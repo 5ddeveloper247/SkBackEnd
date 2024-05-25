@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
+use App\Models\User;
+use Yajra\DataTables\Facades\DataTables;
 /*
-|--------------------------------------------------------------------------
+|---------------------- ----------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
@@ -16,6 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/admin/users', function () {
+    return view('Backend.admin.user.admins');
+});
+
+
 
 
 require_once __DIR__ . '/admin/auth.php';

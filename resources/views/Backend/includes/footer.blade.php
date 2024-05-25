@@ -901,44 +901,44 @@
 
 <footer>
     <div class="contain">
-        {{-- <ul class="social_logos">
+        <ul class="social_logos">
             <li>
                 <a href="https://www.facebook.com/ynauto" class="facebook" target="_blank">
                     <span>Facebook</span>
-                    <img src="<?= $base_url ?>assets/images/social-facebook.svg" alt="">
+                    <img src="{{ asset('/images/social-facebook.svg')}}" alt="">
                 </a>
             </li>
             <li>
                 <a href="https://twitter.com/YourNAuto" class="twitter" target="_blank">
                     <span>Twitter</span>
-                    <img src="<?= $base_url ?>assets/images/social-twitter.svg" alt="">
+                    <img src="{{ asset('/images/social-twitter.svg')}}" alt="">
                 </a>
             </li>
             <li>
                 <a href="https://www.linkedin.com/company/your-next-auto" class="linkedin" target="_blank">
                     <span>Linkedin</span>
-                    <img src="<?= $base_url ?>assets/images/social-linkedin.svg" alt="">
+                    <img src="{{ asset('/images/social-linkedin.svg')}}" alt="">
                 </a>
             </li>
             <li>
                 <a href="https://www.instagram.com/yournextauto" class="instagram" target="_blank">
                     <span>Instagram</span>
-                    <img src="<?= $base_url ?>assets/images/social-instagram.svg" alt="">
+                    <img src="{{ asset('/images/social-instagram.svg')}}" alt="">
                 </a>
             </li>
             <li>
                 <a href="https://www.pinterest.com/yournextauto" class="pinterest" target="_blank">
                     <span>Pinterest</span>
-                    <img src="<?= $base_url ?>assets/images/social-pinterest.svg" alt="">
+                    <img src="{{ asset('/images/social-pinterest.svg')}}" alt="">
                 </a>
             </li>
             <li>
                 <a href="https://www.youtube.com/channel/UCfQy3iyfYHPzFxduUXieN9w" class="youtube" target="_blank">
                     <span>Youtube</span>
-                    <img src="<?= $base_url ?>assets/images/social-youtube.svg" alt="">
+                    <img src="{{ asset('/images/social-youtube.svg')}}" alt="">
                 </a>
             </li>
-        </ul> --}}
+        </ul>
         <div class="main_row flex_row">
             <div class="col">
                 <div class="in_col">
@@ -1004,14 +1004,15 @@
                         <li><a href="?">Advertising packages</a></li>
                         <li><a href="?">Pay As You Go</a></li>
                     </ul>
-                    <!-- <h4 class="drop">Newsletter</h4>
+                    <h4 class="drop">Newsletter</h4>
                     <div class="subscribe">
-                        <span>Keep up on our always evolving products features and technology. Enter your e-mail and subscribe to our newsletter.</span>
+                        <span>Keep up on our always evolving products features and technology. Enter your e-mail and
+                            subscribe to our newsletter.</span>
                         <form action="" method="POST">
                             <input type="text" name="" id="" class="text_box" placeholder="@Email Address">
-                            <button type="submit"><img src="<?= $base_url ?>assets/images/icon-send.svg" alt=""></button>
+                            <button type="submit"><img src="{{ asset('/images/icon-send.svg') }}" alt=""></button>
                         </form>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1030,4 +1031,4 @@
 
 
 <!-- Main Js -->
-<script src="<?= $base_url ?>assets/js/main.js"></script>
+<script src="{{ asset('js/main.js') }}"></script>

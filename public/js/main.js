@@ -13,9 +13,13 @@ $(window).on("load", function () {
 
 	/*_____ Toggle Button _____*/
 	$(document).on("click", "aside .toggle", function () {
+
 		$(this).toggleClass("active");
 		w = $(window).width();
 		if (w >= 1024) {
+			console.log("this" + w);
+			console.log("this" + $("body"));
+
 			$("body").toggleClass("move");
 		} else {
 			$("html").toggleClass("flow");
