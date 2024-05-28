@@ -228,7 +228,9 @@
                                 <h4>Properties Setup</h4>
                             </div>
                             <div class="blk">
-                                <form action="" method="POST">
+                                <form action="{{ route('admin.property.main.submission') }}"
+                                    class="propertySubmissionForm" method="POST">
+                                    @csrf
                                     <ul class="head_lst" id="head_lst">
                                         <li id="tab_head_lst1"><span>Personal Info</span></li>
                                         <li id="tab_head_lst2"><span>Purpose</span></li>
@@ -1804,8 +1806,12 @@ $('.prev_btn').click(function() {
 
   
 function  handlePropertyFormsubmission(){
-    alert("form submitted")
+    setTimeout(() => {
+        $('.propertySubmissionForm').submit();
+        
+    }, 2000);
 }
+
 </script>
 
 

@@ -11,22 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('personal_info', function (Blueprint $table) {
+        Schema::create('property_record_files', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('property_record_id');
-            $table->string('pInfo_fName')->nullable();
-            $table->string('pInfo_lName')->nullable();
-            $table->string('pInfo_email')->nullable();
-            $table->string('pInfo_phoneNumber')->nullable();
+            $table->string('image_uri'); // Changed the arrow function to a string method call
             $table->timestamps();
         });
     }
 
-    /** 
+    /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('personal_info');
+        Schema::dropIfExists('property_record_files'); // Added the dropIfExists method
     }
 };

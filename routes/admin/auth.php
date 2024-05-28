@@ -51,4 +51,5 @@ Route::middleware(['admin'])->group(function () {
 
     //admin property listing
     Route::get('admin/property/listing', [PropertyController::class, 'propertyListing'])->name('admin.property.listing');
+    Route::post('admin/property/main/submission', [PropertyController::class, 'propertyMainSubmission'])->name('admin.property.main.submission');
 });
