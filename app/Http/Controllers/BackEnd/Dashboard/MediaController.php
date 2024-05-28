@@ -14,7 +14,9 @@ class MediaController extends Controller
 
     public function viewMedia(Request $request)
     {
-        return view('Backend.admin.media.media');
+
+        $mediaOnlyRecords =  MediaOnly::all();
+        return view('Backend.admin.media.media', ['mediaOnlyRecords' => $mediaOnlyRecords]);
     }
 
     public function createMedia(Request $request)
@@ -45,7 +47,7 @@ class MediaController extends Controller
 
             return response()->json(['message' => 'Media added successfully'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' =>'Failed to add media'], 500);
+            return response()->json(['message' => 'Failed to add media'], 500);
         }
     }
 
@@ -84,7 +86,8 @@ class MediaController extends Controller
             $media->save();
 
             return response()->json(['message' => 'Media added successfully', 'filePath' => $filePath], 200);
-        } catch (\Exception $e) {
+        } 
+        catch (\Exception $e) {
             return response()->json(['message' => 'Failed to add media'], 500);
         }
     }

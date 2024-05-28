@@ -34,16 +34,16 @@ $page="dashboard";
                     <em>Site Users</em>
                 </a>
             </li> --}}
-            <li class="active">
+            <li class="">
                 <a href="{{ url('/admin/media/view') }}">
                     <img src="{{ asset('/images/icon-vehicle.svg') }}" alt="">
                     <em>Media</em>
                 </a>
             </li>
-            <li class="">
-                <a href="{{ url('trader/wishlists.php') }}">
+            <li class="active">
+                <a href="{{ url('admin/property/listing') }}">
                     <img src="{{ asset('/images/icon-heart-alt.svg') }}" alt="">
-                    <em>Wishlists</em>
+                    <em>Property Listing</em>
                 </a>
             </li>
             <li class="">

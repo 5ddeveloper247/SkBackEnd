@@ -2,96 +2,30 @@
 
 
 @push('styles')
+
+
 <style>
-    .btnRow {
-        display: flex;
-        flex-wrap: nowrap;
-
-    }
-
-    .btnRow>a {
-        margin: 2px;
-
-    }
-
-    <style>
-
-    /* Modal styling */
-    .modal-content {
-        border-radius: 10px;
-    }
-
     .modal-header {
         background-color: #007bff;
         color: white;
-        border-radius: 10px 10px 0 0;
     }
 
-    .modal-body form .mb-3 {
-        margin-bottom: 20px;
+    .modal-header .btn-close {
+        filter: invert(1);
     }
 
-    .modal-body form .form-label {
-        font-weight: bold;
+    .form-check-input {
+        transform: scale(1.5);
     }
 
-    /* Input styling */
-    .form-control {
-        border-radius: 8px;
+    .form-check {
+        padding-left: 0;
     }
 
-    /* Text area styling */
-    .form-control-textarea {
-        border-radius: 8px;
-        resize: none;
-    }
-
-    /* Table styling */
-    .createBtn {
-        text-align: right;
-    }
-
-    .table {
-        border-radius: 10px;
-    }
-
-    .table thead th {
-        background-color: #007bff;
-        color: white;
-        border-color: #007bff;
-    }
-
-    .table tbody td {
+    .table th,
+    .table td {
         vertical-align: middle;
     }
-
-    .table-bordered th,
-    .table-bordered td {
-        border: 1px solid #dee2e6;
-    }
-</style>
-
-.modal-header {
-background-color: #007bff;
-color: white;
-}
-
-.modal-header .btn-close {
-filter: invert(1);
-}
-
-.form-check-input {
-transform: scale(1.5);
-}
-
-.form-check {
-padding-left: 0;
-}
-
-.table th,
-.table td {
-vertical-align: middle;
-}
 </style>
 
 @endpush
@@ -299,15 +233,36 @@ vertical-align: middle;
 
 <div class="container ">
 
-    <div class="d-flex justify-content-end" style="margin-top: 20px;">
-        <div class="createBtn bg-info">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-                id="openCreateModalButton">
-                Create admin
-            </button>
+    <div class="col">
+        <div class="card_blk">
+            <div class="icon">
+                <img src="{{ asset('images/icon-plus.svg') }}" alt="Add Icon">
+            </div>
+            <strong>Create Admin</strong>
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModal" id="openCreateModalButton"></a>
         </div>
     </div>
-    <table class="table table-bordered data-table">
+
+    <table class="table data-table">
+        <thead>
+            <tr>
+                <th width="10">id</th>
+                <th width="10">Image</th>
+                <th width="10">Name</th>
+                <th width="10">Email</th>
+                <th data-center="" width="10"> Role</th>
+                <th width="10" data-center="">Status</th>
+                <th width="10" data-center="">Created</th>
+                <th width="10" data-center="">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+    </tbody>
+    </table>
+
+
+
+    {{-- <table class="table table-bordered data-table">
         <thead>
             <tr>
                 <th>No</th>
@@ -318,13 +273,27 @@ vertical-align: middle;
         </thead>
         <tbody>
         </tbody>
-    </table>
+    </table> --}}
+
 </div>
+
+
+
+{{-- /////////////////////? --}}
+
+{{-- /////////////////////? --}}
 
 @endsection
 
 
-
+<th width="10">#</th>
+<th width="40">Image</th>
+<th width="40">Name</th>
+<th>Email</th>
+<th data-center="">Make &amp; Role</th>
+<th width="40" data-center="">Status</th>
+<th width="40" data-center="">Created_at</th>
+<th width="40" data-center="">Action</th>
 @push('scripts')
 <script type="text/javascript">
     $(function () {
@@ -335,8 +304,12 @@ vertical-align: middle;
         ajax: "{{ route('admin.list') }}",
         columns: [
             {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'}, // as image
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
+            {data: 'role', name: 'role'},
+            {data: 'status', name: 'status'},
+            {data: 'created_at', name: 'created_at'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });

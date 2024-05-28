@@ -252,7 +252,7 @@ vertical-align: middle;
 
 
 
-            {{-- ______________________________Add Media Url________________________________ --}}
+            {{-- ______________________________Add Media Url Tab________________________________ --}}
 
             <div id="All" class="tab-pane fade in active">
                 <div class="top_head">
@@ -260,8 +260,6 @@ vertical-align: middle;
                     <div class="card_blk">
                         <div class="icon"><img src="http://localhost/yna/yna/assets/images/icon-upload.svg" alt="">
                         </div>
-                        {{-- <div class="icon"><img src="http://localhost/yna/yna/assets/images/icon-plus.svg" alt="">
-                        </div> --}}
                         <strong>Add Media Url</strong>
                         <a type="button" id="showMediaUrlPopUpBtn"></a>
                     </div>
@@ -276,36 +274,7 @@ vertical-align: middle;
                                     <li>Leasing Vehicles</li>
                                 </ul>
                                 <div class="blk">
-                                    {{-- <form action="" method="POST">
-                                        <div class="inside">
-                                            <div class="form_blk">
-                                                <select name="" id="" class="text_box selectpicker"
-                                                    data-container="body">
-                                                    <option>Make </option>
-                                                    <option>BMW</option>
-                                                    <option>Honda </option>
-                                                    <option>Hyundai </option>
-                                                    <option>Nissan </option>
-                                                    <option>Mercedes Benz </option>
-                                                </select>
-                                            </div>
-                                            <div class="form_blk">
-                                                <select name="" id="" class="text_box selectpicker"
-                                                    data-container="body">
-                                                    <option>Model</option>
-                                                    <option>3-Series</option>
-                                                    <option>Carrera</option>
-                                                    <option>GT-R</option>
-                                                    <option>Cayenne</option>
-                                                    <option>Mazda6</option>
-                                                    <option>Macan</option>
-                                                </select>
-                                            </div>
-                                            <div class="btn_blk">
-                                                <button type="submit" class="site_btn">Search</button>
-                                            </div>
-                                        </div>
-                                    </form> --}}
+
                                 </div>
                                 <div class="main_row flex_row">
                                     <div class="col">
@@ -366,10 +335,12 @@ vertical-align: middle;
                                             </div>
                                         </div>
                                     </div>
+                                    @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
+
                                     <div class="col">
                                         <div class="item_blk">
                                             <div class="image">
-                                                <img src="{{ asset('images/cars/03.jpg')}}" alt="">
+                                                <img src="{{ asset('storage/' . $mediaOnlyRecord->url) }}" alt="">
                                                 <div class="overlay">
                                                     <ul class="social_links">
                                                         <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
@@ -390,11 +361,12 @@ vertical-align: middle;
                                             </div>
                                             <div class="txt">
                                                 <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">GTA 5 Lowriders DLC</a></h5>
+                                                <h5 class="title"><a href="">{{$mediaOnlyRecord->description}}</a></h5>
                                                 <div class="price"><del>£30,568</del><span>£28,698</span></div>
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
                                     <div class="col">
                                         <div class="item_blk">
                                             <div class="image">
@@ -444,9 +416,7 @@ vertical-align: middle;
 
 
 
-
-
-            {{-- ______________________________Add Media Only________________________________ --}}
+            {{-- ______________________________Add Media Only Tab________________________________ --}}
 
             <div id="AddMedia" class="tab-pane fade">
                 <div class="top_head">
@@ -456,8 +426,6 @@ vertical-align: middle;
                     <div class="card_blk">
                         <div class="icon"><img src="http://localhost/yna/yna/assets/images/icon-upload.svg" alt="">
                         </div>
-                        {{-- <div class="icon"><img src="http://localhost/yna/yna/assets/images/icon-plus.svg" alt="">
-                        </div> --}}
                         <strong>Add Media </strong>
                         <a type="button" id="showMediaPopUpBtn"></a>
                     </div>
@@ -471,42 +439,15 @@ vertical-align: middle;
                                     <li>Leasing Vehicles</li>
                                 </ul>
                                 <div class="blk">
-                                    {{-- <form action="" method="POST">
-                                        <div class="inside">
-                                            <div class="form_blk">
-                                                <select name="" id="" class="text_box selectpicker"
-                                                    data-container="body">
-                                                    <option>Make </option>
-                                                    <option>BMW</option>
-                                                    <option>Honda </option>
-                                                    <option>Hyundai </option>
-                                                    <option>Nissan </option>
-                                                    <option>Mercedes Benz </option>
-                                                </select>
-                                            </div>
-                                            <div class="form_blk">
-                                                <select name="" id="" class="text_box selectpicker"
-                                                    data-container="body">
-                                                    <option>Model</option>
-                                                    <option>3-Series</option>
-                                                    <option>Carrera</option>
-                                                    <option>GT-R</option>
-                                                    <option>Cayenne</option>
-                                                    <option>Mazda6</option>
-                                                    <option>Macan</option>
-                                                </select>
-                                            </div>
-                                            <div class="btn_blk">
-                                                <button type="submit" class="site_btn">Search</button>
-                                            </div>
-                                        </div>
-                                    </form> --}}
+
                                 </div>
                                 <div class="main_row flex_row">
+                                    @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
+
                                     <div class="col">
                                         <div class="item_blk">
                                             <div class="image">
-                                                <img src="{{ asset('images/cars/01.jpg')}}" alt="">
+                                                <img src="{{ asset('storage/' . $mediaOnlyRecord->url) }}" alt="">
                                                 <div class="overlay">
                                                     <ul class="social_links">
                                                         <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
@@ -527,11 +468,12 @@ vertical-align: middle;
                                             </div>
                                             <div class="txt">
                                                 <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">Acura Rsx</a></h5>
+                                                <h5 class="title"><a href="">{{$mediaOnlyRecord->description}}</a></h5>
                                                 <div class="price"><del>£30,568</del><span>£28,698</span></div>
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
                                     <div class="col">
                                         <div class="item_blk">
                                             <div class="image">
@@ -622,6 +564,7 @@ vertical-align: middle;
 
 
                                 </div>
+
                             </div>
                         </section>
                     </div>

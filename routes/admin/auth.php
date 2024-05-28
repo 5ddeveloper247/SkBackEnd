@@ -6,8 +6,9 @@ use App\Http\Controllers\BackEnd\Auth\LoginController;
 use App\Http\Controllers\BackEnd\Dashboard\DashboarController;
 use App\Http\Controllers\BackEnd\Dashboard\AdminController;
 use App\Http\Controllers\BackEnd\Dashboard\MediaController;
+use App\Http\Controllers\BackEnd\Dashboard\PropertyController;
 
-//redirect if authenticated
+//redirect if authenticated  
 Route::middleware(['admin.redirect'])->group(function () {
     Route::get('/admin/login', [LoginController::class, 'index'])->name('admin.login.view');
     Route::post('/admin/login', [LoginController::class, 'handleLogin'])->name('admin.login.submit');
@@ -20,6 +21,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::get('admin/admin/list', [AdminController::class, 'adminList'])->name('admin.list');
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
     Route::get('/admin/dashboard', [DashboarController::class, 'Dashboard'])->name('admin.dashboard');
     Route::post('/admin/dashboard/create/admin', [DashboarController::class, 'createAdmins'])->name('admin.dashboard.create.admin');
     Route::get('/admin/admins', [AdminController::class, 'viewAdmins'])->name('admin.user.admins');
@@ -44,4 +46,9 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/media/view', [MediaController::class, 'viewMedia'])->name('admin.media.view');
     Route::get('admin/media/media/destroy/{id}', [MediaController::class, 'destroyMedia'])->name('admin.media.guest.destroy');
     Route::post('/admin/dashboard/media/upload', [MediaController::class, 'uploadMedia'])->name('admin.dashboard.media.upload');
+
+
+
+    //admin property listing
+    Route::get('admin/property/listing', [PropertyController::class, 'propertyListing'])->name('admin.property.listing');
 });

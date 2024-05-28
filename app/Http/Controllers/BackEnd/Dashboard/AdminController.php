@@ -19,21 +19,22 @@ class AdminController extends Controller
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $btn = '<div class="btnRow">';
-                    $btn .= '<a href="javascript:void(0)" class="view btn btn-info btn-sm" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'>View</a>';
-                    $btn .= '<a href="javascript:void(0)" class="edit btn btn-warning btn-sm" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'>Update</a>';
-                    $btn .= '<a href="javascript:void(0)" class="delete btn btn-danger btn-sm" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'>Delete</a>';
+                    $btn = '<td class="nowrap" data-center="">';
+                    $btn .= '<div class="act_btn">';
+                    $btn .= '<button type="button" class="edit" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'></button>';
+                    $btn .= '<button type="button" class="view copy" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'></button>';
+                    $btn .= '<button type="button" class="delete del" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'></button>';
                     $btn .= '</div>';
-
-
+                    $btn .= '</td>';
                     return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
 
-        return view('users');
+        return view('Backend.admin.user.admins');
     }
+
 
     public function viewAdmins(Request $request)
     {
@@ -77,7 +78,7 @@ class AdminController extends Controller
                 ->make(true);
         }
 
-        return view('users');
+        return view('Backend.admin.user.users');
     }
 
     public function viewUsers(Request $request)
