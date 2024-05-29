@@ -18,6 +18,7 @@ use Yajra\DataTables\Facades\DataTables;
 Route::get('/', function () {
     return view('welcome');
 });
+
 Route::get('/admin/users', function () {
     return view('Backend.admin.user.admins');
 });

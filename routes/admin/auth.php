@@ -52,4 +52,8 @@ Route::middleware(['admin'])->group(function () {
     //admin property listing
     Route::get('admin/property/listing', [PropertyController::class, 'propertyListing'])->name('admin.property.listing');
     Route::post('admin/property/main/submission', [PropertyController::class, 'propertyMainSubmission'])->name('admin.property.main.submission');
+    Route::get('/admin/property/loadpropertyList', [PropertyController::class, 'loadpropertyList'])->name('admin.property.loadproperty');
+    Route::post('/admin/property/status', [PropertyController::class, 'changePropertyStatus'])->name('admin.property.status');
+    Route::post('/admin/property/status/pending', [PropertyController::class, 'changePendingPropertyStatus'])->name('admin.property.statu.pendings');
+    Route::post('/admin/getpropertydata', [PropertyController::class, 'getPropertyData'])->name('admin.property.getData');
 });

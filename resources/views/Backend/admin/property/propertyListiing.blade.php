@@ -9,7 +9,19 @@
 @endpush
 
 @section('content')
+<!-- Display Success Message -->
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
 
+<!-- Display Error Message -->
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
 <section id="deliveries">
     <div class="contain-fluid">
         <ul class="crumbs">
@@ -42,170 +54,23 @@
                     </div>
                     <div class="blk">
                         <div class="tbl_blk">
-                            <table>
+                            <table id="property_table" class="table table-responsive">
                                 <thead>
                                     <tr>
                                         <th width="10">#</th>
-                                        <th>Job No.</th>
-                                        <th data-center>Delivery Provider</th>
-                                        <th data-center>Date</th>
-                                        <th data-center>Time</th>
-                                        <th data-center>Delivery Status</th>
-                                        <th data-center>Amount</th>
-                                        <th width="40" data-center>Action</th>
+                                        <th>Name</th>
+                                        <th >Email</th>
+                                        <th >Contact</th>
+                                        <th >Created Date</th>
+                                        <th >Status</th>
+                                        <th >Hold Status</th>
+                                        <th >Action</th>
+
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="nowrap">01</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">02</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">03</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">04</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">05</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">06</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">07</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">08</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">09</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="nowrap">10</td>
-                                        <td class="nowrap">2345</td>
-                                        <td data-center>YNA</td>
-                                        <td class="nowrap" data-center>18 Dec 2021</td>
-                                        <td class="nowrap" data-center>14:00</td>
-                                        <td class="nowrap" data-center>Departed</td>
-                                        <td class="nowrap" data-center>£9,000</td>
-                                        <td class="nowrap" data-center>
-                                            <div class="act_btn">
-                                                <button type="button" class="edit"></button>
-                                                <button type="button" class="share"></button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                <tbody id="property_table_body">
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -229,7 +94,7 @@
                             </div>
                             <div class="blk">
                                 <form action="{{ route('admin.property.main.submission') }}"
-                                    class="propertySubmissionForm" method="POST">
+                                    class="propertySubmissionForm" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <ul class="head_lst" id="head_lst">
                                         <li id="tab_head_lst1"><span>Personal Info</span></li>
@@ -558,64 +423,38 @@
 
                                             {{-- ________________________________________________________File
                                             Upload______________________________ --}}
+
+
                                             <div class="blk">
                                                 <h4 class="subheading">Upload Photos</h4>
                                                 <div class="form_row row">
                                                     <div class="col-xs-12">
                                                         <div class="uploader_blk text_box">
-                                                            <div class="icon"><img
-                                                                    src="{{ asset('/images/upload.svg')}}" alt=""></div>
+                                                            <div class="icon">
+                                                                <img src="{{ asset('/images/upload.svg') }}" alt="">
+                                                            </div>
                                                             <h6>Drag & Drop</h6>
                                                             <div class="or">OR</div>
                                                             <div class="btn_blk text-center">
-                                                                <button type="button" class="site_btn sm">Browse
+                                                                <input type="file" id="fileInput" name="photos[]"
+                                                                    multiple style="display:none;">
+                                                                <button type="button" class="site_btn sm"
+                                                                    onclick="document.getElementById('fileInput').click();">Browse
                                                                     Files</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12">
                                                         <div class="upload_lst_blk text_box">
-                                                            <ul class="img_list flex">
-                                                                <li>
-                                                                    <div class="thumb">
-                                                                        <img src="{{ asset('/images/cars/01.jpg')}}"
-                                                                            alt="">
-                                                                        <button type="button" class="x_btn"></button>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="thumb">
-                                                                        <img src="{{ asset('/images/cars/02.jpg')}}"
-                                                                            alt="">
-                                                                        <button type="button" class="x_btn"></button>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="thumb">
-                                                                        <img src="{{ asset('/images/cars/03.jpg')}}"
-                                                                            alt="">
-                                                                        <button type="button" class="x_btn"></button>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="thumb">
-                                                                        <img src="{{ asset('/images/cars/04.jpg')}}"
-                                                                            alt="">
-                                                                        <button type="button" class="x_btn"></button>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="thumb">
-                                                                        <img src="{{ asset('/images/cars/05.jpg')}}"
-                                                                            alt="">
-                                                                        <button type="button" class="x_btn"></button>
-                                                                    </div>
-                                                                </li>
+                                                            <ul class="img_list flex" id="previewList">
+                                                                <!-- Previews will be added here dynamically -->
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+
                                             {{-- ________________________________________________________File
                                             Upload______________________________ --}}
 
@@ -639,167 +478,161 @@
                                             <div class="col-xs-12">
                                                 <h6>Amenities</h6>
                                                 <div class="form_blk">
-                                                    {{-- <select id="multiSelect" name="veh_features[]"
-                                                        multiple="multiple" style="width: 100%;">
-                                                        <option value="Possession">Possession</option>
-                                                        <option value="Balloted">Balloted</option>
-                                                        <option value="Sewerage">Sewerage</option>
-                                                        <option value="Electricity">Electricity</option>
-                                                        <option value="Water Supply">Water Supply</option>
-                                                        <option value="Sui Gas">Sui Gas</option>
-                                                        <option value="Boundary Wall">Boundary Wall</option>
-                                                        <option value="Nearby School">Nearby School</option>
-                                                        <option value="Nearby Hospitals">Nearby Hospitals</option>
-                                                        <option value="Nearby Shopping Malls">Nearby Shopping Malls
-                                                        </option>
-                                                        <option value="Nearby Restaurant">Nearby Restaurant</option>
-                                                        <option value="Nearby Public Transport Service">Nearby Public
-                                                            Transport Service</option>
-                                                        <option value="Security Staff">Security Staff</option>
-                                                        <option value="Central Air Conditioning">Central Air
-                                                            Conditioning</option>
-                                                        <option value="Waste Disposal">Waste Disposal</option>
-                                                        <option value="Double Glazed Windows">Double Glazed Windows
-                                                        </option>
-                                                        <option value="Central Heating">Central Heating</option>
-                                                        <option value="Study Room">Study Room</option>
-                                                        <option value="Laundry Room">Laundry Room</option>
-                                                        <option value="Broadband Internet Access">Broadband Internet
-                                                            Access</option>
-                                                        <option value="Power Windows">Power Windows</option>
-                                                        <option value="Satellite or Cable TV Ready">Satellite or Cable
-                                                            TV Ready</option>
-                                                    </select> --}}
                                                     <ul class="check_lst flex">
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_Possesion"
+                                                                    id="check_Possesion">
                                                                 <span>Possesion</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="checkk_Balloted"
+                                                                    id="check_Balloted">
                                                                 <span>Balloted</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
-                                                                <span>Sewerage</span>
+                                                                <input type="checkbox" name="check_Balloted"
+                                                                    id="check_Sewerage">
+                                                                <span>Balloted</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_"
+                                                                    id="check_Electricity">
                                                                 <span>Electricity</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_"
+                                                                    id="check_WaterSupply">
                                                                 <span>Water Supply</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_" id="check_SuiGas">
                                                                 <span>Sui Gas</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_BoundryWall"
+                                                                    id="check_BoundryWall">
                                                                 <span>Boundry Wall</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_NearbySchool"
+                                                                    id="check_NearbySchool">
                                                                 <span>Nearby School</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_NearbyHospitals"
+                                                                    id="check_NearbyHospitals">
                                                                 <span>Nearby Hospitals</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_NearbyShoppingMalls"
+                                                                    id="check_NearbyShoppingMalls">
                                                                 <span>Nearby Shopping Malls</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_NearbyRestaurant"
+                                                                    id="check_NearbyRestaurant">
                                                                 <span>Nearby Restaurant</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox"
+                                                                    name="check_NearbyPubicTransportService"
+                                                                    id="check_NearbyPubicTransportService">
                                                                 <span>Nearby Pubic Transport Service</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_SecurityStaff"
+                                                                    id="check_SecurityStaff">
                                                                 <span>Security Staff</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox"
+                                                                    name="check_CentralAirConditioning"
+                                                                    id="check_CentralAirConditioning">
                                                                 <span>Central Air Conditioning</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_WasteDisposal"
+                                                                    id="check_WasteDisposal">
                                                                 <span>Waste Disposal </span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_DoubleGlazedWindows"
+                                                                    id="check_DoubleGlazedWindows">
                                                                 <span>Double Glazed Windows</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_CentralHeating"
+                                                                    id="check_CentralHeating">
                                                                 <span>Central Heating</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_StudyRoom"
+                                                                    id="check_check_StudyRoom">
                                                                 <span>Study Room</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_LaundryRoom"
+                                                                    id="check_LaundryRoom">
                                                                 <span>Laundry Room</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox"
+                                                                    name="check_BroadbandInternetAccess"
+                                                                    id="check_BroadbandInternetAccess">
                                                                 <span>Broadband Internet Access</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox" name="check_PowerWindows"
+                                                                    id="check_PowerWindows">
                                                                 <span>Power Windows</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="veh_feature" id="">
+                                                                <input type="checkbox"
+                                                                    name="check_SatelliteorCableTVReady"
+                                                                    id="check_SatelliteorCableTVReady">
                                                                 <span>Satellite or Cable TV Ready</span>
                                                             </label>
                                                         </li>
@@ -821,8 +654,6 @@
                                         </div>
                                     </fieldset>
 
-
-
                                     {{-- Done tabl --}}
                                     <fieldset id="done_tab">
                                         <div class="text-center">
@@ -838,694 +669,11 @@
                             </div>
                         </div>
                         {{-- ______________________tab <propertiesSetup> end_______________________________--- --}}
-
-
-
-
-                            {{-- ______________________tab <Inspection> start_______________________________--- --}}
-
-                                {{-- <div id="Inspection" class="tab-pane fade">
-                                    <div class="top_head">
-                                        <h4>Vehicle Pre-Delivery Inspection Form</h4>
-                                    </div>
-                                    <form action="" method="POST">
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Seller Information</h5>
-                                                <div class="form_row row">
-                                                    <div class="col-xs-6">
-                                                        <div class="form_blk">
-                                                            <h6>Full Name<sup>*</sup></h6>
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: John Wick">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <div class="form_blk">
-                                                            <h6>Phone Number<sup>*</sup></h6>
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: +92300 0000 000">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-12">
-                                                        <div class="form_blk">
-                                                            <h6>Address</h6>
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: 123 Main Street, California">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <h5 class="color">Buyer Information</h5>
-                                                <div class="form_row row">
-                                                    <div class="col-xs-6">
-                                                        <div class="form_blk">
-                                                            <h6>Full Name<sup>*</sup></h6>
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: John Wick">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <div class="form_blk">
-                                                            <h6>Phone Number<sup>*</sup></h6>
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: +92300 0000 000">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-12">
-                                                        <div class="form_blk">
-                                                            <h6>Address</h6>
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: 123 Main Street, California">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <!-- <button type="button" class="site_btn long light prev_btn"><img src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt=""> Back</button> -->
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Vehicle Details</h5>
-                                                <div class="form_row row">
-                                                    <div class="col-xs-6">
-                                                        <h6>Make<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <select name="" id="" class="text_box selectpicker"
-                                                                data-container="body">
-                                                                <option>Select </option>
-                                                                <option>BMW</option>
-                                                                <option>Honda </option>
-                                                                <option>Hyundai </option>
-                                                                <option>Nissan </option>
-                                                                <option>Mercedes Benz </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Model<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <select name="" id="" class="text_box selectpicker"
-                                                                data-container="body">
-                                                                <option>Select</option>
-                                                                <option>3-Series</option>
-                                                                <option>Carrera</option>
-                                                                <option>GT-R</option>
-                                                                <option>Cayenne</option>
-                                                                <option>Mazda6</option>
-                                                                <option>Macan</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Color<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <select name="" id="" class="text_box selectpicker"
-                                                                data-container="body">
-                                                                <option>Select</option>
-                                                                <option>Color 001</option>
-                                                                <option>Color 001</option>
-                                                                <option>Color 001</option>
-                                                                <option>Color 001</option>
-                                                                <option>Color 001</option>
-                                                                <option>Color 001</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Reg No<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: SM17LEU">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Chassis No<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: 1.4 DURATORQ TDCI 68-B">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Engine No<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: AT88940">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Mileage<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg: 6300">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Date<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box datepicker"
-                                                                placeholder="eg: 01-18-2022">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Interior Check</h5>
-                                                <table class="check_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Check List</th>
-                                                            <th>OK</th>
-                                                            <th><small>Required/Replaced</small></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Seat Belt - Front & Rear</td>
-                                                            <td><input type="radio" name="int_01" id=""></td>
-                                                            <td><input type="radio" name="int_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Mirror - Interior & Exterior</td>
-                                                            <td><input type="radio" name="int_02" id=""></td>
-                                                            <td><input type="radio" name="int_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Windows - Front & Rear</td>
-                                                            <td><input type="radio" name="int_03" id=""></td>
-                                                            <td><input type="radio" name="int_03" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Wipers - Front & Rear</td>
-                                                            <td><input type="radio" name="int_04" id=""></td>
-                                                            <td><input type="radio" name="int_04" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Glovebox, Ashtray and Cigarette Lighter</td>
-                                                            <td><input type="radio" name="int_05" id=""></td>
-                                                            <td><input type="radio" name="int_05" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Sun Visors and Sunroof</td>
-                                                            <td><input type="radio" name="int_06" id=""></td>
-                                                            <td><input type="radio" name="int_06" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Horn</td>
-                                                            <td><input type="radio" name="int_07" id=""></td>
-                                                            <td><input type="radio" name="int_07" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Seat, Adjustment, Mountings and General Conditions</td>
-                                                            <td><input type="radio" name="int_08" id=""></td>
-                                                            <td><input type="radio" name="int_08" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Internal Panels -Fit and Condition</td>
-                                                            <td><input type="radio" name="int_09" id=""></td>
-                                                            <td><input type="radio" name="int_09" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Carpet and Trim - Condition</td>
-                                                            <td><input type="radio" name="int_10" id=""></td>
-                                                            <td><input type="radio" name="int_10" id=""></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Lights Check</h5>
-                                                <table class="check_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Check List</th>
-                                                            <th>OK</th>
-                                                            <th><small>Required/Replaced</small></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Dashboard Lights</td>
-                                                            <td><input type="radio" name="light_01" id=""></td>
-                                                            <td><input type="radio" name="light_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>All Interior Lights (inc glovebox boot etc.)</td>
-                                                            <td><input type="radio" name="light_02" id=""></td>
-                                                            <td><input type="radio" name="light_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Headlights and Fog Lights</td>
-                                                            <td><input type="radio" name="light_03" id=""></td>
-                                                            <td><input type="radio" name="light_03" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Side Lights - Front and Rear</td>
-                                                            <td><input type="radio" name="light_04" id=""></td>
-                                                            <td><input type="radio" name="light_04" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tail Lights and Rear Fog Lights</td>
-                                                            <td><input type="radio" name="light_05" id=""></td>
-                                                            <td><input type="radio" name="light_05" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Indicator Lights</td>
-                                                            <td><input type="radio" name="light_06" id=""></td>
-                                                            <td><input type="radio" name="light_06" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Brake Lights</td>
-                                                            <td><input type="radio" name="light_07" id=""></td>
-                                                            <td><input type="radio" name="light_07" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Number Plate Lights</td>
-                                                            <td><input type="radio" name="light_08" id=""></td>
-                                                            <td><input type="radio" name="light_08" id=""></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Engine Check</h5>
-                                                <table class="check_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Check List</th>
-                                                            <th>OK</th>
-                                                            <th><small>Required/Replaced</small></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Engine Oil</td>
-                                                            <td><input type="radio" name="eng_01" id=""></td>
-                                                            <td><input type="radio" name="eng_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Brake Fluid</td>
-                                                            <td><input type="radio" name="eng_02" id=""></td>
-                                                            <td><input type="radio" name="eng_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Power Steering Fluid</td>
-                                                            <td><input type="radio" name="eng_03" id=""></td>
-                                                            <td><input type="radio" name="eng_03" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Clutch Fluid</td>
-                                                            <td><input type="radio" name="eng_04" id=""></td>
-                                                            <td><input type="radio" name="eng_04" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Coolant</td>
-                                                            <td><input type="radio" name="eng_05" id=""></td>
-                                                            <td><input type="radio" name="eng_05" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Window Washer</td>
-                                                            <td><input type="radio" name="eng_06" id=""></td>
-                                                            <td><input type="radio" name="eng_06" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Battery - Connection and Mounting</td>
-                                                            <td><input type="radio" name="eng_07" id=""></td>
-                                                            <td><input type="radio" name="eng_07" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>All Belts -Tension and Condition</td>
-                                                            <td><input type="radio" name="eng_08" id=""></td>
-                                                            <td><input type="radio" name="eng_08" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>All Mountings - Security and Condition</td>
-                                                            <td><input type="radio" name="eng_09" id=""></td>
-                                                            <td><input type="radio" name="eng_09" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>All Pipes and Hoses</td>
-                                                            <td><input type="radio" name="eng_10" id=""></td>
-                                                            <td><input type="radio" name="eng_10" id=""></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Exterior Check</h5>
-                                                <table class="check_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Check List</th>
-                                                            <th>OK</th>
-                                                            <th><small>Required/Replaced</small></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Bonnet and Boot - Operating and Locking</td>
-                                                            <td><input type="radio" name="ext_01" id=""></td>
-                                                            <td><input type="radio" name="ext_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Doors - Opening Closing and Locking</td>
-                                                            <td><input type="radio" name="ext_02" id=""></td>
-                                                            <td><input type="radio" name="ext_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Central Locking</td>
-                                                            <td><input type="radio" name="ext_03" id=""></td>
-                                                            <td><input type="radio" name="ext_03" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Suspension and Shock Absorbers</td>
-                                                            <td><input type="radio" name="ext_04" id=""></td>
-                                                            <td><input type="radio" name="ext_04" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Exhaust Condition</td>
-                                                            <td><input type="radio" name="ext_05" id=""></td>
-                                                            <td><input type="radio" name="ext_05" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Brake Pads - Lining and Hoses</td>
-                                                            <td><input type="radio" name="ext_06" id=""></td>
-                                                            <td><input type="radio" name="ext_06" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Tyres - Pressure and Tread Depth</td>
-                                                            <td><input type="radio" name="ext_07" id=""></td>
-                                                            <td><input type="radio" name="ext_07" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Wheel Nuts - Tightness</td>
-                                                            <td><input type="radio" name="ext_08" id=""></td>
-                                                            <td><input type="radio" name="ext_08" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Operation of Fuel Cap</td>
-                                                            <td><input type="radio" name="ext_09" id=""></td>
-                                                            <td><input type="radio" name="ext_09" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Alarm System</td>
-                                                            <td><input type="radio" name="ext_10" id=""></td>
-                                                            <td><input type="radio" name="ext_10" id=""></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Road Test</h5>
-                                                <table class="check_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Check List</th>
-                                                            <th>OK</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Instruments - Speedometer, Rev Counter etc.</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Clutch</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Gear Change Operation</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Steering Alignment</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Brakes - Footbrake and Handbrake</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Indicators - Self Cancel</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Air Conditioning</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Heating System</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Windscreen Washer</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Audio System</td>
-                                                            <td><input type="checkbox" name="road_01" id=""></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Bodywork Appraisal</h5>
-                                                <div class="btn_blk form_blk damage_btn text-center">
-                                                    <button type="button" class="site_btn sm blank"><span
-                                                            class="num yellow">1</span>
-                                                        Scratch</button>
-                                                    <button type="button" class="site_btn sm blank"><span
-                                                            class="num red">2</span>
-                                                        Dent</button>
-                                                    <button type="button" class="site_btn sm blank"><span
-                                                            class="num green">3</span>
-                                                        Chip</button>
-                                                    <button type="button" class="site_btn sm blank"><span
-                                                            class="num blue">4</span>
-                                                        Scuff</button>
-                                                    <button type="button" class="site_btn sm blank"><span
-                                                            class="num gray">5</span>
-                                                        Other</button>
-                                                </div>
-                                                <div class="img_blk form_blk">
-                                                    <img src="{{ asset('assets/images/unfolded-car.svg')}}" alt="">
-                                                </div>
-                                                <p>Choose a damage type above, and click on the diagram. Remove a damage
-                                                    icon by clicking on
-                                                    it.</p>
-                                                <div class="btn_blk form_btn text-right">
-                                                    <button type="button" class="site_btn long light prev_btn"><img
-                                                            src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                        Back</button>
-                                                    <button type="button"
-                                                        class="site_btn long next_btn">Continue</button>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">After Road Test</h5>
-                                                <table class="check_table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Check List</th>
-                                                            <th>OK</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Check for Fluid Leaks</td>
-                                                            <td><input type="checkbox" name="road_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Interior and Exterior Cleaned</td>
-                                                            <td><input type="checkbox" name="road_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Spare Wheel and tools checked</td>
-                                                            <td><input type="checkbox" name="road_02" id=""></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Documents checked</td>
-                                                            <td><input type="checkbox" name="road_02" id=""></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <hr>
-                                                <div class="form_row row">
-                                                    <div class="col-xs-12">
-                                                        <h6>Comments/Recommendations<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <textarea name="" id="" class="text_box"
-                                                                placeholder="Type something here"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="button" class="site_btn long next_btn">Continue</button>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="blk">
-                                                <h5 class="color">Completion</h5>
-                                                <p>I confirm that all items listed on this Pre-Delivery Inspection Form
-                                                    have been checked
-                                                    and repairs/replacements made where necessary.</p>
-                                                <div class="form_row row">
-                                                    <div class="col-xs-12">
-                                                        <h6>Signed <small>(on behalf of seller)</small><sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg John Wick">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Print Name<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg John Wick">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Date<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box datepicker"
-                                                                placeholder="eg 01-12-2022">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr>
-                                                <p>I acknowledge receiving delivery of the vehicle as described above.
-                                                </p>
-                                                <div class="form_row row">
-                                                    <div class="col-xs-12">
-                                                        <h6>Signed <small>(by customer)</small><sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg John Wick">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Print Name<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box"
-                                                                placeholder="eg John Wick">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xs-6">
-                                                        <h6>Date<sup>*</sup></h6>
-                                                        <div class="form_blk">
-                                                            <input type="text" name="" id="" class="text_box datepicker"
-                                                                placeholder="eg 01-12-2022">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="btn_blk form_btn text-right">
-                                                <button type="button" class="site_btn long light prev_btn"><img
-                                                        src="{{ asset('assets/images/arrow-left-sm.svg')}}" alt="">
-                                                    Back</button>
-                                                <button type="submit" class="site_btn long next_btn">Submit</button>
-                                            </div>
-                                        </fieldset>
-                                    </form>
-                                </div> --}}
-
-                                {{-- ______________________tab <Inspection> end_______________________________--- --}}
-
-
-
-
-                                    {{-- ______________________tab <Tracking>
-                                        start_______________________________-----}}
-
-                                        {{-- <div id="Tracking" class="tab-pane fade">
-                                            <div class="top_head">
-                                                <h4>Delivery Tracking</h4>
-                                            </div>
-                                            <div class="blk">
-                                                <ul class="track_lst">
-                                                    <li class="done">
-                                                        <div class="icon"></div>
-                                                        <span>Processing</span>
-                                                    </li>
-                                                    <li class="done">
-                                                        <div class="icon"></div>
-                                                        <span>In Progress</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="icon"></div>
-                                                        <span>Transit</span>
-                                                    </li>
-                                                    <li>
-                                                        <div class="icon"></div>
-                                                        <span>Delivered</span>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- ______________________tab <Tracking> end_______________________________---
-                                            --}}
-
-
         </div>
     </div>
 </section>
+
+
 
 
 @endsection
@@ -1850,5 +998,39 @@ function  handlePropertyFormsubmission(){
         });
     });
 </script>
+
+
+
+
+{{-- file preview handled here --}}
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const files = event.target.files;
+        const previewList = document.getElementById('previewList');
+
+        Array.from(files).forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const li = document.createElement('li');
+                li.innerHTML += `
+                    <div class="thumb">
+                        <img src="${e.target.result}" alt="">
+                        <button type="button" class="x_btn" onclick="removeFile(this)">&times;</button>
+                    </div>
+                `;
+                previewList.appendChild(li);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function removeFile(btn) {
+        const li = btn.parentElement.parentElement;
+        li.remove();
+    }
+</script>
+
+
+
 
 @endpush

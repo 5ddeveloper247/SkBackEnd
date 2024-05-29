@@ -71,6 +71,9 @@
     <script src="{{ asset('js/multi-animated-counter.js') }}"></script>
     <script src="{{ asset('js/datepicker.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="{{ asset('js/propertylisting/script_property_listing.js') }}"></script>
+    <script src="{{ asset('js/common.js') }}"></script>
+
     {{-- ---------------toastr js--------------------- --}}
     <script src="{{ asset('assets/plugins/bootstrap/bootstrap.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
@@ -80,7 +83,7 @@
     <script src="https://cdn.jsdelivr.net/npm/toastr@latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
     @stack('scripts')
