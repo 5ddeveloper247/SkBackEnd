@@ -49,13 +49,13 @@ function loadManagerListResponse(response) {
                                 <td class="nowrap">${formatDate(property.created_at)}</td>
                                 <td data-center>
                                     <div class="switch" >
-                                        <input type="checkbox" onclick="changestatus(${property.status},${property.status})" name="status" id="status" ${property.status == '1' ? 'checked' : ''}>
+                                        <input type="checkbox" onclick="changestatus(${property.id},${property.status})" name="status" id="statusProperty" ${property.status == '1' ? 'checked' : ''}>
                                         <em></em>
                                     </div>
                                 </td>
                                 <td data-center>
                                     <div class="switch" >
-                                        <input type="checkbox" onclick="changestatusPending(${property.hold},${property.hold})" name="status" id="status" ${property.hold == '1' ? 'checked' : ''}>
+                                        <input type="checkbox" onclick="changestatusPending(${property.id},${property.hold})" name="statusHold" id="statusHoldProperty" ${property.hold == '1' ? 'checked' : ''}>
                                         <em></em>
                                     </div>
                                 </td>
@@ -137,7 +137,7 @@ $('#close_delete_modal_btn').click(function () {
 
 $('#delete_confirmed_btn').click(function () {
     var del_id = $(this).attr('data-id');
-    let url = '/admin/deletemanager';
+    let url = '/admin/property/delete';
     let type = 'POST';
     let data = new FormData();
     data.append('del_id', del_id);
@@ -153,7 +153,7 @@ function deletemanagerResponse(response) {
             timeOut: 3000
         });
         $('#uiBlocker').hide();
-
+        $('#delete_modal').hide();
         loadManagerList();
         $('#close_delete_modal_btn').click();
     }
@@ -162,11 +162,12 @@ function deletemanagerResponse(response) {
         $('#close_delete_modal_btn').click();
 
         error = response.message;
-
+        $('#delete_modal').hide();
     } else {
         $('#close_delete_modal_btn').click();
 
-        error = response.responseJSON.message;
+        error = response.message;
+        $('#delete_modal').hide();
     }
     toastr.error(error, '', {
         timeOut: 3000
@@ -178,12 +179,40 @@ function changestatus(id, stauts) {
     let url = '/admin/property/status';
     let type = 'POST';
     let data = new FormData();
+    const statusVal = $('#statusProperty').val();
+
     data.append('id', id);
     data.append('status', status);
     SendAjaxRequestToServer(type, url, data, '', changeStatusResponse, '', '');
 
 
 }
+
+function changeStatusResponse(response) {
+    console.log(response.status)
+    if (response.status == 200) {
+
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
+        $('#uiBlocker').hide();
+
+        loadManagerList();
+    }
+
+    if (response.status == 402) {
+        error = response.message;
+
+    }
+    else {
+        error = response.message;
+    }
+    toastr.error(error, '', {
+        timeOut: 3000
+    });
+}
+
+
 function changestatusPending(id, hold) {
 
     let url = '/admin/property/status/pending';
@@ -195,6 +224,7 @@ function changestatusPending(id, hold) {
 
 
 }
+
 
 
 function changePendingStatusResponse(response) {
@@ -220,29 +250,7 @@ function changePendingStatusResponse(response) {
 }
 
 
-function changeStatusResponse(response) {
-    console.log(response)
-    if (response.status == 200) {
 
-        toastr.success(response.message, '', {
-            timeOut: 3000
-        });
-        $('#uiBlocker').hide();
-
-        loadManagerList();
-    }
-
-    if (response.status == 402) {
-        error = response.message;
-
-    }
-    else {
-        error = response.message;
-    }
-    toastr.error(error, '', {
-        timeOut: 3000
-    });
-}
 
 $(document).on('click', '.edit_btn', function () {
     var id = $(this).attr('data-id');
@@ -258,17 +266,20 @@ $(document).on('click', '.edit_btn', function () {
 
 
 function getpropertydataResponse(response) {
+    console.log(response.propertyInfo)
+    if (response.propertyInfo) {
+        var property = response.propertyInfo;
+        console.log(property.id)
+        console.log("idddddddddd")
 
-    if (response.status == 200) {
-        var manager = response.data;
+        // $('#uiBlocker').hide();
+        $('#property_id_edit').val(property.id);
+        $('#property_name_edit').val(property.pInfo_fName);
+        $('#last_name_edit').val(property.pInfo_lName);
+        $('#contact_number_edit').val(property.pInfo_phoneNumber);
+        $('#email_edit').val(property.pInfo_email);
+        $('#edit-data-popup').show();
 
-        $('#uiBlocker').hide();
-        $('#manager_id_edit').val(manager[0].id);
-        $('#first_name_edit').val(manager[0].first_name);
-        $('#middle_name_edit').val(manager[0].middle_name);
-        $('#last_name_edit').val(manager[0].last_name);
-        $('#contact_number_edit').val(manager[0].contact_number);
-        $('#email_edit').text(manager[0].email);
 
     }
 
@@ -282,20 +293,23 @@ function getpropertydataResponse(response) {
 }
 
 
-$('#edit_manager_form').submit(function (e) {
+$('#edit_property_form').submit(function (e) {
     e.preventDefault();
 
-    let form = document.getElementById('edit_manager_form');
+    let form = document.getElementById('edit_property_form');
     let data = new FormData(form);
     let type = 'POST';
-    let url = '/admin/updateManager';
+    let url = '/admin/property/editProperty';
     SendAjaxRequestToServer(type, url, data, '', updateManagerResponse, '', 'savemanagerbtn');
 });
 
 function updateManagerResponse(response) {
     $('#uiBlocker').hide();
+
     if (response.status == 200) {
 
+
+        $('#edit-data-popup').hide();
         toastr.success(response.message, '', {
             timeOut: 3000
         });
@@ -307,13 +321,13 @@ function updateManagerResponse(response) {
 
     if (response.status == 402) {
         // $('#close_update_modal_default_btn').click();
-
+        $('#edit-data-popup').hide();
         error = response.message;
 
     } else {
         // $('#close_update_modal_default_btn').click();
-
-        error = response.responseJSON.message;
+        $('#edit-data-popup').hide();
+        error = response.message;
     }
     toastr.error(error, '', {
         timeOut: 3000

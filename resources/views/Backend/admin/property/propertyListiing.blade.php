@@ -38,11 +38,103 @@
         </ul>
 
 
-        {{-- ______________________tab listings_______________________________--- --}}
+        {{-- ______________________tab listings end _______________________________--- --}}
+
+        {{-- edit property popup --}}
+        <div class="popup lg" data-popup="edit-data-popup" id="edit-data-popup">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
+                            <div id="Inspection" class="tab-pane fade active in">
+
+                                <form method="POST" id="edit_property_form">
+                                    <input type="hidden" name="property_id_edit" id="property_id_edit">
+                                    @csrf
+                                    <fieldset>
+                                        <div class="blk">
+                                            <h5 class="color">Edit Property</h5>
+                                            <div class="form_row row">
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>First Name<sup>*</sup></h6>
+                                                        <input type="text" name="property_name_edit"
+                                                            id="property_name_edit" class="text_box"
+                                                            placeholder="eg: John Wick" maxlength="50">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Last Name</h6>
+                                                        <input type="text" name="last_name_edit" id="last_name_edit"
+                                                            class="text_box" placeholder="eg: John Wick" maxlength="50">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Contact Number</h6>
+                                                        <input type="number" name="contact_number_edit"
+                                                            id="contact_number_edit" class="text_box"
+                                                            placeholder="eg: +92300 0000 000" maxlength="15">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Email<sup>*</sup></h6>
+                                                        <input type="email" name="email_edit" id="email_edit"
+                                                            class="text_box" placeholder="eg: +example@gmail.com"
+                                                            maxlength="15">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="btn_blk form_btn text-center">
+
+                                                <button type="submit" class="site_btn long savemanagerbtn"
+                                                    id="savemanagerbtn">Update</button>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- delete modal start  -->
+        <div class="popup sm" data-popup="delete-data-popup" id="delete_modal">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="hidden x_btn clode_delete_modal_default_btn"></button>
+                            <h3 class="text-center">Are You Sure to Delete?</h3>
+                            <!-- <p>Are You Sure to Delete?</p> -->
+                            <div class="text-center row">
+                                <button type="button" class="btn bg-transparent rounded-pill" id="delete_confirmed_btn"
+                                    data-id=""><img src="{{asset('assets\images\check_1828640.png')}}"
+                                        style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="close_delete_modal_btn"><img
+                                        src="{{asset('assets\images\close-button_11450177.png')}}"
+                                        style="width:30px"></button>
+
+                                <!-- <button type="button" class="btn btn-danger ">Delete</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- delete modal end  -->
 
         <div class="tab-content">
-
-
             {{-- ______________________tab <All> start_______________________________--- --}}
                 <div id="All" class="tab-pane fade in active">
                     <div class="top_head">
@@ -59,12 +151,12 @@
                                     <tr>
                                         <th width="10">#</th>
                                         <th>Name</th>
-                                        <th >Email</th>
-                                        <th >Contact</th>
-                                        <th >Created Date</th>
-                                        <th >Status</th>
-                                        <th >Hold Status</th>
-                                        <th >Action</th>
+                                        <th>Email</th>
+                                        <th>Contact</th>
+                                        <th>Created Date</th>
+                                        <th>Status</th>
+                                        <th>Hold Status</th>
+                                        <th>Action</th>
 
                                     </tr>
                                 </thead>

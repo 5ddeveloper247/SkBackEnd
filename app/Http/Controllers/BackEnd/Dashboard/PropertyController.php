@@ -164,13 +164,20 @@ class PropertyController extends Controller
     {
 
         $property = PersonalInfo::where('id', $request->id)->first();
-        return json_encode($request->all());
+
         if ($property) {
-            $property->status = $request->status;
-            $property->save();
-            return response()->json(['message' => 'Property status changed successfully.']);
+            if ($property->status == 1) {
+
+
+                $property->status = '0';
+                $property->save();
+            } else {
+                $property->status = '1';
+                $property->save();
+            }
+            return response()->json(['message' => 'Property status changed successfully.', 'status' => 200]);
         } else {
-            return response()->json(['message' => 'Property not found.']);
+            return response()->json(['message' => 'Property not found.', 'status' => 402]);
         }
     }
 
@@ -178,22 +185,59 @@ class PropertyController extends Controller
     {
         $property = PersonalInfo::where('id', $request->id)->first();
         if ($property) {
-            $property->hold = $request->hold;
-            $property->save();
-            return response()->json(['message' => 'Property Hold status changed successfully.']);
+            if ($property->hold == 1) {
+                $property->hold = '0';
+                $property->save();
+            } else {
+                $property->hold = '1';
+                $property->save();
+            }
+            return response()->json(['message' => 'Property Hold status changed successfully.', 'status' => 200]);
         } else {
-            return response()->json(['message' => 'Property  not found.']);
+            return response()->json(['message' => 'Property  not found.', 'status' => 402]);
         }
     }
 
 
     public function getPropertyData(Request $request)
     {
-        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $request->id)->get();
+        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $request->id)->first();
         if ($propertyInfo) {
             return response()->json(['propertyInfo' => $propertyInfo]);
         } else {
             return response()->json(['propertyInfo' => []]);
+        }
+    }
+
+
+
+
+    public function editPropertyData(Request $request)
+    {
+
+        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $request->property_id_edit)->first();
+        if ($propertyInfo) {
+            $propertyInfo->pInfo_fName = $request->property_name_edit;
+            $propertyInfo->pInfo_lName = $request->last_name_edit;
+            $propertyInfo->pInfo_email = $request->email_edit;
+            $propertyInfo->pInfo_phoneNumber = $request->contact_number_edit;
+            $propertyInfo->save();
+            return response()->json(['propertyInfo' => $propertyInfo, 'message' => "Property Detail Updated Successfully", 'status' => 200]);
+        } else {
+            return response()->json(['propertyInfo' => [], 'message' => "Property Detail Not Updated", 'status' => 402]);
+        }
+    }
+
+
+    public function deletePropertyData(Request $request)
+    {
+        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $request->del_id)->first();
+
+        if ($propertyInfo) {
+            $propertyInfo->delete();
+            return response()->json(['propertyInfo' => $propertyInfo, 'message' => "Property Detail Deleted Successfully", 'status' => 200]);
+        } else {
+            return response()->json(['propertyInfo' => [], 'message' => "Property Detail Not Deleted", 'status' => 402]);
         }
     }
 }

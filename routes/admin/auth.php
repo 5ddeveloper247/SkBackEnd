@@ -56,4 +56,6 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/property/status', [PropertyController::class, 'changePropertyStatus'])->name('admin.property.status');
     Route::post('/admin/property/status/pending', [PropertyController::class, 'changePendingPropertyStatus'])->name('admin.property.statu.pendings');
     Route::post('/admin/getpropertydata', [PropertyController::class, 'getPropertyData'])->name('admin.property.getData');
+    Route::post('/admin/property/editProperty', [PropertyController::class, 'editPropertyData'])->name('admin.property.edit');
+    Route::post('/admin/property/delete', [PropertyController::class, 'deletePropertyData'])->name('admin.property.delete');
 });
