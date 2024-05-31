@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('personal_info', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('property_record_id');
-            $table->enum('status', ['0', '1', '2'])->default(1)->comment("0 inactive 1 active 2 pending");
+            $table->enum('status', ['0', '1'])->default(1)->comment("0 inactive 1 active");
             $table->enum('hold', ['0', '1', '2'])->default(1)->comment("0 cancelled 1 completed 2 pending");
+            $table->unsignedBigInteger('price')->nullable();
+            $table->string('currency')->nullable();
             $table->string('pInfo_fName')->nullable();
             $table->string('pInfo_lName')->nullable();
             $table->string('pInfo_email')->nullable();

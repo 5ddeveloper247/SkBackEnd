@@ -30,6 +30,8 @@ class PersonalInfo extends Model
         "pInfo_lName",
         "pInfo_email",
         "pInfo_phoneNumber",
+        "price",
+        "currency",
     ];
 
 

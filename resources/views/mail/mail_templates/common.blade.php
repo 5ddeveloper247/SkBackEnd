@@ -47,7 +47,7 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
-                            &nbsp;{{now()}}</span></p>
+                            &nbsp;</span></p>
                 </td>
             </tr>
             <tr style="min-height: 22.5pt;">
@@ -87,7 +87,7 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
-                            &nbsp;{{ Auth::user()->name }}</span></p>
+                            &nbsp;</span></p>
                 </td>
             </tr>
             <tr style="min-height: 22.5pt;">

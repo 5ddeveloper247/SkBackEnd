@@ -34,7 +34,7 @@
         },
         "files": [
             "app/helpers/helpers.php",
-            "app/Helpers/Mail.php"
+            "app/helpers/Mail.php"
         ]
     },
     "autoload-dev": {
