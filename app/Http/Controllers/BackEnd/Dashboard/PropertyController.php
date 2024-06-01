@@ -150,7 +150,6 @@ class PropertyController extends Controller
         } catch (\Exception $e) {
             // Rollback the transaction
             DB::rollBack();
-
             // Log the error (optional)
             Log::error('Error saving property submission: ' . $e->getMessage());
 
