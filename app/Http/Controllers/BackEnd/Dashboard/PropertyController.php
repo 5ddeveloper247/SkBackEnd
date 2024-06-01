@@ -56,6 +56,7 @@ class PropertyController extends Controller
                 "pInfo_phoneNumber" => $request->pInfo_phoneNumber,
             ]);
 
+            // dd($personalInfoRecord);
             // Saving property listing page record
             $propertyListingPageRecord = PropertyListingPape::create([
                 "property_record_id" => $personalInfoRecord->property_record_id,

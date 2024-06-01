@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PersonalInfo extends Model
 {
     protected $table = 'personal_info';
-    protected $primaryKey = 'property_record_id';
 
     public function propertyListingPape()
     {
