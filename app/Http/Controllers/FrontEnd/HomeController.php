@@ -101,7 +101,132 @@ class HomeController extends Controller
         }
     }
 
-    public function getPropertyDetailbyId(Request $request){
+
+
+    // public function mediaIndexgetByFilters(Request $request)
+    // {
+
+    //     $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
+    //     if ($propertyInfo) {
+    //         return response()->json(['propertyInfo' => $request->all()]);
+    //         // return response()->json(['propertyInfo' => $propertyInfo]);
+    //     } else {
+    //         return response()->json(['propertyInfo' => []]);
+    //         // return response()->json(['propertyInfo' => []]);
+    //     }
+    // }
+
+
+
+    public function mediaIndexgetByFilters(Request $request)
+    {
+        try {
+
+
+
+            // Retrieve all filter data from the request
+            $filterData = $request->all();
+
+            // Start building the query
+            $query = PersonalInfo::query();
+
+            // Apply filters if they are provided
+            $query->where(function ($query) use ($filterData) {
+                // Filters on PersonalInfo attributes
+                // Filters on PropertyListingPape attributes
+                if (isset($filterData['purpose'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%');
+                    });
+                }
+
+                if (isset($filterData['area'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('address_area', 'LIKE', '%' . $filterData['area'] . '%');
+                    });
+                }
+                if (isset($filterData['city'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('address_city', 'LIKE', '%' . $filterData['city'] . '%');
+                    });
+                }
+                if (isset($filterData['commercial'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('purpose_commercial', 'LIKE', '%' . $filterData['commercial'] . '%');
+                    });
+                }
+                if (isset($filterData['homeType'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('pupose_home', 'LIKE', '%' . $filterData['homeType'] . '%');
+                    });
+                }
+                if (isset($filterData['plot'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('purpose_plot', 'LIKE', '%' . $filterData['plot'] . '%');
+                    });
+                }
+                if (isset($filterData['sector'])) {
+                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('address_sector', 'LIKE', '%' . $filterData['sector'] . '%');
+                    });
+                }
+                
+                if (isset($filterData['minPrice']) && isset($filterData['maxPrice'])) {
+                    $query->orWhere(function ($q) use ($filterData) {
+                        $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']]);
+                    });
+                }
+                
+
+
+
+                // Uncomment and adapt the following sections if needed
+
+                // Filters on Amenities attributes
+                // if (isset($filterData['amenity_attribute'])) {
+                //     $query->orWhereHas('amenities', function ($q) use ($filterData) {
+                //         $q->where('attribute_name', 'LIKE', '%' . $filterData['amenity_attribute'] . '%');
+                //     });
+                // }
+
+                // Filters on PropertyRecordFiles attributes
+                // if (isset($filterData['file_attribute'])) {
+                //     $query->orWhereHas('propertyRecordFiles', function ($q) use ($filterData) {
+                //         $q->where('attribute_name', 'LIKE', '%' . $filterData['file_attribute'] . '%');
+                //     });
+                // }
+            });
+
+            // Eager load relationships
+            $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+
+            // Execute the query and return the results  
+            $propertyInfo = $query->get();
+
+            return response()->json(['propertyInfo' => $propertyInfo]);
+        } catch (\Exception $e) {
+            Log::error('Error creating property records: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function getPropertyDetailbyId(Request $request)
+    {
         $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $request->id)->first();
         if ($propertyInfo) {
             return response()->json(['propertyInfo' => $propertyInfo]);

@@ -18,4 +18,6 @@ class MediaController extends Controller
             return response()->json(['media'=>[],'status'=>500]);
         }
     }
+
+   
 }

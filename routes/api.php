@@ -27,6 +27,8 @@ Route::prefix('frontend')->group(function () {
     //property
     Route::post('/home/register/property', [HomeController::class, 'index'])->name('api.frontend.home.register.property');
     Route::get('/home/property/get', [HomeController::class, 'propertyHomeView'])->name('api.frontend.home.property.homeView');
+    Route::post('/home/property/getByFilters', [HomeController::class, 'mediaIndexgetByFilters'])->name('api.frontend.media.getByFilters');
+
     Route::get('/home/property/getbyid/{id}', [HomeController::class, 'getPropertyDetailbyId'])->name('api.frontend.home.property.getbyid');
 
 
