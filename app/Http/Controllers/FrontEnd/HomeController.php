@@ -15,6 +15,8 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+
+         //return json_encode($request->all());
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
@@ -23,8 +25,10 @@ class HomeController extends Controller
             'phone' => 'required|max:15',
             'totalPrice' => 'required|numeric',
             'purpose' => 'required|string|max:255',
-            'propertyType' => 'required|string|max:255',
+            'homeType' => 'required|string|max:255',
             'city' => 'required|string|max:255',
+            'commercial' => 'required|string|max:255',
+            'plot' => 'required|string|max:255',
             'size' => 'required|max:255',
         ]);
 
@@ -46,6 +50,8 @@ class HomeController extends Controller
                 "status" => '0',
                 'hold' => '2',
                 'price' => $request->totalPrice,
+               
+
             ]);
             if ($personalInfoRecord) {
                 $Property_record_id = $personalInfoRecord->property_record_id;
@@ -57,9 +63,9 @@ class HomeController extends Controller
             $propertyListingPaPe = PropertyListingPaPe::create([
                 "property_record_id" => $Property_record_id,
                 "purpose_purpose" => $request->purpose,
-                "pupose_home" => $request->propertyType,
-                "purpose_plot" => $request->propertyType,
-                "purpose_commercial" => $request->propertyType,
+                "pupose_home" => $request->homeType,
+                "purpose_plot" => $request->plot,
+                "purpose_commercial" => $request->commercial,
                 "address_city" => $request->city,
                 "address_area" => $request->size,
             ]);
@@ -103,6 +109,47 @@ class HomeController extends Controller
 
 
 
+    public function propertyHomeViewbyMediaType(Request $request)
+    {
+        try {
+            $propertyType = $request->input('mediaSliderType');
+            $query = PersonalInfo::query();
+
+            if (isset($propertyType) && $propertyType !== 'All') {
+                $query->whereHas('propertyListingPape', function ($q) use ($propertyType) {
+                    $q->where('purpose_purpose', 'LIKE', '%' . $propertyType . '%');
+                });
+            } else {
+                // Fetch the latest 7 records
+                $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles'])
+                    ->orderBy('created_at', 'desc')
+                    ->limit(7);
+            }
+
+            // Eager load relationships
+            $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+
+            // Execute the query and return the results  
+            $propertyInfo = $query->get();
+
+            if ($propertyInfo->isEmpty()) {
+                return response()->json(['propertyInfo' => []]);
+            }
+
+            return response()->json(['propertyInfo' => $propertyInfo]);
+        } catch (\Exception $e) {
+            // Log the exception for debugging purposes
+            Log::error('Error fetching property info: ' . $e->getMessage());
+
+            // Return a JSON response with an error message
+            return response()->json(['error' => 'Failed to fetch property data. Please try again later.'], 500);
+        }
+    }
+
+
+
+
+
     // public function mediaIndexgetByFilters(Request $request)
     // {
 
@@ -121,9 +168,6 @@ class HomeController extends Controller
     public function mediaIndexgetByFilters(Request $request)
     {
         try {
-
-
-
             // Retrieve all filter data from the request
             $filterData = $request->all();
 
@@ -132,69 +176,46 @@ class HomeController extends Controller
 
             // Apply filters if they are provided
             $query->where(function ($query) use ($filterData) {
-                // Filters on PersonalInfo attributes
                 // Filters on PropertyListingPape attributes
                 if (isset($filterData['purpose'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%');
                     });
                 }
-
                 if (isset($filterData['area'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('address_area', 'LIKE', '%' . $filterData['area'] . '%');
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('address_area', $filterData['area']);
                     });
                 }
                 if (isset($filterData['city'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('address_city', 'LIKE', '%' . $filterData['city'] . '%');
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('address_city', $filterData['city']);
                     });
                 }
                 if (isset($filterData['commercial'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('purpose_commercial', 'LIKE', '%' . $filterData['commercial'] . '%');
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('purpose_commercial', $filterData['commercial']);
                     });
                 }
                 if (isset($filterData['homeType'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('pupose_home', 'LIKE', '%' . $filterData['homeType'] . '%');
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('pupose_home', $filterData['homeType']);
                     });
                 }
                 if (isset($filterData['plot'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('purpose_plot', 'LIKE', '%' . $filterData['plot'] . '%');
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('purpose_plot', $filterData['plot']);
                     });
                 }
                 if (isset($filterData['sector'])) {
-                    $query->orWhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('address_sector', 'LIKE', '%' . $filterData['sector'] . '%');
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('address_sector', $filterData['sector']);
                     });
                 }
-                
                 if (isset($filterData['minPrice']) && isset($filterData['maxPrice'])) {
-                    $query->orWhere(function ($q) use ($filterData) {
-                        $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']]);
-                    });
+                    $query->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']]);
                 }
-                
-
-
-
-                // Uncomment and adapt the following sections if needed
-
-                // Filters on Amenities attributes
-                // if (isset($filterData['amenity_attribute'])) {
-                //     $query->orWhereHas('amenities', function ($q) use ($filterData) {
-                //         $q->where('attribute_name', 'LIKE', '%' . $filterData['amenity_attribute'] . '%');
-                //     });
-                // }
-
-                // Filters on PropertyRecordFiles attributes
-                // if (isset($filterData['file_attribute'])) {
-                //     $query->orWhereHas('propertyRecordFiles', function ($q) use ($filterData) {
-                //         $q->where('attribute_name', 'LIKE', '%' . $filterData['file_attribute'] . '%');
-                //     });
-                // }
+                // Add more filter conditions for other attributes if needed
             });
 
             // Eager load relationships
@@ -205,20 +226,13 @@ class HomeController extends Controller
 
             return response()->json(['propertyInfo' => $propertyInfo]);
         } catch (\Exception $e) {
-            Log::error('Error creating property records: ' . $e->getMessage());
+            Log::error('Error fetching property records: ' . $e->getMessage());
             return response()->json([
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => 'Failed to fetch property data.',
             ], 500);
         }
     }
-
-
-
-
-
-
-
 
 
 

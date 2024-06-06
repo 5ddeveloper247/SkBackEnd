@@ -1,3 +1,4 @@
+{{--
 <!DOCTYPE html>
 <html>
 
@@ -109,4 +110,89 @@
     </div>
 </body>
 
-</html>
+</html> --}}
+
+
+
+
+
+@extends('Backend.admin.auth.common-auth')
+@push('styles')
+
+@endpush
+
+@section('content')
+<section id="logon">
+    <div class="side" style="background-image: url({{ asset('/images/cx_mires2-hpbanner_1122x850.jpg')}})">
+        <div class="content text-center">
+            {{-- <div class="logo">
+                <a href="index.php"
+                    style="background-image: url({{ asset('/images/logo-light.png')}}),  url('{{ asset('/images/logo.png') }})"></a>
+            </div> --}}
+            <h1>Please Login to continue</h1>
+            <p>A platform with efficient integration of many features and so much more</p>
+        </div>
+    </div>
+    <div class="contain">
+        <div class="flex_row">
+            <div class="col">
+                <div class="in_col">
+                    <form action="{{ route('admin.login.view') }} " method="POST">
+                        @csrf
+                        <div class="log_blk">
+                            <div class="txt text-center">
+                                <h2>Login</h2>
+                                {{-- <p>Don’t have an account? <a href="register.php">Register</a></p> --}}
+                            </div>
+                            {{-- <div class="social_btn">
+                                <button type="button" class="site_btn gm_btn"><img
+                                        src="{{ asset('/images/google-icon.svg')}}" alt=""> Login with
+                                    google</button>
+                                <button type="button" class="site_btn fb_btn"><img
+                                        src="{{ asset('/images/facebook-icon.svg')}}" alt=""> Login with
+                                    facebook</button>
+                            </div> --}}
+                            <div class="or">Or</div>
+                            <div class="form_row row">
+                                <div class="col-xs-12">
+                                    <h6>Email Address<sup>*</sup></h6>
+                                    <div class="form_blk">
+                                        <input type="email" name="email" value="{{ old('email') }}" required id="email" class="text_box"
+                                            placeholder="eg: sample@gmail.com">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <h6>Password<sup>*</sup></h6>
+                                    <div class="form_blk pass_blk">
+                                        <input  type="password" name="password" required id="password" class="text_box"
+                                            placeholder="eg: PassLogin%7" autocomplete="new-password">
+                                        <i class="icon-eye" id="eye"></i>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="form_blk">
+                                        <div class="lbl_btn">
+                                            <input type="checkbox" name="remember" id="remember">
+                                            <label for="remember">Remember me</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn_blk form_btn">
+                                <button type="submit" class="site_btn block">Login</button>
+                            </div>
+                            {{-- <div class="forgot text-center">
+                                <a href="forgot-password.php" id="pass">Forgot Password?</a>
+                            </div> --}}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endsection
+
+@push('scripts')
+
+@endpush
