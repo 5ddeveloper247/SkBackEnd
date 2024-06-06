@@ -46,6 +46,12 @@ $page="dashboard";
                     <em>Property Listing</em>
                 </a>
             </li>
+            <li class="active">
+                <a href="{{ url('admin/inquiry/view') }}">
+                    <img src="{{ asset('/images/icon-heart-alt.svg') }}" alt="">
+                    <em>Inquiry Catalogue</em>
+                </a>
+            </li>
             <li class="">
                 <a href="{{ url('trader/upload-vehicles.php') }}">
                     <img src="{{ asset('/images/icon-upload.svg') }}" alt="">

@@ -42,4 +42,4 @@ Route::prefix('frontend')->group(function () {
     Route::post('/contact/store', [ContactUsController::class, 'StoreContact'])->name('api.frontend.contact.store');
     //inquiry
     Route::post('/inquiry/store', [InquiryController::class, 'StoreInquiry'])->name('api.frontend.inquiry.store');
-});
+}); 

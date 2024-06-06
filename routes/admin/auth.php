@@ -7,6 +7,7 @@ use App\Http\Controllers\BackEnd\Dashboard\DashboarController;
 use App\Http\Controllers\BackEnd\Dashboard\AdminController;
 use App\Http\Controllers\BackEnd\Dashboard\MediaController;
 use App\Http\Controllers\BackEnd\Dashboard\PropertyController;
+use App\Http\Controllers\BackEnd\Dashboard\InquiryController;
 
 //redirect if authenticated  
 Route::middleware(['admin.redirect'])->group(function () {
@@ -58,4 +59,10 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/admin/getpropertydata', [PropertyController::class, 'getPropertyData'])->name('admin.property.getData');
     Route::post('/admin/property/editProperty', [PropertyController::class, 'editPropertyData'])->name('admin.property.edit');
     Route::post('/admin/property/delete', [PropertyController::class, 'deletePropertyData'])->name('admin.property.delete');
+
+
+
+    //admin inquiry
+    Route::get('admin/inquiry/view', [InquiryController::class, 'viewInquiries'])->name('api.frontend.inquiry.view');
+
 });

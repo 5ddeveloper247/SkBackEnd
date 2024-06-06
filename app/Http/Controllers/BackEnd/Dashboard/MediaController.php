@@ -62,15 +62,15 @@ class MediaController extends Controller
             'mediaOnlyDescription' => 'required|string',
             'mediaOnlyfile' => 'required|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,wmv|max:20480', // Adjust mime types and max size as needed
         ];
-    
+
         // Create a validator instance
         $validator = Validator::make($request->all(), $rules);
-    
+
         // Check if the validation fails
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-    
+
         try {
             $filePath = null;
             if ($request->hasFile('mediaOnlyfile')) {
@@ -79,18 +79,17 @@ class MediaController extends Controller
                 $file->move(public_path('uploads'), $fileName);
                 $filePath = 'uploads/' . $fileName; // Ensure file path is relative to the public directory
             }
-    
+
             // Assuming you have a MediaOnly model
             $media = new MediaOnly();
             $media->title = $request->mediaOnlyTitle;
             $media->description = $request->mediaOnlyDescription;
             $media->url = $filePath;
             $media->save();
-    
+
             return response()->json(['message' => 'Media added successfully', 'filePath' => $filePath], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to add media', 'error' => $e->getMessage()], 500);
         }
     }
-    
 }

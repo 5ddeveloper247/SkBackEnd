@@ -8,6 +8,7 @@ use App\Models\PersonalInfo;
 use App\Models\PropertyListingPaPe;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -15,8 +16,6 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-
-         //return json_encode($request->all());
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'firstName' => 'required|string|max:255',
@@ -40,6 +39,9 @@ class HomeController extends Controller
         }
 
         try {
+            // Start the transaction
+            DB::beginTransaction();
+
             // Create PersonalInfo record
             $personalInfoRecord = PersonalInfo::create([
                 "property_record_id" => mt_rand(100000, 999999),
@@ -50,9 +52,8 @@ class HomeController extends Controller
                 "status" => '0',
                 'hold' => '2',
                 'price' => $request->totalPrice,
-               
-
             ]);
+
             if ($personalInfoRecord) {
                 $Property_record_id = $personalInfoRecord->property_record_id;
             } else {
@@ -71,11 +72,21 @@ class HomeController extends Controller
             ]);
 
             // Send email
-            // $body = view('mail.mail_templates.common')->render();
-            // $userEmailsSend[] = 'devofd172@gmail.com';
-            // $userEmailsSend[] = $request->email;
-            // // to username, to email, from username, subject, body html 
-            // $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For submitting property detail', $body);
+            try {
+                // Send email
+                $body = view('mail.mail_templates.common')->render();
+                $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
+                $userEmailsSend[] = $request->email;
+                // to username, to email, from username, subject, body html 
+                $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For submitting property detail', $body);
+            } catch (\Exception $e) {
+                // Log the error if email sending fails
+                Log::error('Error sending email on property listing from user side: ' . $e->getMessage());
+            }
+
+
+            // Commit the transaction
+            DB::commit();
 
             // Return success response
             return response()->json([
@@ -83,8 +94,11 @@ class HomeController extends Controller
                 'personalInfoRecord' => $personalInfoRecord
             ], 201);
         } catch (\Exception $e) {
+            // Rollback the transaction
+            DB::rollBack();
+
             // Log the error
-            Log::error('Error creating property records: ' . $e->getMessage());
+            Log::error('Error creating property records  abc: ' . $e->getMessage());
 
             // Return error response
             return response()->json([
@@ -93,6 +107,7 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
 
 
 
@@ -140,7 +155,6 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             // Log the exception for debugging purposes
             Log::error('Error fetching property info: ' . $e->getMessage());
-
             // Return a JSON response with an error message
             return response()->json(['error' => 'Failed to fetch property data. Please try again later.'], 500);
         }
@@ -178,36 +192,43 @@ class HomeController extends Controller
             $query->where(function ($query) use ($filterData) {
                 // Filters on PropertyListingPape attributes
                 if (isset($filterData['purpose'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%');
-                    });
+                    if ($filterData['purpose'] == 'All') {
+                        $query->whereHas('propertyListingPape', function ($q) {
+                            $q->whereIn('purpose_purpose', ['Rent', 'Sale']);
+                        });
+                    } else {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%');
+                        });
+                    }
                 }
-                if (isset($filterData['area'])) {
+
+                if (isset($filterData['area']) && !empty($filterData['area'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->whereIn('address_area', $filterData['area']);
                     });
                 }
-                if (isset($filterData['city'])) {
+                if (isset($filterData['city']) && !empty($filterData['city'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->whereIn('address_city', $filterData['city']);
                     });
                 }
-                if (isset($filterData['commercial'])) {
+                if (isset($filterData['commercial']) && !empty($filterData['commercial'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->whereIn('purpose_commercial', $filterData['commercial']);
                     });
                 }
-                if (isset($filterData['homeType'])) {
+                if (isset($filterData['homeType']) && !empty($filterData['homeType'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->whereIn('pupose_home', $filterData['homeType']);
                     });
                 }
-                if (isset($filterData['plot'])) {
+                if (isset($filterData['plot']) && !empty($filterData['plot'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->whereIn('purpose_plot', $filterData['plot']);
                     });
                 }
-                if (isset($filterData['sector'])) {
+                if (isset($filterData['sector']) && !empty($filterData['sector'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->whereIn('address_sector', $filterData['sector']);
                     });
@@ -215,13 +236,12 @@ class HomeController extends Controller
                 if (isset($filterData['minPrice']) && isset($filterData['maxPrice'])) {
                     $query->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']]);
                 }
-                // Add more filter conditions for other attributes if needed
             });
 
             // Eager load relationships
             $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
 
-            // Execute the query and return the results  
+            // Execute the query and return the results
             $propertyInfo = $query->get();
 
             return response()->json(['propertyInfo' => $propertyInfo]);
