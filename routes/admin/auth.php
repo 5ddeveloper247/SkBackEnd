@@ -5,6 +5,7 @@ use App\Http\Controllers\BackEnd\Auth\RegisterController;
 use App\Http\Controllers\BackEnd\Auth\LoginController;
 use App\Http\Controllers\BackEnd\Dashboard\DashboarController;
 use App\Http\Controllers\BackEnd\Dashboard\AdminController;
+use App\Http\Controllers\BackEnd\Dashboard\ContactUsController;
 use App\Http\Controllers\BackEnd\Dashboard\MediaController;
 use App\Http\Controllers\BackEnd\Dashboard\PropertyController;
 use App\Http\Controllers\BackEnd\Dashboard\InquiryController;
@@ -63,6 +64,15 @@ Route::middleware(['admin'])->group(function () {
 
 
     //admin inquiry
-    Route::get('admin/inquiry/view', [InquiryController::class, 'viewInquiries'])->name('api.frontend.inquiry.view');
+    Route::get('admin/inquiry/view', [InquiryController::class, 'viewInquiries'])->name('admin.inquiry.view');
+    Route::post('admin/inquiry/update', [InquiryController::class, 'updateInquiries'])->name('admin.inquiry.update');
+    Route::post('admin/inquiry/delete', [InquiryController::class, 'deleteInquiries'])->name('admin.inquiry.delete');
+    Route::get('/admin/inquiry/view/ajax', [InquiryController::class, 'viewInquiriesAjax'])->name('admin.inquiry.view.ajax');
 
+
+    //admin/contactus
+    Route::get('admin/contact/view', [ContactUsController::class, 'viewContact'])->name('admin.contact.view');
+    Route::post('admin/contact/update', [ContactUsController::class, 'updateContact'])->name('admin.contact.update');
+    Route::post('admin/contact/delete', [ContactUsController::class, 'deleteContact'])->name('admin.contact.delete');
+    Route::get('/admin/contact/view/ajax', [ContactUsController::class, 'viewContactAjax'])->name('admin.contact.view.ajax');
 });

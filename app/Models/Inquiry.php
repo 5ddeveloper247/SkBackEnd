@@ -15,6 +15,8 @@ class Inquiry extends Model
         'description',
         'agent',
         'informed_me',
+        'status',
+        'reply',
     ];
     protected $casts = [
         'agent' => 'array',

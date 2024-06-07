@@ -71,9 +71,11 @@ function loadManagerListResponse(response) {
 
 
     });
-
-
 }
+
+
+
+
 
 $('#add_manager_form').submit(function (e) {
     e.preventDefault();
@@ -263,7 +265,6 @@ $(document).on('click', '.edit_btn', function () {
 
 
 });
-
 
 function getpropertydataResponse(response) {
     console.log(response.propertyInfo)

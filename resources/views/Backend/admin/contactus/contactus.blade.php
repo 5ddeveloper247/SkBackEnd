@@ -25,7 +25,7 @@
 <section id="deliveries">
     <div class="contain-fluid">
         <ul class="crumbs">
-            <li><a href="{{ url('admin/inquiry/view')}}">Dashboard</a></li>
+            <li><a href="{{ url('admin/contact/view')}}">Dashboard</a></li>
             <li>Inquiries</li>
         </ul>
 
@@ -71,46 +71,52 @@
                             <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
                             <div id="Inspection" class="tab-pane fade active in">
 
-                                <form method="POST" id="edit_inquiry_form" action="{{ route('admin.inquiry.update') }}">
+                                <form method="POST" id="edit_contact_form" action="{{ route('admin.contact.update') }}">
                                     <input type="hidden" name="property_id_edit" id="property_id_edit">
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
-                                            <h5 class="color">Reply inquiry</h5>
+                                            <h5 class="color">Reply Contact</h5>
                                             <div class="form_row row">
                                                 <input type="hidden" name="edit_id" id="edit_id">
 
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Email<sup>*</sup></h6>
-                                                        <input type="email" name="inquiry_email_edit"
-                                                            id="inquiry_email_edit" class="text_box" maxlength="15">
+                                                        <h6>Name<sup>*</sup></h6>
+                                                        <input type="text" name="contact_name_edit"
+                                                            id="contact_name_edit" class="text_box" maxlength="15">
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Contact Number</h6>
-                                                        <input type="number" name="inquiry_contact_number_edit"
-                                                            id="inquiry_contact_number_edit" class="text_box"
-                                                            placeholder="" maxlength="15">
+                                                        <h6>Email<sup>*</sup></h6>
+                                                        <input type="email" name="contact_email_edit"
+                                                            id="contact_email_edit" class="text_box" maxlength="15">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
+                                                        <h6>Subject</h6>
+                                                        <textarea name="contact_subject_edit" id="contact_subject_edit"
+                                                            class="text_box" placeholder=""></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12">
+                                                    <div class="form_blk">
                                                         <h6>Description</h6>
-                                                        <textarea name="inquiry_description_edit"
-                                                            id="inquiry_description_edit" class="text_box"
+                                                        <textarea name="contact_description_edit"
+                                                            id="contact_description_edit" class="text_box"
                                                             placeholder=""></textarea>
                                                     </div>
                                                 </div>
 
+
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
                                                         <h6>Reply</h6>
-                                                        <textarea required name="inquiry_reply_edit"
-                                                            id="inquiry_reply_edit" class="text_box"
+                                                        <textarea required name="contact_reply_edit"
+                                                            id="contact_reply_edit" class="text_box"
                                                             placeholder=""></textarea>
                                                     </div>
                                                 </div>
@@ -119,8 +125,8 @@
 
                                             <div class="btn_blk form_btn text-center">
 
-                                                <button type="submit" class="site_btn long edit_inquiry_btn"
-                                                    id="edit_inquiry_btn">Update</button>
+                                                <button type="submit" class="site_btn long edit_contact_btn"
+                                                    id="edit_contact_btn">Update</button>
 
                                             </div>
                                         </div>
@@ -150,7 +156,7 @@
                                     data-id=""><img src="{{asset('assets\images\check_1828640.png')}}"
                                         style="width:30px"></button>
                                 <button type="button" class="btn bg-transparent rounded-pill"
-                                    id="inquiry_close_delete_modal_btn"><img
+                                    id="contact_close_delete_modal_btn"><img
                                         src="{{asset('assets\images\close-button_11450177.png')}}"
                                         style="width:30px"></button>
 
@@ -187,12 +193,14 @@
                                 <thead>
                                     <tr>
                                         <th width="10">#</th>
+                                        <th>Name</th>
                                         <th>Email</th>
+                                        <th>Subject</th>
                                         <th>Description</th>
                                         <th>Created Date</th>
                                     </tr>
                                 </thead>
-                                <tbody id="inquiry_table_body">
+                                <tbody id="contact_table_body">
 
 
                                 </tbody>
@@ -221,15 +229,15 @@
 @push('scripts')
 <script>
     function loadpropertyList() {
-    let url = '/admin/inquiry/view/ajax';
+    let url = '/admin/contact/view/ajax';
     let type = 'GET';
     SendAjaxRequestToServer(type, url, '', '', loadManagerListResponse, '', '');
 }
 
 function loadManagerListResponse(response) {
 
-    var inquiryListingTable = $('#inquiry_table_body');
-    inquiryListingTable.empty();
+    var contactListingTable = $('#contact_table_body');
+    contactListingTable.empty();
     console.log(response.data); 
     var inquiries = response.data;
        // var inactive_managers = response.managers_list.inactive_managers;
@@ -238,83 +246,66 @@ function loadManagerListResponse(response) {
      // $('#total_managers').text(totalManagers);
      // $('#inactive_managers').text(inactive_managers);
     // $('#active_managers').text(active_managers);
-    $.each(inquiries, function (index, inquiry) {
+    $.each(inquiries, function (index, contact) {
 
-        var inquiryRow = `<tr>
+        var contactRow = `<tr>
                                 <td class="nowrap">${index + 1}</td>
                               
-                                <td>${inquiry.email}</td>
-                                <td>${inquiry.description}</td>
-                                <td class="nowrap">${formatDate(inquiry.created_at)}</td>
+                                <td>${contact.full_name}</td>
+                                <td>${contact.email}</td>
+                                <td>${contact.subject}</td>
+                                <td>${contact.message}</td>
+                                <td class="nowrap">${formatDate(contact.created_at)}</td>
                                 <td class="nowrap" data-center>
                                      <div class="act_btn">
-                        <button type="button" class="edit pop_btn inquiry_edit_btn" title="Edit" data-popup="edit-data-popup" data-id="${inquiry.id}" data-inquiry='${JSON.stringify(inquiry)}'></button>
-                        <button type="button" class="del pop_btn inquiry_delete_btn" title="Delete" data-popup="delete-data-popup" data-id="${inquiry.id}" data-inquiry='${JSON.stringify(inquiry)}'></button>
+                        <button type="button" class="edit pop_btn contact_edit_btn" title="Edit" data-popup="edit-data-popup" data-id="${contact.id}" data-contact='${JSON.stringify(contact)}'></button>
+                        <button type="button" class="del pop_btn contact_delete_btn" title="Delete" data-popup="delete-data-popup" data-id="${contact.id}" data-contact='${JSON.stringify(contact)}'></button>
                     </div>
                                 </td>
                             </tr>`;
-            inquiryListingTable.append(inquiryRow); 
+            contactListingTable.append(contactRow); 
 
 
     });
 }
 
-$(document).on('click', '.inquiry_edit_btn', function () {
+$(document).on('click', '.contact_edit_btn', function () {
     var id = $(this).attr('data-id');
-    var inquiry = JSON.parse($(this).attr('data-inquiry'));
-
-    $('#edit_id').val(inquiry.id)
-    $('#inquiry_email_edit').val(inquiry.email)
-    $('#inquiry_contact_number_edit').val(inquiry.phone)
-    $('#inquiry_description_edit').val(inquiry.description)
-    // Add your edit logic here, e.g., populate a form with inquiry details for editing
+    var contact = JSON.parse($(this).attr('data-contact'));
+ console.log(contact)
+    $('#edit_id').val(contact.id)
+    $('#contact_name_edit').val(contact.full_name)
+    $('#contact_email_edit').val(contact.email)
+    $('#contact_subject_edit').val(contact.subject)
+    $('#contact_description_edit').val(contact.message)
+    // Add your edit logic here, e.g., populate a form with contact details for editing
 });  
 
-function getpropertydataResponse(response) {
-    console.log(response.propertyInfo)
-    if (response.propertyInfo) {
-        var property = response.propertyInfo;
-        console.log(property.id)
-        console.log("idddddddddd")
-
-        // $('#uiBlocker').hide();
-        $('#property_id_edit').val(property.id);
-        $('#property_name_edit').val(property.pInfo_fName);
-        $('#last_name_edit').val(property.pInfo_lName);
-        $('#contact_number_edit').val(property.pInfo_phoneNumber);
-        $('#email_edit').val(property.pInfo_email);
-        $('#edit-data-popup').show();
-
-
-    }
-}
-
-
 // _________________________________Delete functions_______________________________
-$(document).on('click', '.inquiry_delete_btn', function () {
+$(document).on('click', '.contact_delete_btn', function () {
     var del_id = $(this).attr('data-id');
     console.log(del_id);
     $('#delete_confirmed_btn').attr('data-id', del_id);
 });
 
-$('#inquiry_close_delete_modal_btn').click(function () {
+$('#contact_close_delete_modal_btn').click(function () {
     $('.clode_delete_modal_default_btn').click();
     $('#delete_confirmed_btn').attr('data-id', '');
 });
 
 $('#delete_confirmed_btn').click(function () {
     var del_id = $(this).attr('data-id');
-    let url = '/admin/inquiry/delete';
+    let url = '/admin/contact/delete';
     let type = 'POST';
     let data = new FormData();
     data.append('del_id', del_id);
-    SendAjaxRequestToServer(type, url, data, '', deletinquiryResponse, '', '');
+    SendAjaxRequestToServer(type, url, data, '', deletcontactResponse, '', '');
 
 });
 
 
-function deletinquiryResponse(response) {
-    $('#inquiry_close_delete_modal_btn').click(); // Close the modal in all cases
+function deletcontactResponse(response) {
+    $('#contact_close_delete_modal_btn').click(); // Close the modal in all cases
 
     if (response.status == 200) {
         toastr.success(response.message, '', { timeOut: 3000 });
@@ -601,7 +592,6 @@ $('.prev_btn').click(function() {
     });
 
     // Example of using jQuery Mask Plugin
-  
 });
 
   

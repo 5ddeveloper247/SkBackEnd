@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('frontend')->group(function () {
     //property
+    
     Route::post('/home/register/property', [HomeController::class, 'index'])->name('api.frontend.home.register.property');
     Route::get('/home/property/get', [HomeController::class, 'propertyHomeView'])->name('api.frontend.home.property.homeView');
     Route::post('/home/property/post', [HomeController::class, 'propertyHomeViewbyMediaType'])->name('api.frontend.home.property.homeView.mediaType');

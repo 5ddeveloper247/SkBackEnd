@@ -6,12 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 use App\Models\Contact;
-
+use App\Helpers\WhatsAppHelper;
 
 class ContactUsController extends Controller
 {
-    //
     public function StoreContact(Request $request)
     {
         // Validate the request data
@@ -44,11 +44,25 @@ class ContactUsController extends Controller
             $userEmailsSend[] = $request->email;
             // to username, to email, from username, subject, body html 
             $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Contacting', $body);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log the error if email sending fails
             Log::error('Error sending email on contact us from user side submission: ' . $e->getMessage());
         }
 
+        // Send WhatsApp message
+        $adminContact=env('ADMIN_WHATSAPP_NUMBER');
+        $phoneno = [923106835826,$adminContact];
+        $message = "Hello whatsapp";
+        $id = 123;
+
+
+        // Call the helper method
+        try {
+            WhatsAppHelper::sendMessages($phoneno, $message, $id);
+        } catch (Exception $e) {
+            // Log the error if sending WhatsApp message fails
+            Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
+        }
         // Return a 201 response with the created contact record
         return response()->json(['contact' => $contact], 201);
     }

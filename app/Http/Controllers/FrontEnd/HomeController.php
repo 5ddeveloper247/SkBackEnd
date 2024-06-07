@@ -9,6 +9,8 @@ use App\Models\PropertyListingPaPe;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\WhatsAppHelper;
+use Exception;
 
 class HomeController extends Controller
 {
@@ -77,9 +79,26 @@ class HomeController extends Controller
                 $body = view('mail.mail_templates.common')->render();
                 $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
                 $userEmailsSend[] = $request->email;
+
+
+
+                // Send WhatsApp message
+                $adminContact = env('ADMIN_WHATSAPP_NUMBER');
+                $phoneno = [$request->phone, $adminContact];
+                $message = $request->description;
+                $id = 123;
+
+
+                // Call the helper method
+                try {
+                    WhatsAppHelper::sendMessages($phoneno, $message, $id);
+                } catch (Exception $e) {
+                    // Log the error if sending WhatsApp message fails
+                    Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
+                }
                 // to username, to email, from username, subject, body html 
                 $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For submitting property detail', $body);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 // Log the error if email sending fails
                 Log::error('Error sending email on property listing from user side: ' . $e->getMessage());
             }
@@ -93,7 +112,7 @@ class HomeController extends Controller
                 'success' => true,
                 'personalInfoRecord' => $personalInfoRecord
             ], 201);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Rollback the transaction
             DB::rollBack();
 
