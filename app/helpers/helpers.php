@@ -32,4 +32,17 @@ if (!function_exists('sendMail')) {
             return $e->getMessage();
         }
     }
+
+
+    function convertYouTubeUrlToEmbed($url) {
+        // Parse the URL
+        $parsedUrl = parse_url($url);
+        if(isset($parsedUrl['query'])){
+            parse_str($parsedUrl['query'], $queryParams);
+            if (isset($queryParams['v'])) {
+                return 'https://www.youtube.com/embed/' . $queryParams['v'] . '?autoplay=1&mute=1';
+            }
+        }
+        return $url;
+    }
 }

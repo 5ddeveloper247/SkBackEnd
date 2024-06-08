@@ -32,7 +32,7 @@ class ContactUsController extends Controller
             'contact_reply_edit' => 'nullable|string|max:2550',
         ]);
 
-        return redirect()->back()->with('success', 'Inquiry edited successfully.');
+        // return redirect()->back()->with('success', 'contact reply sent successfully.');
         try {
             // Find the inquiry with the specified conditions
             $contact = Contact::where('id', $request->edit_id)
@@ -40,12 +40,11 @@ class ContactUsController extends Controller
 
             // If the inquiry exists, update its details
             if ($contact) {
-                $contact->reply = $request->inquiry_reply_edit ?? '';
-                $contact->status = 'completed';
+                $contact->contact_reply_edit = $request->contact_reply_edit ?? '';
                 $contact->save();
                 $site_user_phone_num = $contact->phone ?? " ";
                 try {
-                    // Send email
+                    //Send email
                     $body = view('mail.mail_templates.common')->render();
                     $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
                     $userEmailsSend[] = $request->email;
@@ -60,7 +59,7 @@ class ContactUsController extends Controller
                 // Send WhatsApp message
                 $adminContact = env('ADMIN_WHATSAPP_NUMBER');
                 $phoneno = [$site_user_phone_num, $adminContact];
-                $message = $request->description;
+                $message = $request->contact_reply_edit ?? "There is no content or empty found in reply from Sk Marketing on contact us query!";
                 $id = 123;
 
 
@@ -71,15 +70,15 @@ class ContactUsController extends Controller
                     // Log the error if sending WhatsApp message fails
                     Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
                 }
-                return redirect()->back()->with('success', 'Inquiry edited successfully.');
+                return redirect()->back()->with('success', 'contact reply sent successfully.');
             }
 
             // If the inquiry does not exist, return an error response
-            return redirect()->back()->with('error', 'Inquiry not found or already completed.');
+            return redirect()->back()->with('error', 'Contact detail not found.');
         } catch (Exception $e) {
             // Log the error and return an error response
-            Log::error('Error updating inquiry: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Failed to update the inquiry.');
+            Log::error('Error while sending reply to user on contact: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to send reply on contact.');
         }
     }
 
@@ -120,9 +119,7 @@ class ContactUsController extends Controller
     {
         try {
             // Fetch all inquiries
-            $inquiriesData = Contact::all();
-            // $inquiriesData = Contact::where('status', 'uploaded')->whereNull('reply')->get();
-            // Check if data is retrieved successfully 
+            $inquiriesData = Contact::whereNull('contact_reply_edit');
             if ($inquiriesData) {
                 return response()->json([
                     'success' => true,
@@ -131,7 +128,7 @@ class ContactUsController extends Controller
             } else {
                 return response()->json([
                     'success' => false,
-                    'message' => 'No inquiries found.'
+                    'message' => 'No data found for contacts.'
                 ], 404);
             }
         } catch (Exception $e) {
@@ -141,7 +138,7 @@ class ContactUsController extends Controller
             // Return error response
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to fetch inquiries.',
+                'message' => 'Failed to fetch contact us data.',
                 'error' => $e->getMessage()
             ], 500);
         }

@@ -18,6 +18,25 @@ function formatDate(dateString) {
     return `${day} ${month} ${year}`;
 }
 
+$('.property_search_box').on("keyup", function (e) {
+  
+    var tr = $('.property_data_row');
+    if ($(this).val().length >= 1) {//character limit in search box.
+        var noElem = true;
+        var val = $.trim(this.value).toLowerCase();
+        el = tr.filter(function () {
+            return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+        });
+        if (el.length >= 1) {
+            noElem = false;
+        }
+        tr.not(el).hide();
+        el.fadeIn().show();
+    } else {
+        tr.fadeIn().show();
+    }
+});
+
 
 function loadpropertyList() {
     let url = '/admin/property/loadpropertyList';
@@ -41,12 +60,12 @@ function loadManagerListResponse(response) {
     $.each(properties, function (index, property) {
 
         console.log(property)
-        var propertyRow = `<tr>
-                                <td class="nowrap">${index + 1}</td>
-                                <td>${property.pInfo_fName}</td>
-                                <td>${property.pInfo_email}</td>
-                                <td class="nowrap" >${property.pInfo_phoneNumber ? property.pInfo_phoneNumber : ''}</td>
-                                <td class="nowrap">${formatDate(property.created_at)}</td>
+        var propertyRow = `<tr class="property_data_row">
+                                <td class="nowrap ">${index + 1}</td>
+                                <td class="grid-p-searchby">${property.pInfo_fName}</td>
+                                <td class="grid-p-searchby">${property.pInfo_email}</td>
+                                <td class="nowrap grid-p-searchby" >${property.pInfo_phoneNumber ? property.pInfo_phoneNumber : ''}</td>
+                                <td class="nowrap grid-p-searchby">${formatDate(property.created_at)}</td>
                                 <td data-center>
                                     <div class="switch" >
                                         <input type="checkbox" onclick="changestatus(${property.id},${property.status})" name="status" id="statusProperty" ${property.status == '1' ? 'checked' : ''}>
@@ -255,6 +274,9 @@ function changePendingStatusResponse(response) {
 
 
 $(document).on('click', '.edit_btn', function () {
+
+
+
     var id = $(this).attr('data-id');
     console.log(id)
     let url = '/admin/getpropertydata';
@@ -275,10 +297,19 @@ function getpropertydataResponse(response) {
 
         // $('#uiBlocker').hide();
         $('#property_id_edit').val(property.id);
-        $('#property_name_edit').val(property.pInfo_fName);
-        $('#last_name_edit').val(property.pInfo_lName);
-        $('#contact_number_edit').val(property.pInfo_phoneNumber);
-        $('#email_edit').val(property.pInfo_email);
+        $('#pInfo_firstName_edit').val(property.pInfo_fName);
+        $('#pInfo_lastName_edit').val(property.pInfo_lName);
+        $('#pInfo_email_edit').val(property.pInfo_email);
+        $('#pInfo_phoneNumber_edit').val(property.pInfo_phoneNumber);
+
+        ///
+        // $('#purpose_purpose_edit').val(property?.proerty_listing_pape?.purpose_purpose)
+        // $('#pupose_home_edit').val(property?.proerty_listing_pape?.pupose_home)
+        // $('#purpose_plot_edit').val(property?.proerty_listing_pape?.purpose_plot)
+        // $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial)
+
+
+
         $('#edit-data-popup').show();
 
 

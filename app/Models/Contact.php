@@ -14,5 +14,6 @@ class Contact extends Model
         'company_name',
         'subject',
         'message',
+        'contact_reply_edit',
     ];
 }

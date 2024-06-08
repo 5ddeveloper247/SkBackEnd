@@ -21,7 +21,7 @@ Route::middleware(['admin.redirect'])->group(function () {
 //check role admin before access
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
-    Route::get('admin/admin/list', [AdminController::class, 'adminList'])->name('admin.list');
+    Route::get('/admin/admin/list', [AdminController::class, 'adminList'])->name('admin.list');
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
     Route::get('/admin/dashboard', [DashboarController::class, 'Dashboard'])->name('admin.dashboard');
@@ -39,13 +39,15 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/users/guest', [AdminController::class, 'viewUsers'])->name('admin.user.admins');
     Route::get('admin/users/user/destroy/{id}', [AdminController::class, 'destroyUsers'])->name('admin.user.guest.destroy');
     Route::post('admin/users/admin/update/{id}', [AdminController::class, 'updateAdmin'])->name('admin.user.update');
-
+    Route::get('/admin/users',[AdminController::class,'adminList'])->name('admin.admin.list');
 
 
     // Admin Media Routes here
     Route::post('/admin/dashboard/media/url', [MediaController::class, 'createMedia'])->name('admin.dashboard.create.media.url');
     Route::get('admin/media/list', [MediaController::class, 'mediaList'])->name('admin.media.list');
     Route::get('/admin/media/view', [MediaController::class, 'viewMedia'])->name('admin.media.view');
+    Route::get('/admin/media/delete/mediaonly/{id}', [MediaController::class, 'mediaonlyDelete'])->name('admin.media.mediaonly.delete');
+    Route::get('/admin/media/delete/mediaurl/{id}', [MediaController::class, 'mediaurlDelete'])->name('admin.media.mediaurl.delete');
     Route::get('admin/media/media/destroy/{id}', [MediaController::class, 'destroyMedia'])->name('admin.media.guest.destroy');
     Route::post('/admin/dashboard/media/upload', [MediaController::class, 'uploadMedia'])->name('admin.dashboard.media.upload');
 

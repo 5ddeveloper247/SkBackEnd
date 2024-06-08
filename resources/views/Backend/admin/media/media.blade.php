@@ -125,7 +125,7 @@ vertical-align: middle;
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form_blk">
-                                                <h6>Media url</h6>
+                                                <h6>Video Media</h6>
                                                 <input type="text" name="mediaUrl" id="mediaUrl" class="text_box">
                                             </div>
                                         </div>
@@ -242,9 +242,9 @@ vertical-align: middle;
             <li>Media</li>
         </ul>
         <ul class="tab_list">
-            <li class="active"><a href="#All" data-toggle="tab">All Media</a></li>
+            <li class="active"><a href="#All" data-toggle="tab">Video Media</a></li>
             {{-- <li><a href="#AddMediaUrl" data-toggle="tab">Add Media Url</a></li> --}}
-            <li><a href="#AddMedia" data-toggle="tab">Add Media</a></li>
+            <li><a href="#AddMedia" data-toggle="tab">Image Media</a></li>
             {{-- <li><a href="#Tracking" data-toggle="tab">Delivery Tracking</a></li> --}}
         </ul>
 
@@ -277,126 +277,33 @@ vertical-align: middle;
 
                                 </div>
                                 <div class="main_row flex_row">
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('images/cars/01.jpg')}}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
-                                                    </ul>
-                                                </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
-                                            </div>
-                                            <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">Acura Rsx</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('images/cars/02.jpg')}}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
-                                                    </ul>
-                                                </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
-                                            </div>
-                                            <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">Lexus GS 450h</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
+                                    @foreach ($mediaUrl as $index=>$mediaRecord )
 
                                     <div class="col">
                                         <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('storage/' . $mediaOnlyRecord->url) }}" alt="">
-                                                <div class="overlay">
+                                            <div class="image" style="padding: 0px !important">
+                                                @if(isset($mediaRecord->url) && !empty($mediaRecord->url))
+                                                <iframe width="320" height="220" src="{{$mediaRecord->url}}"
+                                                    frameborder="0" allowfullscreen></iframe>
+                                                @else
+                                                <p>Video not available</p>
+                                                @endif
+                                                <div class="overlay p-0">
                                                     <ul class="social_links">
-                                                        <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
+                                                        <li><a
+                                                                href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
+                                                                    src="{{ asset('images/icons-delete.png')}}"
                                                                     alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
+
                                                     </ul>
                                                 </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
                                             </div>
                                             <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">{{$mediaOnlyRecord->description}}</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
+                                                <h5 class="title">{{ $mediaRecord->description }}</h5>
                                             </div>
                                         </div>
                                     </div>
                                     @endforeach
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('images/cars/04.jpg')}}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a href="<"><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
-                                                    </ul>
-                                                </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
-                                            </div>
-                                            <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">Toyota avalon hybrid</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
 
                                 </div>
                             </div>
@@ -447,122 +354,25 @@ vertical-align: middle;
                                     <div class="col">
                                         <div class="item_blk">
                                             <div class="image">
-                                                <img src="{{ asset('storage/' . $mediaOnlyRecord->url) }}" alt="">
+                                                <img src="{{ asset($mediaOnlyRecord->url) }}" alt="">
                                                 <div class="overlay">
                                                     <ul class="social_links">
-                                                        <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
+                                                        <li><a
+                                                                href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
+                                                                    src="{{ asset('images/icons-delete.png')}}"></a>
+                                                        </li>
+
                                                     </ul>
                                                 </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
+
                                             </div>
                                             <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">{{$mediaOnlyRecord->description}}</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
+                                                <h5 class="title"><a href="#">{{$mediaOnlyRecord->description}}</a></h5>
+
                                             </div>
                                         </div>
                                     </div>
                                     @endforeach
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('images/cars/02.jpg')}}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
-                                                    </ul>
-                                                </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
-                                            </div>
-                                            <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">Lexus GS 450h</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('images/cars/03.jpg')}}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a href=""><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
-                                                    </ul>
-                                                </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
-                                            </div>
-                                            <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">GTA 5 Lowriders DLC</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset('images/cars/04.jpg')}}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a href="<"><img src="{{ asset('images/vector-link.svg')}}"
-                                                                    alt=""></a></li>
-                                                        <li><a href="?"><img
-                                                                    src="{{ asset('images/vector-dashboard.svg')}}"
-                                                                    alt=""></a></li>
-                                                    </ul>
-                                                </div>
-                                                <ul class="menu_list">
-                                                    <li><img src="{{ asset('images/vector-registered.svg')}}" alt="">
-                                                        2017</li>
-                                                    <li><img src="{{ asset('images/vector-cog.svg')}}" alt=""> Manual
-                                                    </li>
-                                                    <li><img src="{{ asset('images/vector-dashboard.svg')}}" alt="">
-                                                        6,000 mi</li>
-                                                </ul>
-                                            </div>
-                                            <div class="txt">
-                                                <div class="rateYo"></div>
-                                                <h5 class="title"><a href="">Toyota avalon hybrid</a></h5>
-                                                <div class="price"><del>£30,568</del><span>£28,698</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
                                 </div>
 
                             </div>
@@ -772,6 +582,7 @@ $('#showMediaUrlPopUpBtn').on('click',function(e){
             data: formData,
             success: function(response) {
                 toastr.success("Media added successfully");
+                window.location.reload();
                 // Optionally, you can reset the form or perform other actions
                 $('#addMediaForm')[0].reset();
             },
@@ -833,6 +644,7 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
         contentType: false, // Add this line to prevent jQuery from setting the content type
         success: function(response) {
             toastr.success("Media added successfully");
+            window.location.reload();
             // Optionally, you can reset the form or perform other actions
             form[0].reset();
         },

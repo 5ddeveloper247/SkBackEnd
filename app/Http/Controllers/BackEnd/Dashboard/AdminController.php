@@ -14,25 +14,8 @@ class AdminController extends Controller
 
     public function adminList(Request $request)
     {
-        if ($request->ajax()) {
-            $data = User::select('*');
-            return Datatables::of($data)
-                ->addIndexColumn()
-                ->addColumn('action', function ($row) {
-                    $btn = '<td class="nowrap" data-center="">';
-                    $btn .= '<div class="act_btn">';
-                    $btn .= '<button type="button" class="edit" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'></button>';
-                    $btn .= '<button type="button" class="view copy" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'></button>';
-                    $btn .= '<button type="button" class="delete del" data-id="' . $row->id . '" data-user=\'' . json_encode($row) . '\'></button>';
-                    $btn .= '</div>';
-                    $btn .= '</td>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
-
-        return view('Backend.admin.user.admins');
+        $dataAdmin = User::all();
+        return view('Backend.admin.user.admins', ['users' => $dataAdmin]);
     }
 
 

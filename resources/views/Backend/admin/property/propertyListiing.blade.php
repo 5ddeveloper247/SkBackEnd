@@ -49,7 +49,7 @@
                             <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
                             <div id="Inspection" class="tab-pane fade active in">
 
-                                <form method="POST" id="edit_property_form">
+                                {{-- <form method="POST" id="edit_property_form">
                                     <input type="hidden" name="property_id_edit" id="property_id_edit">
                                     @csrf
                                     <fieldset>
@@ -99,13 +99,666 @@
                                         </div>
                                     </fieldset>
 
-                                </form>
+                                </form> --}}
+
+                                <div class="blk">
+                                    <form action="{{ route('admin.property.main.submission') }}"
+                                        class="propertySubmissionForm" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <ul class="head_lst" id="head_lst">
+                                            <li id="tab_head_lst1"><span>Personal Info</span></li>
+                                            <li id="tab_head_lst2"><span>Purpose</span></li>
+                                            <li id="tab_head_lst3"><span>Address</span></li>
+                                            <li id="tab_head_lst4"><span>Property Detail</span></li>
+                                            <li id="tab_head_lst5"><span>Extra Information</span></li>
+                                            <li id="tab_head_lst6"><span>Amenities</span></li>
+                                            <li id="tab_head_lst7"><span>Done</span></li>
+                                        </ul>
+
+                                        {{-- Personal info tabl --}}
+
+                                        <fieldset id="personal_info_tab">
+                                            <div class="form_row row">
+                                                <input type="hidden" name="property_id_edit" id="property_id_edit">
+
+                                                <div class="col-xs-6">
+                                                    <h6>First Name<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <input type="text" name="pInfo_firstName_edit" id="pInfo_firstName_edit"
+                                                            class="text_box" placeholder="eg: John Wick">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <h6>Last Name<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <input type="text" name="pInfo_lastName_edit" id="pInfo_lastName_edit"
+                                                            class="text_box" placeholder="eg: John doe">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <h6>Email Address<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <input type="email" name="pInfo_email_edit" id="pInfo_email_edit"
+                                                            class="text_box" placeholder="eg: sample@gmail.com">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <h6>Phone Number<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <input type="number" name="pInfo_phoneNumber_edit"
+                                                            id="pInfo_phoneNumber_edit" class="text_box"
+                                                            placeholder="eg: +92300 0000 000">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="btn_blk form_btn text-right">
+                                                <button type="button" class="site_btn personal_info_continue_btn long "
+                                                    id="p-info_continue_btn">Continue</button>
+                                            </div>
+                                        </fieldset>
+
+                                        {{-- Purpose info tabl --}}
+                                        <fieldset id="purpose_tab">
+                                            <div class="form_row row">
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <h6>Purpose<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="purpose_purpose_edit" id="purpose_purpose_edit"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Sale">Sale</option>
+                                                            <option value="Rent">Rent</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <h6>Home<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="pupose_home_edit" id="pupose_home_edit"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="House">House</option>
+                                                            <option value="Flat">Flat</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <h6>Plot<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="purpose_plot_edit" id="purpose_plot_edit"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Residential Plot">Residential Plot</option>
+                                                            <option value="CommercialPlot">Commercial Plot</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-xs-12">
+                                                    <h6>Commercial<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="purpose_commercial_edit" id="purpose_commercial_edit"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Office">Office</option>
+                                                            <option value="Shop">Shop</option>
+                                                            <option value="Building">Building</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="btn_blk form_btn text-right">
+                                                <button type="button"
+                                                    class="site_btn long simple border purpose_back_btn prev_btn">Back</button>
+                                                <button type="button"
+                                                    class="site_btn purpose_continue_btn long ">Continue</button>
+                                            </div>
+                                        </fieldset>
+
+                                        {{-- Address info tabl --}}
+
+                                        <fieldset id="address_tab">
+                                            <div class="form_row row">
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>City<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="address_city" id="address_city"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Islamabad">Islamabad</option>
+                                                            <option value="Rawalpindi">Rawalpindi</option>
+                                                            <option value="Karachi">Karachi</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Area<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="address_area" id="address_area"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Area Bahria Phase 1">Area Bahria Phase 1
+                                                            </option>
+                                                            <option value="Area Bahria Phase 2"> Area Bahria Phase 2
+                                                            </option>
+                                                            <option value="Area Bahria Phase 3"> Area Bahria Phase 3
+                                                            </option>
+                                                            <option value="Area Bahria Phase 4"> Area Bahria Phase 4
+                                                            </option>
+                                                            <option value="Area Bahria Phase 5"> Area Bahria Phase 5
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Phase<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="address_phase" id="address_phase"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Phase Bahria Phase 1">Phase Bahria Phase 1
+                                                            </option>
+                                                            <option value="Phase Bahria Phase 2"> Phase Bahria Phase 2
+                                                            </option>
+                                                            <option value=" Phase Bahria Phase 3"> Phase Bahria Phase 3
+                                                            </option>
+                                                            <option value="Phase Bahria Phase 4"> Phase Bahria Phase 4
+                                                            </option>
+                                                            <option value="Phase Bahria Phase 5"> Phase Bahria Phase 5
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Sector<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="address_sector" id="address_sector"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Sector f1">Sector f1 </option>
+                                                            <option value="Sector f2">Sector f2 </option>
+                                                            <option value="Sector f3">Sector f3 </option>
+                                                            <option value="Sector f4">Sector f4 </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Address<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="address_address" id="address_address"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Street 1">Street 1 </option>
+                                                            <option value="Street 2">Street 2 </option>
+                                                            <option value="Street 3">Street 3</option>
+                                                            <option value="Street 4">Street 4 </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="btn_blk form_btn text-right">
+                                                <button type="button"
+                                                    class="site_btn long simple border address_back_btn prev_btn"
+                                                    id="address_back_btn">Back</button>
+                                                <button type="button" class="site_btn address_continue_btn long "
+                                                    id="address_continue_btn">Continue</button>
+                                            </div>
+                                        </fieldset>
+
+                                        {{-- Property detail --}}
+                                        <fieldset id="property_detail_tab">
+                                            <div class="form_row row">
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Plot No<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="propertyDetail_plot_num"
+                                                            id="propertyDetail_plot_num" class="text_box selectpicker"
+                                                            data-container="body">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Area<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="propertyDetail_area" id="propertyDetail_area"
+                                                            class="text_box selectpicker" data-container="body">
+                                                            <option value="Marla">Marla</option>
+                                                            <option value="Sq.Ft">Sq.Ft</option>
+                                                            <option value="Sq.M">Sq.M</option>
+                                                            <option value="Sq.Yd">Sq.Yd</option>
+                                                            <option value="Kanal">Kanal</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <div class="form_blk">
+                                                        <div>
+                                                            <h6>Area Unit<sup>*</sup></h6>
+                                                            <div class="form_blk">
+                                                                <input type="number" name="propertyDetail_area_unit"
+                                                                    id="propertyDetail_area_unit" class="text_box"
+                                                                    placeholder="eg: 10">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Bedrooms<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="propertyDetail_bedrooms"
+                                                            id="propertyDetail_bedrooms" class="text_box selectpicker"
+                                                            data-container="body">
+                                                            <option value="1">1</option>
+                                                            <option value="2"> 2</option>
+                                                            <option value="3"> 3</option>
+                                                            <option value="4"> 4</option>
+                                                            <option value="5"> 5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 col-xs-12">
+                                                    <h6>Bathrooms<sup>*</sup></h6>
+                                                    <div class="form_blk">
+                                                        <select name="propertyDetail_bathrooms"
+                                                            id="propertyDetail_bathrooms" class="text_box selectpicker"
+                                                            data-container="body">
+                                                            <option value="1">1</option>
+                                                            <option value="2"> 2</option>
+                                                            <option value="3"> 3</option>
+                                                            <option value="4"> 4</option>
+                                                            <option value="5"> 5</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="btn_blk form_btn text-right">
+                                                <button type="button"
+                                                    class="site_btn long simple border property_detail_back-btn prev_btn">Back</button>
+                                                <button type="button"
+                                                    class="site_btn property_detail_continue_btn long ">Continue</button>
+                                            </div>
+                                        </fieldset>
+
+                                        {{-- Extra information tabl --}}
+                                        <fieldset id="extra_info_tab">
+
+                                            <div class="contain">
+                                                <div class="blk">
+                                                    <div class="form_row row">
+                                                        <div class="col-xs-12">
+                                                            <h6>Title<sup>*</sup></h6>
+                                                            <div class="form_blk">
+                                                                <input type="text" name="extra_info_title"
+                                                                    id="extra_info_title" class="text_box"
+                                                                    value="Mercedes-Benz E Class 3.0 E43 V6 AMG"
+                                                                    placeholder=" " readonly>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12">
+                                                            <h6>Posting As<sup>*</sup></h6>
+                                                            <div class="form_blk">
+                                                                <input type="text" name="extra_info_postingas"
+                                                                    id="extra_info_postingas" class="text_box"
+                                                                    placeholder="Agent Name">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12">
+                                                            <h6>Mobile<sup>*</sup></h6>
+                                                            <div class="form_blk">
+                                                                <input type="number" name="extra_info_mobile"
+                                                                    id="extra_info_mobile" class="text_box"
+                                                                    placeholder="eg: 285432584452">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12">
+                                                            <h6>Landline<sup>*</sup></h6>
+                                                            <div class="form_blk">
+                                                                <input type="number" name="extra_info_landline"
+                                                                    id="extra_info_landline" class="text_box"
+                                                                    placeholder="eg: 285432584452">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12">
+                                                            <h6>Description</h6>
+                                                            <div class="form_blk">
+                                                                <textarea name="extra_info_description"
+                                                                    id="extra_info_description" class="text_box"
+                                                                    placeholder="Describe your vehicle"></textarea>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                                {{-- ________________________________________________________File
+                                                Upload______________________________ --}}
+
+
+                                                <div class="blk">
+                                                    <h4 class="subheading">Upload Photos</h4>
+                                                    <div class="form_row row">
+                                                        <div class="col-xs-12">
+                                                            <div class="uploader_blk text_box">
+                                                                <div class="icon">
+                                                                    <img src="{{ asset('/images/upload.svg') }}" alt="">
+                                                                </div>
+                                                                <h6>Drag & Drop</h6>
+                                                                <div class="or">OR</div>
+                                                                <div class="btn_blk text-center">
+                                                                    <input type="file" id="fileInput" name="photos[]"
+                                                                        multiple style="display:none;">
+                                                                    <button type="button" class="site_btn sm"
+                                                                        onclick="document.getElementById('fileInput').click();">Browse
+                                                                        Files</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-12">
+                                                            <div class="upload_lst_blk text_box">
+                                                                <ul class="img_list flex" id="previewList">
+                                                                    <!-- Previews will be added here dynamically -->
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                {{-- ________________________________________________________File
+                                                Upload______________________________ --}}
+
+                                                <div class="btn_blk text-center">
+                                                    <button type="button"
+                                                        class="site_btn extra_info_back-btn long light prev_btn"><img
+                                                            src="{{ asset('/images/arrow-left-sm.svg')}}" alt="">
+                                                        Back</button>
+                                                    <button type="button"
+                                                        class="site_btn extra_info_continue-btn long">Continue</button>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+
+                                        {{-- Amenities --}}
+
+
+                                        <fieldset id="amenities_tab">
+                                            <div class="form_row row">
+
+                                                <div class="col-xs-12">
+                                                    <h6>Amenities</h6>
+                                                    <div class="form_blk">
+                                                        <ul class="check_lst flex">
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_Possesion"
+                                                                        id="check_Possesion">
+                                                                    <span>Possesion</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="checkk_Balloted"
+                                                                        id="check_Balloted">
+                                                                    <span>Balloted</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_Balloted"
+                                                                        id="check_Sewerage">
+                                                                    <span>Balloted</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_"
+                                                                        id="check_Electricity">
+                                                                    <span>Electricity</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_"
+                                                                        id="check_WaterSupply">
+                                                                    <span>Water Supply</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_"
+                                                                        id="check_SuiGas">
+                                                                    <span>Sui Gas</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_BoundryWall"
+                                                                        id="check_BoundryWall">
+                                                                    <span>Boundry Wall</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_NearbySchool"
+                                                                        id="check_NearbySchool">
+                                                                    <span>Nearby School</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_NearbyHospitals"
+                                                                        id="check_NearbyHospitals">
+                                                                    <span>Nearby Hospitals</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                        name="check_NearbyShoppingMalls"
+                                                                        id="check_NearbyShoppingMalls">
+                                                                    <span>Nearby Shopping Malls</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_NearbyRestaurant"
+                                                                        id="check_NearbyRestaurant">
+                                                                    <span>Nearby Restaurant</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                        name="check_NearbyPubicTransportService"
+                                                                        id="check_NearbyPubicTransportService">
+                                                                    <span>Nearby Pubic Transport Service</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_SecurityStaff"
+                                                                        id="check_SecurityStaff">
+                                                                    <span>Security Staff</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                        name="check_CentralAirConditioning"
+                                                                        id="check_CentralAirConditioning">
+                                                                    <span>Central Air Conditioning</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_WasteDisposal"
+                                                                        id="check_WasteDisposal">
+                                                                    <span>Waste Disposal </span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                        name="check_DoubleGlazedWindows"
+                                                                        id="check_DoubleGlazedWindows">
+                                                                    <span>Double Glazed Windows</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_CentralHeating"
+                                                                        id="check_CentralHeating">
+                                                                    <span>Central Heating</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_StudyRoom"
+                                                                        id="check_check_StudyRoom">
+                                                                    <span>Study Room</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_LaundryRoom"
+                                                                        id="check_LaundryRoom">
+                                                                    <span>Laundry Room</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                        name="check_BroadbandInternetAccess"
+                                                                        id="check_BroadbandInternetAccess">
+                                                                    <span>Broadband Internet Access</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="check_PowerWindows"
+                                                                        id="check_PowerWindows">
+                                                                    <span>Power Windows</span>
+                                                                </label>
+                                                            </li>
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox"
+                                                                        name="check_SatelliteorCableTVReady"
+                                                                        id="check_SatelliteorCableTVReady">
+                                                                    <span>Satellite or Cable TV Ready</span>
+                                                                </label>
+                                                            </li>
+
+
+                                                        </ul>
+
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+                                            <div class="btn_blk form_btn text-right">
+                                                <button type="button"
+                                                    class="site_btn long simple border prev_btn">Back</button>
+                                                <button type="button"
+                                                    class="site_btn amenities_continue_btn long ">Continue</button>
+                                            </div>
+                                        </fieldset>
+
+                                        {{-- Done tabl --}}
+                                        <fieldset id="done_tab">
+                                            <div class="text-center">
+                                                <div class="br"></div>
+                                                <h3 class="color">Thank You!</h3>
+                                                <p>New delivery appointment is complete.</p>
+                                                <p>An email with details of the appointment has been sent.</p>
+                                                <div class="br"></div>
+                                            </div>
+                                        </fieldset>
+
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <!-- delete modal start  -->
         <div class="popup sm" data-popup="delete-data-popup" id="delete_modal">
@@ -140,7 +793,7 @@
                     <div class="top_head">
                         <h4>Properties</h4>
                         <div class="form_blk">
-                            <input type="text" name="" id="" class="text_box" placeholder="Search here">
+                            <input type="text" name="" id="" class="text_box property_search_box" placeholder="Search here">
                             <button type="button"><img src="{{ asset('/images/icon-search.svg')}}" alt=""></button>
                         </div>
                     </div>
@@ -148,7 +801,7 @@
                         <div class="tbl_blk">
                             <table id="property_table" class="table table-responsive">
                                 <thead>
-                                    <tr>
+                                    <tr class="">
                                         <th width="10">#</th>
                                         <th>Name</th>
                                         <th>Email</th>
@@ -769,6 +1422,8 @@
 
 
 @endsection
+
+
 
 @push('scripts')
 <script>

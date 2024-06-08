@@ -177,7 +177,8 @@
                     <div class="top_head">
                         <h4>Properties</h4>
                         <div class="form_blk">
-                            <input type="text" name="" id="" class="text_box" placeholder="Search here">
+                            <input type="text" name="" id="" class="text_box inquiry_search_box"
+                                placeholder="Search here">
                             <button type="button"><img src="{{ asset('/images/icon-search.svg')}}" alt=""></button>
                         </div>
                     </div>
@@ -220,6 +221,38 @@
 
 @push('scripts')
 <script>
+    $('.inquiry_search_box').on("keyup", function (e) {
+  
+  var tr = $('.inquiry_data_row');
+  if ($(this).val().length >= 1) {//character limit in search box.
+      var noElem = true;
+      var val = $.trim(this.value).toLowerCase();
+      el = tr.filter(function () {
+          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+      });
+      if (el.length >= 1) {
+          noElem = false;
+      }
+      tr.not(el).hide();
+      el.fadeIn().show();
+  } else {
+      tr.fadeIn().show();
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+{{-- ______________________________________table searching script _______________________________ --}}
+<script>
     function loadpropertyList() {
     let url = '/admin/inquiry/view/ajax';
     let type = 'GET';
@@ -240,13 +273,13 @@ function loadManagerListResponse(response) {
     // $('#active_managers').text(active_managers);
     $.each(inquiries, function (index, inquiry) {
 
-        var inquiryRow = `<tr>
-                                <td class="nowrap">${index + 1}</td>
+        var inquiryRow = `<tr class="inquiry_data_row">
+                                <td class="nowrap grid-p-searchby">${index + 1}</td>
                               
-                                <td>${inquiry.email}</td>
-                                <td>${inquiry.description}</td>
-                                <td class="nowrap">${formatDate(inquiry.created_at)}</td>
-                                <td class="nowrap" data-center>
+                                <td class="grid-p-searchby">${inquiry.email}</td>
+                                <td class="grid-p-searchby">${inquiry.description}</td>
+                                <td class="nowrap grid-p-searchby">${formatDate(inquiry.created_at)}</td>
+                                <td class="nowrap grid-p-searchby" data-center>
                                      <div class="act_btn">
                         <button type="button" class="edit pop_btn inquiry_edit_btn" title="Edit" data-popup="edit-data-popup" data-id="${inquiry.id}" data-inquiry='${JSON.stringify(inquiry)}'></button>
                         <button type="button" class="del pop_btn inquiry_delete_btn" title="Delete" data-popup="delete-data-popup" data-id="${inquiry.id}" data-inquiry='${JSON.stringify(inquiry)}'></button>

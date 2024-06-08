@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,6 +20,7 @@ class CreateContactsTable extends Migration
             $table->string('company_name');
             $table->string('subject');
             $table->text('message');
+            $table->text('contact_reply_edit')->nullable();
             $table->timestamps();
         });
     }
@@ -33,4 +35,3 @@ class CreateContactsTable extends Migration
         Schema::dropIfExists('contacts');
     }
 }
-
