@@ -159,6 +159,95 @@ class PropertyController extends Controller
 
 
 
+    public function propertyEditShow($id)
+    {
+
+        return view('Backend.admin.property.propertyEdit', ['id' => $id]);
+    }
+
+
+
+
+    public function propertyMainSubmission_edit(Request $request)
+    {
+        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
+            ->where('id', $request->property_id_edit)
+            ->first();
+
+        if ($propertyInfo) {
+            // Update personal info
+            $propertyInfo->pInfo_fName = $request->pInfo_firstName_edit ?? null;
+            $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit ?? null;
+            $propertyInfo->pInfo_email = $request->pInfo_email_edit ?? null;
+            $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit ?? null;
+
+            // Update property listing info
+            if ($propertyInfo->propertyListingPape) {
+                $propertyInfo->propertyListingPape->purpose_purpose = $request->purpose_purpose_edit ?? null;
+                $propertyInfo->propertyListingPape->pupose_home = $request->pupose_home_edit ?? null;
+                $propertyInfo->propertyListingPape->purpose_plot = $request->purpose_plot_edit ?? null;
+                $propertyInfo->propertyListingPape->purpose_commercial = $request->purpose_commercial_edit ?? null;
+                $propertyInfo->propertyListingPape->address_city = $request->address_city_edit ?? null;
+                $propertyInfo->propertyListingPape->address_area = $request->address_area_edit ?? null;
+                $propertyInfo->propertyListingPape->address_phase = $request->address_phase_edit ?? null;
+                $propertyInfo->propertyListingPape->address_sector = $request->address_sector_edit ?? null;
+                $propertyInfo->propertyListingPape->address_address = $request->address_address_edit ?? null;
+                $propertyInfo->propertyListingPape->propertyDetail_plot_num = $request->propertyDetail_plot_num_edit ?? null;
+                $propertyInfo->propertyListingPape->propertyDetail_area = $request->propertyDetail_area_edit ?? null;
+                $propertyInfo->propertyListingPape->propertyDetail_area_unit = $request->propertyDetail_area_unit_edit ?? null;
+                $propertyInfo->propertyListingPape->propertyDetail_bedrooms = $request->propertyDetail_bedrooms_edit ?? null;
+                $propertyInfo->propertyListingPape->propertyDetail_bathrooms = $request->propertyDetail_bathrooms_edit ?? null;
+                $propertyInfo->propertyListingPape->extra_info_title = $request->extra_info_title_edit ?? null;
+                $propertyInfo->propertyListingPape->extra_info_postingas = $request->extra_info_postingas_edit ?? null;
+                $propertyInfo->propertyListingPape->extra_info_mobile = $request->extra_info_mobile_edit ?? null;
+                $propertyInfo->propertyListingPape->extra_info_landline = $request->extra_info_landline_edit ?? null;
+                $propertyInfo->propertyListingPape->extra_info_description = $request->extra_info_description_edit ?? null;
+
+                $propertyInfo->propertyListingPape->save();
+            }
+
+            // Handle existing files
+            $existingFiles =json_decode( $request->existing_files ?? []);
+           
+            if ($propertyInfo->propertyRecordFiles) {
+                foreach ($propertyInfo->propertyRecordFiles as $file) {
+                    if (!in_array($file->image_uri, $existingFiles)) {
+                        $file->delete();
+                    }
+                }
+            }
+
+            // Handle new files
+            if ($request->hasFile('files')) {
+                foreach ($request->file('files') as $photo) {
+                    // Generate a unique file name
+                    $fileName = uniqid('photo_') . '.' . $photo->getClientOriginalExtension();
+
+                    // Move the uploaded file to a public directory
+                    $path = $photo->move(public_path('uploads'), $fileName);
+
+                    // Check if the file was moved successfully
+                    if ($path) {
+                        // Save file details to the database
+                        PropertyRecordFiles::create([
+                            'property_record_id' => $propertyInfo->property_record_id,
+                            'image_uri' => 'uploads/' . $fileName
+                        ]);
+                    } else {
+                        // Handle file upload failure
+                        return redirect()->back()->with('error', "File upload failed for {$photo->getClientOriginalName()}");
+                    }
+                }
+            }
+
+            $propertyInfo->save();
+            return redirect()->back()->with('success', "Edited Successfully");
+        }
+
+        return redirect()->back()->with('error', "Property not found");
+    }
+
+
 
     public function changePropertyStatus(Request $request)
     {

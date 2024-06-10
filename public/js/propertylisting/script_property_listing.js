@@ -19,7 +19,7 @@ function formatDate(dateString) {
 }
 
 $('.property_search_box').on("keyup", function (e) {
-  
+
     var tr = $('.property_data_row');
     if ($(this).val().length >= 1) {//character limit in search box.
         var noElem = true;
@@ -273,67 +273,8 @@ function changePendingStatusResponse(response) {
 
 
 
-$(document).on('click', '.edit_btn', function () {
 
 
-
-    var id = $(this).attr('data-id');
-    console.log(id)
-    let url = '/admin/getpropertydata';
-    let type = 'POST';
-    let data = new FormData();
-    data.append('id', id);
-    SendAjaxRequestToServer(type, url, data, '', getpropertydataResponse, '', '');
-
-
-});
-
-function getpropertydataResponse(response) {
-    console.log(response.propertyInfo)
-    if (response.propertyInfo) {
-        var property = response.propertyInfo;
-        console.log(property.id)
-        console.log("idddddddddd")
-
-        // $('#uiBlocker').hide();
-        $('#property_id_edit').val(property.id);
-        $('#pInfo_firstName_edit').val(property.pInfo_fName);
-        $('#pInfo_lastName_edit').val(property.pInfo_lName);
-        $('#pInfo_email_edit').val(property.pInfo_email);
-        $('#pInfo_phoneNumber_edit').val(property.pInfo_phoneNumber);
-
-        ///
-        // $('#purpose_purpose_edit').val(property?.proerty_listing_pape?.purpose_purpose)
-        // $('#pupose_home_edit').val(property?.proerty_listing_pape?.pupose_home)
-        // $('#purpose_plot_edit').val(property?.proerty_listing_pape?.purpose_plot)
-        // $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial)
-
-
-
-        $('#edit-data-popup').show();
-
-
-    }
-
-    if (response.status == 402) {
-        var error = response.message;
-        toastr.error(error, '', {
-            timeOut: 3000
-        });
-    }
-
-}
-
-
-$('#edit_property_form').submit(function (e) {
-    e.preventDefault();
-
-    let form = document.getElementById('edit_property_form');
-    let data = new FormData(form);
-    let type = 'POST';
-    let url = '/admin/property/editProperty';
-    SendAjaxRequestToServer(type, url, data, '', updateManagerResponse, '', 'savemanagerbtn');
-});
 
 function updateManagerResponse(response) {
     $('#uiBlocker').hide();
@@ -365,27 +306,6 @@ function updateManagerResponse(response) {
         timeOut: 3000
     });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
