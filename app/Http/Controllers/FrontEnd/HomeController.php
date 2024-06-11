@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\WhatsAppHelper;
 use Exception;
+use App\Models\City;
 
 class HomeController extends Controller
 {
@@ -285,6 +286,17 @@ class HomeController extends Controller
             return response()->json(['propertyInfo' => $propertyInfo]);
         } else {
             return response()->json(['propertyInfo' => []]);
+        }
+    }
+
+
+    public function composableCity(Request $request){
+        $cityData = City::with('areas.locations.sectors')->get();
+        if($cityData){
+            return response()->json(['cityData'=>$cityData],200);
+        }
+        else{
+            return response()->json(['cityData'=>[]],200);
         }
     }
 }

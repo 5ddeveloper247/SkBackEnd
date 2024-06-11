@@ -8,6 +8,7 @@ use App\Http\Controllers\frontEnd\MediaController;
 use App\Http\Controllers\frontEnd\ContactUsController;
 use App\Http\Controllers\FrontEnd\InquiryController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -43,4 +44,8 @@ Route::prefix('frontend')->group(function () {
     Route::post('/contact/store', [ContactUsController::class, 'StoreContact'])->name('api.frontend.contact.store');
     //inquiry
     Route::post('/inquiry/store', [InquiryController::class, 'StoreInquiry'])->name('api.frontend.inquiry.store');
+
+
+    //composable routes
+    Route::get('composable/city',[HomeController::class,'composableCity'])->name('composable.city');
 }); 

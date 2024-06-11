@@ -10,6 +10,8 @@ use App\Http\Controllers\BackEnd\Dashboard\MediaController;
 use App\Http\Controllers\BackEnd\Dashboard\PropertyController;
 use App\Http\Controllers\BackEnd\Dashboard\InquiryController;
 
+use App\Models\City;
+
 //redirect if authenticated  
 Route::middleware(['admin.redirect'])->group(function () {
     Route::get('/admin/login', [LoginController::class, 'index'])->name('admin.login.view');
@@ -39,7 +41,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/users/guest', [AdminController::class, 'viewUsers'])->name('admin.user.admins');
     Route::get('admin/users/user/destroy/{id}', [AdminController::class, 'destroyUsers'])->name('admin.user.guest.destroy');
     Route::post('admin/users/admin/update/{id}', [AdminController::class, 'updateAdmin'])->name('admin.user.update');
-    Route::get('/admin/users',[AdminController::class,'adminList'])->name('admin.admin.list');
+    Route::get('/admin/users', [AdminController::class, 'adminList'])->name('admin.admin.list');
 
 
     // Admin Media Routes here
@@ -79,4 +81,13 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/contact/update', [ContactUsController::class, 'updateContact'])->name('admin.contact.update');
     Route::post('admin/contact/delete', [ContactUsController::class, 'deleteContact'])->name('admin.contact.delete');
     Route::get('/admin/contact/view/ajax', [ContactUsController::class, 'viewContactAjax'])->name('admin.contact.view.ajax');
+
+
+
+
+
+    Route::get('/city', function () {
+        $city = City::with('areas.locations.sectors')->get();
+        dd($city);
+    });
 });
