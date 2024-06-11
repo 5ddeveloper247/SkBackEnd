@@ -144,7 +144,7 @@ class PropertyController extends Controller
 
 
             // Commit the transaction
-            DB::commit();
+        DB::commit();
 
             return redirect()->back()->with('success', 'Record has been saved successfully.');
         } catch (\Exception $e) {
@@ -170,16 +170,24 @@ class PropertyController extends Controller
 
     public function propertyMainSubmission_edit(Request $request)
     {
-        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
-            ->where('id', $request->property_id_edit)
-            ->first();
 
-        if ($propertyInfo) {
+        //dd($request);
+        try {
+            $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
+                ->where('id', $request->property_id_edit)
+                ->first();
+
+            if (!$propertyInfo) {
+                return redirect()->back()->with('error', "Property not found");
+            }
+
             // Update personal info
             $propertyInfo->pInfo_fName = $request->pInfo_firstName_edit ?? null;
             $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit ?? null;
             $propertyInfo->pInfo_email = $request->pInfo_email_edit ?? null;
             $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit ?? null;
+            $propertyInfo->status ='1';
+
 
             // Update property listing info
             if ($propertyInfo->propertyListingPape) {
@@ -206,9 +214,37 @@ class PropertyController extends Controller
                 $propertyInfo->propertyListingPape->save();
             }
 
+            // Update amenities
+            $amenities = [
+                'Possession' => $request->has('check_Possesion_edit') ? 1 : 0,
+                'Balloted' => $request->has('checkk_Balloted_edit') ? 1 : 0,
+                'BoundryWall' => $request->has('check_BoundryWall_edit') ? 1 : 0,
+                'NearbySchool' => $request->has('check_NearbySchool_edit') ? 1 : 0,
+                'NearbyHospitals' => $request->has('check_NearbyHospitals_edit') ? 1 : 0,
+                'NearbyShoppingMalls' => $request->has('check_NearbyShoppingMalls_edit') ? 1 : 0,
+                'NearbyRestaurant' => $request->has('check_NearbyRestaurant_edit') ? 1 : 0,
+                'NearbyPubicTransportService' => $request->has('check_NearbyPubicTransportService_edit') ? 1 : 0,
+                'SecurityStaff' => $request->has('check_SecurityStaff_edit') ? 1 : 0,
+                'CentralAirConditioning' => $request->has('check_CentralAirConditioning_edit') ? 1 : 0,
+                'WasteDisposal' => $request->has('check_WasteDisposal_edit') ? 1 : 0,
+                'DoubleGlazedWindows' => $request->has('check_DoubleGlazedWindows_edit') ? 1 : 0,
+                'CentralHeating' => $request->has('check_CentralHeating_edit') ? 1 : 0,
+                'LaundryRoom' => $request->has('check_LaundryRoom_edit') ? 1 : 0,
+                'BroadbandInternetAccess' => $request->has('check_BroadbandInternetAccess_edit') ? 1 : 0,
+                'PowerWindows' => $request->has('check_PowerWindows_edit') ? 1 : 0,
+                'SatelliteorCableTVReady' => $request->has('check_SatelliteorCableTVReady_edit') ? 1 : 0,
+            ];
+
+            foreach ($amenities as $amenity => $value) {
+                Amenities::updateOrCreate(
+                    ['property_record_id' => $propertyInfo->property_record_id, 'amenities' => $amenity],
+                    ['value' => $value]
+                );
+            }
+
             // Handle existing files
-            $existingFiles =json_decode( $request->existing_files ?? []);
-           
+            $existingFiles = json_decode($request->existing_files ?? '[]');
+
             if ($propertyInfo->propertyRecordFiles) {
                 foreach ($propertyInfo->propertyRecordFiles as $file) {
                     if (!in_array($file->image_uri, $existingFiles)) {
@@ -218,8 +254,9 @@ class PropertyController extends Controller
             }
 
             // Handle new files
-            if ($request->hasFile('files')) {
-                foreach ($request->file('files') as $photo) {
+          
+            if ($request->hasFile('photos_edit')) {
+                foreach ($request->file('photos_edit') as $photo) {
                     // Generate a unique file name
                     $fileName = uniqid('photo_') . '.' . $photo->getClientOriginalExtension();
 
@@ -242,10 +279,15 @@ class PropertyController extends Controller
 
             $propertyInfo->save();
             return redirect()->back()->with('success', "Edited Successfully");
-        }
+        } catch (\Exception $e) {
+            // Log the error message
+            Log::error('Error in propertyMainSubmission_edit: ' . $e->getMessage());
 
-        return redirect()->back()->with('error', "Property not found");
+            return redirect()->back()->with('error', "An unexpected error occurred. Please try again later.");
+        }
     }
+
+
 
 
 

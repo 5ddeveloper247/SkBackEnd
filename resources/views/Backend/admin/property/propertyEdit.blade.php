@@ -354,7 +354,7 @@
                     <div class="col-xs-12">
                         <h6>Amenities</h6>
                         <div class="form_blk">
-                            <ul class="check_lst flex">
+                            <ul class="check_lst flex amenities_list_edit">
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_Possesion_edit" id="check_Possesion_edit">
@@ -588,11 +588,6 @@ if (response.propertyInfo) {
         $('#extra_info_description_edit').val(property?.property_listing_pape?.extra_info_description);
 
 
-
-
-
-
-
   // Function to generate and display image previews with remove button
   function displayImagePreviews(files) {
     const previewList = $('#previewList_edit');
@@ -621,6 +616,14 @@ if (response.propertyInfo) {
 if (property.property_record_files) {
     displayImagePreviews(property.property_record_files);
 }
+
+//setting amanities 
+property.amenities.forEach(function(amenity) {
+                var checkbox = document.getElementById('check_' + amenity.amenities + '_edit');
+                if (checkbox) {
+                    checkbox.checked = amenity.value === 1;
+                }
+            }); 
 
 }
 

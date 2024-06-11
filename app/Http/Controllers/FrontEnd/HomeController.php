@@ -84,8 +84,8 @@ class HomeController extends Controller
 
                 // Send WhatsApp message
                 $adminContact = env('ADMIN_WHATSAPP_NUMBER');
-                $phoneno = [$request->phone, $adminContact];
-                $message = $request->description;
+                $phoneno = [$request->phone ? $request->phone : $adminContact, $adminContact];
+                $message = $request->description ? $request->description : "No description is specified for this property";
                 $id = 123;
 
 
@@ -133,7 +133,7 @@ class HomeController extends Controller
     public function propertyHomeView(Request $request)
     {
 
-        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
+        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('status','1')->get();
         if ($propertyInfo) {
             return response()->json(['propertyInfo' => $propertyInfo]);
         } else {
@@ -171,7 +171,7 @@ class HomeController extends Controller
             }
 
             return response()->json(['propertyInfo' => $propertyInfo]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log the exception for debugging purposes
             Log::error('Error fetching property info: ' . $e->getMessage());
             // Return a JSON response with an error message
