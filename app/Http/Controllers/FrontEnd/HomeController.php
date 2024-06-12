@@ -295,7 +295,7 @@ class HomeController extends Controller
         if($cityData){
             return response()->json(['cityData'=>$cityData],200);
         }
-        else{
+        else{ 
             return response()->json(['cityData'=>[]],200);
         }
     }

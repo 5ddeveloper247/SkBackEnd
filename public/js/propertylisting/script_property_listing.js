@@ -45,18 +45,12 @@ function loadpropertyList() {
 }
 
 
-function loadManagerListResponse(response) {
 
+function loadManagerListResponse(response) {
     var propertyListingTable = $('#property_table_body');
     propertyListingTable.empty();
     response.responseData;
     var properties = response.responseData;
-    // var inactive_managers = response.managers_list.inactive_managers;
-    // var active_managers = response.managers_list.active_managers;
-    // var totalManagers = managers.length;
-    // $('#total_managers').text(totalManagers);
-    // $('#inactive_managers').text(inactive_managers);
-    // $('#active_managers').text(active_managers);
     $.each(properties, function (index, property) {
 
         console.log(property)
@@ -245,7 +239,6 @@ function changestatusPending(id, hold) {
 
 
 }
-
 
 
 function changePendingStatusResponse(response) {

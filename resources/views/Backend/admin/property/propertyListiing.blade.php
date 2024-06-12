@@ -298,9 +298,31 @@
                                         </div>
                                     </fieldset>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     {{-- Address info tabl --}}
 
-                                    <fieldset id="address_tab">
+                                    {{-- <fieldset id="address_tab">
                                         <div class="form_row row">
                                             <div class="col-sm-4 col-xs-12">
                                                 <h6>City<sup>*</sup></h6>
@@ -331,7 +353,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-4 col-xs-12">
-                                                <h6>Phase<sup>*</sup></h6>
+                                                <h6>Location<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="address_phase" id="address_phase"
                                                         class="text_box selectpicker" data-container="body">
@@ -381,7 +403,62 @@
                                             <button type="button" class="site_btn address_continue_btn long "
                                                 id="address_continue_btn">Continue</button>
                                         </div>
+                                    </fieldset> --}}
+
+
+                                    <fieldset id="address_tab">
+                                        <div class="form_row row">
+                                            <div class="col-sm-4 col-xs-12">
+                                                <h6>City<sup>*</sup></h6>
+                                                <div class="form_blk">
+                                                    <select name="address_city" id="address_city" class="text_box"
+                                                        data-container="body">
+                                                        <!-- Options will be populated dynamically -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-xs-12">
+                                                <h6>Area<sup>*</sup></h6>
+                                                <div class="form_blk">
+                                                    <select name="address_area" id="address_area" class="text_box "
+                                                        data-container="body">
+                                                        <!-- Options will be populated dynamically -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-xs-12">
+                                                <h6>location<sup>*</sup></h6>
+                                                <div class="form_blk">
+                                                    <select name="address_location" id="address_location"
+                                                        class="text_box" data-container="body">
+                                                        <!-- Options will be populated dynamically -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-xs-12">
+                                                <h6>Sector<sup>*</sup></h6>
+                                                <div class="form_blk">
+                                                    <select name="address_sector" id="address_sector" class="text_box "
+                                                        data-container="body">
+                                                        <!-- Options will be populated dynamically -->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 col-xs-12">
+                                                <h6>Address<sup>*</sup></h6>
+                                                <textarea name="" id="" class="text_box"
+                                                    placeholder="Describe your address"  name="address_address" id="address_address" spellcheck="false"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="btn_blk form_btn text-right">
+                                            <button type="button"
+                                                class="site_btn long simple border address_back_btn prev_btn"
+                                                id="address_back_btn">Back</button>
+                                            <button type="button" class="site_btn address_continue_btn long"
+                                                id="address_continue_btn">Continue</button>
+                                        </div>
                                     </fieldset>
+
 
                                     {{-- Property detail --}}
                                     <fieldset id="property_detail_tab">
@@ -901,12 +978,11 @@ $('.purpose_continue_btn').click(function() {
 
 
 
-
 $('.address_continue_btn').click(function() {
     const tab_head_lst = 3;
     var city = $('#address_city');
     var area = $('#address_area');
-    var phase = $('#address_phase');
+    var location = $('#address_location');
     var sector = $('#address_sector');
     var address = $('#address_address');
 
@@ -920,13 +996,13 @@ $('.address_continue_btn').click(function() {
     if (!area.val().trim()) {
         area.addClass('validation-failed');
     }
-    if (!phase.val().trim()) {
-        phase.addClass('validation-failed');
+    if (!location.val().trim()) {
+        location.addClass('validation-failed');
     }
     if (!sector.val().trim()) {
         sector.addClass('validation-failed');
     }
-    if (!address.val().trim()) {
+    if (!address.text().trim()) {
         address.addClass('validation-failed');
     }
 
@@ -941,6 +1017,7 @@ $('.address_continue_btn').click(function() {
         $('#property_detail_tab').show();
     }
 });
+
 
 
 
@@ -1564,6 +1641,101 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 
     return true;
 }
+
+</script>
+
+<script>
+    function loadCityListingAndPropertyListing() {
+    let url = '/admin/property/loadpropertyList';
+    let type = 'GET';
+    SendAjaxRequestToServer(type, url, '', '', loadPropertyandCityListing, '', '');
+}
+
+function loadPropertyandCityListing(response) {
+    const cityData = response.cityData;
+
+    // Populate city dropdown with initial "Select City" option
+    let cityDropdown = document.getElementById('address_city');
+    cityDropdown.innerHTML = '<option value="">Select City</option>';
+    cityData.forEach(city => {
+        let option = document.createElement('option');
+        option.value = city.NAME;
+        option.textContent = city.NAME;
+        cityDropdown.appendChild(option);
+    });
+
+    // Add event listener to update areas and sectors when city is changed
+    cityDropdown.addEventListener('change', function() {
+        populateAreasAndLocations(cityData);
+    });
+}
+
+function populateAreasAndLocations(cityData) {
+    let selectedCity = document.getElementById('address_city').value;
+    let city = cityData.find(city => city.NAME === selectedCity);
+    
+    // Populate area dropdown
+    let areaDropdown = document.getElementById('address_area');
+    // areaDropdown.innerHTML = '<option value="">Select Area</option>';
+    city.areas.forEach(area => {
+        let option = document.createElement('option');
+        option.value = area.NAME;
+        option.textContent = area.NAME;
+        console.log(option)
+        areaDropdown.appendChild(option);
+    });
+
+    // Populate location dropdown
+    let locationDropdown = document.getElementById('address_location');
+   // locationDropdown.innerHTML = '<option value="">Select Location</option>';
+    city.areas.forEach(area => {
+        area.locations.forEach(location => {
+            let option = document.createElement('option');
+            option.value = location.NAME;
+            option.textContent = location.NAME;
+            locationDropdown.appendChild(option);
+        });
+    });
+
+    // Populate sectors dropdown
+    populateSectors(city.areas);
+    console.log("city.area",city.areas)
+}
+
+
+//while populating the sector i populate when the change in city occurs if the area is undefined or option not containing the area 
+//like if we use placeholder or select area option it does not fetch the area and show undefined
+function populateSectors(areas) {
+    console.log("areas in f",areas)
+    let selectedArea = document.getElementById('address_area').value;
+  
+    let area = areas.find(area => area.NAME === selectedArea);
+    
+
+
+    let sectorDropdown = document.getElementById('address_sector');
+   // sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+    if (area) {
+        area.locations.forEach(location => {
+            location.sectors.forEach(sector => {
+                let option = document.createElement('option');
+                option.value = sector.NAME;
+                option.textContent = sector.NAME;
+                console.log(option)
+                sectorDropdown.appendChild(option);
+            });
+        });
+    }
+    else{
+        alert("jfklajsdl")
+    }
+}
+
+// Call this function to load the city and property listings when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadCityListingAndPropertyListing();
+});
+
 </script>
 
 

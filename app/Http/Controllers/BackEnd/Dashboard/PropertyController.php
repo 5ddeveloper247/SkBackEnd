@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PersonalInfo;
 use App\Models\PropertyListingPaPe;
 use App\Models\Amenities;
+use App\Models\City;
 use App\Models\PropertyRecordFiles;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -30,9 +31,17 @@ class PropertyController extends Controller
 
     // load property for ajax
     public function loadpropertyList(Request $request)
-    {
+    {  
         $responseData = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
-        return response()->json(['responseData' => $responseData]);
+        $cityData = City::with('areas.locations.sectors')->get();
+        if($cityData){
+            $cities=$cityData;
+        }
+        else{
+            $cities=[];
+        }
+       
+        return response()->json(['responseData' => $responseData,'cityData'=>$cities]);
     }
 
 
@@ -144,7 +153,7 @@ class PropertyController extends Controller
 
 
             // Commit the transaction
-        DB::commit();
+            DB::commit();
 
             return redirect()->back()->with('success', 'Record has been saved successfully.');
         } catch (\Exception $e) {
@@ -186,7 +195,7 @@ class PropertyController extends Controller
             $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit ?? null;
             $propertyInfo->pInfo_email = $request->pInfo_email_edit ?? null;
             $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit ?? null;
-            $propertyInfo->status ='1';
+            $propertyInfo->status = '1';
 
 
             // Update property listing info
@@ -254,7 +263,6 @@ class PropertyController extends Controller
             }
 
             // Handle new files
-          
             if ($request->hasFile('photos_edit')) {
                 foreach ($request->file('photos_edit') as $photo) {
                     // Generate a unique file name
