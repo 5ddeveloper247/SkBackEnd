@@ -447,7 +447,8 @@
                                             <div class="col-sm-12 col-xs-12">
                                                 <h6>Address<sup>*</sup></h6>
                                                 <textarea name="" id="" class="text_box"
-                                                    placeholder="Describe your address"  name="address_address" id="address_address" spellcheck="false"></textarea>
+                                                    placeholder="Describe your address" name="address_address"
+                                                    id="address_address" spellcheck="false"></textarea>
                                             </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
@@ -664,35 +665,30 @@
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="checkk_Balloted"
+                                                                <input type="checkbox" name="check_Balloted"
                                                                     id="check_Balloted">
                                                                 <span>Balloted</span>
                                                             </label>
                                                         </li>
+
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="check_Balloted"
-                                                                    id="check_Sewerage">
-                                                                <span>Balloted</span>
-                                                            </label>
-                                                        </li>
-                                                        <li>
-                                                            <label>
-                                                                <input type="checkbox" name="check_"
+                                                                <input type="checkbox" name="check_Electricity"
                                                                     id="check_Electricity">
                                                                 <span>Electricity</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="check_"
+                                                                <input type="checkbox" name="check_WaterSupply"
                                                                     id="check_WaterSupply">
                                                                 <span>Water Supply</span>
                                                             </label>
                                                         </li>
                                                         <li>
                                                             <label>
-                                                                <input type="checkbox" name="check_" id="check_SuiGas">
+                                                                <input type="checkbox" name="check_SuiGas"
+                                                                    id="check_SuiGas">
                                                                 <span>Sui Gas</span>
                                                             </label>
                                                         </li>
@@ -778,7 +774,7 @@
                                                         <li>
                                                             <label>
                                                                 <input type="checkbox" name="check_StudyRoom"
-                                                                    id="check_check_StudyRoom">
+                                                                    id="check_StudyRoom">
                                                                 <span>Study Room</span>
                                                             </label>
                                                         </li>
