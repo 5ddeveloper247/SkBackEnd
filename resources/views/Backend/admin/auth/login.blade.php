@@ -9,7 +9,7 @@
 @endpush
 @section('content')
 <section id="logon">
-    <div class="side" style="background-image: url({{ asset('/images/cx_mires2-hpbanner_1122x850.jpg')}})">
+    <div class="side" style="background-image: url({{ asset('/images/SK-logo.png')}})">
         <div class="content text-center">
             <h1>Please Login to continue</h1>
             <p>A platform with efficient integration of many features and so much more</p>

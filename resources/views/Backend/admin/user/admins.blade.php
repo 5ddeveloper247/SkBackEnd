@@ -80,42 +80,42 @@
         </section>
 
         <!-- View User Modal -->
-        <section class="popup lg" id="popupView" data-popup="search" style="display: none;">
+        <section class="popup sm" id="popupView" data-popup="search" style="display: none;">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
                         <div class="_inner">
                             <button class="x_btn" id="closeCustomModalButton"></button>
                             <div class="modal-body">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
+                                <div class="row mb-3" style="margin-bottom: 12px;">
+                                    <div class="col-sm-12">
+                                        <h6 class="mb-0"><b>Full Name</b></h6>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-12">
                                         <span id="viewFullName"></span>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Email</h6>
+                                <div class="row mb-3" style="margin-bottom: 12px;">
+                                    <div class="col-sm-12">
+                                        <h6 class="mb-0"><b>Email</b></h6>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-12">
                                         <span id="viewEmail"></span>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Phone</h6>
+                                <div class="row mb-3" style="margin-bottom: 12px;">
+                                    <div class="col-sm-12">
+                                        <h6 class="mb-0"><b>Phone</b></h6>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-12">
                                         <span id="viewPhone"></span>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Status</h6>
+                                <div class="row mb-3" style="margin-bottom: 12px;">
+                                    <div class="col-sm-12">
+                                        <h6 class="mb-0"><b>Status</b></h6>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-12">
                                         <span id="viewStatus"></span>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
 
         {{-- edit property popup --}}
         <!-- _______________update popu_________________ -->
-        <section class="popup lg" id="popupUpdate" data-popup="search" style="display: none;">
+        <section class="popup md" id="popupUpdate" data-popup="search" style="display: none;">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
@@ -139,49 +139,49 @@
                             <button class="x_btn" id="closeUpdateModalButtonx"></button>
                             <div class="modal-body">
                                 <form action="#" id="updateAdminForm">
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
+                                    <div class="row mb-3" style="margin-bottom: 12px;">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-1">Full Name</h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <input name="editFullNameInput" id="editFullNameInput" type="text"
                                                 class="form-control mb-1" value="" />
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
+                                    <div class="row mb-3" style="margin-bottom: 12px;">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Email</h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <input name="editEmailInput" id="editEmailInput" type="text"
                                                 class="form-control mb-1" value="" />
                                         </div>
                                     </div>
-                                    {{-- <div class="row mb-3">
-                                        <div class="col-sm-3">
+                                    {{-- <div class="row mb-3" style="margin-bottom: 12px;">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <input name="editPhoneInput" id="editPhoneInput" type="text"
                                                 class="form-control"
                                                 oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
                                         </div>
                                     </div> --}}
-                                    <div class="row mb-5">
-                                        <div class="col-sm-3">
+                                    <div class="row mb-5" style="margin-bottom: 12px;">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Password</h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <input name="editPasswordInput" id="editPasswordInput" type="text"
                                                 class="form-control mb-1" required
                                                 placeholder="Leave it empty if you don't want to change password" />
                                         </div>
                                     </div>
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
+                                    <div class="row mb-3" style="margin-bottom: 12px;">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Status</h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <div class="ms-3 form-check form-switch">
                                                 <input name="editStatusInput" id="editStatusInput"
                                                     style="font-size: 20px;" type="checkbox"
@@ -299,8 +299,8 @@
                                             <div class="act_btn">
                                                 <button type="button" class="edit" data-user="{{ $user }}"
                                                     id="admin_edit"></button>
-                                                <button type="button" class="copy admin_view"
-                                                    data-user="{{ $user }}"></button>
+                                                <!-- <button type="button" class="copy admin_view"
+                                                    data-user="{{ $user }}"></button> -->
                                                 <button type="button" class="del" data-user="{{ $user }}"
                                                     id="admin_delete"></button>
                                             </div>

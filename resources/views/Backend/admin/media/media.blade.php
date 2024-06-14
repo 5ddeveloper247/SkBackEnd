@@ -69,30 +69,30 @@
     .table-bordered td {
         border: 1px solid #dee2e6;
     }
+    .modal-header {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .modal-header .btn-close {
+        filter: invert(1);
+    }
+
+    .form-check-input {
+        transform: scale(1.5);
+    }
+
+    .form-check {
+        padding-left: 0;
+    }
+
+    .table th,
+    .table td {
+        vertical-align: middle;
+    }
 </style>
 
-.modal-header {
-background-color: #007bff;
-color: white;
-}
 
-.modal-header .btn-close {
-filter: invert(1);
-}
-
-.form-check-input {
-transform: scale(1.5);
-}
-
-.form-check {
-padding-left: 0;
-}
-
-.table th,
-.table td {
-vertical-align: middle;
-}
-</style>
 
 @endpush
 
@@ -125,8 +125,8 @@ vertical-align: middle;
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form_blk">
-                                                <h6>Video Media</h6>
-                                                <input type="text" name="mediaUrl" id="mediaUrl" class="text_box">
+                                                <h6>Video Media URL</h6>
+                                                <input type="text" name="mediaUrl" id="mediaUrl" class="text_box" placeholder="Video Media must be youtube URL">
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
@@ -258,7 +258,7 @@ vertical-align: middle;
                 <div class="top_head">
                     <h4>Media</h4>
                     <div class="card_blk">
-                        <div class="icon"><img src="http://localhost/yna/yna/assets/images/icon-upload.svg" alt="">
+                        <div class="icon"><img src="{{asset('images/icon-upload.svg')}}" alt="">
                         </div>
                         <strong>Add Media Url</strong>
                         <a type="button" id="showMediaUrlPopUpBtn"></a>
@@ -273,50 +273,48 @@ vertical-align: middle;
                                     <li><a href="">Dashboard</a></li>
                                     <li>Leasing Vehicles</li>
                                 </ul>
-                                <div class="blk">
-
-                                </div>
+                                <br>
                                 <div class="main_row flex_row">
-                                    @foreach ($mediaUrl as $index=>$mediaRecord )
+                                    @if(count($mediaUrl))
+                                        @foreach ($mediaUrl as $index=>$mediaRecord )
 
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image" style="padding: 0px !important">
-                                                @if(isset($mediaRecord->url) && !empty($mediaRecord->url))
-                                                <iframe width="320" height="220" src="{{$mediaRecord->url}}"
-                                                    frameborder="0" allowfullscreen></iframe>
-                                                @else
-                                                <p>Video not available</p>
-                                                @endif
-                                                <div class="overlay p-0">
-                                                    <ul class="social_links">
-                                                        <li><a
-                                                                href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
-                                                                    src="{{ asset('images/icons-delete.png')}}"
-                                                                    alt=""></a></li>
+                                        <div class="col">
+                                            <div class="item_blk">
+                                                <div class="image" style="padding: 0px !important">
+                                                    @if(isset($mediaRecord->url) && !empty($mediaRecord->url))
+                                                    <iframe width="320" height="220" src="{{$mediaRecord->url}}"
+                                                        frameborder="0" allowfullscreen></iframe>
+                                                    @else
+                                                    <p>Video not available</p>
+                                                    @endif
+                                                    <div class="overlay p-0">
+                                                        <ul class="social_links">
+                                                            <li><a
+                                                                    href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
+                                                                        src="{{ asset('images/icons-delete.png')}}"
+                                                                        alt=""></a></li>
 
-                                                    </ul>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="txt">
+                                                    <h5 class="title">{{ $mediaRecord->description }}</h5>
                                                 </div>
                                             </div>
-                                            <div class="txt">
-                                                <h5 class="title">{{ $mediaRecord->description }}</h5>
-                                            </div>
                                         </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <div style="width:100%; text-align:center;">
+                                            <p>No record found...</p>
+                                        </div>
+                                    @endif
 
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
-                <ul class="pagination">
-                    <li><a href="?" class="prev"></a></li>
-                    <li><a href="?" class="active">1</a></li>
-                    <li><a href="?">2</a></li>
-                    <li><a href="?">3</a></li>
-                    <li><a href="?" class="next"></a></li>
-                </ul>
+                
             </div>
 
 
@@ -331,7 +329,7 @@ vertical-align: middle;
 
 
                     <div class="card_blk">
-                        <div class="icon"><img src="http://localhost/yna/yna/assets/images/icon-upload.svg" alt="">
+                        <div class="icon"><img src="{{asset('images/icon-upload.svg')}}" alt="">
                         </div>
                         <strong>Add Media </strong>
                         <a type="button" id="showMediaPopUpBtn"></a>
@@ -345,47 +343,45 @@ vertical-align: middle;
                                     <li><a href="">Dashboard</a></li>
                                     <li>Leasing Vehicles</li>
                                 </ul>
-                                <div class="blk">
-
-                                </div>
+                                <br>
                                 <div class="main_row flex_row">
-                                    @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
+                                    @if(count($mediaOnlyRecords))
+                                        @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
 
-                                    <div class="col">
-                                        <div class="item_blk">
-                                            <div class="image">
-                                                <img src="{{ asset($mediaOnlyRecord->url) }}" alt="">
-                                                <div class="overlay">
-                                                    <ul class="social_links">
-                                                        <li><a
-                                                                href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
-                                                                    src="{{ asset('images/icons-delete.png')}}"></a>
-                                                        </li>
+                                        <div class="col">
+                                            <div class="item_blk">
+                                                <div class="image">
+                                                    <img src="{{ asset($mediaOnlyRecord->url) }}" alt="">
+                                                    <div class="overlay">
+                                                        <ul class="social_links">
+                                                            <li><a
+                                                                    href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
+                                                                        src="{{ asset('images/icons-delete.png')}}"></a>
+                                                            </li>
 
-                                                    </ul>
+                                                        </ul>
+                                                    </div>
+
                                                 </div>
+                                                <div class="txt">
+                                                    <h5 class="title"><a href="#">{{$mediaOnlyRecord->description}}</a></h5>
 
-                                            </div>
-                                            <div class="txt">
-                                                <h5 class="title"><a href="#">{{$mediaOnlyRecord->description}}</a></h5>
-
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    @endforeach
+                                        @endforeach
+                                    @else
+                                        <div style="width:100%; text-align:center;">
+                                            <p>No record found...</p>
+                                        </div>
+                                    @endif
                                 </div>
 
                             </div>
                         </section>
                     </div>
                 </div>
-                <ul class="pagination">
-                    <li><a href="?" class="prev"></a></li>
-                    <li><a href="?" class="active">1</a></li>
-                    <li><a href="?">2</a></li>
-                    <li><a href="?">3</a></li>
-                    <li><a href="?" class="next"></a></li>
-                </ul>
+                
             </div>
 
 

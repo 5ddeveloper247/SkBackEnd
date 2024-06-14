@@ -16,7 +16,7 @@
         <div class="tile_row flex_row">
             <div class="col">
                 <div class="tile_blk">
-                    <div class="icon"><img src="http://localhost/yna/yna/assets/images/vector-car.svg" alt=""></div>
+                    <div class="icon"><img src="{{asset('images/vector-car.svg')}}" alt=""></div>
                     <div class="txt">
                         <h4>Some Heading is here</h4>
                         <p>Make more money when you sell your car yourself.</p>
@@ -25,7 +25,7 @@
             </div>
             <div class="col">
                 <div class="tile_blk">
-                    <div class="icon"><img src="http://localhost/yna/yna/assets/images/vector-auction.svg" alt=""></div>
+                    <div class="icon"><img src="{{asset('images/vector-auction.svg')}}" alt=""></div>
                     <div class="txt">
                         <h4>Some Heading is here</h4>
                         <p>Get an Instant Cash Offer and trade in or sell your...</p>
@@ -34,7 +34,7 @@
             </div>
             <div class="col">
                 <div class="tile_blk">
-                    <div class="icon"><img src="http://localhost/yna/yna/assets/images/vector-badge.svg" alt=""></div>
+                    <div class="icon"><img src="{{asset('images/vector-badge.svg')}}" alt=""></div>
                     <div class="txt">
                         <h4>Some Heading is here</h4>
                         <p>Find out what your car is worth to an individual buyer or dealer.</p>
