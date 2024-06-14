@@ -24,6 +24,7 @@ class PropertyListingPaPe extends Model
         'address_area',
         'address_phase',
         'address_sector',
+        'address_location',
         'address_address',
         'propertyDetail_plot_num',
         'propertyDetail_area',

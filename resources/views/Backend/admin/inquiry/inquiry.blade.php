@@ -84,31 +84,31 @@
                                                     <div class="form_blk">
                                                         <h6>Email<sup>*</sup></h6>
                                                         <input type="email" name="inquiry_email_edit"
-                                                            id="inquiry_email_edit" class="text_box" maxlength="15">
+                                                            id="inquiry_email_edit" class="text_box" maxlength="15" readonly>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Contact Number</h6>
+                                                        <h6>Contact Number<sup>*</sup></h6>
                                                         <input type="number" name="inquiry_contact_number_edit"
                                                             id="inquiry_contact_number_edit" class="text_box"
-                                                            placeholder="" maxlength="15">
+                                                            placeholder="" maxlength="15" readonly>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Description</h6>
+                                                        <h6>Description <sup>*</sup></h6>
                                                         <textarea name="inquiry_description_edit"
                                                             id="inquiry_description_edit" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            placeholder="" readonly></textarea>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Reply</h6>
+                                                        <h6>Reply <sup>*</sup></h6>
                                                         <textarea required name="inquiry_reply_edit"
                                                             id="inquiry_reply_edit" class="text_box"
                                                             placeholder=""></textarea>
@@ -175,7 +175,7 @@
             {{-- ______________________tab <All> start_______________________________--- --}}
                 <div id="All" class="tab-pane fade in active">
                     <div class="top_head">
-                        <h4>Properties</h4>
+                        <h4>Inquiries</h4>
                         <div class="form_blk">
                             <input type="text" name="" id="" class="text_box inquiry_search_box"
                                 placeholder="Search here">
@@ -200,13 +200,13 @@
                             </table>
                         </div>
                     </div>
-                    <ul class="pagination">
+                    {{-- <ul class="pagination">
                         <li><a href="?" class="prev"></a></li>
                         <li><a href="?" class="active">1</a></li>
                         <li><a href="?">2</a></li>
                         <li><a href="?">3</a></li>
                         <li><a href="?" class="next"></a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 {{-- ______________________tab <All> end_______________________________--- --}}
 

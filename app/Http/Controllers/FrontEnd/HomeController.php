@@ -182,23 +182,6 @@ class HomeController extends Controller
 
 
 
-
-
-    // public function mediaIndexgetByFilters(Request $request)
-    // {
-
-    //     $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
-    //     if ($propertyInfo) {
-    //         return response()->json(['propertyInfo' => $request->all()]);
-    //         // return response()->json(['propertyInfo' => $propertyInfo]);
-    //     } else {
-    //         return response()->json(['propertyInfo' => []]);
-    //         // return response()->json(['propertyInfo' => []]);
-    //     }
-    // }
-
-
-
     public function mediaIndexgetByFilters(Request $request)
     {
         try {
@@ -265,7 +248,7 @@ class HomeController extends Controller
             $propertyInfo = $query->get();
 
             return response()->json(['propertyInfo' => $propertyInfo]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             Log::error('Error fetching property records: ' . $e->getMessage());
             return response()->json([
                 'success' => false,

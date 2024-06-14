@@ -11,7 +11,7 @@ class PersonalInfo extends Model
 
     public function propertyListingPape()
     {
-        return $this->belongsTo(PropertyListingPape::class, 'property_record_id', 'property_record_id');
+        return $this->belongsTo(PropertyListingPaPe::class, 'property_record_id', 'property_record_id');
     }
 
     public function amenities()

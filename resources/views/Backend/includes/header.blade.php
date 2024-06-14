@@ -4,7 +4,7 @@ $page='';
 
 
 
-<header >
+<header>
     <div id="bar">
         <div class="contain">
             <div class="list">
@@ -25,7 +25,7 @@ $page='';
                     <li class="">
                         <a href="{{ url('#') }}" data-text="Bikes">Support</a>
                     </li>
-                  
+
                 </ul>
             </div>
             <ul class="btn_list">
@@ -47,7 +47,8 @@ $page='';
     <div class="contain">
         <div id="nav">
             <div class="logo">
-                <a href="{{ url('index.php') }}" style="background-image: url('{{ asset('/images/logo.png') }}');"></a>
+                <a href="{{ url('index.php') }}"
+                    style="background-image: url('{{ asset('/images/SK-logo.png') }}');"></a>
             </div>
             <button type="button" class="toggle"><span></span></button>
 
@@ -55,12 +56,12 @@ $page='';
             <nav class="ease">
                 <button type="button" class="x_btn"></button>
                 <ul id="lst">
-                   
+
                     <li><a href="{{ url('financing.php') }}" class="run_btn">Home</a></li>
                     <li><a href="{{ url('financing.php') }}" class="run_btn">About</a></li>
                     <li><a href="{{ url('financing.php') }}" class="run_btn">Contact</a></li>
 
-                   
+
                 </ul>
             </nav>
 

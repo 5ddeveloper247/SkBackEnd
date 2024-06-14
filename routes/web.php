@@ -17,7 +17,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->middleware('admin');
 
 
 

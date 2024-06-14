@@ -26,7 +26,7 @@
     <div class="contain-fluid">
         <ul class="crumbs">
             <li><a href="{{ url('admin/contact/view')}}">Dashboard</a></li>
-            <li>Inquiries</li>
+            <li>contacts</li>
         </ul>
 
 
@@ -84,37 +84,37 @@
                                                     <div class="form_blk">
                                                         <h6>Name<sup>*</sup></h6>
                                                         <input type="text" name="contact_name_edit"
-                                                            id="contact_name_edit" class="text_box" maxlength="15">
+                                                            id="contact_name_edit" class="text_box" maxlength="15" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Email<sup>*</sup></h6>
                                                         <input type="email" name="contact_email_edit"
-                                                            id="contact_email_edit" class="text_box" maxlength="15">
+                                                            id="contact_email_edit" class="text_box" maxlength="15" readonly>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Subject</h6>
+                                                        <h6>Subject <sup>*</sup></h6>
                                                         <textarea name="contact_subject_edit" id="contact_subject_edit"
-                                                            class="text_box" placeholder=""></textarea>
+                                                            class="text_box" placeholder="" readonly></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Description</h6>
+                                                        <h6>Description<sup>*</sup></h6>
                                                         <textarea name="contact_description_edit"
                                                             id="contact_description_edit" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            placeholder="" readonly></textarea>
                                                     </div>
                                                 </div>
 
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Reply</h6>
+                                                        <h6>Reply <sup>*</sup></h6>
                                                         <textarea required name="contact_reply_edit"
                                                             id="contact_reply_edit" class="text_box"
                                                             placeholder=""></textarea>
@@ -181,7 +181,7 @@
             {{-- ______________________tab <All> start_______________________________--- --}}
                 <div id="All" class="tab-pane fade in active">
                     <div class="top_head">
-                        <h4>Properties</h4>
+                        <h4>Contacts</h4>
                         <div class="form_blk">
                             <input type="text" name="" id="" class="text_box contact_search_box"
                                 placeholder="Search here">
@@ -208,13 +208,13 @@
                             </table>
                         </div>
                     </div>
-                    <ul class="pagination">
+                    {{-- <ul class="pagination">
                         <li><a href="?" class="prev"></a></li>
                         <li><a href="?" class="active">1</a></li>
                         <li><a href="?">2</a></li>
                         <li><a href="?">3</a></li>
                         <li><a href="?" class="next"></a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 {{-- ______________________tab <All> end_______________________________--- --}}
 

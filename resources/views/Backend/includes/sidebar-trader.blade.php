@@ -5,7 +5,7 @@ $page="dashboard";
 <aside style="">
     <div class="logo_blk">
         <div class="logo">
-            <a href="#" style="background-image: url('{{ asset('/images/logo.svg') }}');"></a>
+            <a href="#" style="background-image: url('{{ asset('/images/SK-logo.png') }}');"></a>
         </div>
         <button type="button" class="toggle"><span></span></button>
     </div>
@@ -51,6 +51,12 @@ $page="dashboard";
                 <a href="{{ url('admin/contact/view') }}">
                     <img src="{{ asset('/images/icon-reply.svg') }}" alt="">
                     <em>Contact Catalogue</em>
+                </a>
+            </li>
+            <li class="active">
+                <a href="{{route('admin.testimonials.view') }}">
+                    <img src="{{ asset('/images/icon-reply.svg') }}" alt="">
+                    <em>Testimonials</em>
                 </a>
             </li>
 

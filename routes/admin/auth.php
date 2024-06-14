@@ -9,6 +9,7 @@ use App\Http\Controllers\BackEnd\Dashboard\ContactUsController;
 use App\Http\Controllers\BackEnd\Dashboard\MediaController;
 use App\Http\Controllers\BackEnd\Dashboard\PropertyController;
 use App\Http\Controllers\BackEnd\Dashboard\InquiryController;
+use App\Http\Controllers\BackEnd\Dashboard\TestimonialsController;
 
 use App\Models\City;
 
@@ -82,12 +83,9 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/contact/delete', [ContactUsController::class, 'deleteContact'])->name('admin.contact.delete');
     Route::get('/admin/contact/view/ajax', [ContactUsController::class, 'viewContactAjax'])->name('admin.contact.view.ajax');
 
+    //testimonials
+    Route::get('admin/testimonials/view', [TestimonialsController::class, 'viewTestimonials'])->name('admin.testimonials.view');
+    Route::get('/admin/testimonials/view/ajax', [TestimonialsController::class, 'viewTestimonialAjax'])->name('admin.testimonial.view.ajax');
+    Route::post('admin/testimonial/delete', [TestimonialsController::class, 'deleteTestimonial'])->name('admin.testimonial.delete');
 
-
-
-
-    Route::get('/city', function () {
-        $city = City::with('areas.locations.sectors')->get();
-        dd($city);
-    });
 });

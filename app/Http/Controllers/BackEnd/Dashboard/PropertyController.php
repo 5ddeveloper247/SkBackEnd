@@ -12,6 +12,7 @@ use App\Models\PropertyRecordFiles;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
 {
@@ -20,7 +21,7 @@ class PropertyController extends Controller
     public function propertyListing(Request $request)
     {
         // resources\views\Backend\admin\property\propertyListiing.blade.php
-        $personalInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
+        $personalInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('status', 0)->get();
         if ($personalInfo == null) {
             return view('Backend.admin.property.propertyListiing');
         } else {
@@ -31,17 +32,16 @@ class PropertyController extends Controller
 
     // load property for ajax
     public function loadpropertyList(Request $request)
-    {  
+    {
         $responseData = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
         $cityData = City::with('areas.locations.sectors')->get();
-        if($cityData){
-            $cities=$cityData;
+        if ($cityData) {
+            $cities = $cityData;
+        } else {
+            $cities = [];
         }
-        else{
-            $cities=[];
-        }
-       
-        return response()->json(['responseData' => $responseData,'cityData'=>$cities]);
+
+        return response()->json(['responseData' => $responseData, 'cityData' => $cities]);
     }
 
 
@@ -63,11 +63,12 @@ class PropertyController extends Controller
                 "pInfo_lName" => $request->pInfo_lastName,
                 "pInfo_email" => $request->pInfo_email,
                 "pInfo_phoneNumber" => $request->pInfo_phoneNumber,
+                'status' => '1',
             ]);
 
             // dd($personalInfoRecord);
-            // Saving property listing page record
-            $propertyListingPageRecord = PropertyListingPape::create([
+            // Saving property listing page records
+            $propertyListingPageRecord = PropertyListingPaPe::create([
                 "property_record_id" => $personalInfoRecord->property_record_id,
                 "purpose_purpose" => $request->purpose_purpose,
                 "pupose_home" => $request->pupose_home,
@@ -76,6 +77,7 @@ class PropertyController extends Controller
                 "address_city" => $request->address_city,
                 "address_area" => $request->address_area,
                 "address_phase" => $request->address_phase,
+                "address_location" => $request->address_location,
                 "address_sector" => $request->address_sector,
                 "address_address" => $request->address_address,
                 "propertyDetail_plot_num" => $request->propertyDetail_plot_num,
@@ -170,17 +172,53 @@ class PropertyController extends Controller
 
     public function propertyEditShow($id)
     {
-
         return view('Backend.admin.property.propertyEdit', ['id' => $id]);
     }
 
 
 
 
+
     public function propertyMainSubmission_edit(Request $request)
     {
+        // Validation rules
+        // Validation rules
 
-        //dd($request);
+        $validator = Validator::make($request->all(), [
+            'pInfo_firstName_edit' => 'required|string|max:255',
+            'pInfo_lastName_edit' => 'required|string|max:255',
+            'pInfo_email_edit' => 'required|email|unique:personal_info,pInfo_email,' . $request->property_id_edit,
+            'pInfo_phoneNumber_edit' => 'required|string|max:15',
+            'purpose_purpose_edit' => 'required|string|max:255',
+            'pupose_home_edit' => 'required|string|max:255',
+            'purpose_plot_edit' => 'required|string|max:255',
+            'purpose_commercial_edit' => 'required|string|max:255',
+            'address_city_edit' => 'required|string|max:255',
+            'address_area_edit' => 'required|string|max:255',
+            'address_location_edit' => 'required|string|max:255',
+            'address_sector_edit' => 'required|string|max:255',
+            'address_address_edit' => 'required|string|max:255',
+            'propertyDetail_plot_num_edit' => 'required|string|max:255',
+            'propertyDetail_area_edit' => 'required|string|max:255',
+            'propertyDetail_area_unit_edit' => 'required|string|max:255',
+            'propertyDetail_bedrooms_edit' => 'required|string|max:255',
+            'propertyDetail_bathrooms_edit' => 'required|string|max:255',
+            'extra_info_title_edit' => 'required|string|max:255',
+            'extra_info_postingas_edit' => 'required|string|max:255',
+            'extra_info_mobile_edit' => 'required|string|max:15',
+            'extra_info_landline_edit' => 'required|string|max:15',
+            'extra_info_description_edit' => 'required|string|max:5000',
+            'photos_edit.*' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // validate each file
+        ]);
+
+        // Check validation results
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('error', 'Validation failed. Please check your input.');
+        }
+
         try {
             $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
                 ->where('id', $request->property_id_edit)
@@ -191,34 +229,34 @@ class PropertyController extends Controller
             }
 
             // Update personal info
-            $propertyInfo->pInfo_fName = $request->pInfo_firstName_edit ?? null;
-            $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit ?? null;
-            $propertyInfo->pInfo_email = $request->pInfo_email_edit ?? null;
-            $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit ?? null;
+            $propertyInfo->pInfo_fName = $request->pInfo_firstName_edit;
+            $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit;
+            $propertyInfo->pInfo_email = $request->pInfo_email_edit;
+            $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit;
             $propertyInfo->status = '1';
-
 
             // Update property listing info
             if ($propertyInfo->propertyListingPape) {
-                $propertyInfo->propertyListingPape->purpose_purpose = $request->purpose_purpose_edit ?? null;
-                $propertyInfo->propertyListingPape->pupose_home = $request->pupose_home_edit ?? null;
-                $propertyInfo->propertyListingPape->purpose_plot = $request->purpose_plot_edit ?? null;
-                $propertyInfo->propertyListingPape->purpose_commercial = $request->purpose_commercial_edit ?? null;
-                $propertyInfo->propertyListingPape->address_city = $request->address_city_edit ?? null;
-                $propertyInfo->propertyListingPape->address_area = $request->address_area_edit ?? null;
-                $propertyInfo->propertyListingPape->address_phase = $request->address_phase_edit ?? null;
-                $propertyInfo->propertyListingPape->address_sector = $request->address_sector_edit ?? null;
-                $propertyInfo->propertyListingPape->address_address = $request->address_address_edit ?? null;
-                $propertyInfo->propertyListingPape->propertyDetail_plot_num = $request->propertyDetail_plot_num_edit ?? null;
-                $propertyInfo->propertyListingPape->propertyDetail_area = $request->propertyDetail_area_edit ?? null;
-                $propertyInfo->propertyListingPape->propertyDetail_area_unit = $request->propertyDetail_area_unit_edit ?? null;
-                $propertyInfo->propertyListingPape->propertyDetail_bedrooms = $request->propertyDetail_bedrooms_edit ?? null;
-                $propertyInfo->propertyListingPape->propertyDetail_bathrooms = $request->propertyDetail_bathrooms_edit ?? null;
-                $propertyInfo->propertyListingPape->extra_info_title = $request->extra_info_title_edit ?? null;
-                $propertyInfo->propertyListingPape->extra_info_postingas = $request->extra_info_postingas_edit ?? null;
-                $propertyInfo->propertyListingPape->extra_info_mobile = $request->extra_info_mobile_edit ?? null;
-                $propertyInfo->propertyListingPape->extra_info_landline = $request->extra_info_landline_edit ?? null;
-                $propertyInfo->propertyListingPape->extra_info_description = $request->extra_info_description_edit ?? null;
+                $propertyInfo->propertyListingPape->purpose_purpose = $request->purpose_purpose_edit;
+                $propertyInfo->propertyListingPape->pupose_home = $request->pupose_home_edit;
+                $propertyInfo->propertyListingPape->purpose_plot = $request->purpose_plot_edit;
+                $propertyInfo->propertyListingPape->purpose_commercial = $request->purpose_commercial_edit;
+                $propertyInfo->propertyListingPape->address_city = $request->address_city_edit;
+                $propertyInfo->propertyListingPape->address_area = $request->address_area_edit;
+                $propertyInfo->propertyListingPape->address_phase = $request->address_phase_edit;
+                $propertyInfo->propertyListingPape->address_location = $request->address_location_edit;
+                $propertyInfo->propertyListingPape->address_sector = $request->address_sector_edit;
+                $propertyInfo->propertyListingPape->address_address = $request->address_address_edit;
+                $propertyInfo->propertyListingPape->propertyDetail_plot_num = $request->propertyDetail_plot_num_edit;
+                $propertyInfo->propertyListingPape->propertyDetail_area = $request->propertyDetail_area_edit;
+                $propertyInfo->propertyListingPape->propertyDetail_area_unit = $request->propertyDetail_area_unit_edit;
+                $propertyInfo->propertyListingPape->propertyDetail_bedrooms = $request->propertyDetail_bedrooms_edit;
+                $propertyInfo->propertyListingPape->propertyDetail_bathrooms = $request->propertyDetail_bathrooms_edit;
+                $propertyInfo->propertyListingPape->extra_info_title = $request->extra_info_title_edit;
+                $propertyInfo->propertyListingPape->extra_info_postingas = $request->extra_info_postingas_edit;
+                $propertyInfo->propertyListingPape->extra_info_mobile = $request->extra_info_mobile_edit;
+                $propertyInfo->propertyListingPape->extra_info_landline = $request->extra_info_landline_edit;
+                $propertyInfo->propertyListingPape->extra_info_description = $request->extra_info_description_edit;
 
                 $propertyInfo->propertyListingPape->save();
             }
@@ -226,7 +264,8 @@ class PropertyController extends Controller
             // Update amenities
             $amenities = [
                 'Possession' => $request->has('check_Possesion_edit') ? 1 : 0,
-                'Balloted' => $request->has('checkk_Balloted_edit') ? 1 : 0,
+                'Balloted' => $request->has('check_Balloted_edit') ? 1 : 0,
+                'Electricity' => $request->has('check_Electricity_edit') ? 1 : 0,
                 'BoundryWall' => $request->has('check_BoundryWall_edit') ? 1 : 0,
                 'NearbySchool' => $request->has('check_NearbySchool_edit') ? 1 : 0,
                 'NearbyHospitals' => $request->has('check_NearbyHospitals_edit') ? 1 : 0,
@@ -290,8 +329,7 @@ class PropertyController extends Controller
         } catch (\Exception $e) {
             // Log the error message
             Log::error('Error in propertyMainSubmission_edit: ' . $e->getMessage());
-
-            return redirect()->back()->with('error', "An unexpected error occurred. Please try again later.");
+            return redirect()->back()->with('error', "An unexpected error occurred. Please try.");
         }
     }
 

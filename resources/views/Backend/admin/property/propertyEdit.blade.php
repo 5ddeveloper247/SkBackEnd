@@ -6,6 +6,27 @@
 
 
 @section('content')
+@if (session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
+@if (session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+
+@if ($errors->any())
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+</div>
+@endif
 <div class="blk">
     <form action="{{ route('admin.property.main.submission.edit') }}" class="propertySubmissionForm_edit" method="POST"
         enctype="multipart/form-data">
@@ -21,7 +42,7 @@
             </div>
             <div class="form_row row">
                 <input type="hidden" name="property_id_edit" id="property_id_edit">
-               
+
                 <div class="col-xs-6">
                     <h6>First Name<sup>*</sup></h6>
                     <div class="form_blk">
@@ -110,50 +131,44 @@
                 </h3>
             </div>
             <div class="form_row row">
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>City<sup>*</sup></h6>
                     <div class="form_blk">
-                        <select name="address_city_edit" id="address_city_edit" class="text_box"
-                            data-container="body">
-                           {{-- city will be append here --}}
+                        <select name="address_city_edit" id="address_city_edit" class="text_box" data-container="body">
+                            {{-- city will be append here --}}
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Area<sup>*</sup></h6>
                     <div class="form_blk">
-                        <select name="address_area_edit" id="address_area_edit" class="text_box"
-                            data-container="body">
-                           {{-- area will be append here --}}
+                        <select name="address_area_edit" id="address_area_edit" class="text_box" data-container="body">
+                            {{-- area will be append here --}}
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>location<sup>*</sup></h6>
                     <div class="form_blk">
-                        <select name="address_location_edit" id="address_location_edit"
-                            class="text_box" data-container="body">
+                        <select name="address_location_edit" id="address_location_edit" class="text_box"
+                            data-container="body">
                             <!-- Options will be populated dynamically -->
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Sector<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="address_sector_edit" id="address_sector_edit" class="text_box"
                             data-container="body">
-                           {{-- sectors will be append here --}}
+                            {{-- sectors will be append here --}}
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-12 col-xs-12">
                     <h6>Address<sup>*</sup></h6>
-                    <div class="form_blk">
-                        <select name="address_address_edit" id="address_address_edit" class="text_box"
-                            data-container="body">
-                           
-                        </select>
-                    </div>
+                    <textarea class="text_box" placeholder="Describe your address" name="address_address_edit"
+                        id="address_address_edit" spellcheck="false"></textarea>
                 </div>
 
             </div>
@@ -167,19 +182,16 @@
                 </h3>
             </div>
             <div class="form_row row">
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Plot No<sup>*</sup></h6>
                     <div class="form_blk">
-                        <select name="propertyDetail_plot_num_edit" id="propertyDetail_plot_num_edit"
-                            class="text_box selectpicker" data-container="body">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
+                        <input type="text" name="propertyDetail_plot_num_edit" id="propertyDetail_plot_num_edit"
+                            class="text_box" data-container="body"/>
+                           
+                        
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Area<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="propertyDetail_area_edit" id="propertyDetail_area_edit"
@@ -192,7 +204,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <div class="form_blk">
                         <div>
                             <h6>Area Unit<sup>*</sup></h6>
@@ -203,29 +215,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Bedrooms<sup>*</sup></h6>
                     <div class="form_blk">
-                        <select name="propertyDetail_bedrooms_edit" id="propertyDetail_bedrooms_edit"
-                            class="text_box selectpicker" data-container="body">
-                            <option value="1">1</option>
-                            <option value="2"> 2</option>
-                            <option value="3"> 3</option>
-                            <option value="4"> 4</option>
-                            <option value="5"> 5</option>
-                        </select>
+                        <input type="text" name="propertyDetail_bedrooms_edit" id="propertyDetail_bedrooms_edit"
+                            class="text_box" data-container="body"/>
+                      
                     </div>
                 </div>
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Bathrooms<sup>*</sup></h6>
                     <div class="form_blk">
-                        <select name="propertyDetail_bathrooms_edit" id="propertyDetail_bathrooms_edit"
-                            class="text_box selectpicker" data-container="body">
-                            <option value="1">1</option>
-                            <option value="2"> 2</option>
-                            <option value="3"> 3</option>
-                            <option value="4"> 4</option>
-                            <option value="5"> 5</option>
+                        <input type="text" name="propertyDetail_bathrooms_edit" id="propertyDetail_bathrooms_edit"
+                            class="text_box" data-container="body"/>
                         </select>
                     </div>
                 </div>
@@ -242,15 +244,15 @@
                         <div class="col-xs-12">
                             <h6>Title<sup>*</sup></h6>
                             <div class="form_blk">
-                                <input type="text" name="extra_info_title" id="extra_info_title_edit" class="text_box"
-                                    value=" " placeholder=" " readonly>
+                                <input type="text" name="extra_info_title_edit" id="extra_info_title_edit"
+                                    class="text_box" value="" placeholder=" ">
                             </div>
                         </div>
 
                         <div class="col-xs-12">
                             <h6>Posting As<sup>*</sup></h6>
                             <div class="form_blk">
-                                <input type="text" name="extra_info_postingas" id="extra_info_postingas_edit"
+                                <input type="text" name="extra_info_postingas_edit" id="extra_info_postingas_edit"
                                     class="text_box" placeholder="Agent Name">
                             </div>
                         </div>
@@ -346,7 +348,7 @@
                                         <span>Balloted</span>
                                     </label>
                                 </li>
-        
+
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_Electricity_edit"
@@ -446,8 +448,7 @@
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_StudyRoom_edit"
-                                            id="check_StudyRoom_edit">
+                                        <input type="checkbox" name="check_StudyRoom_edit" id="check_StudyRoom_edit">
                                         <span>Study Room</span>
                                     </label>
                                 </li>
@@ -488,9 +489,13 @@
                 </div>
 
 
-               <div class="my-div m-2"></div>
+                <div class="my-div m-2"></div>
+                <br>
                 <div class="btn_blk text-center">
-                    <button type="submit" class="site_btn extra_info_continue-btn_edit long " >Submit</button>
+                    <button type="submit" class="site_btn long ">
+                        <a href="{{route('admin.property.listing')}}">Back</a>
+                    </button>
+                    <button type="submit" class="site_btn extra_info_continue-btn_edit long ">Submit</button>
                 </div>
             </div>
 
@@ -504,10 +509,10 @@
 
 
 @push('scripts')
+
+
+
 {{-- ________________________________setting edit value in edit form_________________________ --}}
-
-
-
 
 <script>
     $(document).ready(() => {
@@ -542,11 +547,19 @@ if (response.propertyInfo) {
     $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial).selectpicker('refresh');
 
     //step 3
-     $('#address_city_edit').val(property?.property_listing_pape?.address_city);
-       $('#address_area_edit').val(property?.property_listing_pape?.address_area);
-        $('#address_phase_edit').val(property?.property_listing_pape?.address_phase);
-        $('#address_sector_edit').val(property?.property_listing_pape?.address_sector);
-         $('#address_address_edit').val(property?.property_listing_pape?.address_address);
+    let cityDropdown = document.getElementById('address_city_edit');
+    cityDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_city || '') + '">' + (property?.property_listing_pape?.address_city || 'Select City') + '</option>';
+    let areaDropdown = document.getElementById('address_area_edit');
+    areaDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_area || '') + '">' + (property?.property_listing_pape?.address_area || 'Select Area') + '</option>';
+      // Populate location dropdown with the previously selected location as the first option
+    let locationDropdown = document.getElementById('address_location_edit');
+    locationDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_location || '') + '">' + (property?.property_listing_pape?.address_location || 'Select Location') + '</option>';
+      // Populate sector dropdown with the previously selected sector as the first option
+    let sectorDropdown = document.getElementById('address_sector_edit');
+    sectorDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_sector || '') + '">' + (property?.property_listing_pape?.address_sector || 'Select Sector') + '</option>';
+    // Populate the address with the previosly selected 
+    $('#address_address_edit').text(property?.property_listing_pape?.address_address);
+        
 
         //  step 4
     $('#propertyDetail_plot_num_edit').val(property?.property_listing_pape?.propertyDetail_plot_num);
@@ -669,7 +682,7 @@ function loadPropertyandCityListing(response) {
 
     // Populate city dropdown with initial "Select City" option
     let cityDropdown = document.getElementById('address_city_edit');
-    cityDropdown.innerHTML = '<option value="">Select City</option>';
+  //  cityDropdown.innerHTML = '<option value="">Select City</option>';
     cityData.forEach(city => {
         let option = document.createElement('option');
         option.value = city.NAME;
@@ -677,75 +690,89 @@ function loadPropertyandCityListing(response) {
         cityDropdown.appendChild(option);
     });
 
-    // Add event listener to update areas and sectors when city is changed
+    // Add event listener to update areas and locations when city is changed
     cityDropdown.addEventListener('change', function() {
-        populateAreasAndLocations(cityData);
+        populateAreas(cityData);
     });
 }
 
-function populateAreasAndLocations(cityData) {
+function populateAreas(cityData) {
     let selectedCity = document.getElementById('address_city_edit').value;
     let city = cityData.find(city => city.NAME === selectedCity);
     
     // Populate area dropdown
     let areaDropdown = document.getElementById('address_area_edit');
-    // areaDropdown.innerHTML = '<option value="">Select Area</option>';
-    city.areas.forEach(area => {
-        let option = document.createElement('option');
-        option.value = area.NAME;
-        option.textContent = area.NAME;
-        console.log(option)
-        areaDropdown.appendChild(option);
+    areaDropdown.innerHTML = '<option value="">Select Area</option>';
+    if (city) {
+        city.areas.forEach(area => {
+            let option = document.createElement('option');
+            option.value = area.NAME;
+            option.textContent = area.NAME;
+            areaDropdown.appendChild(option);
+        });
+    }
+
+    // Clear the location and sector dropdowns
+    let locationDropdown = document.getElementById('address_location_edit');
+    locationDropdown.innerHTML = '<option value="">Select Location</option>';
+
+    let sectorDropdown = document.getElementById('address_sector_edit');
+    sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+
+    // Add event listener to update locations when area is changed
+    areaDropdown.addEventListener('change', function() {
+        populateLocations(city.areas);
     });
+}
+
+function populateLocations(areas) {
+    let selectedArea = document.getElementById('address_area_edit').value;
+    let area = areas.find(area => area.NAME === selectedArea);
 
     // Populate location dropdown
     let locationDropdown = document.getElementById('address_location_edit');
    // locationDropdown.innerHTML = '<option value="">Select Location</option>';
-    city.areas.forEach(area => {
+    if (area) {
         area.locations.forEach(location => {
             let option = document.createElement('option');
             option.value = location.NAME;
             option.textContent = location.NAME;
             locationDropdown.appendChild(option);
         });
-    });
+    }
 
-    // Populate sectors dropdown
-    populateSectors(city.areas);
-    console.log("city.area",city.areas)
+    // Clear the sector dropdown
+    let sectorDropdown = document.getElementById('address_sector_edit');
+  //  sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+
+    // Add event listener to update sectors when location is changed
+    locationDropdown.addEventListener('change', function() {
+        populateSectors(area.locations);
+    });
 }
 
+function populateSectors(locations) {
+    let selectedLocation = document.getElementById('address_location_edit').value;
+    let location = locations.find(location => location.NAME === selectedLocation);
 
-//while populating the sector i populate when the change in city occurs if the area is undefined or option not containing the area 
-//like if we use placeholder or select area option it does not fetch the area and show undefined
-function populateSectors(areas) {
-    console.log("areas in f",areas)
-    let selectedArea = document.getElementById('address_area_edit').value;
-  
-    let area = areas.find(area => area.NAME === selectedArea);
-    
-
-
+    // Populate sector dropdown
     let sectorDropdown = document.getElementById('address_sector_edit');
-   // sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
-    if (area) {
-        area.locations.forEach(location => {
-            location.sectors.forEach(sector => {
-                let option = document.createElement('option');
-                option.value = sector.NAME;
-                option.textContent = sector.NAME;
-                console.log(option)
-                sectorDropdown.appendChild(option);
-            });
+    sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+    if (location) {
+        location.sectors.forEach(sector => {
+            let option = document.createElement('option');
+            option.value = sector.NAME;
+            option.textContent = sector.NAME;
+            sectorDropdown.appendChild(option);
         });
     }
-   
 }
-
+ 
 // Call this function to load the city and property listings when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     loadCityListingAndPropertyListing();
 });
+
 
 </script>
 

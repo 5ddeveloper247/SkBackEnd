@@ -4,8 +4,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FrontEnd\HomeController;
-use App\Http\Controllers\frontEnd\MediaController;
-use App\Http\Controllers\frontEnd\ContactUsController;
+use App\Http\Controllers\FrontEnd\MediaController;
+use App\Http\Controllers\FrontEnd\ContactUsController;
 use App\Http\Controllers\FrontEnd\InquiryController;
 
 
@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('frontend')->group(function () {
     //property
-    
+
     Route::post('/home/register/property', [HomeController::class, 'index'])->name('api.frontend.home.register.property');
     Route::get('/home/property/get', [HomeController::class, 'propertyHomeView'])->name('api.frontend.home.property.homeView');
     Route::post('/home/property/post', [HomeController::class, 'propertyHomeViewbyMediaType'])->name('api.frontend.home.property.homeView.mediaType');
@@ -47,5 +47,5 @@ Route::prefix('frontend')->group(function () {
 
 
     //composable routes
-    Route::get('composable/city',[HomeController::class,'composableCity'])->name('composable.city');
-}); 
+    Route::get('composable/city', [HomeController::class, 'composableCity'])->name('composable.city');
+});

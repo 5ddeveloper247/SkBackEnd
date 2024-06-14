@@ -232,13 +232,13 @@
                             </table>
                         </div>
                     </div>
-                    <ul class="pagination">
+                    {{-- <ul class="pagination">
                         <li><a href="?" class="prev"></a></li>
                         <li><a href="?" class="active">1</a></li>
                         <li><a href="?">2</a></li>
                         <li><a href="?">3</a></li>
                         <li><a href="?" class="next"></a></li>
-                    </ul>
+                    </ul> --}}
                 </div>
                 {{-- ______________________tab <All> end_______________________________--- --}}
 
@@ -322,10 +322,8 @@ $.ajax({
 
 // Event delegation for handling click events on action buttons
 $(document).on('click', '.admin_view', function() {
-    alert("lkfajdlkfja")
     // Get user data from the button's data attributes
     var userData = $(this).data('user');
-    
     // Populate the modal with user data
     $('#viewFullName').text(userData.name);
     $('#viewEmail').text(userData.email);
@@ -342,13 +340,14 @@ $(document).on('click', '.admin_view', function() {
 
  // Handle edit button click
  $('#admin_edit').on('click', function() {
-
     var userData = $(this).data('user');
     if (userData) {
         $('#editFullNameInput').val(userData.name || '');
         $('#editEmailInput').val(userData.email || '');
         $('#editPasswordInput').val('');
-        $('#editStatusInput').prop('checked', userData.status || false);
+
+        // Set checkbox checked state based on userData.status
+        $('#editStatusInput').prop('checked', userData.status == 1);
 
         // Show the modal using Bootstrap
         $('#popupUpdate').css('display', 'block');
