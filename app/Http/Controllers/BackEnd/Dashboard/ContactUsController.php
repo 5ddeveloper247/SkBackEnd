@@ -7,6 +7,7 @@ use App\Models\Contact;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 use App\Helpers\WhatsAppHelper;
 
 class ContactUsController extends Controller
@@ -28,7 +29,7 @@ class ContactUsController extends Controller
 
         // Validate the request data
         $request->validate([
-            'edit_id' => 'required|integer|exists:inquiries,id',
+            'edit_id' => 'required|integer|exists:contacts,id',
             'contact_reply_edit' => 'nullable|string|max:2550',
         ]);
 
@@ -88,28 +89,28 @@ class ContactUsController extends Controller
     {
         try {
             // Find the inquiry with the specified conditions
-            $inquiry = Contact::where('id', $request->del_id)->first();
+            $contact = Contact::where('id', $request->del_id)->first();
 
             // If the inquiry exists, delete it
-            if ($inquiry) {
-                $inquiry->delete();
+            if ($contact) {
+                $contact->delete();
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Inquiry deleted successfully.'
+                    'message' => 'contact deleted successfully.'
                 ]);
             }
 
             // If the inquiry does not exist, return an error response
             return response()->json([
                 'status' => 404,
-                'message' => 'Inquiry not found or already completed.'
+                'message' => 'contact not found or already completed.'
             ]);
         } catch (Exception $e) {
             // Log the error and return an error response
-            Log::error('Error deleting inquiry: ' . $e->getMessage());
+            Log::error('Error deleting contact: ' . $e->getMessage());
             return response()->json([
                 'status' => 500,
-                'message' => 'Failed to delete the inquiry.'
+                'message' => 'Failed to delete the contact.'
             ]);
         }
     }
@@ -119,11 +120,12 @@ class ContactUsController extends Controller
     {
         try {
             // Fetch all inquiries
-            $inquiriesData = Contact::all();
-            if ($inquiriesData) {
+            $contactData = DB::table('contacts')->where('contact_reply_edit', Null)->get();
+            // $contactData = Contact::where('contact_reply_edit', null);
+            if ($contactData) {
                 return response()->json([
                     'success' => true,
-                    'data' => $inquiriesData
+                    'data' => $contactData
                 ], 200);
             } else {
                 return response()->json([

@@ -152,7 +152,7 @@
                             <h3 class="text-center">Are You Sure to Delete?</h3>
                             <!-- <p>Are You Sure to Delete?</p> -->
                             <div class="text-center row">
-                                <button type="button" class="btn bg-transparent rounded-pill" id="delete_confirmed_btn"
+                                <button type="button" class="btn bg-transparent rounded-pill" id="contact_delete_confirmed_btn"
                                     data-id=""><img src="{{asset('assets\images\check_1828640.png')}}"
                                         style="width:30px"></button>
                                 <button type="button" class="btn bg-transparent rounded-pill"
@@ -308,16 +308,15 @@ $(document).on('click', '.contact_edit_btn', function () {
 // _________________________________Delete functions_______________________________
 $(document).on('click', '.contact_delete_btn', function () {
     var del_id = $(this).attr('data-id');
-    console.log(del_id);
-    $('#delete_confirmed_btn').attr('data-id', del_id);
+    $('#contact_delete_confirmed_btn').attr('data-id', del_id);
 });
 
 $('#contact_close_delete_modal_btn').click(function () {
     $('.clode_delete_modal_default_btn').click();
-    $('#delete_confirmed_btn').attr('data-id', '');
+    $('#contact_delete_confirmed_btn').attr('data-id', '');
 });
 
-$('#delete_confirmed_btn').click(function () {
+$('#contact_delete_confirmed_btn').click(function () {
     var del_id = $(this).attr('data-id');
     let url = '/admin/contact/delete';
     let type = 'POST';
@@ -346,119 +345,6 @@ function deletcontactResponse(response) {
 </script>
 {{-- _____________________________-loading inquiries ended____________________ --}}
 
-<script>
-    $(window).on("load", function() {
-        $(".head_lst > li:nth-child(1)").addClass("current");
-        li = $('.head_lst > li:first');
-        $(document).on("click", ".next_btn", function() {
-            li = li.next('li');
-            li.prev().removeClass("current");
-            li.addClass("current");
-        });
-        $(document).on("click", ".prev_btn", function() {
-            li.removeClass("current");
-            li.nextAll().removeClass("done");
-            li = li.prev("li").addClass("current");
-        });
-        $(document).on("click", ".damage_btn .site_btn", function() {
-            $(".damage_btn .site_btn").removeClass("active");
-            $(this).addClass("active");
-        });
-    })
-</script>
-
-
-
-
-<script>
-    $(document).ready(function() {
-
-       
-function handleTabHeadNextActive  (tab_head) {   
-    for (let i = 1; i <= 7; i++) {
-        if (tab_head === i) {
-            $('.head_lst > li:nth-child(' + i + ')').addClass('current');
-        } else {
-            $('.head_lst > li:nth-child(' + i + ')').removeClass('current');
-        }
-    }
-}
-
-
-    // Step 1: Personal Info Validation and Navigation
-    $('#p-info_continue_btn').click(function(e) {
-    const tab_head_lst = 1;
-    var firstName = $('#pInfo_firstName');
-    var lastName = $('#pInfo_lastName');
-    var email = $('#pInfo_email');
-    var phone = $('#pInfo_phoneNumber');
-    
-    // Remove red borders from previously failed fields
-    $('.validation-failed').removeClass('validation-failed');
-
-    if (!firstName.val().trim()) {
-        firstName.addClass('validation-failed');
-    }
-    if (!lastName.val().trim()) {
-        lastName.addClass('validation-failed');
-    }
-    if (!email.val().trim()) {
-        email.addClass('validation-failed');
-    }
-    if (!phone.val().trim()) {
-        phone.addClass('validation-failed');
-    }
-
-    if ($('.validation-failed').length > 0) {
-        handleTabHeadNextActive(tab_head_lst);
-        $('#personal_info_tab').css('display', 'block');
-        $('#purpose_tab').css('display', 'none');
-        return;
-    } else {
-        handleTabHeadNextActive(tab_head_lst + 1);
-        $('#personal_info_tab').css('display', 'none');
-        $('#purpose_tab').css('display', 'block');
-    }
-});
-
-
-
-   // Step 2:purpose Validation and Navigation
-$('.purpose_continue_btn').click(function() {
-    const tab_head_lst = 2;
-    var purpose = $('#purpose_purpose');
-    var home = $('#pupose_home');
-    var plot = $('#purpose_plot');
-    var commercial = $('#purpose_commercial');
-
-    // Remove red borders from previously failed fields
-    $('.validation-failed').removeClass('validation-failed');
-
-    // Add validation logic for Purpose fields
-    if (!purpose.val().trim()) {
-        purpose.addClass('validation-failed');
-    }
-    if (!home.val().trim()) {
-        home.addClass('validation-failed');
-    }
-    if (!plot.val().trim()) {
-        plot.addClass('validation-failed');
-    }
-    if (!commercial.val().trim()) {
-        commercial.addClass('validation-failed');
-    }
-
-    // Check if any field failed validation
-    if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Purpose.');
-        return;  
-    } else {
-        // If all fields pass validation, proceed to the next tab
-        handleTabHeadNextActive(tab_head_lst + 1);
-        $('#purpose_tab').hide();
-        $('#address_tab').show();
-    }
-});
 
 
 
@@ -467,191 +353,12 @@ $('.purpose_continue_btn').click(function() {
 
 
 
-$('.address_continue_btn').click(function() {
-    const tab_head_lst = 3;
-    var city = $('#address_city');
-    var area = $('#address_area');
-    var phase = $('#address_phase');
-    var sector = $('#address_sector');
-    var address = $('#address_address');
 
-    // Remove red borders from previously failed fields
-    $('.validation-failed').removeClass('validation-failed');
-
-    // Add validation logic for Address fields
-    if (!city.val().trim()) {
-        city.addClass('validation-failed');
-    }
-    if (!area.val().trim()) {
-        area.addClass('validation-failed');
-    }
-    if (!phase.val().trim()) {
-        phase.addClass('validation-failed');
-    }
-    if (!sector.val().trim()) {
-        sector.addClass('validation-failed');
-    }
-    if (!address.val().trim()) {
-        address.addClass('validation-failed');
-    }
-
-    // Check if any field failed validation
-    if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Address.');
-        return;
-    } else {
-        // If all fields pass validation, proceed to the next tab
-        handleTabHeadNextActive(tab_head_lst + 1);
-        $('#address_tab').hide();
-        $('#property_detail_tab').show();
-    }
-});
+   
 
 
 
 
-
-
-$('.property_detail_continue_btn').click(function() {
-    const tab_head_lst = 4;
-    var plotNum = $('#propertyDetail_plot_num');
-    var area = $('#propertyDetail_area');
-    var areaUnit = $('#propertyDetail_area_unit');
-    var bedrooms = $('#propertyDetail_bedrooms');
-    var bathrooms = $('#propertyDetail_bathrooms');
-
-    // Remove red borders from previously failed fields
-    $('.validation-failed').removeClass('validation-failed');
-
-    // Add validation logic for Property Detail fields
-    if (!plotNum.val().trim()) {
-        plotNum.addClass('validation-failed');
-    }
-    if (!area.val().trim()) {
-        area.addClass('validation-failed');
-    }
-    if (!areaUnit.val().trim()) {
-        areaUnit.addClass('validation-failed');
-    }
-    if (!bedrooms.val().trim()) {
-        bedrooms.addClass('validation-failed');
-    }
-    if (!bathrooms.val().trim()) {
-        bathrooms.addClass('validation-failed');
-    }
-
-    // Check if any field failed validation
-    if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Property Detail.');
-        return;
-    } else {
-        // If all fields pass validation, proceed to the next tab
-        handleTabHeadNextActive(tab_head_lst + 1);
-        $('#property_detail_tab').hide();
-        $('#extra_info_tab').show();
-    }
-});
-
-
-
-
-$('.extra_info_continue-btn').click(function() {
-    const tab_head_lst = 5;
-    var title = $('#extra_info_title');
-    var postingAs = $('#extra_info_postingas');
-    var mobile = $('#extra_info_mobile');
-    var landline = $('#extra_info_landline');
-    var description = $('#extra_info_description');
-
-    // Remove red borders from previously failed fields
-    $('.validation-failed').removeClass('validation-failed');
-
-    // Add validation logic for Extra Information fields
-    if (!title.val().trim()) {
-        title.addClass('validation-failed');
-    }
-    if (!postingAs.val().trim()) {
-        postingAs.addClass('validation-failed');
-    }
-    if (!mobile.val().trim()) {
-        mobile.addClass('validation-failed');
-    }
-    if (!landline.val().trim()) {
-        landline.addClass('validation-failed');
-    }
-    if (!description.val().trim()) {
-        description.addClass('validation-failed');
-    }
-
-    // Check if any field failed validation
-    if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Extra Information.');
-        return;
-    } else {
-        // If all fields pass validation, proceed to the next tab
-        handleTabHeadNextActive(tab_head_lst + 1);
-        $('#extra_info_tab').hide();
-        $('#amenities_tab').show();
-
-        // Add code to move to the next step or complete the form
-    }    
-}); 
-
-
-
-$('.amenities_continue_btn').click(function(){
-    const tab_head_lst = 6;
-    $('#amenities_tab').hide();
-    $('#done_tab').show();
-    handleTabHeadNextActive(tab_head_lst + 1);
-    handlePropertyFormsubmission();
-
-});
-
-
-
-//Back Buttons
-$('.prev_btn').click(function() {
-        $(this).closest('.tab').hide().prev('.tab').show();
-    });
-
-    // Example of using jQuery Mask Plugin
-});
-
-  
-function  handlePropertyFormsubmission(){
-    setTimeout(() => {
-        $('.propertySubmissionForm').submit();
-        
-    }, 2000);
-}
-
-</script>
-
-
-<script>
-    $(document).ready(function() {
-    $('.prev_btn').click(function() {
-        console.log("Previous button clicked");
-
-        // Get the current tab index
-        var currentIndex = $('#head_lst li').index($('#head_lst li.current'));
-        console.log("Current tab index:", currentIndex);
-
-        // If it's the first tab, return early
-        if (currentIndex === 0) {
-            return;
-        }
-
-        // Remove current class from the current tab
-        $('#head_lst li.current').removeClass('current');
-
-        // Add current class to the previous tab
-        $('#head_lst li').eq(currentIndex - 1).addClass('current');
-    });
-});
-
-</script>
 
 
 
