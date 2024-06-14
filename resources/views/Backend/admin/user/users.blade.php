@@ -71,27 +71,7 @@
     }
 </style>
 
-.modal-header {
-background-color: #007bff;
-color: white;
-}
 
-.modal-header .btn-close {
-filter: invert(1);
-}
-
-.form-check-input {
-transform: scale(1.5);
-}
-
-.form-check {
-padding-left: 0;
-}
-
-.table th,
-.table td {
-vertical-align: middle;
-}
 </style>
 
 @endpush
