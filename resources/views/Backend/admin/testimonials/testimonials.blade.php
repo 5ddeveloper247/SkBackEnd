@@ -27,10 +27,10 @@
         {{-- ______________________tab listings end _______________________________--- --}}
 
         {{--___________________________________ edit property resonse message___________________________________ --}}
-      
+
 
         <!-- Display Error Message -->
-     
+
 
         <!-- Display Validation Errors -->
 
@@ -117,13 +117,13 @@
                 <div class="table_cell">
                     <div class="contain">
                         <div class="_inner editor_blk">
-                            <button type="button" class="hidden x_btn clode_delete_modal_default_btn"></button>
+                            <button type="button" class="hidden x_btn close_delete_modal_default_btn"></button>
                             <h3 class="text-center">Are You Sure to Delete?</h3>
                             <!-- <p>Are You Sure to Delete?</p> -->
                             <div class="text-center row">
-                                <button type="button" class="btn bg-transparent rounded-pill" id="delete_confirmed_btn"
-                                    data-id=""><img src="{{asset('assets\images\check_1828640.png')}}"
-                                        style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="testimonial_delete_confirmed_btn" data-id=""><img
+                                        src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
                                 <button type="button" class="btn bg-transparent rounded-pill"
                                     id="inquiry_close_delete_modal_btn"><img
                                         src="{{asset('assets\images\close-button_11450177.png')}}"
@@ -215,7 +215,7 @@
       tr.fadeIn().show();
   }
 }); 
-</script> 
+</script>
 
 
 
@@ -274,15 +274,15 @@
     $(document).on('click', '.testimonial_delete_btn', function () {
         var del_id = $(this).attr('data-id');
         
-        $('#delete_confirmed_btn').attr('data-id', del_id);
+        $('#testimonial_delete_confirmed_btn').attr('data-id', del_id);
     });
 
     $('#testimonial_close_delete_modal_btn').click(function () {
         $('.close_delete_modal_default_btn').click();
-        $('#delete_confirmed_btn').attr('data-id', '');
+        $('#testimonial_delete_confirmed_btn').attr('data-id', '');
     });
 
-    $('#delete_confirmed_btn').click(function () { 
+    $('#testimonial_delete_confirmed_btn').click(function () { 
         var del_id = $(this).attr('data-id');
         let url = '/admin/testimonial/delete';
         let type = 'POST';
@@ -299,7 +299,7 @@
             window.location.reload(); // Reload the page
         } else {
             $('#delete_modal').hide();
-            toastr.error(response.message, '', { timeOut: 3000 });
+            // toastr.error(response.message, '', { timeOut: 3000 });
         }
     }
 

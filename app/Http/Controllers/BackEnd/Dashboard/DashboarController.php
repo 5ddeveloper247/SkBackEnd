@@ -24,10 +24,10 @@ class DashboarController extends Controller
     public function createAdmins(Request $request)
     {
         $rules = [
-            'createEmailInput' => 'required|email',
-            'createFullNameInput' => 'required|string',
-            'createPasswordInput' => 'required|string',
-            'createPhoneInput' => 'required|string',
+            'EmailInput' => 'required|email',
+            'FullNameInput' => 'required|string',
+            'PasswordInput' => 'required|string',
+            // 'PhoneInput' => 'required|string',
         ];
 
         // Validate the request data
@@ -41,12 +41,13 @@ class DashboarController extends Controller
         // If validation succeeds, create a new user
         try {
             $user = new User();
-            $user->email = $request->createEmailInput;
-            $user->name = $request->createFullNameInput;
-            $user->password = Hash::make($request->createPasswordInput);
+            $user->email = $request->EmailInput;
+            $user->name = $request->FullNameInput;
+            $user->password = Hash::make($request->PasswordInput);
             $user->role = "admin";
+            $user->status='1';
             //   $user->phone = $request->createPhoneInput;
-            $user->status = $request->has('createStatusInput') ? true : false; // Assuming status is boolean
+            $user->status = $request->has('StatusInput') ? true : false; // Assuming status is boolean
 
             // Save the user
             $user->save();

@@ -17,6 +17,68 @@
             <li><a href="{{ url('admin/users')}}">Dashboard</a></li>
             <li>Admin</li>
         </ul>
+        <!-- Modal create admin -->
+        <section class="popup lg" id="popupAddAdminUrl" data-popup="search" style="display: none;">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner">
+                            <button class="x_btn" id="closeCustomModalButton"></button>
+                            <div class="modal-body">
+
+                                <form action="#" id="AddAdminForm">
+                                    <div class="row mb-3">
+                                      
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-1">Full Name<sup>*</sup></h6>
+                                        </div>
+                                        <div class="col-sm-9 m-2">
+                                            <input name="FullNameInput" id="FullNameInput" type="text"
+                                                class="form-control mb-1" value="" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Email<sup>*</sup></h6>
+                                        </div>
+                                        <div class="col-sm-9 m-2">
+                                            <input name="EmailInput" id="EmailInput" type="text"
+                                                class="form-control mb-1" value="" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-5">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Password<sup>*</sup></h6>
+                                        </div>
+                                        <div class="col-sm-9 m-2">
+                                            <input name="PasswordInput" id="PasswordInput" type="text"
+                                                class="form-control mb-1" required placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-3">
+                                            <h6 class="mb-0">Status<sup>*</sup></h6>
+                                        </div>
+                                        <div class="col-sm-9 m-2">
+                                            <div class="ms-3 form-check form-switch">
+                                                <input name="StatusInput" id="StatusInput" style="font-size: 20px;"
+                                                    type="checkbox" class="form-check-input mb-1" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="modal-footer">
+
+                                    <button type="button" id="AddAdminBtn" class="btn btn-primary">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- View User Modal -->
         <section class="popup lg" id="popupView" data-popup="search" style="display: none;">
             <div class="table_dv">
@@ -174,13 +236,30 @@
             {{-- ______________________tab <All> start_______________________________--- --}}
                 <div id="All" class="tab-pane fade in active">
                     <div class="top_head">
-                        <h4>Properties</h4>
+                        <h4>Admin</h4>
                         <div class="form_blk">
-                            <input type="text" name="" id="" class="text_box property_search_box" placeholder="Search here">
+                            <input type="text" name="" id="" class="text_box property_search_box"
+                                placeholder="Search here">
                             <button type="button"><img src="{{ asset('/images/icon-search.svg')}}" alt=""></button>
                         </div>
                     </div>
                     <div class="blk">
+                        <div class="top_head">
+                            
+                            <div class="card_blk" id="showAddAdminPopUpBtn">
+                                <div class="icon"><img src="{{ asset('/images/icon-plus.svg') }}" alt="">
+                                </div>
+                                <strong>Add Admin</strong>
+                                <a type="button"></a>
+                            </div>
+                           
+                            <div class="card_blk" id="">
+                                <div class="icon"><img src="{{ asset('/images/icon-heart.svg') }}" alt="">
+                                </div>
+                                <strong >Total Users {{ $adminCounter }} <p id="totalUserCounter"></p></strong>
+                                <a type="button"></a>
+                            </div>
+                        </div>
                         <div class="tbl_blk">
                             <table id="admin_table" class="table table-responsive">
                                 <thead>
@@ -277,8 +356,11 @@
 {{-- __________________________ table searching ended_______________ --}}
 <script>
     // Define the functaion
+$('#AddAdminBtn').on('click',function(){
+    handleCreateAdminx();
+});
 function handleCreateAdminx() {
-var formData = $('#createAdminForm').serialize();
+var formData = $('#AddAdminForm').serialize();
 const uri ='/admin/dashboard/create/admin';
 
 $.ajax({
@@ -289,32 +371,29 @@ $.ajax({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function(response) {
-        toastr.success("Submitted Successfully");
-       // window.location.reload();
+        toastr.success("Submitted Successfully", '', { timeOut: 5000 }); // Set timeout to 5 seconds
+        // window.location.reload();
         // Handle success response 
         // Close the modal if needed  
-        window.location.reload()
+        window.location.reload();
         $('.data-table').DataTable().ajax.reload();
         $('#exampleModal').modal('hide');
-    }, 
+    },
     error: function(xhr, status, error) {
-        toastr.error('Error submitting form:', error, '', {
-            timeOut: 3000
-        });
         var errorMessages = "";
         if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
             for (var key in errors) {
-                toastr.error(errors[key][0] + '<br>'); // Concatenate error messages
+                toastr.error(errors[key][0] + '<br>', '', { timeOut: 5000 }); // Set timeout to 5 seconds
             }
-            // toastr.error(errorMessages);
         } else {
-            toastr.error('Error:', error);
+            toastr.error('Error:', error, { timeOut: 5000 }); // Set timeout to 5 seconds
         }
         $('#exampleModal').modal('show');
         console.error('Error submitting form:', error);
     }
-});                         
+});  
+                       
 }
 
 
@@ -440,5 +519,15 @@ $('#admin_delete').click( function() {
     });
 });
 
+</script>
+
+
+<script>
+    $(document).ready(function() {
+    $('#showAddAdminPopUpBtn').on('click', function() {
+        $('#popupAddAdminUrl').show();
+    });
+});  
+  
 </script>
 @endpush

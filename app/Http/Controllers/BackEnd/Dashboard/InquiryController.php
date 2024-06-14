@@ -25,6 +25,7 @@ class InquiryController extends Controller
   public function updateInquiries(Request $request)
   {
     // Validate the request data
+   
     $request->validate([
       'edit_id' => 'required|integer|exists:inquiries,id',
       'inquiry_description_edit' => 'nullable|string|max:2550',
@@ -60,7 +61,7 @@ class InquiryController extends Controller
          // Send WhatsApp message
          $adminContact=env('ADMIN_WHATSAPP_NUMBER');
          $phoneno = [$site_user_phone_num,$adminContact];
-         $message = $request->description;
+         $message = $request->inquiry_reply_edit ?? "An empty response was submitted in response";
          $id = 123;
  
  

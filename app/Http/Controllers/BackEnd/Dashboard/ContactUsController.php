@@ -119,7 +119,7 @@ class ContactUsController extends Controller
     {
         try {
             // Fetch all inquiries
-            $inquiriesData = Contact::whereNull('contact_reply_edit');
+            $inquiriesData = Contact::all();
             if ($inquiriesData) {
                 return response()->json([
                     'success' => true,

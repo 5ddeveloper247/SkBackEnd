@@ -14,8 +14,12 @@ class AdminController extends Controller
 
     public function adminList(Request $request)
     {
-        $dataAdmin = User::all();
-        return view('Backend.admin.user.admins', ['users' => $dataAdmin]);
+        // Assuming 'role' is a column in your 'users' table to distinguish admins from other users.
+        // Adjust the condition based on your actual schema.
+        $dataAdmin = User::where('role', 'admin')->get();
+        $adminCounter = $dataAdmin->count();
+
+        return view('Backend.admin.user.admins', ['users' => $dataAdmin, 'adminCounter' => $adminCounter]);
     }
 
 
