@@ -135,7 +135,8 @@
                     <h6>City<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="address_city_edit" id="address_city_edit" class="text_box" data-container="body">
-                            {{-- city will be append here --}}
+                        <option value="">Choose City</option>       
+                        {{-- city will be append here --}}
                         </select>
                     </div>
                 </div>
@@ -143,7 +144,8 @@
                     <h6>Area<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="address_area_edit" id="address_area_edit" class="text_box" data-container="body">
-                            {{-- area will be append here --}}
+                            <option value="">Choose Area</option>    
+                        {{-- area will be append here --}}
                         </select>
                     </div>
                 </div>
@@ -152,6 +154,7 @@
                     <div class="form_blk">
                         <select name="address_location_edit" id="address_location_edit" class="text_box"
                             data-container="body">
+                            <option value="">Choose Location</option>    
                             <!-- Options will be populated dynamically -->
                         </select>
                     </div>
@@ -161,6 +164,7 @@
                     <div class="form_blk">
                         <select name="address_sector_edit" id="address_sector_edit" class="text_box"
                             data-container="body">
+                            <option value="">Choose Sector</option>    
                             {{-- sectors will be append here --}}
                         </select>
                     </div>
@@ -529,46 +533,76 @@
 
 function getpropertydataEditResponse(response) {
 
-if (response.propertyInfo) {
-    var property = response.propertyInfo;
+    var areas = response.areas;
+    var locations = response.locations;
+    var sectors = response.sectors;
 
-    // step 1
-    $('#property_id_edit').val(property.id);
-    $('#pInfo_firstName_edit').val(property.pInfo_fName);
-    $('#pInfo_lastName_edit').val(property.pInfo_lName);
-    $('#pInfo_email_edit').val(property.pInfo_email);
-    $('#pInfo_phoneNumber_edit').val(property.pInfo_phoneNumber);
+    var areaOption = locationOption = sectorOption = `<option value=''>Choose</option>`;
 
-    //step 2
-    
-    $('#purpose_purpose_edit').val(property?.proerty_listing_pape?.purpose_purpose).selectpicker('refresh');
-    $('#pupose_home_edit').val(property?.proerty_listing_pape?.pupose_home).selectpicker('refresh');
-    $('#purpose_plot_edit').val(property?.proerty_listing_pape?.purpose_plot).selectpicker('refresh');
-    $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial).selectpicker('refresh');
+    $.each(areas, function (index, value) {
+        areaOption += `<option value="${value.NAME}">${value.NAME}</option>`;
+    });
+    $("#address_area_edit").html(areaOption);
 
-    //step 3
-    let cityDropdown = document.getElementById('address_city_edit');
-    cityDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_city || '') + '">' + (property?.property_listing_pape?.address_city || 'Select City') + '</option>';
-    let areaDropdown = document.getElementById('address_area_edit');
-    areaDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_area || '') + '">' + (property?.property_listing_pape?.address_area || 'Select Area') + '</option>';
-      // Populate location dropdown with the previously selected location as the first option
-    let locationDropdown = document.getElementById('address_location_edit');
-    locationDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_location || '') + '">' + (property?.property_listing_pape?.address_location || 'Select Location') + '</option>';
-      // Populate sector dropdown with the previously selected sector as the first option
-    let sectorDropdown = document.getElementById('address_sector_edit');
-    sectorDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_sector || '') + '">' + (property?.property_listing_pape?.address_sector || 'Select Sector') + '</option>';
-    // Populate the address with the previosly selected 
-    $('#address_address_edit').text(property?.property_listing_pape?.address_address);
+    $.each(locations, function (index, value) {
+        locationOption += `<option value="${value.NAME}">${value.NAME}</option>`;
+    });
+    $("#address_location_edit").html(locationOption);
+
+    $.each(sectors, function (index, value) {
+        sectorOption += `<option value="${value.NAME}">${value.NAME}</option>`;
+    });
+    $("#address_sector_edit").html(sectorOption);
+
+    if (response.propertyInfo) {
+        var property = response.propertyInfo;
+
+        // step 1
+        $('#property_id_edit').val(property.id);
+        $('#pInfo_firstName_edit').val(property.pInfo_fName);
+        $('#pInfo_lastName_edit').val(property.pInfo_lName);
+        $('#pInfo_email_edit').val(property.pInfo_email);
+        $('#pInfo_phoneNumber_edit').val(property.pInfo_phoneNumber);
+
+        //step 2
+        
+        $('#purpose_purpose_edit').val(property?.proerty_listing_pape?.purpose_purpose).selectpicker('refresh');
+        $('#pupose_home_edit').val(property?.proerty_listing_pape?.pupose_home).selectpicker('refresh');
+        $('#purpose_plot_edit').val(property?.proerty_listing_pape?.purpose_plot).selectpicker('refresh');
+        $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial).selectpicker('refresh');
+
+        //step 3
+        // let cityDropdown = document.getElementById('address_city_edit');
+        // cityDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_city || '') + '">' + (property?.property_listing_pape?.address_city || 'Select City') + '</option>';
+        
+        setTimeout(function(){
+            $("#address_city_edit").val(property.property_listing_pape.address_city);
+            $("#address_area_edit").val(property.property_listing_pape.address_area);
+            $("#address_location_edit").val(property.property_listing_pape.address_location);
+            $("#address_sector_edit").val(property.property_listing_pape.address_sector);
+        }, 500);
         
 
-        //  step 4
-    $('#propertyDetail_plot_num_edit').val(property?.property_listing_pape?.propertyDetail_plot_num);
-    $('#propertyDetail_area_edit').val(property?.property_listing_pape?.propertyDetail_area);
-    $('#propertyDetail_area_unit_edit').val(property?.property_listing_pape?.propertyDetail_area_unit);
-    $('#propertyDetail_bedrooms_edit').val(property?.property_listing_pape?.propertyDetail_bedrooms);
-    $('#propertyDetail_bathrooms_edit').val(property?.property_listing_pape?.propertyDetail_bathrooms);
+        // let areaDropdown = document.getElementById('address_area_edit');
+        // areaDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_area || '') + '">' + (property?.property_listing_pape?.address_area || 'Select Area') + '</option>';
+        // Populate location dropdown with the previously selected location as the first option
+        // let locationDropdown = document.getElementById('address_location_edit');
+        // locationDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_location || '') + '">' + (property?.property_listing_pape?.address_location || 'Select Location') + '</option>';
+        // Populate sector dropdown with the previously selected sector as the first option
+        // let sectorDropdown = document.getElementById('address_sector_edit');
+        // sectorDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_sector || '') + '">' + (property?.property_listing_pape?.address_sector || 'Select Sector') + '</option>';
+        // Populate the address with the previosly selected 
+        $('#address_address_edit').text(property?.property_listing_pape?.address_address);
+            
 
-    // step 5
+        //  step 4
+        $('#propertyDetail_plot_num_edit').val(property?.property_listing_pape?.propertyDetail_plot_num);
+        $('#propertyDetail_area_edit').val(property?.property_listing_pape?.propertyDetail_area);
+        $('#propertyDetail_area_unit_edit').val(property?.property_listing_pape?.propertyDetail_area_unit);
+        $('#propertyDetail_bedrooms_edit').val(property?.property_listing_pape?.propertyDetail_bedrooms);
+        $('#propertyDetail_bathrooms_edit').val(property?.property_listing_pape?.propertyDetail_bathrooms);
+
+        // step 5
         $('#extra_info_title_edit').val(property?.property_listing_pape?.extra_info_title);
         $('#extra_info_postingas_edit').val(property?.property_listing_pape?.extra_info_postingas);
         $('#extra_info_mobile_edit').val(property?.property_listing_pape?.extra_info_mobile);
@@ -576,52 +610,52 @@ if (response.propertyInfo) {
         $('#extra_info_description_edit').val(property?.property_listing_pape?.extra_info_description);
 
 
-  // Function to generate and display image previews with remove button
-  function displayImagePreviews(files) {
-    const previewList = $('#previewList_edit');
-    const existingFiles = $('#existingFiles');
-    previewList.empty(); // Clear any existing previews
-    const base_url = '{{ url('/') }}'; // Correctly set base URL
+        // Function to generate and display image previews with remove button
+        function displayImagePreviews(files) {
+            const previewList = $('#previewList_edit');
+            const existingFiles = $('#existingFiles');
+            previewList.empty(); // Clear any existing previews
+            const base_url = '{{ url('/') }}'; // Correctly set base URL
 
-    let filePaths = [];
+            let filePaths = [];
 
-    files.forEach(file => {
-        const listItem = $('<li>');
-        listItem.html(`
-            <div class="thumb">
-                <img src="${base_url}/${file.image_uri}" alt="">
-                <button type="button" class="x_btn" onclick="removeFile_edit(this)">&times;</button>
-            </div>
-        `);
-        previewList.append(listItem);
-        filePaths.push(file.image_uri); // Store file path
-    });
+            files.forEach(file => {
+                const listItem = $('<li>');
+                listItem.html(`
+                    <div class="thumb">
+                        <img src="${base_url}/${file.image_uri}" alt="">
+                        <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
+                    </div>
+                `);
+                previewList.append(listItem);
+                filePaths.push(file.image_uri); // Store file path
+            });
 
-    existingFiles.val(JSON.stringify(filePaths)); // Store file paths in hidden input
-}
+            existingFiles.val(JSON.stringify(filePaths)); // Store file paths in hidden input
+        }
 
-// Display existing images on load
-if (property.property_record_files) {
-    displayImagePreviews(property.property_record_files);
-}
+        // Display existing images on load
+        if (property.property_record_files) {
+            displayImagePreviews(property.property_record_files);
+        }
 
-//setting amanities 
-property.amenities.forEach(function(amenity) {
-                var checkbox = document.getElementById('check_' + amenity.amenities + '_edit');
-                if (checkbox) {
-                    checkbox.checked = amenity.value === 1;
-                }
-            }); 
+        //setting amanities 
+        property.amenities.forEach(function(amenity) {
+                        var checkbox = document.getElementById('check_' + amenity.amenities + '_edit');
+                        if (checkbox) {
+                            checkbox.checked = amenity.value === 1;
+                        }
+                    }); 
 
-}
+        }
 
 
-if (response.status == 402) { 
-    var error = response.message;
-    toastr.error(error, '', {
-        timeOut: 3000
-    });
-}
+        if (response.status == 402) { 
+            var error = response.message;
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
+        }
 
 }
 

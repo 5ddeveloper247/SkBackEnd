@@ -1003,6 +1003,7 @@ $('.extra_info_continue-btn').click(function() {
     var mobile = $('#extra_info_mobile');
     var landline = $('#extra_info_landline');
     var description = $('#extra_info_description');
+    var images = $('#fileInput');
 
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
@@ -1022,6 +1023,9 @@ $('.extra_info_continue-btn').click(function() {
     }
     if (!description.val().trim()) {
         description.addClass('validation-failed');
+    }
+    if(!images.val()){
+        images.addClass('validation-failed');
     }
 
     // Check if any field failed validation

@@ -18,7 +18,7 @@
             <li>Admin</li>
         </ul>
         <!-- Modal create admin -->
-        <section class="popup lg" id="popupAddAdminUrl" data-popup="search" style="display: none;">
+        <section class="popup md" id="popupAddAdminUrl" data-popup="search" style="display: none;">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
@@ -29,38 +29,38 @@
                                 <form action="#" id="AddAdminForm">
                                     <div class="row mb-3">
                                       
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-1">Full Name<sup>*</sup></h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <input name="FullNameInput" id="FullNameInput" type="text"
                                                 class="form-control mb-1" value="" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Email<sup>*</sup></h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <input name="EmailInput" id="EmailInput" type="text"
                                                 class="form-control mb-1" value="" />
                                         </div>
                                     </div>
 
                                     <div class="row mb-5">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Password<sup>*</sup></h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <input name="PasswordInput" id="PasswordInput" type="text"
                                                 class="form-control mb-1" required placeholder="" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-12">
                                             <h6 class="mb-0">Status<sup>*</sup></h6>
                                         </div>
-                                        <div class="col-sm-9 m-2">
+                                        <div class="col-sm-12 m-2">
                                             <div class="ms-3 form-check form-switch">
                                                 <input name="StatusInput" id="StatusInput" style="font-size: 20px;"
                                                     type="checkbox" class="form-check-input mb-1" />
@@ -245,18 +245,36 @@
                     </div>
                     <div class="blk">
                         <div class="top_head">
+                            <div class="card_blk" id="">
+                                <div class="icon"><p id="totalUserCounter">0</p>
+                                </div>
+                                <strong >Pending Users</strong>
+                                <a type="button"></a>
+                            </div>
+                            <div class="card_blk" id="">
+                                <div class="icon"><p id="totalUserCounter">0</p>
+                                </div>
+                                <strong >Active Users</strong>
+                                <a type="button"></a>
+                            </div>
+                            <div class="card_blk" id="">
+                                <div class="icon"><p id="totalUserCounter">0</p>
+                                </div>
+                                <strong >In-Active Users</strong>
+                                <a type="button"></a>
+                            </div>
+                            <div class="card_blk" id="">
+                                <div class="icon"><p id="totalUserCounter">0</p>
+                                </div>
+                                <strong >Total Users</strong>
+                                <a type="button"></a>
+                            </div>
                             
+
                             <div class="card_blk" id="showAddAdminPopUpBtn">
                                 <div class="icon"><img src="{{ asset('/images/icon-plus.svg') }}" alt="">
                                 </div>
                                 <strong>Add Admin</strong>
-                                <a type="button"></a>
-                            </div>
-                           
-                            <div class="card_blk" id="">
-                                <div class="icon"><img src="{{ asset('/images/icon-heart.svg') }}" alt="">
-                                </div>
-                                <strong >Total Users {{ $adminCounter }} <p id="totalUserCounter"></p></strong>
                                 <a type="button"></a>
                             </div>
                         </div>
