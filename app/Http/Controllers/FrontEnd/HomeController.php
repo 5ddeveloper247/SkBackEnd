@@ -28,10 +28,10 @@ class HomeController extends Controller
             'phone' => 'required|max:15',
             'totalPrice' => 'required|numeric',
             'purpose' => 'required|string|max:255',
-            'homeType' => 'required|string|max:255',
+            'homeType' => 'nullable|string|max:255',
             'city' => 'required|string|max:255',
-            'commercial' => 'required|string|max:255',
-            'plot' => 'required|string|max:255',
+            'commercial' => 'nullable|string|max:255',
+            'plot' => 'nullable|string|max:255',
             'size' => 'required|max:255',
         ]);
 
