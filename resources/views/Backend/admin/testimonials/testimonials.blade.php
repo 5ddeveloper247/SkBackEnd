@@ -24,18 +24,76 @@
 
 
 
-        {{-- ______________________tab listings end _______________________________--- --}}
-
-        {{--___________________________________ edit property resonse message___________________________________ --}}
 
 
-        <!-- Display Error Message -->
+        {{--___________________________________ add property resonse message___________________________________ --}}
+        <section class="popup lg" id="popupAddTestimonial" data-popup="search" style="display: none;">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner">
+                            <button class="x_btn" id="closeCustomModalButton"></button>
+                            <div class="modal-body">
 
+                                <form method="POST" id="add_testimonial_form"
+                                    action="{{ route('admin.testimonial.update') }}">
 
-        <!-- Display Validation Errors -->
+                                    @csrf
+                                    <fieldset>
+                                        <div class="blk">
+                                            <h5 class="color">Add Testimonial</h5>
+                                            <div class="form_row row">
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Name<sup>*</sup></h6>
+                                                        <input type="text" name="testimonial_name"
+                                                            id="testimonial_name" class="text_box" maxlength="15">
+                                                    </div>
+                                                </div>
 
-        {{--___________________________________ edit property resonse message___________________________________ --}}
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Title<sup>*</sup></h6>
+                                                        <input type="text" name="testimonial_title"
+                                                            id="testimonial_title" class="text_box" placeholder=""
+                                                            maxlength="15">
+                                                    </div>
+                                                </div>
 
+                                                <div class="col-xs-12">
+                                                    <div class="form_blk">
+                                                        <h6>Description<sup>*</sup></h6>
+                                                        <textarea name="testimonial_description"
+                                                            id="testimonial_description" class="text_box"
+                                                            placeholder=""></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-12">
+                                                    <div class="form_blk">
+                                                        <h6>Profile Pic<sup></sup></h6>
+                                                        <input type="file" name="pic" id="pic" class="text_box"
+                                                            placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+
+                                                <button type="button" id="testimonial_add_btn"
+                                                    class="btn btn-primary">Add</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         {{-- edit testimonial popup --}}
         <div class="popup lg" data-popup="edit-data-popup" id="edit-data-popup">
             <div class="table_dv">
@@ -45,8 +103,9 @@
                             <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
                             <div id="Inspection" class="tab-pane fade active in">
 
-                                <form method="POST" id="edit_inquiry_form" action="{{ route('admin.inquiry.update') }}">
-                                    <input type="hidden" name="property_id_edit" id="property_id_edit">
+                                <form method="POST" id="edit_testimonial_form"
+                                    action="{{ route('admin.testimonial.update') }}">
+
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
@@ -83,8 +142,8 @@
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
                                                         <h6>Profile Pic<sup></sup></h6>
-                                                        <input type="file" name="testimonial_pic_edit"
-                                                            id="testimonial_pic_edit" class="text_box" placeholder="">
+                                                        <input type="file" name="pic" id="pic" class="text_box"
+                                                            placeholder="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -152,7 +211,7 @@
                             <strong>Add Testimonial</strong>
                             <a type="button"></a>
                         </div>
-                      
+
                         <div class="form_blk">
                             <input type="text" name="" id="" class="text_box inquiry_search_box"
                                 placeholder="Search here">
@@ -257,7 +316,6 @@
 
 
     $(document).on('click','.testimonial_edit_btn', function () {
-        alert("hello")
         var id = $(this).attr('data-id');
         var testimonial = JSON.parse($(this).attr('data-testimonial'));
         $('#edit_id').val(testimonial.id);
@@ -278,11 +336,19 @@
     }  
 
     // _________________________________Delete functions_______________________________
+    $(document).ready(function () {
+    // Delete Testimonial
     $(document).on('click', '.testimonial_delete_btn', function () {
         var del_id = $(this).attr('data-id');
         
+        // Set data-id for confirmation modal button
         $('#testimonial_delete_confirmed_btn').attr('data-id', del_id);
     });
+
+    // Handle Delete Confirmation
+   
+});
+
 
     $('#testimonial_close_delete_modal_btn').click(function () {
         $('.close_delete_modal_default_btn').click();
@@ -302,9 +368,11 @@
         $('#testimonial_close_delete_modal_btn').click(); // Close the modal in all cases
 
         if (response.status == 200) {
+            toastr.success(response.message, 'Success', { timeOut: 3000 });
             $('#delete_modal').hide();
             window.location.reload(); // Reload the page
         } else {
+            toastr.error('Failed to delete testimonial.', 'Error', { timeOut: 3000 });
             $('#delete_modal').hide();
             // toastr.error(response.message, '', { timeOut: 3000 });
         }
@@ -322,10 +390,84 @@
 <script>
     $(document).ready(function() {
     $('#showAddTestimonialPopUpBtn').on('click', function() {
-        $('#popupAddAdminUrl').show();
+        $('#popupAddTestimonial').show();
     });
 });  
   
+</script>
+
+<script>
+    $(document).ready(function () {
+    // Add Testimonial
+    $('#testimonial_add_btn').on('click', function (e) {
+        e.preventDefault();
+        var formData = new FormData($('#add_testimonial_form')[0]);
+
+        $.ajax({
+            url: '{{ route('admin.testimonial.add') }}', // Add your route for adding testimonial
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status === 200) {
+                    toastr.success(response.message, 'Success', { timeOut: 2000 });
+                    // Reset the form
+                    $('#add_testimonial_form')[0].reset();
+                    window.location.reload();
+                    // Close the modal
+                    $('#popupAddTestimonial').hide();
+                } else {
+                    toastr.error(response.message, 'Error', { timeOut: 2000 });
+                }
+            },
+            error: function (xhr) {
+                var errors = xhr.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    toastr.error(value[0], 'Error', { timeOut: 2000 });
+                });
+            }
+        });
+    });
+
+    // Edit Testimonial
+    $('#testimonial_update_btn').on('click', function (e) {
+        e.preventDefault();
+        var formData = new FormData($('#edit_testimonial_form')[0]);
+
+        $.ajax({
+            url: '{{ route('admin.testimonial.update') }}', // Add your route for updating testimonial
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.status === 200) {
+                    toastr.success(response.message, 'Success', { timeOut: 2000 });
+                    // Reset the form
+                    window.location.reload();
+                    $('#edit_testimonial_form')[0].reset();
+                    // Close the modal
+                    $('#edit-data-popup').hide();
+                } else {
+                    toastr.error(response.message, 'Error', { timeOut: 2000 });
+                }
+            },
+            error: function (xhr) {
+                var errors = xhr.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    toastr.error(value[0], 'Error', { timeOut: 2000 });
+                });
+            }
+        });
+    });
+
+    // Close modal on button click
+    $('#closeCustomModalButton, #close_update_modal_default_btn').on('click', function () {
+        $(this).closest('.popup').hide();
+    });
+});
+
 </script>
 
 

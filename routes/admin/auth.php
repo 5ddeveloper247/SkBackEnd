@@ -87,5 +87,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('admin/testimonials/view', [TestimonialsController::class, 'viewTestimonials'])->name('admin.testimonials.view');
     Route::get('/admin/testimonials/view/ajax', [TestimonialsController::class, 'viewTestimonialAjax'])->name('admin.testimonial.view.ajax');
     Route::post('admin/testimonial/delete', [TestimonialsController::class, 'deleteTestimonial'])->name('admin.testimonial.delete');
+    Route::post('admin/testimonial/add', [TestimonialsController::class, 'addTestimonial'])->name('admin.testimonial.add');
+    Route::post('admin/testimonial/update', [TestimonialsController::class, 'updateTestimonial'])->name('admin.testimonial.update');
 
 });

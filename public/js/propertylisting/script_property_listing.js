@@ -169,6 +169,7 @@ function deletemanagerResponse(response) {
         });
         $('#uiBlocker').hide();
         $('#delete_modal').hide();
+        window.location.reload();
         loadManagerList();
         $('#close_delete_modal_btn').click();
     }
@@ -178,11 +179,13 @@ function deletemanagerResponse(response) {
 
         error = response.message;
         $('#delete_modal').hide();
+        window.location.reload();
     } else {
         $('#close_delete_modal_btn').click();
 
         error = response.message;
         $('#delete_modal').hide();
+        window.location.reload();
     }
     toastr.error(error, '', {
         timeOut: 3000

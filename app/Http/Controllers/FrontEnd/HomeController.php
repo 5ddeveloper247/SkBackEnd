@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PersonalInfo;
 use App\Models\PropertyListingPaPe;
+use App\Models\Testimonial;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class HomeController extends Controller
                 "pInfo_lName" => $request->lastName,
                 "pInfo_email" => $request->email,
                 "pInfo_phoneNumber" => $request->phone,
-                "status" => '0',
+                "status" => 0,
                 'hold' => '2',
                 'price' => $request->totalPrice,
             ]);
@@ -133,14 +134,35 @@ class HomeController extends Controller
 
     public function propertyHomeView(Request $request)
     {
+        try {
+            // Retrieve property information
+            $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
+                ->where('status', '1')
+                ->get();
 
-        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('status','1')->get();
-        if ($propertyInfo) {
-            return response()->json(['propertyInfo' => $propertyInfo]);
-        } else {
-            return response()->json(['propertyInfo' => []]);
+            // Retrieve testimonials
+            $testimonials = Testimonial::all();
+
+            // Check if propertyInfo is empty
+            if ($propertyInfo->isEmpty()) {
+                $propertyInfo = [];
+            }
+
+            // Check if testimonials is empty
+            if ($testimonials->isEmpty()) {
+                $testimonials = [];
+            }
+
+            // Return JSON response with property information and testimonials
+            return response()->json(['propertyInfo' => $propertyInfo, 'testimonials' => $testimonials]);
+        } catch (\Exception $e) {
+            // Log the error and return a server error response
+            Log::error('Error fetching property info and testimonials: ' . $e->getMessage());
+            return response()->json(['error' => 'Failed to fetch property information and testimonials.'], 500);
         }
     }
+
+
 
 
 
@@ -273,13 +295,13 @@ class HomeController extends Controller
     }
 
 
-    public function composableCity(Request $request){
+    public function composableCity(Request $request)
+    {
         $cityData = City::with('areas.locations.sectors')->get();
-        if($cityData){
-            return response()->json(['cityData'=>$cityData],200);
-        }
-        else{ 
-            return response()->json(['cityData'=>[]],200);
+        if ($cityData) {
+            return response()->json(['cityData' => $cityData], 200);
+        } else {
+            return response()->json(['cityData' => []], 200);
         }
     }
 }
