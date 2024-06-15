@@ -56,47 +56,43 @@
 
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Email<sup>*</sup></h6>
-                                                        <input type="email" name="inquiry_email_edit"
-                                                            id="inquiry_email_edit" class="text_box" maxlength="15"
-                                                            readonly>
+                                                        <h6>Name<sup>*</sup></h6>
+                                                        <input type="email" name="testimonial_name_edit"
+                                                            id="testimonial_name_edit" class="text_box" maxlength="15">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Contact Number<sup>*</sup></h6>
-                                                        <input type="number" name="inquiry_contact_number_edit"
-                                                            id="inquiry_contact_number_edit" class="text_box"
-                                                            placeholder="" maxlength="15" readonly>
+                                                        <h6>Title<sup>*</sup></h6>
+                                                        <input type="text" name="testimonial_title_edit"
+                                                            id="testimonial_title_edit" class="text_box" placeholder=""
+                                                            maxlength="15">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Description <sup>*</sup></h6>
-                                                        <textarea name="inquiry_description_edit"
-                                                            id="inquiry_description_edit" class="text_box"
-                                                            placeholder="" readonly></textarea>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-xs-12">
-                                                    <div class="form_blk">
-                                                        <h6>Reply <sup>*</sup></h6>
-                                                        <textarea required name="inquiry_reply_edit"
-                                                            id="inquiry_reply_edit" class="text_box"
+                                                        <h6>Description<sup>*</sup></h6>
+                                                        <textarea name="testimonial_description_edit"
+                                                            id="testimonial_description_edit" class="text_box"
                                                             placeholder=""></textarea>
                                                     </div>
                                                 </div>
 
+                                                <div class="col-xs-12">
+                                                    <div class="form_blk">
+                                                        <h6>Profile Pic<sup></sup></h6>
+                                                        <input type="file" name="testimonial_pic_edit"
+                                                            id="testimonial_pic_edit" class="text_box" placeholder="">
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="btn_blk form_btn text-center">
 
-                                                <button type="submit" class="site_btn long edit_inquiry_btn"
-                                                    id="edit_inquiry_btn">Update</button>
-
+                                                <button type="submit" class="site_btn long testimonial_update_btn"
+                                                    id="testimonial_update_btn">Update</button>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -150,7 +146,13 @@
             {{-- ______________________tab <All> start_______________________________--- --}}
                 <div id="All" class="tab-pane fade in active">
                     <div class="top_head">
-                        <h4>Testimonials</h4>
+                        <div class="card_blk" id="showAddTestimonialPopUpBtn">
+                            <div class="icon"><img src="{{ asset('/images/icon-plus.svg') }}" alt="">
+                            </div>
+                            <strong>Add Testimonial</strong>
+                            <a type="button"></a>
+                        </div>
+                      
                         <div class="form_blk">
                             <input type="text" name="" id="" class="text_box inquiry_search_box"
                                 placeholder="Search here">
@@ -251,11 +253,16 @@
         });
     }
 
+
+
+
     $(document).on('click','.testimonial_edit_btn', function () {
+        alert("hello")
         var id = $(this).attr('data-id');
         var testimonial = JSON.parse($(this).attr('data-testimonial'));
-
         $('#edit_id').val(testimonial.id);
+        $('#testimonial_name_edit').val(testimonial.name);
+        $('#testimonial_title_edit').val(testimonial.title);
         $('#testimonial_description_edit').val(testimonial.description);
         // Add your edit logic here, e.g., populate a form with testimonial details for editing
     });
@@ -307,11 +314,19 @@
         loadTestimonialList();
     });
 </script>
+
 {{-- _____________________________-loading testimonials ended____________________ --}}
 
 
 
-
+<script>
+    $(document).ready(function() {
+    $('#showAddTestimonialPopUpBtn').on('click', function() {
+        $('#popupAddAdminUrl').show();
+    });
+});  
+  
+</script>
 
 
 
