@@ -590,7 +590,7 @@ if (response.propertyInfo) {
         listItem.html(`
             <div class="thumb">
                 <img src="${base_url}/${file.image_uri}" alt="">
-                <button type="button" class="x_btn" onclick="removeFile_edit(this)">&times;</button>
+                <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
             </div>
         `);
         previewList.append(listItem);
