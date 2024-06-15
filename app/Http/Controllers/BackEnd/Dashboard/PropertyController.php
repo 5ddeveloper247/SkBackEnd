@@ -8,6 +8,9 @@ use App\Models\PersonalInfo;
 use App\Models\PropertyListingPaPe;
 use App\Models\Amenities;
 use App\Models\City;
+use App\Models\Area;
+use App\Models\Location;
+use App\Models\Sector;
 use App\Models\PropertyRecordFiles;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -184,6 +187,7 @@ class PropertyController extends Controller
         // Validation rules
         // Validation rules
 
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'pInfo_firstName_edit' => 'required|string|max:255',
             'pInfo_lastName_edit' => 'required|string|max:255',
@@ -263,9 +267,12 @@ class PropertyController extends Controller
 
             // Update amenities
             $amenities = [
-                'Possession' => $request->has('check_Possesion_edit') ? 1 : 0,
+                'Possesion' => $request->has('check_Possesion_edit') ? 1 : 0,
                 'Balloted' => $request->has('check_Balloted_edit') ? 1 : 0,
                 'Electricity' => $request->has('check_Electricity_edit') ? 1 : 0,
+                'WaterSupply' => $request->has('check_WaterSupply_edit') ? 1 : 0,
+                'SuiGas' => $request->has('check_SuiGas_edit') ? 1 : 0,
+                'StudyRoom' => $request->has('check_StudyRoom_edit') ? 1 : 0,
                 'BoundryWall' => $request->has('check_BoundryWall_edit') ? 1 : 0,
                 'NearbySchool' => $request->has('check_NearbySchool_edit') ? 1 : 0,
                 'NearbyHospitals' => $request->has('check_NearbyHospitals_edit') ? 1 : 0,
@@ -379,8 +386,19 @@ class PropertyController extends Controller
     public function getPropertyData(Request $request)
     {
         $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $request->id)->first();
+
+        $city_id = City::where('NAME', $propertyInfo->propertyListingPape->address_city)->value('id');
+        $area_id = Area::where('NAME', $propertyInfo->propertyListingPape->address_area)->value('id');
+        $location_id = Location::where('NAME', $propertyInfo->propertyListingPape->address_location)->value('id');
+        $sector = $propertyInfo->propertyListingPape->address_sector;
+        
+        $areas = Area::where('CITY_ID', $city_id)->get();
+        $locations = Location::where('AREA_ID', $area_id)->get();
+        $sectors = Sector::where('LOCATION_ID', $location_id)->get();
+
+        // dd($propertyInfo);
         if ($propertyInfo) {
-            return response()->json(['propertyInfo' => $propertyInfo]);
+            return response()->json(['propertyInfo' => $propertyInfo,'areas' => $areas,'locations' => $locations,'sectors' => $sectors]);
         } else {
             return response()->json(['propertyInfo' => []]);
         }
