@@ -31,6 +31,7 @@ class PersonalInfo extends Model
         "pInfo_phoneNumber",
         "price",
         "currency",
+        'status',
     ];
 
 

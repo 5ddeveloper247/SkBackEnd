@@ -53,7 +53,7 @@ class HomeController extends Controller
                 "pInfo_lName" => $request->lastName,
                 "pInfo_email" => $request->email,
                 "pInfo_phoneNumber" => $request->phone,
-                "status" => 0,
+                "status" => '0',
                 'hold' => '2',
                 'price' => $request->totalPrice,
             ]);
@@ -176,17 +176,26 @@ class HomeController extends Controller
                 $query->whereHas('propertyListingPape', function ($q) use ($propertyType) {
                     $q->where('purpose_purpose', 'LIKE', '%' . $propertyType . '%');
                 });
-            } else {
-                // Fetch the latest 7 records
-                $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles'])
-                    ->orderBy('created_at', 'desc')
-                    ->limit(7);
+            } elseif (isset($propertyType) && $propertyType == 'Sale') {
+                // Fetch the latest 7 records where purpose_purpose equals 'Sale'
+                $query->where('status', '1')
+                    ->whereHas('propertyListingPape', function ($q) {
+                        $q->where('purpose_purpose', 'Sale');
+                    });
+            } elseif (isset($propertyType) && $propertyType == 'Rent') {
+                // Fetch the latest 7 records where purpose_purpose equals 'Rent'
+                $query->where('status', '1')
+                    ->whereHas('propertyListingPape', function ($q) {
+                        $q->where('purpose_purpose', 'Rent');
+                    });
             }
 
-            // Eager load relationships
-            $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+            // Always fetch the latest 7 records regardless of the filter
+            $query->orderBy('created_at', 'desc')
+                ->limit(7)
+                ->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
 
-            // Execute the query and return the results  
+            // Execute the query and return the results
             $propertyInfo = $query->get();
 
             if ($propertyInfo->isEmpty()) {
@@ -294,6 +303,15 @@ class HomeController extends Controller
         }
     }
 
+
+    public function maxRangePrice(Request $request ){
+        $maxPrice = PersonalInfo::max('price');
+        if ($maxPrice) {
+            return response()->json(['maxPrice' => $maxPrice], 200);
+        } else {
+            return response()->json(['maxPrice' => 0], 200);
+        }
+    }
 
     public function composableCity(Request $request)
     {

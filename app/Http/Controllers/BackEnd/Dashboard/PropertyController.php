@@ -51,6 +51,7 @@ class PropertyController extends Controller
     public function propertyMainSubmission(Request $request)
     {
 
+        
         // Validate the incoming request
 
 
@@ -66,7 +67,9 @@ class PropertyController extends Controller
                 "pInfo_lName" => $request->pInfo_lastName,
                 "pInfo_email" => $request->pInfo_email,
                 "pInfo_phoneNumber" => $request->pInfo_phoneNumber,
+                'price' => $request->price,
                 'status' => '1',
+                
             ]);
 
             // dd($personalInfoRecord);
@@ -81,6 +84,7 @@ class PropertyController extends Controller
                 "address_area" => $request->address_area,
                 "address_phase" => $request->address_phase,
                 "address_location" => $request->address_location,
+                "address_map_location" => $request->address_map_location,
                 "address_sector" => $request->address_sector,
                 "address_address" => $request->address_address,
                 "propertyDetail_plot_num" => $request->propertyDetail_plot_num,
@@ -197,9 +201,11 @@ class PropertyController extends Controller
             'pupose_home_edit' => 'required|string|max:255',
             'purpose_plot_edit' => 'required|string|max:255',
             'purpose_commercial_edit' => 'required|string|max:255',
+            'price_edit'=>'required|integer',
             'address_city_edit' => 'required|string|max:255',
             'address_area_edit' => 'required|string|max:255',
-            'address_location_edit' => 'required|string|max:255',
+            'address_location_edit' => 'required|string|max:2000',
+            'address_map_location_edit' => 'required|string|max:2000',
             'address_sector_edit' => 'required|string|max:255',
             'address_address_edit' => 'required|string|max:255',
             'propertyDetail_plot_num_edit' => 'required|string|max:255',
@@ -237,6 +243,7 @@ class PropertyController extends Controller
             $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit;
             $propertyInfo->pInfo_email = $request->pInfo_email_edit;
             $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit;
+            $propertyInfo->price =$request->price_edit;
             $propertyInfo->status = '1';
 
             // Update property listing info
@@ -249,6 +256,7 @@ class PropertyController extends Controller
                 $propertyInfo->propertyListingPape->address_area = $request->address_area_edit;
                 $propertyInfo->propertyListingPape->address_phase = $request->address_phase_edit;
                 $propertyInfo->propertyListingPape->address_location = $request->address_location_edit;
+                $propertyInfo->propertyListingPape->address_map_location = $request->address_map_location_edit;
                 $propertyInfo->propertyListingPape->address_sector = $request->address_sector_edit;
                 $propertyInfo->propertyListingPape->address_address = $request->address_address_edit;
                 $propertyInfo->propertyListingPape->propertyDetail_plot_num = $request->propertyDetail_plot_num_edit;

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('address_phase')->nullable();
             $table->string('address_sector')->nullable();
             $table->string('address_location')->nullable();
+            $table->string('address_map_location')->nullable();
             $table->string('address_address')->nullable();
             $table->string('propertyDetail_plot_num')->nullable();
             $table->string('propertyDetail_area')->nullable();

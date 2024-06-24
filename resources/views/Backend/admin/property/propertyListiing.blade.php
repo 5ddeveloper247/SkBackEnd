@@ -140,6 +140,7 @@
                                     class="propertySubmissionForm" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <ul class="head_lst" id="head_lst">
+                                        <li id="tab_head_lst1"><span>Personal Info</span></li>
                                         <li id="tab_head_lst2"><span>Purpose</span></li>
                                         <li id="tab_head_lst3"><span>Address</span></li>
                                         <li id="tab_head_lst4"><span>Property Detail</span></li>
@@ -152,6 +153,7 @@
 
                                     <fieldset id="personal_info_tab">
                                         <div class="form_row row">
+
 
                                             <div class="col-xs-6">
                                                 <h6>First Name<sup>*</sup></h6>
@@ -233,6 +235,14 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="col-xs-6">
+                                                <h6>Price<sup>*</sup></h6>
+                                                <div class="form_blk">
+                                                    <input type="number" name="price" id="price" class="text_box"
+                                                        placeholder="pirce in pkr">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
                                             <button type="button"
@@ -244,112 +254,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                     {{-- Address info tabl --}}
-
-                                    {{-- <fieldset id="address_tab">
-                                        <div class="form_row row">
-                                            <div class="col-sm-4 col-xs-12">
-                                                <h6>City<sup>*</sup></h6>
-                                                <div class="form_blk">
-                                                    <select name="address_city" id="address_city"
-                                                        class="text_box selectpicker" data-container="body">
-                                                        <option value="Islamabad">Islamabad</option>
-                                                        <option value="Rawalpindi">Rawalpindi</option>
-                                                        <option value="Karachi">Karachi</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 col-xs-12">
-                                                <h6>Area<sup>*</sup></h6>
-                                                <div class="form_blk">
-                                                    <select name="address_area" id="address_area"
-                                                        class="text_box selectpicker" data-container="body">
-                                                        <option value="Area Bahria Phase 1">Area Bahria Phase 1</option>
-                                                        <option value="Area Bahria Phase 2"> Area Bahria Phase 2
-                                                        </option>
-                                                        <option value="Area Bahria Phase 3"> Area Bahria Phase 3
-                                                        </option>
-                                                        <option value="Area Bahria Phase 4"> Area Bahria Phase 4
-                                                        </option>
-                                                        <option value="Area Bahria Phase 5"> Area Bahria Phase 5
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 col-xs-12">
-                                                <h6>Location<sup>*</sup></h6>
-                                                <div class="form_blk">
-                                                    <select name="address_phase" id="address_phase"
-                                                        class="text_box selectpicker" data-container="body">
-                                                        <option value="Phase Bahria Phase 1">Phase Bahria Phase 1
-                                                        </option>
-                                                        <option value="Phase Bahria Phase 2"> Phase Bahria Phase 2
-                                                        </option>
-                                                        <option value=" Phase Bahria Phase 3"> Phase Bahria Phase 3
-                                                        </option>
-                                                        <option value="Phase Bahria Phase 4"> Phase Bahria Phase 4
-                                                        </option>
-                                                        <option value="Phase Bahria Phase 5"> Phase Bahria Phase 5
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 col-xs-12">
-                                                <h6>Sector<sup>*</sup></h6>
-                                                <div class="form_blk">
-                                                    <select name="address_sector" id="address_sector"
-                                                        class="text_box selectpicker" data-container="body">
-                                                        <option value="Sector f1">Sector f1 </option>
-                                                        <option value="Sector f2">Sector f2 </option>
-                                                        <option value="Sector f3">Sector f3 </option>
-                                                        <option value="Sector f4">Sector f4 </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-4 col-xs-12">
-                                                <h6>Address<sup>*</sup></h6>
-                                                <div class="form_blk">
-                                                    <select name="address_address" id="address_address"
-                                                        class="text_box selectpicker" data-container="body">
-                                                        <option value="Street 1">Street 1 </option>
-                                                        <option value="Street 2">Street 2 </option>
-                                                        <option value="Street 3">Street 3</option>
-                                                        <option value="Street 4">Street 4 </option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="btn_blk form_btn text-right">
-                                            <button type="button"
-                                                class="site_btn long simple border address_back_btn prev_btn"
-                                                id="address_back_btn">Back</button>
-                                            <button type="button" class="site_btn address_continue_btn long "
-                                                id="address_continue_btn">Continue</button>
-                                        </div>
-                                    </fieldset> --}}
-
-
                                     <fieldset id="address_tab">
                                         <div class="form_row row">
                                             <div class="col-sm-6 col-xs-12">
@@ -392,6 +297,13 @@
                                                 <h6>Address<sup>*</sup></h6>
                                                 <textarea class="text_box" placeholder="Describe your address"
                                                     name="address_address" id="address_address"
+                                                    spellcheck="false"></textarea>
+                                            </div>
+
+                                            <div class="col-sm-12 col-xs-12">
+                                                <h6>Map Location<sup>*</sup></h6>
+                                                <textarea class="text_box" placeholder="Map Location"
+                                                    name="address_map_location" id="address_map_location"
                                                     spellcheck="false"></textarea>
                                             </div>
                                         </div>
@@ -866,11 +778,13 @@ function handleTabHeadNextActive  (tab_head) {
 
    // Step 2:purpose Validation and Navigation
 $('.purpose_continue_btn').click(function() {
+   
     const tab_head_lst = 2;
     var purpose = $('#purpose_purpose');
     var home = $('#pupose_home');
     var plot = $('#purpose_plot');
     var commercial = $('#purpose_commercial');
+    var price = $('#price');
 
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
@@ -887,6 +801,9 @@ $('.purpose_continue_btn').click(function() {
     }
     if (!commercial.val().trim()) {
         commercial.addClass('validation-failed');
+    }
+    if (!price.val().trim()) {
+        price.addClass('validation-failed');
     }
 
     // Check if any field failed validation
@@ -905,8 +822,6 @@ $('.purpose_continue_btn').click(function() {
 
 
 
-
-
 $('.address_continue_btn').click(function() {
     const tab_head_lst = 3;
     var city = $('#address_city');
@@ -914,6 +829,7 @@ $('.address_continue_btn').click(function() {
     var location = $('#address_location');
     // var sector = $('#address_sector');
     var address = $('#address_address');
+    var address_map_location = $('#address_map_location');
 
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
@@ -933,6 +849,9 @@ $('.address_continue_btn').click(function() {
     // }
     if (!address.val().trim()) {
         address.addClass('validation-failed');
+    }
+    if (!address_map_location.val().trim()) {
+        address_map_location.addClass('validation-failed');
     }
 
     // Check if any field failed validation

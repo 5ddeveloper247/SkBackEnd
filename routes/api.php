@@ -33,8 +33,8 @@ Route::prefix('frontend')->group(function () {
     Route::get('/home/property/get', [HomeController::class, 'propertyHomeView'])->name('api.frontend.home.property.homeView');
     Route::post('/home/property/post', [HomeController::class, 'propertyHomeViewbyMediaType'])->name('api.frontend.home.property.homeView.mediaType');
     Route::post('/home/property/getByFilters', [HomeController::class, 'mediaIndexgetByFilters'])->name('api.frontend.media.getByFilters');
-
     Route::get('/home/property/getbyid/{id}', [HomeController::class, 'getPropertyDetailbyId'])->name('api.frontend.home.property.getbyid');
+    Route::get('/home/property/max/range/price', [HomeController::class, 'maxRangePrice'])->name('api.frontend.home.property.max.range.price');
 
 
     //media

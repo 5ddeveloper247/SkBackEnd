@@ -123,6 +123,14 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="col-xs-6">
+                    <h6>Price<sup>*</sup></h6>
+                    <div class="form_blk">
+                        <input type="number" name="price_edit" id="price_edit" class="text_box"
+                            placeholder="pirce in pkr">
+                    </div>
+                </div>
             </div>
 
             <div>
@@ -159,6 +167,7 @@
                         </select>
                     </div>
                 </div>
+              
                 <div class="col-sm-6 col-xs-12">
                     <h6>Sector<sup>*</sup></h6>
                     <div class="form_blk">
@@ -173,6 +182,12 @@
                     <h6>Address<sup>*</sup></h6>
                     <textarea class="text_box" placeholder="Describe your address" name="address_address_edit"
                         id="address_address_edit" spellcheck="false"></textarea>
+                </div>
+                <div class="col-sm-12 col-xs-12">
+                    <h6>Map Location<sup>*</sup></h6>
+                    <textarea class="text_box" placeholder="Map Location"
+                        name="address_map_location_edit" id="address_map_location_edit"
+                        spellcheck="false"></textarea>
                 </div>
 
             </div>
@@ -570,16 +585,18 @@ function getpropertydataEditResponse(response) {
         $('#pupose_home_edit').val(property?.proerty_listing_pape?.pupose_home).selectpicker('refresh');
         $('#purpose_plot_edit').val(property?.proerty_listing_pape?.purpose_plot).selectpicker('refresh');
         $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial).selectpicker('refresh');
+        $('#price_edit').val(property?.price);
 
         //step 3
         // let cityDropdown = document.getElementById('address_city_edit');
         // cityDropdown.innerHTML = '<option value="' + (property?.property_listing_pape?.address_city || '') + '">' + (property?.property_listing_pape?.address_city || 'Select City') + '</option>';
         
         setTimeout(function(){
-            $("#address_city_edit").val(property.property_listing_pape.address_city);
-            $("#address_area_edit").val(property.property_listing_pape.address_area);
-            $("#address_location_edit").val(property.property_listing_pape.address_location);
-            $("#address_sector_edit").val(property.property_listing_pape.address_sector);
+            $("#address_city_edit").val(property?.property_listing_pape?.address_city);
+            $("#address_area_edit").val(property?.property_listing_pape?.address_area);
+            $("#address_location_edit").val(property?.property_listing_pape?.address_location);
+            $("#address_map_location_edit").val(property?.property_listing_pape?.address_map_location);
+            $("#address_sector_edit").val(property?.property_listing_pape?.address_sector);
         }, 500);
         
 
