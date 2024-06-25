@@ -11,7 +11,7 @@ use App\Http\Controllers\FrontEnd\InquiryController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| API Routes 
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
