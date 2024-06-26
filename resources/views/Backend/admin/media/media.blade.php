@@ -260,7 +260,7 @@
                     <div class="card_blk">
                         <div class="icon"><img src="{{asset('images/icon-upload.svg')}}" alt="">
                         </div>
-                        <strong>Add Media Url</strong>
+                        <strong>Add Video</strong>
                         <a type="button" id="showMediaUrlPopUpBtn"></a>
                     </div>
                 </div>
@@ -331,7 +331,7 @@
                     <div class="card_blk">
                         <div class="icon"><img src="{{asset('images/icon-upload.svg')}}" alt="">
                         </div>
-                        <strong>Add Media </strong>
+                        <strong>Add Image </strong>
                         <a type="button" id="showMediaPopUpBtn"></a>
                     </div>
                 </div>

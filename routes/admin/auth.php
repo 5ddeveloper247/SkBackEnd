@@ -90,4 +90,10 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/testimonial/add', [TestimonialsController::class, 'addTestimonial'])->name('admin.testimonial.add');
     Route::post('admin/testimonial/update', [TestimonialsController::class, 'updateTestimonial'])->name('admin.testimonial.update');
 
+
+
+    Route::get('admin/city/citydata', [PropertyController::class, 'cityData'])->name('admin.city.citydata');
+    Route::post('/admin/property/populateAreasLov', [PropertyController::class, 'populateAreasLov'])->name('admin.property.populateAreasLov');
+    Route::post('/admin/property/populateLocationLov', [PropertyController::class, 'populateLocationLov'])->name('admin.property.populateLocationLov');
+    Route::post('/admin/property/populateSectorLov', [PropertyController::class, 'populateSectorLov'])->name('admin.property.populateSectorLov');
 });

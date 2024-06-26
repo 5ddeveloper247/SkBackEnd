@@ -35,7 +35,7 @@
                     <ul class="drop_lst">
                         <li><a href="{{ url('/admin/dashboard') }}">Dashboard</a></li>
 
-                        <li><a href="#">Settings</a></li>
+                        {{-- <li><a href="#">Settings</a></li> --}}
                         <li><a href="{{ url('/admin/logout')}}">Logout</a></li>
                     </ul>
                 </div>

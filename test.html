@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dependent Dropdowns</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <form id="editForm">
+        <label for="city">City:</label>
+        <select id="city" name="city">
+            <option value="">Select City</option>
+            <!-- City options will be populated dynamically -->
+        </select>
+
+        <label for="area">Area:</label>
+        <select id="area" name="area">
+            <option value="">Select Area</option>
+            <!-- Area options will be populated dynamically -->
+        </select>
+
+        <label for="location">Location:</label>
+        <select id="location" name="location">
+            <option value="">Select Location</option>
+            <!-- Location options will be populated dynamically -->
+        </select>
+
+        <label for="sector">Sector:</label>
+        <select id="sector" name="sector">
+            <option value="">Select Sector</option>
+            <!-- Sector options will be populated dynamically -->
+        </select>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <button type="button" id="testbtn">
+        change Now
+    </button>
+
+
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        // Example data from the server
+        var cities = {
+            "Moscow": {
+                "areas": {
+                    "Area 1": {
+                        "locations": {
+                            "Location 1": ["Sector 1", "Sector 2"],
+                            "Location 2": ["Sector 3", "Sector 4"]
+                        }
+                    },
+                    "Area 2": {
+                        "locations": {
+                            "Location 3": ["Sector 5", "Sector 6"],
+                            "Location 4": ["Sector 7", "Sector 8"]
+                        }
+                    }
+                }
+            },
+            "New York": {
+                "areas": {
+                    "Area 3": {
+                        "locations": {
+                            "Location 5": ["Sector 9", "Sector 10"],
+                            "Location 6": ["Sector 11", "Sector 12"]
+                        }
+                    },
+                    "Area 4": {
+                        "locations": {
+                            "Location 7": ["Sector 13", "Sector 14"],
+                            "Location 8": ["Sector 15", "Sector 16"]
+                        }
+                    }
+                }
+            }
+        };
+
+        // Pre-selected values (example)
+        var selectedCity = "Moscow";
+        var selectedArea = "Area 1";
+        var selectedLocation = "Location 1";
+        var selectedSector = "Sector 1";
+
+        // Populate city dropdown
+        $.each(cities, function (city, data) {
+
+            $('#city').append(new Option(city, city));
+        });
+
+
+
+        // Function to populate areas based on selected city
+        function populateAreas(city) {
+            $('#area').empty().append(new Option('Select Area', ''));
+            $.each(cities[city].areas, function (area, data) {
+                $('#area').append(new Option(area, area));
+            });
+        }
+
+        // Function to populate locations based on selected area
+        function populateLocations(city, area) {
+            $('#location').empty().append(new Option('Select Location', ''));
+            $.each(cities[city].areas[area].locations, function (location, data) {
+                $('#location').append(new Option(location, location));
+            });
+        }
+
+        // Function to populate sectors based on selected location
+
+        function populateSectors(city, area, location) {
+            $('#sector').empty().append(new Option('Select Sector', ''));
+            $.each(cities[city].areas[area].locations[location], function (index, sector) {
+                $('#sector').append(new Option(sector, sector));
+            });
+        }
+
+        //Initial population based on pre-selected values
+        $('#city').val(selectedCity);
+        populateAreas(selectedCity);
+        $('#area').val(selectedArea);
+        populateLocations(selectedCity, selectedArea);
+        $('#location').val(selectedLocation);
+        populateSectors(selectedCity, selectedArea, selectedLocation);
+        $('#sector').val(selectedSector);
+
+        //Event listeners for dropdown changes
+        $('#city').change(function () {
+            var city = $(this).val();
+            populateAreas(city);
+            $('#area').val('');
+            $('#location').val('');
+            $('#sector').val('');
+        });
+
+        $('#area').change(function () {
+            var city = $('#city').val();
+            var area = $(this).val();
+            populateLocations(city, area);
+            $('#location').val('');
+            $('#sector').val('');
+        });
+
+        $('#location').change(function () {
+            var city = $('#city').val();
+            var area = $('#area').val();
+            var location = $(this).val();
+            populateSectors(city, area, location);
+            $('#sector').val('');
+        });
+
+        $('#testbtn').click(() => {
+            $('#city').val('New York');
+            $('#area').val('Area 4');
+            $('#location').val('Location 8');
+            $('#sector').val('Sector 16');
+        })
+    });
+
+</script>

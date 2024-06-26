@@ -1,9 +1,12 @@
 @extends('Backend.admin.auth.common-auth')
 @push('styles')
 <style>
-   
     .validation-failed {
         border: 2px solid red;
+    }
+
+    body>main {
+        padding-top: 0px !important;
     }
 </style>
 @endpush
@@ -15,13 +18,13 @@
             <p>A platform with efficient integration of many features and so much more</p>
         </div>
     </div>
-    <div class="contain">
+    <div class="contain ">
         <div class="flex_row">
             <div class="col">
-                <div class="in_col">
+                <div class="in_col" style="margin-top: 10px; !important">
                     <form id="loginForm" action="{{ route('admin.login.view') }}" method="POST">
                         @csrf
-                        <div class="log_blk">
+                        <div class="log_blk " >
                             <div class="txt text-center">
                                 <h2>Admin Login</h2>
                             </div>
@@ -30,14 +33,14 @@
                                 <div class="col-xs-12">
                                     <h6>Email Address<sup>*</sup></h6>
                                     <div class="form_blk">
-                                        <input type="email" name="email" value="{{ old('email') }}"  id="email"
+                                        <input type="email" name="email" value="{{ old('email') }}" id="email"
                                             class="text_box" placeholder="eg: sample@gmail.com">
                                     </div>
                                 </div>
                                 <div class="col-xs-12">
                                     <h6>Password<sup>*</sup></h6>
                                     <div class="form_blk pass_blk">
-                                        <input type="password" name="password"  id="password" class="text_box"
+                                        <input type="password" name="password" id="password" class="text_box"
                                             placeholder="eg: PassLogin%7" autocomplete="new-password">
                                         <i class="icon-eye" id="eye"></i>
                                     </div>

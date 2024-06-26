@@ -5,18 +5,32 @@ namespace App\Http\Controllers\BackEnd\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\PersonalInfo;
+use App\Models\Contact;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 class DashboarController extends Controller
 {
-    //
+    //0
 
-    public function Dashboard(Request $request)
-    {
-        return view('Backend.admin.dashboard.dashboard');
-    }
+public function Dashboard(Request $request)
+{
+    $adminUsers = User::where('role', 'admin')->count();
+    $propertyListings = PersonalInfo::all()->count();
+    $activePropertyListings = PersonalInfo::where('status', '1')->count();
+    $inactivePropertyListings = PersonalInfo::where('status', '0')->count();
+    $pendingContacts = Contact::whereNull('contact_reply_edit')->count();
 
+    // Pass variables to the view
+    return view('Backend.admin.dashboard.dashboard', [
+        'adminUsers' => $adminUsers,
+        'propertyListings' => $propertyListings,
+        'activePropertyListings' => $activePropertyListings,
+        'inactivePropertyListings' => $inactivePropertyListings,
+        'pendingContacts' => $pendingContacts,
+    ]);
+}
 
 
 

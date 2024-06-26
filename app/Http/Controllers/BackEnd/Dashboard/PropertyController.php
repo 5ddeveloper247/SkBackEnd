@@ -51,7 +51,7 @@ class PropertyController extends Controller
     public function propertyMainSubmission(Request $request)
     {
 
-        
+
         // Validate the incoming request
 
 
@@ -69,7 +69,7 @@ class PropertyController extends Controller
                 "pInfo_phoneNumber" => $request->pInfo_phoneNumber,
                 'price' => $request->price,
                 'status' => '1',
-                
+
             ]);
 
             // dd($personalInfoRecord);
@@ -179,7 +179,24 @@ class PropertyController extends Controller
 
     public function propertyEditShow($id)
     {
-        return view('Backend.admin.property.propertyEdit', ['id' => $id]);
+
+        $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $id)->first();
+        $cities = City::with('areas.locations.sectors')->get();
+        $propertyCity = City::with('areas.locations.sectors')->where('NAME', $propertyInfo->propertyListingPape->address_city)->get();
+
+
+        $city_id = City::where('NAME', $propertyInfo->propertyListingPape->address_city)->value('id');
+        $area_id = Area::where('NAME', $propertyInfo->propertyListingPape->address_area)->value('id');
+        $location_id = Location::where('NAME', $propertyInfo->propertyListingPape->address_location)->value('id');
+        $sector = $propertyInfo->propertyListingPape->address_sector;
+
+        $areas = Area::where('CITY_ID', $city_id)->get();
+        $locations = Location::where('AREA_ID', $area_id)->get();
+        $sectors = Sector::where('LOCATION_ID', $location_id)->get();
+
+        //dd($propertyInfo);
+
+        return view('Backend.admin.property.propertyEdit', ['id' => $id, 'propertyInfo' => $propertyInfo, 'cities' => $cities, 'areas' => $areas, 'locations' => $locations, 'sectors' => $sectors, 'city' => $propertyCity]);
     }
 
 
@@ -198,10 +215,10 @@ class PropertyController extends Controller
             'pInfo_email_edit' => 'required|email|unique:personal_info,pInfo_email,' . $request->property_id_edit,
             'pInfo_phoneNumber_edit' => 'required|string|max:15',
             'purpose_purpose_edit' => 'required|string|max:255',
-            'pupose_home_edit' => 'required|string|max:255',
-            'purpose_plot_edit' => 'required|string|max:255',
-            'purpose_commercial_edit' => 'required|string|max:255',
-            'price_edit'=>'required|integer',
+            'pupose_home_edit' => 'nullable|string|max:255',
+            'purpose_plot_edit' => 'nullable|string|max:255',
+            'purpose_commercial_edit' => 'nullable|string|max:255',
+            'price_edit' => 'required|integer',
             'address_city_edit' => 'required|string|max:255',
             'address_area_edit' => 'required|string|max:255',
             'address_location_edit' => 'required|string|max:2000',
@@ -243,7 +260,7 @@ class PropertyController extends Controller
             $propertyInfo->pInfo_lName = $request->pInfo_lastName_edit;
             $propertyInfo->pInfo_email = $request->pInfo_email_edit;
             $propertyInfo->pInfo_phoneNumber = $request->pInfo_phoneNumber_edit;
-            $propertyInfo->price =$request->price_edit;
+            $propertyInfo->price = $request->price_edit;
             $propertyInfo->status = '1';
 
             // Update property listing info
@@ -399,14 +416,14 @@ class PropertyController extends Controller
         $area_id = Area::where('NAME', $propertyInfo->propertyListingPape->address_area)->value('id');
         $location_id = Location::where('NAME', $propertyInfo->propertyListingPape->address_location)->value('id');
         $sector = $propertyInfo->propertyListingPape->address_sector;
-        
+
         $areas = Area::where('CITY_ID', $city_id)->get();
         $locations = Location::where('AREA_ID', $area_id)->get();
         $sectors = Sector::where('LOCATION_ID', $location_id)->get();
 
         // dd($propertyInfo);
         if ($propertyInfo) {
-            return response()->json(['propertyInfo' => $propertyInfo,'areas' => $areas,'locations' => $locations,'sectors' => $sectors]);
+            return response()->json(['propertyInfo' => $propertyInfo, 'areas' => $areas, 'locations' => $locations, 'sectors' => $sectors]);
         } else {
             return response()->json(['propertyInfo' => []]);
         }
@@ -442,5 +459,59 @@ class PropertyController extends Controller
         } else {
             return response()->json(['propertyInfo' => [], 'message' => "Property Detail Not Deleted", 'status' => 402]);
         }
+    }
+
+
+
+
+    public function cityData(Request $request)
+    {
+        $cityData = City::with('areas.locations.sectors')->get();
+        if ($cityData) {
+            return response()->json(['cityData' => $cityData], 200);
+        } else {
+            return response()->json(['cityData' => []], 200);
+        }
+    }
+
+
+
+    public function populateAreasLov(Request $request)
+    {
+        $city = $request->city;
+
+        $city_id = City::where('NAME', $city)->value('id');
+
+        $areas = Area::where('CITY_ID', $city_id)->get();
+
+        return response()->json(['areas' => $areas], 200);
+    }
+
+    public function populateLocationLov(Request $request)
+    {
+        $area = $request->area;
+
+        $area_id = Area::where('NAME', $area)->value('id');
+        // $location_id = Location::where('NAME', $propertyInfo->propertyListingPape->address_location)->value('id');
+        // $sector = $propertyInfo->propertyListingPape->address_sector;
+
+        $locations = Location::where('AREA_ID', $area_id)->get();
+        // $sectors = Sector::where('LOCATION_ID', $location_id)->get();
+
+        //dd($propertyInfo);
+
+        return response()->json(['locations' => $locations], 200);
+    }
+    public function populateSectorLov(Request $request)
+    {
+        $location = $request->location;
+
+        $location_id = Location::where('NAME', $location)->value('id');
+
+        $sectors = Sector::where('LOCATION_ID', $location_id)->get();
+
+        //dd($propertyInfo);
+
+        return response()->json(['sectors' => $sectors], 200);
     }
 }
