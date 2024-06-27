@@ -69,6 +69,7 @@
     .table-bordered td {
         border: 1px solid #dee2e6;
     }
+
     .modal-header {
         background-color: #007bff;
         color: white;
@@ -126,7 +127,8 @@
                                         <div class="col-xs-6">
                                             <div class="form_blk">
                                                 <h6>Video Media URL</h6>
-                                                <input type="text" name="mediaUrl" id="mediaUrl" class="text_box" placeholder="Video Media must be youtube URL">
+                                                <input type="text" name="mediaUrl" id="mediaUrl" class="text_box"
+                                                    placeholder="Video Media must be youtube URL">
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
@@ -276,37 +278,37 @@
                                 <br>
                                 <div class="main_row flex_row">
                                     @if(count($mediaUrl))
-                                        @foreach ($mediaUrl as $index=>$mediaRecord )
+                                    @foreach ($mediaUrl as $index=>$mediaRecord )
 
-                                        <div class="col">
-                                            <div class="item_blk">
-                                                <div class="image" style="padding: 0px !important">
-                                                    @if(isset($mediaRecord->url) && !empty($mediaRecord->url))
-                                                    <iframe width="320" height="220" src="{{$mediaRecord->url}}"
-                                                        frameborder="0" allowfullscreen></iframe>
-                                                    @else
-                                                    <p>Video not available</p>
-                                                    @endif
-                                                    <div class="overlay p-0">
-                                                        <ul class="social_links">
-                                                            <li><a
-                                                                    href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
-                                                                        src="{{ asset('images/icons-delete.png')}}"
-                                                                        alt=""></a></li>
+                                    <div class="col">
+                                        <div class="item_blk">
+                                            <div class="image" style="padding: 0px !important">
+                                                @if(isset($mediaRecord->url) && !empty($mediaRecord->url))
+                                                <iframe width="320" height="220" src="{{$mediaRecord->url}}"
+                                                    frameborder="0" allowfullscreen></iframe>
+                                                @else
+                                                <p>Video not available</p>
+                                                @endif
+                                                <div class="overlay p-0">
+                                                    <ul class="social_links">
+                                                        <li><a
+                                                                href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
+                                                                    src="{{ asset('images/icons-delete.png')}}"
+                                                                    alt=""></a></li>
 
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="txt">
-                                                    <h5 class="title">{{ $mediaRecord->description }}</h5>
+                                                    </ul>
                                                 </div>
                                             </div>
+                                            <div class="txt">
+                                                <h5 class="title">{{ $mediaRecord->title }}</h5>
+                                            </div>
                                         </div>
-                                        @endforeach
+                                    </div>
+                                    @endforeach
                                     @else
-                                        <div style="width:100%; text-align:center;">
-                                            <p>No record found...</p>
-                                        </div>
+                                    <div style="width:100%; text-align:center;">
+                                        <p>No record found...</p>
+                                    </div>
                                     @endif
 
                                 </div>
@@ -314,7 +316,7 @@
                         </section>
                     </div>
                 </div>
-                
+
             </div>
 
 
@@ -346,34 +348,34 @@
                                 <br>
                                 <div class="main_row flex_row">
                                     @if(count($mediaOnlyRecords))
-                                        @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
+                                    @foreach ($mediaOnlyRecords as $index=>$mediaOnlyRecord )
 
-                                        <div class="col">
-                                            <div class="item_blk">
-                                                <div class="image">
-                                                    <img src="{{ asset($mediaOnlyRecord->url) }}" alt="">
-                                                    <div class="overlay">
-                                                        <ul class="social_links">
-                                                            <li><a
-                                                                    href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
-                                                                        src="{{ asset('images/icons-delete.png')}}"></a>
-                                                            </li>
+                                    <div class="col">
+                                        <div class="item_blk">
+                                            <div class="image">
+                                                <img src="{{ asset($mediaOnlyRecord->url) }}" alt="">
+                                                <div class="overlay">
+                                                    <ul class="social_links">
+                                                        <li><a
+                                                                href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
+                                                                    src="{{ asset('images/icons-delete.png')}}"></a>
+                                                        </li>
 
-                                                        </ul>
-                                                    </div>
-
+                                                    </ul>
                                                 </div>
-                                                <div class="txt">
-                                                    <h5 class="title"><a href="#">{{$mediaOnlyRecord->description}}</a></h5>
 
-                                                </div>
+                                            </div>
+                                            <div class="txt">
+                                                <h5 class="title"><a href="#">{{$mediaOnlyRecord->title}}</a></h5>
+
                                             </div>
                                         </div>
-                                        @endforeach
+                                    </div>
+                                    @endforeach
                                     @else
-                                        <div style="width:100%; text-align:center;">
-                                            <p>No record found...</p>
-                                        </div>
+                                    <div style="width:100%; text-align:center;">
+                                        <p>No record found...</p>
+                                    </div>
                                     @endif
                                 </div>
 
@@ -381,7 +383,7 @@
                         </section>
                     </div>
                 </div>
-                
+
             </div>
 
 
@@ -667,6 +669,38 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
 });
 
 </script>
+
+
+
+{{-- opening current image tab after submission imge --}}
+<script>
+    $(document).ready(function() {
+        $('#AddMediaOnlySubmitBtn').click(function() {
+            // Set a flag in local storage
+            localStorage.setItem('showPopup', 'true');
+            //alert('Flag set to true before submitting the form');
+        });
+    });
+</script>
+
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if the flag is set in local storage
+        // alert('Current flag value: ' + localStorage.getItem('showPopup'));
+        if (localStorage.getItem('showPopup') === 'true') {
+            // Show the popup
+            document.getElementById('AddMedia').style.display = 'block';
+            document.getElementById('All').style.display = 'none';
+
+            // Remove the flag from local storage
+            localStorage.removeItem('showPopup');
+            // alert('Popup shown and flag removed');
+        } else {
+            // alert('Flag is not set to true');
+        }
+    });
+</script> --}}
+
 
 
 @endpush

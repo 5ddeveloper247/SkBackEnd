@@ -28,7 +28,7 @@
 
                                 <form action="#" id="AddAdminForm">
                                     <div class="row mb-3">
-                                      
+
                                         <div class="col-sm-12">
                                             <h6 class="mb-1">Full Name<sup>*</sup></h6>
                                         </div>
@@ -215,10 +215,10 @@
                             <h3 class="text-center">Are You Sure to Delete?</h3>
                             <!-- <p>Are You Sure to Delete?</p> -->
                             <div class="text-center row">
-                                <button type="button" class="btn bg-transparent rounded-pill" id="delete_confirmed_btn"
-                                    data-id=""><img src="{{asset('assets\images\check_1828640.png')}}"
-                                        style="width:30px"></button>
                                 <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="admin_delete_confirmed_btn" data-id=""><img
+                                        src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill close_delete_modal_btn "
                                     id="close_delete_modal_btn"><img
                                         src="{{asset('assets\images\close-button_11450177.png')}}"
                                         style="width:30px"></button>
@@ -246,30 +246,27 @@
                     <div class="blk">
                         <div class="top_head">
                             <div class="card_blk" id="">
-                                <div class="icon"><p id="totalUserCounter">0</p>
+                                <div class="icon">
+                                    <p id="totalUserCounter">{{ $activeAdmins }}</p>
                                 </div>
-                                <strong >Pending Users</strong>
+                                <strong>Active Users</strong>
                                 <a type="button"></a>
                             </div>
                             <div class="card_blk" id="">
-                                <div class="icon"><p id="totalUserCounter">0</p>
+                                <div class="icon">
+                                    <p id="totalUserCounter">{{ $inactiveAdmins }}</p>
                                 </div>
-                                <strong >Active Users</strong>
+                                <strong>In-Active Users</strong>
                                 <a type="button"></a>
                             </div>
                             <div class="card_blk" id="">
-                                <div class="icon"><p id="totalUserCounter">0</p>
+                                <div class="icon">
+                                    <p id="totalUserCounter">{{$totalAdmins }}</p>
                                 </div>
-                                <strong >In-Active Users</strong>
+                                <strong>Total Users</strong>
                                 <a type="button"></a>
                             </div>
-                            <div class="card_blk" id="">
-                                <div class="icon"><p id="totalUserCounter">0</p>
-                                </div>
-                                <strong >Total Users</strong>
-                                <a type="button"></a>
-                            </div>
-                            
+
 
                             <div class="card_blk" id="showAddAdminPopUpBtn">
                                 <div class="icon"><img src="{{ asset('/images/icon-plus.svg') }}" alt="">
@@ -315,11 +312,12 @@
                                         </td>
                                         <td class="nowrap" data-center="">
                                             <div class="act_btn">
-                                                <button type="button" class="edit" data-user="{{ $user }}"
+                                                <button type="button" class="edit admin_edit" data-user="{{ $user }}"
                                                     id="admin_edit"></button>
                                                 <!-- <button type="button" class="copy admin_view"
                                                     data-user="{{ $user }}"></button> -->
-                                                <button type="button" class="del" data-user="{{ $user }}"
+                                                <button type="button" class="del admin_delete" data-popup="delete-data-popup"
+                                                    data-user="{{ $user }}" data-id={{ $user->id }}
                                                     id="admin_delete"></button>
                                             </div>
                                         </td>
@@ -436,7 +434,7 @@ $(document).on('click', '.admin_view', function() {
 
 
  // Handle edit button click
- $('#admin_edit').on('click', function() {
+ $('.admin_edit').on('click', function() {
     var userData = $(this).data('user');
     if (userData) {
         $('#editFullNameInput').val(userData.name || '');
@@ -515,13 +513,22 @@ $(document).on('click', '.admin_view', function() {
     // Close modals on close button click end
  
 
-$('#admin_delete').click( function() {
+
+
+$('.admin_delete').click(function(){
+    var del_id = $(this).attr('data-id');
+    $('#admin_delete_confirmed_btn').attr('data-id', del_id);
+$('#delete_modal').show();
+});
+
+
+$('#admin_delete_confirmed_btn').click( function() {
     
     // Handle delete button click
-    var userData = $(this).data('user');
+    var id = $(this).data('id');
     $.ajax({
         type: 'GET',
-        url: '/admin/users/admin/destroy/' + userData.id,// Adjust the URL according to your route configuration
+        url: '/admin/users/admin/destroy/' + id,// Adjust the URL according to your route configuration
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
@@ -537,6 +544,9 @@ $('#admin_delete').click( function() {
     });
 });
 
+$('.close_delete_modal_btn').click(function(){
+    $('#admin_delete_confirmed_btn').attr('data-id', '');
+});
 </script>
 
 

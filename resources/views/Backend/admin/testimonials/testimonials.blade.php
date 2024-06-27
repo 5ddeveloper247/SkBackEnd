@@ -46,8 +46,8 @@
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Name<sup>*</sup></h6>
-                                                        <input type="text" name="testimonial_name"
-                                                            id="testimonial_name" class="text_box" maxlength="15">
+                                                        <input type="text" name="testimonial_name" id="testimonial_name"
+                                                            class="text_box" maxlength="15">
                                                     </div>
                                                 </div>
 
@@ -132,7 +132,7 @@
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Description<sup>*</sup></h6>
+                                                        <h6>Comment<sup>*</sup></h6>
                                                         <textarea name="testimonial_description_edit"
                                                             id="testimonial_description_edit" class="text_box"
                                                             placeholder=""></textarea>
@@ -213,7 +213,7 @@
                         </div>
 
                         <div class="form_blk">
-                            <input type="text" name="" id="" class="text_box inquiry_search_box"
+                            <input type="text" name="" id="" class="text_box testimonial_search_box"
                                 placeholder="Search here">
                             <button type="button"><img src="{{ asset('/images/icon-search.svg')}}" alt=""></button>
                         </div>
@@ -295,7 +295,7 @@
         console.log(response.data);
         var testimonials = response.data;
         $.each(testimonials, function (index, testimonial) {
-        var testimonialRow =`<tr class="_data_row"> 
+        var testimonialRow =`<tr class="testimonial_data_row"> 
                                     <td class="nowrap grid-p-searchby">${index + 1}</td>
                                     <td class="grid-p-searchby">${testimonial.name}</td>
                                     <td class="grid-p-searchby">${testimonial.title}</td>
@@ -470,6 +470,29 @@
 
 </script>
 
+
+{{-- table searching is here --}}
+
+<script>
+    $('.testimonial_search_box').on("keyup", function (e) {
+  
+  var tr = $('.contact_data_row');
+  if ($(this).val().length >= 1) {//character limit in search box.
+      var noElem = true;
+      var val = $.trim(this.value).toLowerCase();
+      el = tr.filter(function () {
+          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+      });
+      if (el.length >= 1) {
+          noElem = false;
+      }
+      tr.not(el).hide();
+      el.fadeIn().show();
+  } else {
+      tr.fadeIn().show();
+  }
+});
+</script>
 
 
 

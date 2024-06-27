@@ -75,13 +75,16 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/inquiry/update', [InquiryController::class, 'updateInquiries'])->name('admin.inquiry.update');
     Route::post('admin/inquiry/delete', [InquiryController::class, 'deleteInquiries'])->name('admin.inquiry.delete');
     Route::get('/admin/inquiry/view/ajax', [InquiryController::class, 'viewInquiriesAjax'])->name('admin.inquiry.view.ajax');
+    Route::get('/admin/inquiry/view/replied/ajax', [InquiryController::class, 'viewRepliedInquiriesAjax'])->name('admin.inquiry.view.replied.ajax');
 
 
     //admin/contactus
     Route::get('admin/contact/view', [ContactUsController::class, 'viewContact'])->name('admin.contact.view');
     Route::post('admin/contact/update', [ContactUsController::class, 'updateContact'])->name('admin.contact.update');
     Route::post('admin/contact/delete', [ContactUsController::class, 'deleteContact'])->name('admin.contact.delete');
+    Route::post('admin/contact/replied/delete', [ContactUsController::class, 'deleteRepliedContact'])->name('admin.contact.replied.delete');
     Route::get('/admin/contact/view/ajax', [ContactUsController::class, 'viewContactAjax'])->name('admin.contact.view.ajax');
+    Route::get('/admin/contact/view/replied/ajax', [ContactUsController::class, 'viewRepliedContactAjax'])->name('admin.contact.view.replied.ajax');
 
     //testimonials
     Route::get('admin/testimonials/view', [TestimonialsController::class, 'viewTestimonials'])->name('admin.testimonials.view');

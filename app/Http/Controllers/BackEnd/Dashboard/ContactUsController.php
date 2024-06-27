@@ -115,12 +115,72 @@ class ContactUsController extends Controller
         }
     }
 
+    public function deleteRepliedContact(Request $request)
+    {
+        try {
+
+            // Find the inquiry with the specified conditions
+            $contact = Contact::where('id', $request->del_replied_id)->first();
+
+            // If the inquiry exists, delete it
+            if ($contact) {
+                $contact->delete();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'contact deleted successfully.'
+                ]);
+            }
+
+            // If the inquiry does not exist, return an error response
+            return response()->json([
+                'status' => 404,
+                'message' => 'contact not found or already completed.'
+            ]);
+        } catch (Exception $e) {
+            // Log the error and return an error response
+            Log::error('Error deleting contact: ' . $e->getMessage());
+            return response()->json([
+                'status' => 500,
+                'message' => 'Failed to delete the contact.'
+            ]);
+        }
+    }
+
 
     public function viewContactAjax(Request $request)
     {
         try {
             // Fetch all inquiries
             $contactData = DB::table('contacts')->where('contact_reply_edit', Null)->get();
+            // $contactData = Contact::where('contact_reply_edit', null);
+            if ($contactData) {
+                return response()->json([
+                    'success' => true,
+                    'data' => $contactData
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No data found for contacts.'
+                ], 404);
+            }
+        } catch (Exception $e) {
+            // Log the error
+            Log::error('Error fetching inquiries: ' . $e->getMessage());
+
+            // Return error response
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to fetch contact us data.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function viewRepliedContactAjax(Request $request)
+    {
+        try {
+            // Fetch all inquiries
+            $contactData = DB::table('contacts')->whereNotNull('contact_reply_edit')->get();
             // $contactData = Contact::where('contact_reply_edit', null);
             if ($contactData) {
                 return response()->json([

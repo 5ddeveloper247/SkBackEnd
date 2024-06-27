@@ -53,7 +53,7 @@ function loadManagerListResponse(response) {
     var properties = response.responseData;
     $.each(properties, function (index, property) {
 
-        console.log(property)
+
         var propertyRow = `<tr class="property_data_row">
                                 <td class="nowrap ">${index + 1}</td>
                                 <td class="grid-p-searchby">${property.pInfo_fName}</td>
@@ -141,7 +141,7 @@ function addManagerResponse(response) {
 
 $(document).on('click', '.delete_btn', function () {
     var del_id = $(this).attr('data-id');
-    console.log(del_id);
+
     $('#delete_confirmed_btn').attr('data-id', del_id);
 });
 
@@ -207,7 +207,7 @@ function changestatus(id, stauts) {
 }
 
 function changeStatusResponse(response) {
-    console.log(response.status)
+
     if (response.status == 200) {
 
         toastr.success(response.message, '', {

@@ -36,7 +36,9 @@ class PropertyController extends Controller
     // load property for ajax
     public function loadpropertyList(Request $request)
     {
-        $responseData = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->get();
+        $responseData = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
+            ->orderBy('id', 'desc')
+            ->get();
         $cityData = City::with('areas.locations.sectors')->get();
         if ($cityData) {
             $cities = $cityData;
@@ -77,14 +79,14 @@ class PropertyController extends Controller
             $propertyListingPageRecord = PropertyListingPaPe::create([
                 "property_record_id" => $personalInfoRecord->property_record_id,
                 "purpose_purpose" => $request->purpose_purpose,
-                "pupose_home" => $request->pupose_home,
-                "purpose_plot" => $request->purpose_plot,
-                "purpose_commercial" => $request->purpose_commercial,
+                "pupose_home" => $request->pupose_home ?? null,
+                "purpose_plot" => $request->purpose_plot ?? null,
+                "purpose_commercial" => $request->purpose_commercial ?? null,
                 "address_city" => $request->address_city,
                 "address_area" => $request->address_area,
                 "address_phase" => $request->address_phase,
                 "address_location" => $request->address_location,
-                "address_map_location" => $request->address_map_location,
+                "address_map_location" => $request->address_map_location ?? null,
                 "address_sector" => $request->address_sector,
                 "address_address" => $request->address_address,
                 "propertyDetail_plot_num" => $request->propertyDetail_plot_num,
@@ -222,7 +224,7 @@ class PropertyController extends Controller
             'address_city_edit' => 'required|string|max:255',
             'address_area_edit' => 'required|string|max:255',
             'address_location_edit' => 'required|string|max:2000',
-            'address_map_location_edit' => 'required|string|max:2000',
+            'address_map_location_edit' => 'nullable|string|max:2000',
             'address_sector_edit' => 'required|string|max:255',
             'address_address_edit' => 'required|string|max:255',
             'propertyDetail_plot_num_edit' => 'required|string|max:255',
@@ -316,6 +318,7 @@ class PropertyController extends Controller
             ];
 
             foreach ($amenities as $amenity => $value) {
+
                 Amenities::updateOrCreate(
                     ['property_record_id' => $propertyInfo->property_record_id, 'amenities' => $amenity],
                     ['value' => $value]

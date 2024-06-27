@@ -168,7 +168,8 @@
                                         <div class="blk">
                                             <h5 class="color">Reply Contact</h5>
                                             <div class="form_row row">
-                                                <input type="hidden" name="edit_replied_id" id="edit_replied_id">
+                                                <input type="hidden" class="edit_replied_id" name="edit_id"
+                                                    id="edit_id">
 
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
@@ -209,7 +210,8 @@
                                                     <div class="form_blk">
                                                         <h6>Reply <sup>*</sup></h6>
                                                         <textarea required name="contact_reply_edit"
-                                                            id="contact_reply_edit" class="text_box"
+                                                            id="contact_reply_edit"
+                                                            class="text_box contact_replied_reply_edit"
                                                             placeholder=""></textarea>
                                                     </div>
                                                 </div>
@@ -267,7 +269,7 @@
                 <div class="table_cell">
                     <div class="contain">
                         <div class="_inner editor_blk">
-                            <button type="button" class="hidden x_btn clode_delete_modal_default_btn"></button>
+                            <button type="button" class="hidden x_btn clode_replied_delete_modal_default_btn"></button>
                             <h3 class="text-center">Are You Sure to Delete?</h3>
                             <!-- <p>Are You Sure to Delete?</p> -->
                             <div class="text-center row">
@@ -405,6 +407,7 @@
 
 {{-- ________________________________table searching ended____________________________ --}}
 <script>
+    //1
     function loadpropertyList() {
     let url = '/admin/contact/view/ajax';
     let type = 'GET';
@@ -416,7 +419,8 @@ function loadManagerListResponse(response) {
 
     var contactListingTable = $('#contact_table_body');
     contactListingTable.empty();
-    console.log(response.data); 
+   
+     
     var inquiries = response.data;
     $.each(inquiries, function (index, contact) {
 
@@ -441,13 +445,13 @@ function loadManagerListResponse(response) {
     });
 }
 
+//1
 $(document).on('click', '.contact_edit_btn', function () {
-    alert("clicked")
+   
     var id = $(this).attr('data-id');
-    alert(id)
+   
     var contact = JSON.parse($(this).attr('data-contact'));
-    console.log(contact)
- console.log(contact)
+   
     $('#edit_id').val(contact.id)
     $('#contact_name_edit').val(contact.full_name)
     $('#contact_email_edit').val(contact.email)
@@ -461,76 +465,66 @@ $(document).on('click', '.contact_edit_btn', function () {
 
 
 
-
-// contact replied edit handle
-$(document).on('click', '.contact_replied_edit_btn', function () {
-    var id = $(this).attr('data-id');
-    var contact = JSON.parse($(this).attr('data-contact'));
- console.log(contact)
-    $('#edit_replied_id').val(contact.id)
-    $('#contact_replied_name_edit').val(contact.full_name)
-    $('#contact_replied_email_edit').val(contact.email)
-    $('#contact_replied_subject_edit').val(contact.subject)
-    $('#contact_replied_description_edit').val(contact.message)
-    // Add your edit logic here, e.g., populate a form with contact details for editing
-});  
-
+//1
 // _________________________________Delete replied functions_______________________________
-$(document).on('click', '.contact_replied_delete_btn', function () {
+$(document).on('click', '.contact_delete_btn', function () {
     var del_id = $(this).attr('data-id');
-    $('#contact_replied_delete_confirmed_btn').attr('data-id', del_id);
+    $('#contact_delete_confirmed_btn').attr('data-id', del_id);
 });
 
-$('#contact_replied_close_delete_modal_btn').click(function () {
-    $('.clode_replied_delete_modal_default_btn').click();
-    $('#contact_replieddelete_confirmed_btn').attr('data-id', '');
+$('#contact_close_delete_modal_btn').click(function () {
+    $('.clode_delete_modal_default_btn').click();
+    $('#contact_delete_confirmed_btn').attr('data-id', '');
 });
 
-$('#contact_replied_delete_confirmed_btn').click(function () {
+$('#contact_delete_confirmed_btn').click(function () {
     var del_id = $(this).attr('data-id');
     let url = '/admin/contact/delete';
     let type = 'POST';
     let data = new FormData();
     data.append('del_id', del_id);
-    SendAjaxRequestToServer(type, url, data, '', deletcontactRepliedResponse, '', '');
+    SendAjaxRequestToServer(type, url, data, '', deletcontactResponse, '', '');
 
 });
 
 
-function deletcontactRepliedResponse(response) {
-    $('#contact_replied_close_delete_modal_btn').click(); // Close the modal in all cases
+function deletcontactResponse(response) {
+    $('#contact_close_delete_modal_btn').click(); // Close the modal in all cases
 
     if (response.status == 200) {
         toastr.success(response.message, '', { timeOut: 3000 });
        
-        $('#delete_replied_modal').hide();
+        $('#delete_modal').hide();
         window.location.reload(); // Reload the page
     } else {
-        $('#delete_replied_modal').hide();
+        $('#delete_modal').hide();
         toastr.error(response.message, '', { timeOut: 3000 });
     }
 }
-
-
 </script>
+
 {{-- _____________________________-loading contact request ended____________________ --}}
 
+
+
+
+{{-- 2 --}}
 <script>
     loadContactReplied();
     function loadContactReplied() {
-    let url = '/admin/contact/view/ajax';
+    let url = '/admin/contact/view/replied/ajax';
     let type = 'GET';
     SendAjaxRequestToServer(type, url, '', '', loadContactRepliedResponse, '', '');
 }
 
 
 function loadContactRepliedResponse(response) {
-
+ 
     var contactListingTable = $('#contact_replied_table_body');
     contactListingTable.empty();
-    console.log(response.data); 
     var inquiries = response.data;
     $.each(inquiries, function (index, contact) {
+
 
         var contactRow = `<tr class="contact_data_row">
                                 <td class="nowrap grid-p-searchby">${index + 1}</td>
@@ -553,41 +547,46 @@ function loadContactRepliedResponse(response) {
     });
 }
 
+
+
+//2
 $(document).on('click', '.contact_replied_edit_btn', function () {
     var id = $(this).attr('data-id');
     var contact = JSON.parse($(this).attr('data-contact'));
- console.log(contact)
-    $('#edit_replied_id').val(contact.id)
+    $('.edit_replied_id').val(contact.id) 
     $('#contact_replied_name_edit').val(contact.full_name)
     $('#contact_replied_email_edit').val(contact.email)
     $('#contact_replied_subject_edit').val(contact.subject)
     $('#contact_replied_description_edit').val(contact.message)
+    $('.contact_replied_reply_edit').val(contact.contact_reply_edit)
     // Add your edit logic here, e.g., populate a form with contact details for editing
 });  
 
+//2
 // _________________________________Delete functions_______________________________
 $(document).on('click', '.contact_replied_delete_btn', function () {
     var del_id = $(this).attr('data-id');
     $('#contact_replied_delete_confirmed_btn').attr('data-id', del_id);
 });
 
-$('#contact_close_delete_modal_btn').click(function () {
+//2
+$('#contact_replied_close_delete_modal_btn').click(function () {
     $('.clode_replied_delete_modal_default_btn').click();
     $('#contact_replied_delete_confirmed_btn').attr('data-id', '');
 });
-
+//2
 $('#contact_replied_delete_confirmed_btn').click(function () {
     var del_id = $(this).attr('data-id');
-    let url = '/admin/contact/delete';
+    let url = '/admin/contact/replied/delete';
     let type = 'POST';
     let data = new FormData();
     data.append('del_replied_id', del_id);
-    SendAjaxRequestToServer(type, url, data, '', deletcontactResponse, '', '');
+    SendAjaxRequestToServer(type, url, data, '', deletcontactRepliedResponse, '', '');
 
 });
 
-
-function deletcontactResponse(response) {
+//2
+function deletcontactRepliedResponse(response) {
     $('#contact_replied_close_delete_modal_btn').click(); // Close the modal in all cases
 
     if (response.status == 200) {

@@ -29,27 +29,34 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6|max:20',
         ];
-
+    
         // Validate the request data
         $validator = Validator::make($request->all(), $rules);
-
+    
         // Check if validation fails
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-
+    
         // Attempt to log the user in
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-
-            // Authentication passed...
-
-            return redirect()->intended('admin/dashboard'); // Redirect to intended route 
+            // Check if the user's status is 1
+            $user = Auth::user();
+            if ($user->status == 1) {
+                // Authentication and status check passed
+                return redirect()->intended('admin/dashboard'); // Redirect to intended route 
+            } else {
+                // Log the user out if status is not 1
+                Auth::logout();
+                return redirect()->back()->with('error', 'Your account is inactive.');
+            }
         }
-
-        // Authentication failed...
+    
+        // Authentication failed
         return redirect()->back()->with('error', 'Invalid email or password.');
     }
+    
 
 
 

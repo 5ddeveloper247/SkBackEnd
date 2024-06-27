@@ -104,7 +104,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Home<sup></sup></h6>
+                    <h6>Home<sup>**</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedHomePurpose = $propertyInfo->propertyListingPape->pupose_home ?? '';
@@ -127,7 +127,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Plot<sup></sup></h6>
+                    <h6>Plot<sup>**</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedPlotPurpose = $propertyInfo->propertyListingPape->purpose_plot ?? '';
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Commercial<sup></sup></h6>
+                    <h6>Commercial<sup>**</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedCommercialPurpose = $propertyInfo->propertyListingPape->purpose_commercial ?? '';
@@ -272,7 +272,7 @@
                         spellcheck="false">{{ $propertyInfo->propertyListingPape->address_address }}</textarea>
                 </div>
                 <div class="col-sm-12 col-xs-12">
-                    <h6>Map Location<sup>*</sup></h6>
+                    <h6>Map Location<sup></sup></h6>
                     <textarea class="text_box" placeholder="Map Location" name="address_map_location_edit"
                         id="address_map_location_edit"
                         value="{{ $propertyInfo->propertyListingPape->address_map_location }}"
@@ -621,7 +621,7 @@
                 <br>
                 <div class="btn_blk text-center">
                     <button type="submit" class="site_btn long ">
-                        <a href="{{route('admin.property.listing')}}">Back</a>
+                        <a class="site_btn" href="{{route('admin.property.listing')}}">Back</a>
                     </button>
                     <button type="submit" class="site_btn extra_info_continue-btn_edit long ">Submit</button>
                 </div>
@@ -1030,7 +1030,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
                 '#address_location_edit',
                 '#address_sector_edit',
                 '#address_address_edit',
-                '#address_map_location_edit',
+                //'#address_map_location_edit',
                 '#propertyDetail_plot_num_edit',
                 '#propertyDetail_area_edit',
                 '#propertyDetail_area_unit_edit',
@@ -1070,7 +1070,9 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
                     $(field).css('border', '1px solid red');
                 });
                 isValid = false;
-                alert("Please select one of the purpose fields.");
+                toastr.info('Please select a field from  Home, Plot, Commercial', '', {
+                timeOut: 3000
+            });
             } else {
                 purposeFields.forEach(function(field) {
                     $(field).css('border', '');

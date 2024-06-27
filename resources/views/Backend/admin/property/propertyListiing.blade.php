@@ -32,9 +32,8 @@
         {{-- ______________________tab listings_______________________________--- --}}
         <ul class="tab_list">
             <li class="active"><a href="#All" data-toggle="tab">All Properties</a></li>
-            <li><a href="#propertiesSetup" data-toggle="tab">Properties Setup</a></li>
-            {{-- <li><a href="#Inspection" data-toggle="tab">Vehicle Inspection</a></li>
-            <li><a href="#Tracking" data-toggle="tab">Delivery Tracking</a></li> --}}
+            <li><a href="#propertiesSetup" data-toggle="tab">Add Property</a></li>
+
         </ul>
 
 
@@ -133,7 +132,7 @@
 
                         <div id="propertiesSetup" class="tab-pane fade">
                             <div class="top_head">
-                                <h4>Properties Setup</h4>
+                                <h4>Add Property</h4>
                             </div>
                             <div class="blk">
                                 <form action="{{ route('admin.property.main.submission') }}"
@@ -180,7 +179,7 @@
                                                 <h6>Phone Number<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="pInfo_phoneNumber" id="pInfo_phoneNumber"
-                                                        class="text_box" placeholder="eg: +92300 0000 000">
+                                                        class="text_box" placeholder="eg: +92300 0000 000" >
                                                 </div>
                                             </div>
 
@@ -205,30 +204,33 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Home<sup>*</sup></h6>
+                                                <h6>Home<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="pupose_home" id="pupose_home"
                                                         class="text_box selectpicker" data-container="body">
+                                                        <option value="">Select Home</option>
                                                         <option value="House">House</option>
                                                         <option value="Flat">Flat</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Plot<sup>*</sup></h6>
+                                                <h6>Plot<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_plot" id="purpose_plot"
                                                         class="text_box selectpicker" data-container="body">
+                                                        <option value="">Select Plot</option>
                                                         <option value="Residential Plot">Residential Plot</option>
                                                         <option value="CommercialPlot">Commercial Plot</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Commercial<sup>*</sup></h6>
+                                                <h6>Commercial<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_commercial" id="purpose_commercial"
                                                         class="text_box selectpicker" data-container="body">
+                                                        <option value="">Select Commercial</option>
                                                         <option value="Office">Office</option>
                                                         <option value="Shop">Shop</option>
                                                         <option value="Building">Building</option>
@@ -240,7 +242,7 @@
                                                 <h6>Price<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="price" id="price" class="text_box"
-                                                        placeholder="pirce in pkr">
+                                                        placeholder="Price" >
                                                 </div>
                                             </div>
                                         </div>
@@ -301,7 +303,7 @@
                                             </div>
 
                                             <div class="col-sm-12 col-xs-12">
-                                                <h6>Map Location<sup>*</sup></h6>
+                                                <h6>Map Location<sup></sup></h6>
                                                 <textarea class="text_box" placeholder="Map Location"
                                                     name="address_map_location" id="address_map_location"
                                                     spellcheck="false"></textarea>
@@ -325,7 +327,7 @@
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_plot_num"
                                                         id="propertyDetail_plot_num" class="text_box"
-                                                        data-container="body" />
+                                                        data-container="body"  />
 
                                                     </select>
                                                 </div>
@@ -349,7 +351,7 @@
                                                         <h6>Area Unit<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="propertyDetail_area_unit"
-                                                                id="propertyDetail_area_unit" class="text_box"
+                                                                id="propertyDetail_area_unit" class="text_box" 
                                                                 placeholder="eg: 10">
                                                         </div>
                                                     </div>
@@ -360,7 +362,7 @@
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_bedrooms"
                                                         id="propertyDetail_bedrooms" class="text_box "
-                                                        data-container="body" />
+                                                        data-container="body" mx="10" />
                                                     </select>
                                                 </div>
                                             </div>
@@ -369,7 +371,7 @@
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_bathrooms"
                                                         id="propertyDetail_bathrooms" class="text_box"
-                                                        data-container="body" />
+                                                        data-container="body" max="10" />
 
                                                     </select>
                                                 </div>
@@ -424,7 +426,7 @@
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_landline"
                                                                 id="extra_info_landline" class="text_box"
-                                                                placeholder="eg: 285432584452">
+                                                                placeholder="eg: 285432584452" >
                                                         </div>
                                                     </div>
 
@@ -777,30 +779,41 @@ function handleTabHeadNextActive  (tab_head) {
 
 
    // Step 2:purpose Validation and Navigation
-$('.purpose_continue_btn').click(function() {
-   
+   $('.purpose_continue_btn').click(function() {
     const tab_head_lst = 2;
     var purpose = $('#purpose_purpose');
-    var home = $('#pupose_home');
-    var plot = $('#purpose_plot');
-    var commercial = $('#purpose_commercial');
     var price = $('#price');
 
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
 
-    // Add validation logic for Purpose fields
+    // Ensure only one of the purpose fields is selected
+    var purposeFields = [
+        '#pupose_home',
+        '#purpose_plot',
+        '#purpose_commercial'
+    ];
+
+    var purposeSelected = purposeFields.some(function(field) {
+        return $(field).val().trim() !== '';
+    });
+
+    if (!purposeSelected) {
+        purposeFields.forEach(function(field) {
+            $(field).addClass('validation-failed');
+        });
+        toastr.info('Please select a field from Home, Plot, or Commercial', '', {
+            timeOut: 3000
+        });
+    } else {
+        purposeFields.forEach(function(field) {
+            $(field).removeClass('validation-failed');
+        });
+    }
+
+    // Add validation logic for Purpose and Price fields
     if (!purpose.val().trim()) {
         purpose.addClass('validation-failed');
-    }
-    if (!home.val().trim()) {
-        home.addClass('validation-failed');
-    }
-    if (!plot.val().trim()) {
-        plot.addClass('validation-failed');
-    }
-    if (!commercial.val().trim()) {
-        commercial.addClass('validation-failed');
     }
     if (!price.val().trim()) {
         price.addClass('validation-failed');
@@ -808,8 +821,10 @@ $('.purpose_continue_btn').click(function() {
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Purpose.');
-        return;  
+        toastr.info('Please fill all required fields in Purpose', '', {
+            timeOut: 3000
+        });
+        return;
     } else {
         // If all fields pass validation, proceed to the next tab
         handleTabHeadNextActive(tab_head_lst + 1);
@@ -822,6 +837,7 @@ $('.purpose_continue_btn').click(function() {
 
 
 
+
 $('.address_continue_btn').click(function() {
     const tab_head_lst = 3;
     var city = $('#address_city');
@@ -829,7 +845,7 @@ $('.address_continue_btn').click(function() {
     var location = $('#address_location');
     // var sector = $('#address_sector');
     var address = $('#address_address');
-    var address_map_location = $('#address_map_location');
+   // var address_map_location = $('#address_map_location');
 
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
@@ -850,13 +866,15 @@ $('.address_continue_btn').click(function() {
     if (!address.val().trim()) {
         address.addClass('validation-failed');
     }
-    if (!address_map_location.val().trim()) {
-        address_map_location.addClass('validation-failed');
-    }
+    // if (!address_map_location.val().trim()) {
+    //     address_map_location.addClass('validation-failed');
+    // }
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Address.');
+        toastr.info('Please select all in Address', '', {
+                timeOut: 3000
+            });
         return;
     } else {
         // If all fields pass validation, proceed to the next tab
@@ -902,7 +920,9 @@ $('.property_detail_continue_btn').click(function() {
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Property Detail.');
+        toastr.info('Please select all required fields in Property Detail', '', {
+                timeOut: 3000
+            });
         return;
     } else {
         // If all fields pass validation, proceed to the next tab
@@ -949,7 +969,9 @@ $('.extra_info_continue-btn').click(function() {
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        alert('Please fill out all fields in Extra Information.');
+        toastr.info('Please select all required fields in Extra Information', '', {
+                timeOut: 3000
+            });
         return;
     } else {
         // If all fields pass validation, proceed to the next tab
@@ -1130,10 +1152,9 @@ function  handlePropertyFormsubmission(){
     $('.purpose_continue_btn_edit').click(function() {
         const tab_head_lst = 2;
         var purpose = $('#purpose_purpose_edit');
-        console.log(purpose)
-        var home = $('#pupose_home_edit');
-        var plot = $('#purpose_plot_edit');
-        var commercial = $('#purpose_commercial_edit');
+        // var home = $('#pupose_home_edit');
+        // var plot = $('#purpose_plot_edit'); 
+        // var commercial = $('#purpose_commercial_edit');
     
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
@@ -1142,19 +1163,21 @@ function  handlePropertyFormsubmission(){
         if (!purpose.val().trim()) {
             purpose.addClass('validation-failed');
         }
-        if (!home.val().trim()) {
-            home.addClass('validation-failed');
-        }
-        if (!plot.val().trim()) {
-            plot.addClass('validation-failed');
-        }
-        if (!commercial.val().trim()) {
-            commercial.addClass('validation-failed');
-        }
+        // if (!home.val().trim()) {
+        //     home.addClass('validation-failed');
+        // }
+        // if (!plot.val().trim()) {
+        //     plot.addClass('validation-failed');
+        // }
+        // if (!commercial.val().trim()) {
+        //     commercial.addClass('validation-failed');
+        // }
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            alert('Please fill out all fields in Purpose.');
+            toastr.info('Please select all required fields in Purpose', '', {
+                timeOut: 3000
+            });
             return;  
         } else {
             // If all fields pass validation, proceed to the next tab
@@ -1202,7 +1225,9 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            alert('Please fill out all fields in Address.');
+            toastr.info('Please select all required fields in Address', '', {
+                timeOut: 3000
+            });
             return;
         } else {
             // If all fields pass validation, proceed to the next tab
@@ -1245,7 +1270,9 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            alert('Please fill out all fields in Property Detail.');
+             toastr.info('Please select all required fields in Property Detail', '', {
+                timeOut: 3000
+            });
             return;
         } else {
             // If all fields pass validation, proceed to the next tab
@@ -1288,7 +1315,9 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            alert('Please fill out all fields in Extra Information.');
+            toastr.info('Please select all required fields in Extra Information', '', {
+                timeOut: 3000
+            });
             return;
         } else {
             // If all fields pass validation, proceed to the next tab
@@ -1602,6 +1631,114 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+</script>
+
+
+
+
+<script>
+    $(document).ready(function() {
+        function resetSelects(except) {
+            if (except !== '#pupose_home') {
+                $('#pupose_home').val('').selectpicker('refresh');
+            }
+            if (except !== '#purpose_plot') {
+                $('#purpose_plot').val('').selectpicker('refresh');
+            }
+            if (except !== '#purpose_commercial') {
+                $('#purpose_commercial').val('').selectpicker('refresh');
+            }
+        }
+    
+        $('#pupose_home').change(function() {
+            if ($(this).val() !== '') {
+                resetSelects('#pupose_home');
+            }
+        });
+    
+        $('#purpose_plot').change(function() {
+            if ($(this).val() !== '') {
+                resetSelects('#purpose_plot');
+            }
+        });
+    
+        $('#purpose_commercial').change(function() {
+            if ($(this).val() !== '') {
+                resetSelects('#purpose_commercial');
+            }
+        });
+    
+        $("#propertySubmissionForm").submit(function(event) {
+            var isValid = true;
+    
+            // List of input fields to validate
+            var requiredFields = [
+                '#pInfo_firstName',
+                '#pInfo_lastName',
+                '#pInfo_email',
+                '#pInfo_phoneNumber',
+                '#price',
+                '#address_city',
+                '#address_area',
+                '#address_location',
+                '#address_sector',
+                '#address_address',
+                //'#address_map_location_edit',
+                '#propertyDetail_plot_num',
+                '#propertyDetail_area',
+                '#propertyDetail_area_unit',
+                '#propertyDetail_bedrooms',
+                '#propertyDetail_bathrooms',
+                '#extra_info_title',
+                '#extra_info_postingas',
+                '#extra_info_mobile',
+                '#extra_info_landline',
+                '#extra_info_description'
+            ];
+    
+            // Loop through each required field and check if it's empty
+            requiredFields.forEach(function(field) {
+                var $field = $(field);
+                if ($field.val().trim() === '') {
+                    $field.css('border', '1px solid red');
+                    isValid = false;
+                } else {
+                    $field.css('border', '');
+                }
+            });
+    
+            // Ensure only one of the purpose fields is selected
+            var purposeFields = [
+                '#pupose_home',
+                '#purpose_plot',
+                '#purpose_commercial'
+            ];
+    
+            var purposeSelected = purposeFields.some(function(field) {
+                return $(field).val().trim() !== '';
+            });
+    
+            if (!purposeSelected) {
+                purposeFields.forEach(function(field) {
+                    $(field).css('border', '1px solid red');
+                });
+                isValid = false;
+                toastr.info('Please select a field from  Home, Plot, Commercial', '', {
+                timeOut: 3000
+            });
+            } else {
+                purposeFields.forEach(function(field) {
+                    $(field).css('border', '');
+                });
+            }  
+    
+            // Prevent form submission if any field is invalid
+            if (!isValid) {
+                $(window).scrollTop(0);
+                event.preventDefault();
+            }
+        });
+    });
 </script>
 
 
