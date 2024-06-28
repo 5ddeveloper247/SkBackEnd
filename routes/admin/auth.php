@@ -10,8 +10,8 @@ use App\Http\Controllers\BackEnd\Dashboard\MediaController;
 use App\Http\Controllers\BackEnd\Dashboard\PropertyController;
 use App\Http\Controllers\BackEnd\Dashboard\InquiryController;
 use App\Http\Controllers\BackEnd\Dashboard\TestimonialsController;
+use App\Http\Controllers\BackEnd\Dashboard\CityController;
 
-use App\Models\City;
 
 //redirect if authenticated  
 Route::middleware(['admin.redirect'])->group(function () {
@@ -94,9 +94,27 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/testimonial/update', [TestimonialsController::class, 'updateTestimonial'])->name('admin.testimonial.update');
 
 
-
+    //property update form routes
     Route::get('admin/city/citydata', [PropertyController::class, 'cityData'])->name('admin.city.citydata');
     Route::post('/admin/property/populateAreasLov', [PropertyController::class, 'populateAreasLov'])->name('admin.property.populateAreasLov');
     Route::post('/admin/property/populateLocationLov', [PropertyController::class, 'populateLocationLov'])->name('admin.property.populateLocationLov');
     Route::post('/admin/property/populateSectorLov', [PropertyController::class, 'populateSectorLov'])->name('admin.property.populateSectorLov');
+
+    //city
+
+    Route::get('admin/view/city', [CityController::class, 'index'])->name('admin.city.view');
+    Route::post('admin/city/update', [CityController::class, 'updateCity'])->name('admin.city.update');
+    Route::post('admin/city/add', [CityController::class, 'addCity'])->name('admin.city.add');
+    Route::post('admin/area/add', [CityController::class, 'addArea'])->name('admin.area.add');
+    Route::post('admin/location/add', [CityController::class, 'addLocation'])->name('admin.location.add');
+    Route::post('admin/sector/add', [CityController::class, 'addSector'])->name('admin.sector.add');
+    Route::post('admin/city/delete', [CityController::class, 'deleteCity'])->name('admin.city.delete');
+    Route::get('/admin/city/view/ajax', [CityController::class, 'viewCityAjax'])->name('admin.inquiry.view.ajax');
+
+
+    Route::post('admin/city/populateAreaLov', [CityController::class, 'populateAreaLov'])->name('admin.city.populateAreaLov');
+    Route::post('admin/city/populateLocationLov', [CityController::class, 'populateLocationLov'])->name('admin.city.populateLocationLov');
+
+   
+    
 });
