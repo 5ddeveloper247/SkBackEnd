@@ -23,12 +23,18 @@ $page="dashboard";
                     <em>Dashboard</em>
                 </a>
             </li>
-            <li class="active">
-                <a href="{{ url('/admin/users') }}">
-                    <img src="{{ asset('/images/icon-user.svg') }}" alt="">
-                    <em>Admin Users</em>
-                </a>
-            </li>
+
+            @auth
+                @if(Auth::user()->super_admin == 1)
+                <li class="active">
+                    <a href="{{ url('/admin/users') }}">
+                        <img src="{{ asset('/images/icon-user.svg') }}" alt="">
+                        <em>Admin Users</em>
+                    </a>
+                </li>
+                @endif
+            @endauth
+            
             {{-- <li class="">
                 <a href="{{ url('/admin/users/guest') }}">
                     <img src="{{ asset('/images/icon-vehicle.svg') }}" alt="">

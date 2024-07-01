@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\Area;
 use App\Models\Location;
 use App\Models\Sector;
+use App\Models\PersonalInfo;
 
 class CityController extends Controller
 {
@@ -27,7 +28,7 @@ class CityController extends Controller
 
 
         $sectors = Sector::with('location.area.city')->get();
-       
+
 
         // Pass data to the view
         return view('Backend.admin.city.city', compact('citiesData', 'cities', 'areas', 'locations', 'sectors'));
@@ -125,11 +126,24 @@ class CityController extends Controller
     public function deleteCity(Request $request)
     {
         $city = City::find($request->city_id);
-        if ($city) {
-            $city->delete();
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => false]);
+
+        if (!$city) {
+            return response()->json(['success' => false, 'message' => 'City not found.']);
         }
+
+        // Check if the city is associated with any properties
+        $query = PersonalInfo::whereHas('propertyListingPape', function ($q) use ($city) {
+            $q->where('address_city', $city->NAME); // Assuming 'address_city' stores city name
+        });
+
+        $propertyRecordCount = $query->count();
+
+        if ($propertyRecordCount > 0) {
+            return response()->json(['success' => false, 'message' => 'City is associated with properties. Delete properties first.']);
+        }
+
+        // Proceed to delete the city
+        $city->delete();
+        return response()->json(['success' => true, 'message' => 'City deleted successfully.']);
     }
 }

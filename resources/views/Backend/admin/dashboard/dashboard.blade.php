@@ -5,7 +5,11 @@
 <link rel="stylesheet" href="{{ asset('css/custom-home.css') }}"> --}}
 @endpush
 
-
+<style>
+    .dashboard-main-cards .col a {
+        width: 100%
+    }
+</style>
 
 @section('content')
 <section id="dash">
@@ -13,49 +17,49 @@
         <ul class="crumbs">
             <li>Dashboard</li>
         </ul>
-        <div class="tile_row flex_row">
+        <div class="tile_row flex_row dashboard-main-cards">
             <div class="col">
                 <a href="{{ route('admin.property.listing') }}">
-                <div class="tile_blk">
-                    <div class="icon"><img src="{{asset('images/icon-list.svg')}}" alt=""></div>
-                    <div class="txt">
-                        <h4>Property Listing</h4>
-                        <p>Add a property</p>
+                    <div class="tile_blk">
+                        <div class="icon"><img src="{{asset('images/icon-list.svg')}}" alt=""></div>
+                        <div class="txt">
+                            <h4>Property Listing</h4>
+                            <p>Add a property</p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
             </div>
             <div class="col">
                 <a href="{{ route('admin.media.view') }}">
-                <div class="tile_blk">
-                    
-                    <div class="icon"><img src="{{asset('images/icon-plus.svg')}}" alt=""></div>
-                    <div class="txt">
-                        <h4>Media</h4>
-                        <p>Add a Media</p>
+                    <div class="tile_blk">
+
+                        <div class="icon"><img src="{{asset('images/icon-plus.svg')}}" alt=""></div>
+                        <div class="txt">
+                            <h4>Media</h4>
+                            <p>Add a Media</p>
+                        </div>
+
                     </div>
-               
-                </div>
-            </a>
+                </a>
             </div>
             <div class="col">
                 <a href="{{ route('admin.testimonials.view') }}">
-                <div class="tile_blk">
-                    
-                    <div class="icon"><img src="{{asset('images/icon-reply.svg')}}" alt=""></div>
-                    <div class="txt">
-                        <h4>Testimonials</h4>
-                        <p>Add a testimonial</p>
+                    <div class="tile_blk">
+
+                        <div class="icon"><img src="{{asset('images/icon-reply.svg')}}" alt=""></div>
+                        <div class="txt">
+                            <h4>Testimonials</h4>
+                            <p>Add a testimonial</p>
+                        </div>
+
                     </div>
-                   
-                </div>
-            </a>
+                </a>
             </div>
         </div>
         <div class="space"></div>
         <div class="block_row flex_row">
             <div class="col">
-         
+
                 <div class="inner">
                     <strong>{{ $adminUsers }}</strong>
                     <p>Admin Users</p>
@@ -73,11 +77,11 @@
                     <p>Inactive Property Listings</p>
                 </div>
             </div>
-            
+
             <div class="col">
                 <div class="inner">
                     <strong>{{ $activePropertyListings }}</strong>
-                    <p>Completed Property Listings</p>
+                    <p>Active Property Listings</p>
                 </div>
             </div>
             <div class="col">
@@ -88,13 +92,13 @@
             </div>
         </div>
         <div class="space"></div>
-       
-      
-        
-       
-       
-       
-        
+
+
+
+
+
+
+
     </div>
 </section>
 @endsection

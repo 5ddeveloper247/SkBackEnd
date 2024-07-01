@@ -58,7 +58,7 @@
     <!-- /Main Content -->
 
     <!-- Footer -->
-    @include('Backend.includes.footer-logged');
+    {{-- @include('Backend.includes.footer-logged'); --}}
     <!-- /Footer -->
 
     <!-- JS Files -->

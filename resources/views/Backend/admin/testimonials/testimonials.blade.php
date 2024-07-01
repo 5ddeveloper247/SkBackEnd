@@ -71,7 +71,7 @@
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Profile Pic<sup></sup></h6>
+                                                        <h6>Picture<sup></sup></h6>
                                                         <input type="file" name="pic" id="pic" class="text_box"
                                                             placeholder="">
                                                     </div>

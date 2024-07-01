@@ -585,7 +585,7 @@
                                                         <th>City Name</th>
                                                         <th>Area Name</th>
                                                         <th>Location Name</th>
-                                                        
+
                                                     </tr>
                                                 </thead>
                                                 <tbody id="area_table_body">
@@ -594,25 +594,30 @@
                                                         <td>{{ $sector->id }}</td>
                                                         <td>{{ $sector->NAME }}</td>
                                                         <td>
-                                                            {{ $sector->location && $sector->location->area && $sector->location->area->city ? 
-                                                                $sector->location->area->city->NAME : 'No city assigned' }}
+                                                            {{ $sector->location && $sector->location->area &&
+                                                            $sector->location->area->city ?
+                                                            $sector->location->area->city->NAME : 'No city assigned' }}
                                                         </td>
                                                         <td>
-                                                            {{ $sector->location && $sector->location->area && $sector->location->area ? 
-                                                                $sector->location->area->NAME : 'No area assigned' }}
+                                                            {{ $sector->location && $sector->location->area &&
+                                                            $sector->location->area ?
+                                                            $sector->location->area->NAME : 'No area assigned' }}
                                                         </td>
                                                         <td>
-                                                            {{ $sector->location && $sector->location && $sector->location? 
-                                                                $sector->location->NAME : 'No location assigned' }}
+                                                            {{ $sector->location && $sector->location &&
+                                                            $sector->location?
+                                                            $sector->location->NAME : 'No location assigned' }}
                                                         </td>
                                                         <td class="nowrap" data-center>
                                                             <div class="act_btn">
-                                                                <button type="button" class="edit pop_btn sector_edit_btn"
-                                                                    title="Edit" data-popup="sector-city-data-popup"
+                                                                <button type="button"
+                                                                    class="edit pop_btn sector_edit_btn" title="Edit"
+                                                                    data-popup="sector-city-data-popup"
                                                                     data-id="{{ $sector->id }}"
                                                                     data-sector='{{ $sector }}'></button>
-                                                                <button type="button" class="del pop_btn sector_delete_btn"
-                                                                    title="Delete" data-popup="sector-delete-data-popup"
+                                                                <button type="button"
+                                                                    class="del pop_btn sector_delete_btn" title="Delete"
+                                                                    data-popup="sector-delete-data-popup"
                                                                     data-id="{{ $sector->id }}"
                                                                     data-sector='{{ $sector }}'></button>
                                                             </div>
@@ -625,8 +630,6 @@
                                     </div>
                                 </div>
                                 {{-- ______________________tab <sector> end_______________________________--- --}}
-
-
 
         </div>
     </div>
@@ -771,7 +774,8 @@ function populateAreaLovx() {
     let url = '/admin/city/delete';
     let type = 'POST';
     let data = new FormData();
-    data.append('city_id',id);
+    data.append('city_id', id);
+
     SendAjaxRequestToServer(type, url, data, '', deleteCityResponse, '', '');
 });
 
@@ -782,7 +786,7 @@ function deleteCityResponse(response) {
         location.reload();
     } else {
         $('#city_delete_modal').modal('hide');
-        toastr.error("Something went wrong", '', { timeOut: 3000 });
+        toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
     }
 }
 

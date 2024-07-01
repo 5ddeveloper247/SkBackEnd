@@ -78,6 +78,7 @@
 
 
             {{-- 2________ --}}
+            <br>
             <div>
                 <h3>
                     Purpose
@@ -85,6 +86,7 @@
             </div>
             <div class="form_row row">
                 <div class="col-sm-6 col-xs-12">
+                    <br>
                     <h6>Purpose<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
@@ -92,7 +94,7 @@
                         $purposes = ['Sale', 'Rent'];
                         @endphp
 
-                        <select name="purpose_purpose_edit" id="purpose_purpose_edit" class="text_box selectpicker"
+                        <select name="purpose_purpose_edit" id="purpose_purpose_edit" class="text_box "
                             data-container="body">
                             <option value="{{ $selectedPurpose }}">{{ $selectedPurpose }}</option>
                             @foreach ($purposes as $purpose)
@@ -111,8 +113,7 @@
                         $homePurposes = ['House', 'Flat'];
                         @endphp
 
-                        <select name="pupose_home_edit" id="pupose_home_edit" class="text_box selectpicker"
-                            data-container="body">
+                        <select name="pupose_home_edit" id="pupose_home_edit" class="text_box " data-container="body">
                             <option value="">Select Home</option>
                             @if ($selectedHomePurpose)
                             <option value="{{ $selectedHomePurpose }}" selected>{{ $selectedHomePurpose }}</option>
@@ -134,8 +135,7 @@
                         $plotPurposes = ['Residential Plot', 'Commercial Plot'];
                         @endphp
 
-                        <select name="purpose_plot_edit" id="purpose_plot_edit" class="text_box selectpicker"
-                            data-container="body">
+                        <select name="purpose_plot_edit" id="purpose_plot_edit" class="text_box" data-container="body">
                             <option value="">Select Plot</option>
                             @if ($selectedPlotPurpose)
                             <option value="{{ $selectedPlotPurpose }}" selected>{{ $selectedPlotPurpose }}</option>
@@ -157,8 +157,8 @@
                         $commercialPurposes = ['Office', 'Shop', 'Building'];
                         @endphp
 
-                        <select name="purpose_commercial_edit" id="purpose_commercial_edit"
-                            class="text_box selectpicker" data-container="body">
+                        <select name="purpose_commercial_edit" id="purpose_commercial_edit" class="text_box "
+                            data-container="body">
                             <option value="">Select Commercial</option>
                             @if ($selectedCommercialPurpose)
                             <option value="{{ $selectedCommercialPurpose }}" selected>{{ $selectedCommercialPurpose }}
@@ -183,7 +183,9 @@
                     </div>
                 </div>
             </div>
-            {{-- Addressx --}}
+            {{-- Address --}}
+
+            <br>
             <div>
                 <h3>
                     Address
@@ -272,18 +274,17 @@
                         spellcheck="false">{{ $propertyInfo->propertyListingPape->address_address }}</textarea>
                 </div>
                 <div class="col-sm-12 col-xs-12">
-                    <h6>Map Location<sup></sup></h6>
-                    <textarea class="text_box" placeholder="Map Location" name="address_map_location_edit"
+                    <h6>Google Map Link<sup></sup></h6>
+                    <input class="text_box" placeholder="Map Location" name="address_map_location_edit"
                         id="address_map_location_edit"
-                        value="{{ $propertyInfo->propertyListingPape->address_map_location }}"
-                        spellcheck="false">{{ $propertyInfo->propertyListingPape->address_map_location }}</textarea>
+                        value="{{ $propertyInfo->propertyListingPape->address_map_location }}" spellcheck="false" />
                 </div>
 
             </div>
 
 
 
-
+            <br>
             <div>
                 <h3>
                     Property detail
@@ -301,7 +302,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Area<sup>*</sup></h6>
+                    <h6>Area Unit<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedAreaUnit = $propertyInfo->propertyListingPape->propertyDetail_area ?? ''; // Use a
@@ -309,8 +310,8 @@
                         $areaUnits = ['Marla', 'Sq.Ft', 'Sq.M', 'Sq.Yd', 'Kanal'];
                         @endphp
 
-                        <select name="propertyDetail_area_edit" id="propertyDetail_area_edit"
-                            class="text_box selectpicker" data-container="body">
+                        <select name="propertyDetail_area_edit" id="propertyDetail_area_edit" class="text_box "
+                            data-container="body">
                             @if ($selectedAreaUnit && !in_array($selectedAreaUnit, $areaUnits))
                             <option value="{{ $selectedAreaUnit }}">{{ $selectedAreaUnit }}</option>
                             @endif
@@ -325,7 +326,7 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="form_blk">
                         <div>
-                            <h6>Area Unit<sup>*</sup></h6>
+                            <h6>Area<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="propertyDetail_area_unit_edit"
                                     id="propertyDetail_area_unit_edit" class="text_box"
@@ -355,6 +356,7 @@
                 </div>
             </div>
 
+            <br>
             <div>
                 <h3>
                     Extra info
@@ -418,15 +420,15 @@
                 Upload edit ______________________________ --}}
 
                 <div class="blk">
-                    <h4 class="subheading">Upload Photos</h4>
+                    <h4 class="subheading">Upload Photos<sup class="text-red" style="font-size: 10px;">(Allowed formats:png, jpeg, jpg)</sup></h4>
                     <div class="form_row row">
                         <div class="col-xs-12">
                             <div class="uploader_blk text_box">
                                 <div class="icon">
                                     <img src="{{ asset('/images/upload.svg') }}" alt="">
                                 </div>
-                                <h6>Drag & Drop</h6>
-                                <div class="or">OR</div>
+                                <h6></h6>
+                                <div class="or"></div>
                                 <div class="btn_blk text-center">
                                     <input type="hidden" id="existingFiles" name="existing_files">
                                     <input type="file" id="fileInput_edit" name="photos_edit[]" multiple
@@ -455,7 +457,7 @@
 
                 <div>
                     <h1>
-                        amenities
+                        Amenities
                     </h1>
                 </div>
                 <div class="form_row row">
@@ -946,7 +948,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
             li.innerHTML += `
                 <div class="thumb">
                     <img src="${e.target.result}" alt="">
-                    <button type="button" class="x_btn" onclick="removeFile_edit(this)">&times;</button>
+                    <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
                 </div>
             `;
             previewList.appendChild(li);
@@ -984,108 +986,151 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 
 
 <script>
-    $(document).ready(function() {
-        function resetSelects(except) {
-            if (except !== '#pupose_home_edit') {
-                $('#pupose_home_edit').val('').selectpicker('refresh');
-            }
-            if (except !== '#purpose_plot_edit') {
-                $('#purpose_plot_edit').val('').selectpicker('refresh');
-            }
-            if (except !== '#purpose_commercial_edit') {
-                $('#purpose_commercial_edit').val('').selectpicker('refresh');
-            }
+ $(document).ready(function() {
+    
+    function resetSelects(except) {
+        if (except !== '#pupose_home_edit') {
+            $('#pupose_home_edit').val('').selectpicker('refresh');
         }
-    
-        $('#pupose_home_edit').change(function() {
-            if ($(this).val() !== '') {
-                resetSelects('#pupose_home_edit');
-            }
-        });
-    
-        $('#purpose_plot_edit').change(function() {
-            if ($(this).val() !== '') {
-                resetSelects('#purpose_plot_edit');
-            }
-        });
-    
-        $('#purpose_commercial_edit').change(function() {
-            if ($(this).val() !== '') {
-                resetSelects('#purpose_commercial_edit');
-            }
-        });
-    
-        $("#propertySubmissionForm_edit").submit(function(event) {
-            var isValid = true;
-    
-            // List of input fields to validate
-            var requiredFields = [
-                '#pInfo_firstName_edit',
-                '#pInfo_lastName_edit',
-                '#pInfo_email_edit',
-                '#pInfo_phoneNumber_edit',
-                '#price_edit',
-                '#address_city_edit',
-                '#address_area_edit',
-                '#address_location_edit',
-                '#address_sector_edit',
-                '#address_address_edit',
-                //'#address_map_location_edit',
-                '#propertyDetail_plot_num_edit',
-                '#propertyDetail_area_edit',
-                '#propertyDetail_area_unit_edit',
-                '#propertyDetail_bedrooms_edit',
-                '#propertyDetail_bathrooms_edit',
-                '#extra_info_title_edit',
-                '#extra_info_postingas_edit',
-                '#extra_info_mobile_edit',
-                '#extra_info_landline_edit',
-                '#extra_info_description_edit'
-            ];
-    
-            // Loop through each required field and check if it's empty
-            requiredFields.forEach(function(field) {
-                var $field = $(field);
-                if ($field.val().trim() === '') {
-                    $field.css('border', '1px solid red');
-                    isValid = false;
-                } else {
-                    $field.css('border', '');
-                }
-            });
-    
-            // Ensure only one of the purpose fields is selected
-            var purposeFields = [
-                '#pupose_home_edit',
-                '#purpose_plot_edit',
-                '#purpose_commercial_edit'
-            ];
-    
-            var purposeSelected = purposeFields.some(function(field) {
-                return $(field).val().trim() !== '';
-            });
-    
-            if (!purposeSelected) {
-                purposeFields.forEach(function(field) {
-                    $(field).css('border', '1px solid red');
-                });
+        if (except !== '#purpose_plot_edit') {
+            $('#purpose_plot_edit').val('').selectpicker('refresh');
+        }
+        if (except !== '#purpose_commercial_edit') {
+            $('#purpose_commercial_edit').val('').selectpicker('refresh');
+        }
+    }
+
+    $('#pupose_home_edit').change(function() {
+        if ($(this).val() !== '') {
+            resetSelects('#pupose_home_edit');
+        }
+    });
+
+    $('#purpose_plot_edit').change(function() {
+        if ($(this).val() !== '') {
+            resetSelects('#purpose_plot_edit');
+        }
+    });
+
+    $('#purpose_commercial_edit').change(function() {
+        if ($(this).val() !== '') {
+            resetSelects('#purpose_commercial_edit');
+        }
+    });
+
+    $("#propertySubmissionForm_edit").submit(function(event) {
+        var isValid = true;
+
+        // List of input fields to validate
+        var commonRequiredFields = [
+            '#pInfo_firstName_edit',
+            '#pInfo_lastName_edit',
+            '#pInfo_email_edit',
+            '#pInfo_phoneNumber_edit',
+            '#price_edit',
+            '#address_city_edit',
+            '#address_area_edit',
+            '#address_location_edit',
+            '#address_sector_edit',
+            '#address_address_edit',
+            '#extra_info_title_edit',
+            '#extra_info_postingas_edit',
+            '#extra_info_mobile_edit',
+            '#extra_info_landline_edit',
+            '#extra_info_description_edit'
+        ];
+
+        var plotPurposeFields = [
+            '#propertyDetail_plot_num_edit',
+            '#propertyDetail_area_edit',
+            '#propertyDetail_area_unit_edit'
+        ];
+
+        var homePurposeFields = [
+            '#propertyDetail_bedrooms_edit',
+            '#propertyDetail_bathrooms_edit'
+        ];
+
+        var requiredFields = commonRequiredFields.slice(); // Clone the array
+
+        // Adjust required fields based on selected purpose
+        if ($('#pupose_home_edit').val().trim() !== '') {
+            requiredFields = requiredFields.concat(homePurposeFields);
+        } else if ($('#purpose_plot_edit').val().trim() !== '') {
+            requiredFields = requiredFields.concat(plotPurposeFields);
+        } else if ($('#purpose_commercial_edit').val().trim() === '') {
+            requiredFields = requiredFields.concat(homePurposeFields, plotPurposeFields);
+        }
+
+        // Loop through each required field and check if it's empty
+        requiredFields.forEach(function(field) {
+            var $field = $(field);
+            if ($field.val().trim() === '') {
+                $field.css('border', '1px solid red');
                 isValid = false;
-                toastr.info('Please select a field from  Home, Plot, Commercial', '', {
+            } else {
+                $field.css('border', '');
+            }
+        });
+
+        // Check the length of the landline and mobile fields
+        var $landline = $('#extra_info_landline_edit');
+        var $mobile = $('#extra_info_mobile_edit');
+        
+        if ($landline.val().trim().length > 10) {
+            $landline.css('border', '1px solid red');
+            toastr.error('Landline number should not be greater than 10 characters', '', {
                 timeOut: 3000
             });
-            } else {
-                purposeFields.forEach(function(field) {
-                    $(field).css('border', '');
-                });
-            }  
-    
-            // Prevent form submission if any field is invalid
-            if (!isValid) {
-                $(window).scrollTop(0);
-                event.preventDefault();
-            }
+            isValid = false;
+        } else {
+            $landline.css('border', '');
+        }
+
+        if ($mobile.val().trim().length > 15) {
+            $mobile.css('border', '1px solid red');
+            toastr.error('Mobile number should not be greater than 15 characters', '', {
+                timeOut: 3000
+            });
+            isValid = false;
+        } else {
+            $mobile.css('border', '');
+        }
+
+        // Ensure only one of the purpose fields is selected
+        var purposeFields = [
+            '#pupose_home_edit',
+            '#purpose_plot_edit',
+            '#purpose_commercial_edit'
+        ];
+
+        var purposeSelected = purposeFields.some(function(field) {
+            return $(field).val().trim() !== '';
         });
+
+        if (!purposeSelected) {
+            purposeFields.forEach(function(field) {
+                $(field).css('border', '1px solid red');
+            });
+            isValid = false;
+            toastr.info('Please select a field from Home, Plot, Commercial', '', {
+                timeOut: 3000
+            });
+        } else {
+            purposeFields.forEach(function(field) {
+                $(field).css('border', '');
+            });
+        }  
+
+        // Prevent form submission if any field is invalid
+        if (!isValid) {
+            $(window).scrollTop(0);
+            event.preventDefault();
+        }
     });
+});
+
+
 </script>
 
 

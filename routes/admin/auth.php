@@ -42,7 +42,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/users/guest', [AdminController::class, 'viewUsers'])->name('admin.user.admins');
     Route::get('admin/users/user/destroy/{id}', [AdminController::class, 'destroyUsers'])->name('admin.user.guest.destroy');
     Route::post('admin/users/admin/update/{id}', [AdminController::class, 'updateAdmin'])->name('admin.user.update');
-    Route::get('/admin/users', [AdminController::class, 'adminList'])->name('admin.admin.list');
+    Route::get('/admin/users', [AdminController::class, 'adminList'])->name('admin.admin.list')->middleware('superadmin');
 
 
     // Admin Media Routes here
@@ -114,7 +114,4 @@ Route::middleware(['admin'])->group(function () {
 
     Route::post('admin/city/populateAreaLov', [CityController::class, 'populateAreaLov'])->name('admin.city.populateAreaLov');
     Route::post('admin/city/populateLocationLov', [CityController::class, 'populateLocationLov'])->name('admin.city.populateLocationLov');
-
-   
-    
 });

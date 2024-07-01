@@ -58,12 +58,14 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
-                                            <h6 class="mb-0">Status<sup>*</sup></h6>
+                                            <h6 class="mb-0">Status<sup< /sup>
+                                            </h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <div class="ms-3 form-check form-switch">
-                                                <input name="StatusInput" id="StatusInput" style="font-size: 20px;"
-                                                    type="checkbox" class="form-check-input mb-1" />
+                                                <input name="AddStatusInput" id="AddStatusInput"
+                                                    style="font-size: 20px;" type="checkbox"
+                                                    class="form-check-input mb-1" />
                                             </div>
                                         </div>
                                     </div>
@@ -291,9 +293,8 @@
                                     </tr>
                                 </thead>
                                 <tbody id="admin_table_body">
-                                    @foreach ($users as $user )
-
-
+                                    @foreach ($users as $user)
+                                    @if($user->name != Auth::user()->name)
                                     <tr class="property_data_row">
                                         <td class="grid-p-searchby">
                                             {{ $user->id }}
@@ -308,22 +309,24 @@
                                             {{ $user->created_at }}
                                         </td>
                                         <td class="grid-p-searchby">
-                                            {{ $user->status==1?"Active":"Inactive" }}
+                                            {{ $user->status == 1 ? "Active" : "Inactive" }}
                                         </td>
                                         <td class="nowrap" data-center="">
                                             <div class="act_btn">
                                                 <button type="button" class="edit admin_edit" data-user="{{ $user }}"
                                                     id="admin_edit"></button>
-                                                <!-- <button type="button" class="copy admin_view"
-                                                    data-user="{{ $user }}"></button> -->
-                                                <button type="button" class="del admin_delete" data-popup="delete-data-popup"
-                                                    data-user="{{ $user }}" data-id={{ $user->id }}
-                                                    id="admin_delete"></button>
+                                                @if($user->super_admin == 0)
+                                                <button type="button" class="del admin_delete"
+                                                    data-popup="delete-data-popup" data-user="{{ $user }}"
+                                                    data-id="{{ $user->id }}" id="admin_delete"></button>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -533,14 +536,19 @@ $('#admin_delete_confirmed_btn').click( function() {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(response) {
-            toastr.success("User deleted successfully");
-            // Reload the DataTable or update it to reflect the changes
-            // For example, you can use DataTables API to redraw the table
-            window.location.reload()
+            if (response.success) {
+                toastr.success(response.success, '', { timeOut: 3000 });
+                // Reload the DataTable or update it to reflect the changes
+                setTimeout(function() {
+                    window.location.reload();
+                }, 3000);
+            } else if (response.error) {
+                toastr.error(response.error, '', { timeOut: 3000 });
+            }
         },
         error: function(xhr, status, error) {
-            toastr.error("Error deleting user");
-        }
+            toastr.error("Error deleting user", '', { timeOut: 3000 });
+        } 
     });
 });
 

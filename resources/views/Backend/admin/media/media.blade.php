@@ -133,7 +133,7 @@
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="form_blk">
-                                                <h6>description<sup>*</sup></h6>
+                                                <h6>description<sup></sup></h6>
                                                 <textarea type="text" name="mediaUrlDescription"
                                                     id="mediaUrlDescription" class="text_box"></textarea>
                                             </div>
@@ -162,7 +162,7 @@
 
 
 
-{{-- pop up for add medi only pictures --}}
+{{-- pop up for add medi  pictures --}}
 <section class="popup lg" id="popupAddMediaOnly" data-popup="search" style="display: none;">
     <div class="table_dv">
         <div class="table_cell">
@@ -206,7 +206,7 @@
 
                                         <div class="col-xs-12">
                                             <div class="form_blk">
-                                                <h6>description<sup>*</sup></h6>
+                                                <h6>description<sup></sup></h6>
                                                 <textarea type="text" name="mediaOnlyDescription"
                                                     id="mediaUrlDescription" class="text_box"></textarea>
                                             </div>
@@ -273,7 +273,7 @@
                             <div class="contain-fluid">
                                 <ul class="crumbs">
                                     <li><a href="">Dashboard</a></li>
-                                    <li>Leasing Vehicles</li>
+                                    <li>Media</li>
                                 </ul>
                                 <br>
                                 <div class="main_row flex_row">
@@ -343,7 +343,7 @@
                             <div class="contain-fluid">
                                 <ul class="crumbs">
                                     <li><a href="">Dashboard</a></li>
-                                    <li>Leasing Vehicles</li>
+                                    <li>Media</li>
                                 </ul>
                                 <br>
                                 <div class="main_row flex_row">

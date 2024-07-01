@@ -14,23 +14,23 @@ class DashboarController extends Controller
 {
     //0
 
-public function Dashboard(Request $request)
-{
-    $adminUsers = User::where('role', 'admin')->count();
-    $propertyListings = PersonalInfo::all()->count();
-    $activePropertyListings = PersonalInfo::where('status', '1')->count();
-    $inactivePropertyListings = PersonalInfo::where('status', '0')->count();
-    $pendingContacts = Contact::whereNull('contact_reply_edit')->count();
+    public function Dashboard(Request $request)
+    {
+        $adminUsers = User::where('role', 'admin')->count();
+        $propertyListings = PersonalInfo::all()->count();
+        $activePropertyListings = PersonalInfo::where('status', '1')->count();
+        $inactivePropertyListings = PersonalInfo::where('status', '0')->count();
+        $pendingContacts = Contact::whereNull('contact_reply_edit')->count();
 
-    // Pass variables to the view
-    return view('Backend.admin.dashboard.dashboard', [
-        'adminUsers' => $adminUsers,
-        'propertyListings' => $propertyListings,
-        'activePropertyListings' => $activePropertyListings,
-        'inactivePropertyListings' => $inactivePropertyListings,
-        'pendingContacts' => $pendingContacts,
-    ]);
-}
+        // Pass variables to the view
+        return view('Backend.admin.dashboard.dashboard', [
+            'adminUsers' => $adminUsers,
+            'propertyListings' => $propertyListings,
+            'activePropertyListings' => $activePropertyListings,
+            'inactivePropertyListings' => $inactivePropertyListings,
+            'pendingContacts' => $pendingContacts,
+        ]);
+    }
 
 
 
@@ -41,7 +41,7 @@ public function Dashboard(Request $request)
             'EmailInput' => 'required|email',
             'FullNameInput' => 'required|string',
             'PasswordInput' => 'required|string',
-            // 'PhoneInput' => 'required|string',
+            //'PhoneInput' => 'required|string',
         ];
 
         // Validate the request data
@@ -59,20 +59,22 @@ public function Dashboard(Request $request)
             $user->name = $request->FullNameInput;
             $user->password = Hash::make($request->PasswordInput);
             $user->role = "admin";
-            $user->status='1';
-            //   $user->phone = $request->createPhoneInput;
-            $user->status = $request->has('StatusInput') ? true : false; // Assuming status is boolean
-
+            if ($request->has('AddStatusInput')) {
+                $user->status = '1'; // Convert checkbox value to boolean
+            } else {
+                $user->status = '0'; // Convert checkbox value to boolean
+            }
             // Save the user
             $user->save();
-
             // Return success message in JSON format
-            return response()->json(['message' => 'User created successfully'], 200);
+            return response()->json(['message' => 'User created successfully', 'user' => $user], 200);
         } catch (\Exception $e) {
             // Return failure message in JSON format
-            return response()->json(['message' => 'Failed to create user'], 500);
+            return response()->json(['message' => 'Failed to create user', 'error' => $e->getMessage()], 500);
         }
     }
+
+
 
 
 

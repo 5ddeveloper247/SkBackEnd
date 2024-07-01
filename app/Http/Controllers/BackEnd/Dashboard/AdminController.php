@@ -32,10 +32,18 @@ class AdminController extends Controller
     }
 
 
-
-    public function destroyAdmins(Request $rquest)
+    public function destroyAdmins(Request $request)
     {
-        $user = User::find($rquest->id);
+        $user = User::find($request->id);
+        
+        if (!$user) {
+            return response()->json(['error' => 'User not found.']);
+        }
+    
+        if ($user->super_admin == 1) {
+            return response()->json(['error' => 'You cannot delete a super admin.']);
+        }
+    
         $user->delete();
         return response()->json(['success' => 'User deleted successfully.']);
     }

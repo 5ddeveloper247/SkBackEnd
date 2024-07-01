@@ -92,8 +92,8 @@ class PropertyController extends Controller
                 "propertyDetail_plot_num" => $request->propertyDetail_plot_num,
                 "propertyDetail_area" => $request->propertyDetail_area,
                 "propertyDetail_area_unit" => $request->propertyDetail_area_unit,
-                "propertyDetail_bedrooms" => $request->propertyDetail_bedrooms,
-                "propertyDetail_bathrooms" => $request->propertyDetail_bathrooms,
+               "propertyDetail_bedrooms" => $request->propertyDetail_bedrooms,
+               "propertyDetail_bathrooms" => $request->propertyDetail_bathrooms,
                 "extra_info_title" => $request->extra_info_title,
                 "extra_info_postingas" => $request->extra_info_postingas,
                 "extra_info_mobile" => $request->extra_info_mobile,
@@ -181,12 +181,9 @@ class PropertyController extends Controller
 
     public function propertyEditShow($id)
     {
-
         $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('id', $id)->first();
         $cities = City::with('areas.locations.sectors')->get();
         $propertyCity = City::with('areas.locations.sectors')->where('NAME', $propertyInfo->propertyListingPape->address_city)->get();
-
-
         $city_id = City::where('NAME', $propertyInfo->propertyListingPape->address_city)->value('id');
         $area_id = Area::where('NAME', $propertyInfo->propertyListingPape->address_area)->value('id');
         $location_id = Location::where('NAME', $propertyInfo->propertyListingPape->address_location)->value('id');
@@ -230,8 +227,8 @@ class PropertyController extends Controller
             'propertyDetail_plot_num_edit' => 'required|string|max:255',
             'propertyDetail_area_edit' => 'required|string|max:255',
             'propertyDetail_area_unit_edit' => 'required|string|max:255',
-            'propertyDetail_bedrooms_edit' => 'required|string|max:255',
-            'propertyDetail_bathrooms_edit' => 'required|string|max:255',
+            'propertyDetail_bedrooms_edit' => 'nullable|string|max:255',
+            'propertyDetail_bathrooms_edit' => 'nullable|string|max:255',
             'extra_info_title_edit' => 'required|string|max:255',
             'extra_info_postingas_edit' => 'required|string|max:255',
             'extra_info_mobile_edit' => 'required|string|max:15',
@@ -360,7 +357,7 @@ class PropertyController extends Controller
             }
 
             $propertyInfo->save();
-            return redirect()->back()->with('success', "Edited Successfully");
+            return redirect()->to('admin/property/listing')->with('success', "Edited Successfully");
         } catch (\Exception $e) {
             // Log the error message
             Log::error('Error in propertyMainSubmission_edit: ' . $e->getMessage());

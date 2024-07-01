@@ -33,14 +33,13 @@ class MediaController extends Controller
 
     public function mediaonlyDelete(Request $request)
     {
-       // dd($request);
+        // dd($request);
         $mediaId = $request->id;
         $media = MediaOnly::find($mediaId);
         if ($media) {
             $media->delete();
             return redirect()->back()->with('success', "Media Deleted Successfully");
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', "Media Not Deleted");
         }
     }
@@ -51,8 +50,7 @@ class MediaController extends Controller
         if ($media) {
             $media->delete();
             return redirect()->back()->with('success', "Media Deleted Successfully");
-        }
-        else{
+        } else {
             return redirect()->back()->with('error', "Media Not Deleted");
         }
     }
@@ -61,7 +59,7 @@ class MediaController extends Controller
     {
         $rules = [
             'mediaUrlTitle' => 'required|string|max:255',
-            'mediaUrlDescription' => 'required|string',
+            // 'mediaUrlDescription' => 'required|string',
             'mediaUrl' => 'required|url', // Adjust mime types and max size as needed
         ];
 
@@ -98,7 +96,7 @@ class MediaController extends Controller
         // Define the validation rules
         $rules = [
             'mediaOnlyTitle' => 'required|string|max:255',
-            'mediaOnlyDescription' => 'required|string',
+            // 'mediaOnlyDescription' => 'required|string',
             'mediaOnlyfile' => 'required|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,wmv|max:20480', // Adjust mime types and max size as needed
         ];
 

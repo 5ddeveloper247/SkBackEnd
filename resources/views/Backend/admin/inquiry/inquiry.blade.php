@@ -103,9 +103,9 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Location<sup>*</sup></h6>
-                                                        <input type="text" name="inquiry_location_edit"
-                                                            id="inquiry_location_edit" class="text_box" maxlength="15"
+                                                        <h6>Name<sup>*</sup></h6>
+                                                        <input type="text" name="inquiry_name_edit"
+                                                            id="inquiry_name_edit" class="text_box" maxlength="15"
                                                             readonly>
                                                     </div>
                                                 </div>
@@ -188,16 +188,16 @@
                                                     <div class="form_blk">
                                                         <h6>Agent<sup>*</sup></h6>
                                                         <input type="text" name="inquiry_agent_edit"
-                                                            id="inquiry_replied_agent_edit" class="text_box" maxlength="15"
-                                                            readonly>
+                                                            id="inquiry_replied_agent_edit" class="text_box"
+                                                            maxlength="15" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Location<sup>*</sup></h6>
-                                                        <input type="text" name="inquiry_location_edit"
-                                                            id="inquiry_replied_location_edit" class="text_box" maxlength="15"
-                                                            readonly>
+                                                        <h6>Name<sup>*</sup></h6>
+                                                        <input type="text" name="inquiry_replied_name_edit"
+                                                            id="inquiry_replied_name_edit" class="text_box"
+                                                            maxlength="15" readonly>
                                                     </div>
                                                 </div>
 
@@ -259,9 +259,9 @@
                             <h3 class="text-center">Are You Sure to Delete?</h3>
                             <!-- <p>Are You Sure to Delete?</p> -->
                             <div class="text-center row">
-                                <button type="button" class="btn bg-transparent rounded-pill" id="delete_confirmed_btn"
-                                    data-id=""><img src="{{asset('assets\images\check_1828640.png')}}"
-                                        style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="inquiry_request_delete_confirmed_btn" data-id=""><img
+                                        src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
                                 <button type="button" class="btn bg-transparent rounded-pill"
                                     id="inquiry_close_delete_modal_btn"><img
                                         src="{{asset('assets\images\close-button_11450177.png')}}"
@@ -467,7 +467,7 @@ $(document).on('click', '.inquiry_edit_btn', function () {
     $('#edit_id').val(inquiry.id)
     
     $('#inquiry_email_edit').val(inquiry.email)
-    $('#inquiry_location_edit').val(inquiry.location)
+    $('#inquiry_name_edit').val(inquiry?.name)
     $('#inquiry_agent_edit').val(inquiry?.agent)
     $('#inquiry_contact_number_edit').val(inquiry.phone)
     $('#inquiry_description_edit').val(inquiry.description)
@@ -479,20 +479,20 @@ $(document).on('click', '.inquiry_edit_btn', function () {
 // _________________________________Delete 1 functions_______________________________
 $(document).on('click', '.inquiry_delete_btn', function () {
     var del_id = $(this).attr('data-id');
-    $('#delete_confirmed_btn').attr('data-id', del_id);
+    $('#inquiry_request_delete_confirmed_btn').attr('data-id', del_id);
 });
 
 $('#inquiry_close_delete_modal_btn').click(function () {
     $('.clode_delete_modal_default_btn').click();
-    $('#delete_confirmed_btn').attr('data-id', '');
+    $('#inquiry_request_delete_confirmed_btn').attr('data-id', '');
 });
 
-$('#delete_confirmed_btn').click(function () {
+$('#inquiry_request_delete_confirmed_btn').click(function () {
     var del_id = $(this).attr('data-id');
     let url = '/admin/inquiry/delete'; 
     let type = 'POST';
     let data = new FormData();
-    data.append('del_id', del_id);
+    data.append('del_id', del_id); 
     SendAjaxRequestToServer(type, url, data, '', deletinquiryResponse, '', '');
 
 });
@@ -565,7 +565,7 @@ $(document).on('click', '.inquiry_replied_edit_btn', function () {
       
     $('#edit_replied_id').val(inquiry.id)
     $('#inquiry_replied_email_edit').val(inquiry.email)
-    $('#inquiry_replied_location_edit').val(inquiry.location)
+    $('#inquiry_replied_name_edit').val(inquiry?.name)
     $('#inquiry_replied_agent_edit').val(inquiry?.agent)
     $('#inquiry_replied_contact_number_edit').val(inquiry.phone)
     $('#inquiry_replied_description_edit').val(inquiry.description)

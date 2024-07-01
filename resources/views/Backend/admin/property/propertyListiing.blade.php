@@ -158,28 +158,28 @@
                                                 <h6>First Name<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="pInfo_firstName" id="pInfo_firstName"
-                                                        class="text_box" placeholder="eg: John Wick">
+                                                        class="text_box" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Last Name<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="pInfo_lastName" id="pInfo_lastName"
-                                                        class="text_box" placeholder="eg: John doe">
+                                                        class="text_box" placeholder="">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Email Address<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="email" name="pInfo_email" id="pInfo_email"
-                                                        class="text_box" placeholder="eg: sample@gmail.com">
+                                                        class="text_box" placeholder="sample@gmail.com">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Phone Number<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="pInfo_phoneNumber" id="pInfo_phoneNumber"
-                                                        class="text_box" placeholder="eg: +92300 0000 000" >
+                                                        class="text_box" placeholder="+92300 0000 000">
                                                 </div>
                                             </div>
 
@@ -193,11 +193,11 @@
                                     {{-- Purpose info tabl --}}
                                     <fieldset id="purpose_tab">
                                         <div class="form_row row">
-                                            <div class="col-sm-6 col-xs-12">
+                                            <div class="col-sm-6 col-xs-12 ">
                                                 <h6>Purpose<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="purpose_purpose" id="purpose_purpose"
-                                                        class="text_box selectpicker" data-container="body">
+                                                    <select name="purpose_purpose" id="purpose_purpose" class="text_box"
+                                                        data-container="body">
                                                         <option value="Sale">Sale</option>
                                                         <option value="Rent">Rent</option>
                                                     </select>
@@ -206,8 +206,8 @@
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Home<sup>**</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="pupose_home" id="pupose_home"
-                                                        class="text_box selectpicker" data-container="body">
+                                                    <select name="pupose_home" id="pupose_home" class="text_box"
+                                                        data-container="body">
                                                         <option value="">Select Home</option>
                                                         <option value="House">House</option>
                                                         <option value="Flat">Flat</option>
@@ -217,8 +217,8 @@
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Plot<sup>**</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="purpose_plot" id="purpose_plot"
-                                                        class="text_box selectpicker" data-container="body">
+                                                    <select name="purpose_plot" id="purpose_plot" class="text_box"
+                                                        data-container="body">
                                                         <option value="">Select Plot</option>
                                                         <option value="Residential Plot">Residential Plot</option>
                                                         <option value="CommercialPlot">Commercial Plot</option>
@@ -229,7 +229,7 @@
                                                 <h6>Commercial<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_commercial" id="purpose_commercial"
-                                                        class="text_box selectpicker" data-container="body">
+                                                        class="text_box" data-container="body">
                                                         <option value="">Select Commercial</option>
                                                         <option value="Office">Office</option>
                                                         <option value="Shop">Shop</option>
@@ -242,7 +242,7 @@
                                                 <h6>Price<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="price" id="price" class="text_box"
-                                                        placeholder="Price" >
+                                                        placeholder="Price">
                                                 </div>
                                             </div>
                                         </div>
@@ -303,10 +303,10 @@
                                             </div>
 
                                             <div class="col-sm-12 col-xs-12">
-                                                <h6>Map Location<sup></sup></h6>
-                                                <textarea class="text_box" placeholder="Map Location"
+                                                <h6>Google Map Link<sup></sup></h6>
+                                                <input class="text_box" placeholder="Map Location"
                                                     name="address_map_location" id="address_map_location"
-                                                    spellcheck="false"></textarea>
+                                                    spellcheck="false" />
                                             </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
@@ -327,16 +327,16 @@
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_plot_num"
                                                         id="propertyDetail_plot_num" class="text_box"
-                                                        data-container="body"  />
+                                                        data-container="body" />
 
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Area<sup>*</sup></h6>
+                                                <h6>Area Unit<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="propertyDetail_area" id="propertyDetail_area"
-                                                        class="text_box selectpicker" data-container="body">
+                                                        class="text_box " data-container="body">
                                                         <option value="Marla">Marla</option>
                                                         <option value="Sq.Ft">Sq.Ft</option>
                                                         <option value="Sq.M">Sq.M</option>
@@ -348,10 +348,10 @@
                                             <div class="col-sm-6 col-xs-12">
                                                 <div class="form_blk">
                                                     <div>
-                                                        <h6>Area Unit<sup>*</sup></h6>
+                                                        <h6>Area<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="propertyDetail_area_unit"
-                                                                id="propertyDetail_area_unit" class="text_box" 
+                                                                id="propertyDetail_area_unit" class="text_box"
                                                                 placeholder="eg: 10">
                                                         </div>
                                                     </div>
@@ -360,20 +360,20 @@
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Bedrooms<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="text" name="propertyDetail_bedrooms"
+                                                    <input type="number" name="propertyDetail_bedrooms"
                                                         id="propertyDetail_bedrooms" class="text_box "
                                                         data-container="body" mx="10" />
-                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Bathrooms<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="text" name="propertyDetail_bathrooms"
+                                                    <input type="number" name="propertyDetail_bathrooms"
                                                         id="propertyDetail_bathrooms" class="text_box"
                                                         data-container="body" max="10" />
 
-                                                    </select>
+
                                                 </div>
                                             </div>
 
@@ -426,7 +426,7 @@
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_landline"
                                                                 id="extra_info_landline" class="text_box"
-                                                                placeholder="eg: 285432584452" >
+                                                                placeholder="eg: 285432584452">
                                                         </div>
                                                     </div>
 
@@ -449,15 +449,18 @@
 
 
                                             <div class="blk">
-                                                <h4 class="subheading">Upload Photos</h4>
+                                                <h4 class="subheading">Upload Photos <sup>*</sup><sup class="text-red"
+                                                        style="font-size: 10px;">(Allowed formats:png, jpeg, jpg)</sup>
+                                                </h4>
+
                                                 <div class="form_row row">
                                                     <div class="col-xs-12">
                                                         <div class="uploader_blk text_box">
                                                             <div class="icon">
                                                                 <img src="{{ asset('/images/upload.svg') }}" alt="">
                                                             </div>
-                                                            <h6>Drag & Drop</h6>
-                                                            <div class="or">OR</div>
+                                                            <h6></h6>
+                                                            <div class="or"></div>
                                                             <div class="btn_blk text-center">
                                                                 <input type="file" id="fileInput" name="photos[]"
                                                                     accept=".png, .jpg, .jpeg" multiple
@@ -763,13 +766,26 @@ function handleTabHeadNextActive  (tab_head) {
     if (!phone.val().trim()) {
         phone.addClass('validation-failed');
     }
+     // Validate phone number
+     if (!phone.val().trim()) {
+        phone.addClass('validation-failed');
+    } else if (phone.val().trim().length > 15) {
+        phone.addClass('validation-failed');
+        toastr.error('Phone number should not be greater than 15 characters', '', {
+            timeOut: 3000
+        });
+    }
 
     if ($('.validation-failed').length > 0) {
         handleTabHeadNextActive(tab_head_lst);
         $('#personal_info_tab').css('display', 'block');
         $('#purpose_tab').css('display', 'none');
+        toastr.error('Please fill out all mandatory fields!', '', {
+            timeOut: 2000
+        });
         return;
-    } else {
+    } 
+    else {
         handleTabHeadNextActive(tab_head_lst + 1);
         $('#personal_info_tab').css('display', 'none');
         $('#purpose_tab').css('display', 'block');
@@ -802,7 +818,7 @@ function handleTabHeadNextActive  (tab_head) {
         purposeFields.forEach(function(field) {
             $(field).addClass('validation-failed');
         });
-        toastr.info('Please select a field from Home, Plot, or Commercial', '', {
+        toastr.error('Please select a field from Home, Plot, or Commercial', '', {
             timeOut: 3000
         });
     } else {
@@ -821,8 +837,8 @@ function handleTabHeadNextActive  (tab_head) {
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        toastr.info('Please fill all required fields in Purpose', '', {
-            timeOut: 3000
+        toastr.error('Please fill out all mandatory fields!', '', {
+            timeOut: 2000
         });
         return;
     } else {
@@ -872,7 +888,7 @@ $('.address_continue_btn').click(function() {
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        toastr.info('Please select all in Address', '', {
+        toastr.error('Please select all in Address', '', {
                 timeOut: 3000
             });
         return;
@@ -898,6 +914,10 @@ $('.property_detail_continue_btn').click(function() {
     var bedrooms = $('#propertyDetail_bedrooms');
     var bathrooms = $('#propertyDetail_bathrooms');
 
+
+
+
+    var hometype=$('#pupose_home').val();
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
 
@@ -911,20 +931,26 @@ $('.property_detail_continue_btn').click(function() {
     if (!areaUnit.val().trim()) {
         areaUnit.addClass('validation-failed');
     }
+
+    if(hometype !=='')
+    {
     if (!bedrooms.val().trim()) {
         bedrooms.addClass('validation-failed');
     }
     if (!bathrooms.val().trim()) {
         bathrooms.addClass('validation-failed');
-    }
+    } 
+    } 
+   
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        toastr.info('Please select all required fields in Property Detail', '', {
+        toastr.error('Please select all required fields in Property Detail', '', {
                 timeOut: 3000
             });
         return;
-    } else {
+    } 
+    else {
         // If all fields pass validation, proceed to the next tab
         handleTabHeadNextActive(tab_head_lst + 1);
         $('#property_detail_tab').hide();
@@ -957,21 +983,37 @@ $('.extra_info_continue-btn').click(function() {
     if (!mobile.val().trim()) {
         mobile.addClass('validation-failed');
     }
+    if (mobile.val().trim().length > 15) {
+        mobile.addClass('validation-failed');
+        toastr.error('Moible number should not be greater than 15 characters', '', {
+            timeOut: 3000
+        });
+    }
+    
     if (!landline.val().trim()) {
         landline.addClass('validation-failed');
+    }
+    if (landline.val().trim().length > 10) {
+        landline.addClass('validation-failed');
+        toastr.error('Landline number should not be greater than 10 characters', '', {
+            timeOut: 3000
+        });
     }
     if (!description.val().trim()) {
         description.addClass('validation-failed');
     }
     if(!images.val()){
         images.addClass('validation-failed');
+        toastr.error('Please upload image first', '', {
+            timeOut: 3000
+        });
     }
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        toastr.info('Please select all required fields in Extra Information', '', {
-                timeOut: 3000
-            });
+        toastr.error('Please select all required fields in Extra Information', '', {
+            timeOut: 3000
+        });
         return;
     } else {
         // If all fields pass validation, proceed to the next tab
@@ -981,7 +1023,8 @@ $('.extra_info_continue-btn').click(function() {
 
         // Add code to move to the next step or complete the form
     }    
-}); 
+});
+
 
 
 
@@ -1073,11 +1116,11 @@ function  handlePropertyFormsubmission(){
             reader.onload = function(e) {
                 const li = document.createElement('li');
                 li.innerHTML += `
-                    <div class="thumb">
-                        <img src="${e.target.result}" alt="">
-                        <button type="button" class="x_btn" onclick="removeFile(this)">&times;</button>
-                    </div>
-                `;
+                <div class="thumb">
+                    <img src="${e.target.result}" alt="">
+                    <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
+                </div>
+            `;
                 previewList.appendChild(li);
             };
             reader.readAsDataURL(file);
@@ -1139,7 +1182,8 @@ function  handlePropertyFormsubmission(){
             $('#personal_info_tab_edit').css('display', 'block');
             $('#purpose_tab_edit').css('display', 'none');
             return;
-        } else {
+        } 
+        else {
             handleTabHeadNextActive(tab_head_lst + 1);
             $('#personal_info_tab_edit').css('display', 'none');
             $('#purpose_tab_edit').css('display', 'block');
@@ -1175,7 +1219,7 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            toastr.info('Please select all required fields in Purpose', '', {
+            toastr.error('Please select all required fields in Purpose', '', {
                 timeOut: 3000
             });
             return;  
@@ -1225,7 +1269,7 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            toastr.info('Please select all required fields in Address', '', {
+            toastr.error('Please select all required fields in Address', '', {
                 timeOut: 3000
             });
             return;
@@ -1270,7 +1314,7 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-             toastr.info('Please select all required fields in Property Detail', '', {
+             toastr.error('Please select all required fields in Property Detail', '', {
                 timeOut: 3000
             });
             return;
@@ -1315,7 +1359,7 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            toastr.info('Please select all required fields in Extra Information', '', {
+            toastr.error('Please select all required fields in Extra Information', '', {
                 timeOut: 3000
             });
             return;
@@ -1447,7 +1491,7 @@ if (response.propertyInfo) {
         listItem.html(`
             <div class="thumb">
                 <img src="${base_url}/${file.image_uri}" alt="">
-                <button type="button" class="x_btn" onclick="removeFile_edit(this)">&times;</button>
+                <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
             </div>
         `);
         previewList.append(listItem);
@@ -1488,7 +1532,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
             li.innerHTML += `
                 <div class="thumb">
                     <img src="${e.target.result}" alt="">
-                    <button type="button" class="x_btn" onclick="removeFile_edit(this)">&times;</button>
+                    <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
                 </div>
             `;
             previewList.appendChild(li);
@@ -1507,7 +1551,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 {{-- ________________________________setting value in edit form end_________________________ --}}
 <script>
     function removeFile_edit(btn) { 
-    alert("clicked");
+    //alert("clicked");
     const li = btn.parentElement.parentElement;
 
     const existingFiles = $('#existingFiles');
@@ -1516,11 +1560,11 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
     const filePath = btn.previousElementSibling.src.split(base_url + '/')[1];
    
     // Ensure the filePath is correct
-    console.log("File path to remove:", filePath);
+    //console.log("File path to remove:", filePath);
    
     // Filter out the file path from the array of existing file paths
     filePaths = filePaths.filter(path => path !== filePath);
-    console.log("Updated file paths:", filePaths);
+    //console.log("Updated file paths:", filePaths);
     
     // Update the value of the existingFiles input
     existingFiles.val(JSON.stringify(filePaths));
@@ -1723,7 +1767,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     $(field).css('border', '1px solid red');
                 });
                 isValid = false;
-                toastr.info('Please select a field from  Home, Plot, Commercial', '', {
+                toastr.error('Please select a field from  Home, Plot, Commercial', '', {
                 timeOut: 3000
             });
             } else {
