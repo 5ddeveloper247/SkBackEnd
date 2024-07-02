@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Exception;
 
 class PropertyController extends Controller
 {
@@ -92,8 +93,8 @@ class PropertyController extends Controller
                 "propertyDetail_plot_num" => $request->propertyDetail_plot_num,
                 "propertyDetail_area" => $request->propertyDetail_area,
                 "propertyDetail_area_unit" => $request->propertyDetail_area_unit,
-               "propertyDetail_bedrooms" => $request->propertyDetail_bedrooms,
-               "propertyDetail_bathrooms" => $request->propertyDetail_bathrooms,
+                "propertyDetail_bedrooms" => $request->propertyDetail_bedrooms,
+                "propertyDetail_bathrooms" => $request->propertyDetail_bathrooms,
                 "extra_info_title" => $request->extra_info_title,
                 "extra_info_postingas" => $request->extra_info_postingas,
                 "extra_info_mobile" => $request->extra_info_mobile,
@@ -162,6 +163,17 @@ class PropertyController extends Controller
                 }
             }
 
+            try {
+                // Send email
+                $body = view('mail.mail_templates.common')->render();
+                $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
+               // $userEmailsSend[] = $request->email;
+                // to username, to email, from username, subject, body html 
+                $response = sendMail($userEmailsSend, $userEmailsSend, 'Sk Property', 'New Property has listed', $body);
+            } catch (Exception $e) {
+                // Log the error if email sending fails
+                Log::error('Error sending email on new property listing from user side submission: ' . $e->getMessage());
+            }
 
             // Commit the transaction
             DB::commit();

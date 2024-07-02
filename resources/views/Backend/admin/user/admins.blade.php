@@ -296,7 +296,7 @@
                                     @foreach ($users as $user)
                                     @if($user->name != Auth::user()->name)
                                     <tr class="property_data_row">
-                                        <td class="grid-p-searchby">
+                                        <td class="grid-p-searchby nowrap">
                                             {{ $user->id }}
                                         </td>
                                         <td class="grid-p-searchby">

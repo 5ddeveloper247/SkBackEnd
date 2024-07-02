@@ -5,6 +5,13 @@
     .validation-failed {
         border: 1px solid red;
     }
+
+    /* Chrome, Safari, Edge, Opera */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 </style>
 @endpush
 
@@ -102,6 +109,7 @@
                                         <th width="10">#</th>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Property Type</th>
                                         <th>Contact</th>
                                         <th>Created Date</th>
                                         <th>Status</th>
@@ -449,8 +457,9 @@
 
 
                                             <div class="blk">
-                                                <h4 class="subheading">Upload Photos <sup>*</sup><sup class="text-red"
-                                                        style="font-size: 10px;">(Allowed formats:png, jpeg, jpg)</sup>
+                                                <h4 class="subheading">Upload Photos <sup>*</sup>
+                                                    <sup class="text-red" style="font-size: 10px;">(Allowed formats:png,
+                                                        jpeg, jpg)</sup>
                                                 </h4>
 
                                                 <div class="form_row row">
@@ -852,8 +861,6 @@ function handleTabHeadNextActive  (tab_head) {
 
 
 
-
-
 $('.address_continue_btn').click(function() {
     const tab_head_lst = 3;
     var city = $('#address_city');
@@ -1111,25 +1118,37 @@ function  handlePropertyFormsubmission(){
                 alert('Only PNG and JPEG image files are allowed.');
                 return;
             }
-            
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 const li = document.createElement('li');
-                li.innerHTML += `
-                <div class="thumb">
-                    <img src="${e.target.result}" alt="">
-                    <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
-                </div>
-            `;
+                li.innerHTML = `
+                    <div class="thumb">
+                        <img src="${e.target.result}" alt="">
+                        <button type="button" class="x_btn" onclick="removeFile(this, ${index})"></button>
+                    </div>
+                `;
                 previewList.appendChild(li);
             };
             reader.readAsDataURL(file);
         });
     });
 
-    function removeFile(btn) {
+    function removeFile(btn, index) {
+        const previewList = document.getElementById('previewList');
         const li = btn.parentElement.parentElement;
-        li.remove();
+        const inputFile = document.getElementById('fileInput');
+        
+        // Convert FileList to Array
+        const files = Array.from(inputFile.files);
+        files.splice(index, 1); // Remove the file at the given index
+
+        // Create a new FileList object
+        const dataTransfer = new DataTransfer();
+        files.forEach(file => dataTransfer.items.add(file));
+        inputFile.files = dataTransfer.files; // Update the input file list
+
+        li.remove(); // Remove the list item from the DOM
     }
 </script>
 
@@ -1405,120 +1424,20 @@ function  handlePropertyFormsubmission(){
     
 </script>
 
-{{-- ___________________________________-Edit Scripts ended______________________________________ --}}
+
 
 
 
 {{-- ________________________________setting edit value in edit form_________________________ --}}
 <script>
-    //     $(document).on('click', '.edit_btn', function () {
-// var id = $(this).attr('data-id');
-// console.log(id)
-// let url = '/admin/getpropertydata';
-// let type = 'POST';
-// let data = new FormData();
-// data.append('id', id);
-// SendAjaxRequestToServer(type, url, data, '', getpropertydataResponse, '', '');
-
-
-// });
-
-$(document).on('click', '.edit_btn', function () {
+    $(document).on('click', '.edit_btn', function () {
     var id = $(this).attr('data-id');
     const base_url = '{{ url('/') }}';
     window.location.href = base_url + '/admin/property/edit/show/' + id;
 });
 
-function getpropertydataResponse(response) {
-
-if (response.propertyInfo) {
-    var property = response.propertyInfo;
- 
-   
-  
-    // step 1
-    $('#property_id_edit').val(property.id);
-    $('#pInfo_firstName_edit').val(property.pInfo_fName);
-    $('#pInfo_lastName_edit').val(property.pInfo_lName);
-    $('#pInfo_email_edit').val(property.pInfo_email);
-    $('#pInfo_phoneNumber_edit').val(property.pInfo_phoneNumber);
-
-    //step 2
-    
-    $('#purpose_purpose_edit').val(property?.proerty_listing_pape?.purpose_purpose).selectpicker('refresh');
-    $('#pupose_home_edit').val(property?.proerty_listing_pape?.pupose_home).selectpicker('refresh');
-    $('#purpose_plot_edit').val(property?.proerty_listing_pape?.purpose_plot).selectpicker('refresh');
-    $('#purpose_commercial_edit').val(property?.proerty_listing_pape?.purpose_commercial).selectpicker('refresh');
-
-    //step 3
-     $('#address_city_edit').val(property?.property_listing_pape?.address_city);
-       $('#address_area_edit').val(property?.property_listing_pape?.address_area);
-        $('#address_phase_edit').val(property?.property_listing_pape?.address_phase);
-        $('#address_sector_edit').val(property?.property_listing_pape?.address_sector);
-         $('#address_address_edit').val(property?.property_listing_pape?.address_address);
-
-        //  step 4
-    $('#propertyDetail_plot_num_edit').val(property?.property_listing_pape?.propertyDetail_plot_num);
-    $('#propertyDetail_area_edit').val(property?.property_listing_pape?.propertyDetail_area);
-    $('#propertyDetail_area_unit_edit').val(property?.property_listing_pape?.propertyDetail_area_unit);
-    $('#propertyDetail_bedrooms_edit').val(property?.property_listing_pape?.propertyDetail_bedrooms);
-    $('#propertyDetail_bathrooms_edit').val(property?.property_listing_pape?.propertyDetail_bathrooms);
-
-    // step 5
-        $('#extra_info_title_edit').val(property?.property_listing_pape?.extra_info_title);
-        $('#extra_info_postingas_edit').val(property?.property_listing_pape?.extra_info_postingas);
-        $('#extra_info_mobile_edit').val(property?.property_listing_pape?.extra_info_mobile);
-        $('#extra_info_landline_edit').val(property?.property_listing_pape?.extra_info_landline);
-        $('#extra_info_description_edit').val(property?.property_listing_pape?.extra_info_description);
 
 
-
-
-
-
-
-  // Function to generate and display image previews with remove button
-  function displayImagePreviews(files) {
-    const previewList = $('#previewList_edit');
-    const existingFiles = $('#existingFiles');
-    previewList.empty(); // Clear any existing previews
-    const base_url = '{{ url('/') }}'; // Correctly set base URL
-
-    let filePaths = [];
-
-    files.forEach(file => {
-        const listItem = $('<li>');
-        listItem.html(`
-            <div class="thumb">
-                <img src="${base_url}/${file.image_uri}" alt="">
-                <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
-            </div>
-        `);
-        previewList.append(listItem);
-        filePaths.push(file.image_uri); // Store file path
-    });
-
-    existingFiles.val(JSON.stringify(filePaths)); // Store file paths in hidden input
-}
-
-// Display existing images on load
-if (property.property_record_files) {
-    displayImagePreviews(property.property_record_files);
-}
-
-
-    $('#edit-data-popup').show();
-
-}
-
-if (response.status == 402) {
-    var error = response.message;
-    toastr.error(error, '', {
-        timeOut: 3000
-    });
-}
-
-}
 
 
 document.getElementById('fileInput_edit').addEventListener('change', function(event) {
@@ -1542,38 +1461,16 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 });
 
 
+</script>
 
-
-
-
+{{-- handle remove btn --}}
+<script>
+    function removeFile_edit(btn) { 
+        removeFile(btn); 
+}
 </script>
 
 {{-- ________________________________setting value in edit form end_________________________ --}}
-<script>
-    function removeFile_edit(btn) { 
-    //alert("clicked");
-    const li = btn.parentElement.parentElement;
-
-    const existingFiles = $('#existingFiles');
-    let filePaths = JSON.parse(existingFiles.val());
-    const base_url = '{{ url('/') }}';
-    const filePath = btn.previousElementSibling.src.split(base_url + '/')[1];
-   
-    // Ensure the filePath is correct
-    //console.log("File path to remove:", filePath);
-   
-    // Filter out the file path from the array of existing file paths
-    filePaths = filePaths.filter(path => path !== filePath);
-    //console.log("Updated file paths:", filePaths);
-    
-    // Update the value of the existingFiles input
-    existingFiles.val(JSON.stringify(filePaths));
-    $('.edit-data-popup').css('display', 'block');
-
-    return true;
-}
-
-</script>
 
 <script>
     function loadCityListingAndPropertyListing() {

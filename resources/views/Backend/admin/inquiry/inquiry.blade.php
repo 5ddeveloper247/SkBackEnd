@@ -95,7 +95,7 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Agent<sup>*</sup></h6>
+                                                        <h6>Buyer/Tenant/Agent<sup>*</sup></h6>
                                                         <input type="text" name="inquiry_agent_edit"
                                                             id="inquiry_agent_edit" class="text_box" maxlength="15"
                                                             readonly>
@@ -186,7 +186,7 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
-                                                        <h6>Agent<sup>*</sup></h6>
+                                                        <h6>Buyer/Tenant/Agent<sup>*</sup></h6>
                                                         <input type="text" name="inquiry_agent_edit"
                                                             id="inquiry_replied_agent_edit" class="text_box"
                                                             maxlength="15" readonly>
@@ -330,6 +330,7 @@
                                 <thead>
                                     <tr>
                                         <th width="10">#</th>
+                                        <th>Name</th>
                                         <th>Email</th>
                                         <th>Description</th>
                                         <th>Created Date</th>
@@ -366,6 +367,7 @@
                                         <thead>
                                             <tr>
                                                 <th width="10">#</th>
+                                                <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Description</th>
                                                 <th>Created Date</th>
@@ -444,6 +446,7 @@ function loadManagerListResponse(response) {
         var inquiryRow = `<tr class="inquiry_data_row">
                                 <td class="nowrap grid-p-searchby">${index + 1}</td>
                               
+                                <td class="grid-p-searchby">${inquiry.name}</td>
                                 <td class="grid-p-searchby">${inquiry.email}</td>
                                 <td class="grid-p-searchby">${inquiry.description}</td>
                                 <td class="nowrap grid-p-searchby">${formatDate(inquiry.created_at)}</td>
@@ -541,6 +544,7 @@ function loadRepliedInquiriesResponse(response) {
         var inquiryRow = `<tr class="inquiry_data_row">
                                 <td class="nowrap grid-p-searchby">${index + 1}</td>
                               
+                                <td class="grid-p-searchby">${inquiry.name}</td>
                                 <td class="grid-p-searchby">${inquiry.email}</td>
                                 <td class="grid-p-searchby">${inquiry.description}</td>
                                 <td class="nowrap grid-p-searchby">${formatDate(inquiry.created_at)}</td>
