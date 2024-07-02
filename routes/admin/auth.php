@@ -114,4 +114,37 @@ Route::middleware(['admin'])->group(function () {
 
     Route::post('admin/city/populateAreaLov', [CityController::class, 'populateAreaLov'])->name('admin.city.populateAreaLov');
     Route::post('admin/city/populateLocationLov', [CityController::class, 'populateLocationLov'])->name('admin.city.populateLocationLov');
+
+    Route::post('admin/city/getcitydetails', [CityController::class, 'getCityDetails'])->name('admin.city.getcitydetails');
+    Route::post('admin/city/update', [CityController::class, 'updateCity'])->name('admin.city.update');
+    
+    
+    
+    Route::post('admin/area/getareadetails', [CityController::class, 'getAreaDetails'])->name('admin.area.getareadetails');
+    Route::post('admin/area/update', [CityController::class, 'updateArea'])->name('admin.area.update');
+    Route::post('admin/area/delete', [CityController::class, 'deleteArea'])->name('admin.area.delete');
+    
+    
+    Route::post('admin/location/getlocationdetails', [CityController::class, 'getLocationDetails'])->name('admin.location.getlocationdetails');
+    Route::post('admin/location/update', [CityController::class, 'updateLocation'])->name('admin.location.update');
+    Route::post('admin/location/delete', [CityController::class, 'deleteLocation'])->name('admin.location.delete');
+    Route::post('admin/location/getcityareas', [CityController::class, 'getcityareas'])->name('admin.location.getcityareas');
+    
+    
+    Route::post('admin/sector/getsectordetails', [CityController::class, 'getsectorDetails'])->name('admin.sector.getsectordetails');
+    Route::post('admin/sector/getarealocations ', [CityController::class, 'getarealocations'])->name('admin.sector.getarealocations ');
+    Route::post('admin/sector/update', [CityController::class, 'updatesector'])->name('admin.sector.update');
+    Route::post('admin/sector/delete', [CityController::class, 'deleteSector'])->name('admin.sector.delete');
+    Route::post('admin/location/getcityareas', [CityController::class, 'getcityareas'])->name('admin.location.getcityareas');
+
+
+
+
+
+
+
+
+
+
+
 });

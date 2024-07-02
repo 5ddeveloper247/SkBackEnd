@@ -137,6 +137,58 @@
                 </div>
             </div>
         </div>
+
+
+         {{-- edit city popup --}}
+         <div class="popup lg" data-popup="edit-city-data-popup" id="edit-city-data-popup">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
+                            <div id="Inspection" class="tab-pane fade active in">
+
+                                <form method="POST" id="edit_city_form" action="{{ route('admin.city.update') }}">
+
+                                    @csrf
+                                    <fieldset>
+                                        <div class="blk">
+                                            <h5 class="color">Edit City</h5>
+                                            <div class="form_row row">
+
+
+                                                <input type="hidden" name="edit_city_id" id="edit_city_id">
+
+                                                <div class="col-xs-12">
+                                                    <div class="form_blk">
+                                                        <h6>City Name<sup>*</sup></h6>
+                                                        <input type="text" name="edit_city_name" id="edit_city_name"
+                                                            class="text_box">
+                                                    </div>
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                            <div class="btn_blk form_btn text-center">
+
+                                                <button type="submit" class="site_btn long add_city_btn"
+                                                    id="add_city_btn">Update City</button>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{-- add area popup --}}
         <div class="popup lg" data-popup="add-area-data-popup" id="add-area-data-popup">
             <div class="table_dv">
@@ -178,6 +230,57 @@
 
                                                 <button type="submit" class="site_btn long add_area_btn"
                                                     id="add_area_btn">Add Area</button>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- edit area popup --}}
+        <div class="popup lg" data-popup="edit-area-data-popup" id="edit-area-data-popup">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
+                            <div id="Inspection" class="tab-pane fade active in">
+
+                                <form method="POST" id="edit_area_form" action="{{ route('admin.area.update') }}">
+                                    @csrf
+                                    <fieldset>
+                                        <div class="blk">
+                                            <h5 class="color">Edit Area</h5>
+                                            <div class="form_row row">
+                                                <input type="hidden" name="edit_area_id" id="edit_area_id">
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>City Name<sup>*</sup></h6>
+                                                        <select type="text" name="edit_area_city" id="edit_area_city"
+                                                            class="text_box">
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Area Name<sup>*</sup></h6>
+                                                        <input type="text" name="edit_area_area" id="edit_area_area"
+                                                            class="text_box">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="btn_blk form_btn text-center">
+
+                                                <button type="submit" class="site_btn long add_area_btn"
+                                                    id="add_area_btn">Update Area</button>
 
                                             </div>
                                         </div>
@@ -243,6 +346,66 @@
 
                                                 <button type="submit" class="site_btn long add_location_btn"
                                                     id="add_location_btn">Add Location</button>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- edit location popup --}}
+        <div class="popup lg" data-popup="edit-location-data-popup" id="edit-location-data-popup">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
+                            <div id="Inspection" class="tab-pane fade active in">
+
+                                <form method="POST" id="edit_location_form" action="{{ route('admin.location.update') }}">
+                                    @csrf
+                                    <fieldset>
+                                        <div class="blk">
+                                            <h5 class="color">Edit Location</h5>
+                                            <div class="form_row row">
+                                                <input type="hidden" name="edit_location_id" id="edit_location_id">
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>City Name<sup>*</sup></h6>
+                                                        <select type="text" name="edit_location_city"
+                                                            id="edit_location_city" class="text_box">
+                                                            
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Area Name<sup>*</sup></h6>
+                                                        <select type="text" name="edit_location_area"
+                                                            id="edit_location_area" class="text_box">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6 margin-top-location">
+                                                    <div class="form_blk">
+                                                        <h6>Location<sup>*</sup></h6>
+                                                        <input type="text" name="edit_location_location"
+                                                            id="edit_location_location" class="text_box">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="btn_blk form_btn text-center">
+
+                                                <button type="submit" class="site_btn long add_location_btn"
+                                                    id="add_location_btn">Update Location</button>
 
                                             </div>
                                         </div>
@@ -330,6 +493,81 @@
 
 
 
+          {{-- edit sector popup --}}
+          <div class="popup lg" data-popup="edit-sector-data-popup" id="edit-sector-data-popup">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
+                            <div id="Inspection" class="tab-pane fade active in">
+
+                                <form method="POST" id="edit_sector_form" action="{{ route('admin.sector.update') }}">
+                                    <input type="hidden" name="edit_sector_id" id="edit_sector_id">
+                                    @csrf
+                                    <fieldset>
+                                        <div class="blk">
+                                            <h5 class="color">Edit Sector</h5>
+                                            <div class="form_row row">
+
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>City Name<sup>*</sup></h6>
+                                                        <select type="text" name="edit_sector_city" id="edit_sector_city"
+                                                            class="text_box">
+                                                            <option value="">Select City</option>
+                                                            @foreach ($cities as $city )
+                                                            <option value="{{ $city->id }}">{{ $city->NAME }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form_blk">
+                                                        <h6>Area Name<sup>*</sup></h6>
+                                                        <select type="text" name="edit_sector_area" id="edit_sector_area"
+                                                            class="text_box">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6 margin-top-location">
+                                                    <div class="form_blk">
+                                                        <h6>Area Location<sup>*</sup></h6>
+                                                        <select type="text" name="edit_sector_location"
+                                                            id="edit_sector_location" class="text_box">
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-6 margin-top-location">
+                                                    <div class="form_blk">
+                                                        <h6> Sector<sup>*</sup></h6>
+                                                        <input type="text" name="edit_sector_sector"
+                                                            id="edit_sector_sector" class="text_box">
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="btn_blk form_btn text-center margin-top-location">
+                                                <button type="submit" class="site_btn long add_city_btn"
+                                                    id="update_sector_btn">Update Sector</button>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 
         <!-- delete city modal start  -->
         <div class="popup sm" data-popup="city-delete-data-popup" id="city_delete_modal">
@@ -357,6 +595,93 @@
             </div>
         </div>
         <!-- delete city modal end  -->
+
+
+
+
+        <!-- delete area modal start  -->
+        <div class="popup sm" data-popup="area-delete-data-popup" id="area_delete_modal">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="hidden x_btn clode_delete_modal_default_btn_area"></button>
+                            <h3 class="text-center">Are You Sure to Delete?</h3>
+                            <!-- <p>Are You Sure to Delete?</p> -->
+                            <div class="text-center row">
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="area_delete_confirmed_btn_location" data-id=""><img
+                                        src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="area_close_delete_modal_btn_area"><img
+                                        src="{{asset('assets\images\close-button_11450177.png')}}"
+                                        style="width:30px"></button>
+
+                                <!-- <button type="button" class="btn btn-danger ">Delete</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- delete area modal end  -->
+
+
+
+         <!-- delete location modal start  -->
+         <div class="popup sm" data-popup="location-delete-data-popup" id="location_delete_modal">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="hidden x_btn clode_delete_modal_default_btn_location"></button>
+                            <h3 class="text-center">Are You Sure to Delete?</h3>
+                            <!-- <p>Are You Sure to Delete?</p> -->
+                            <div class="text-center row">
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="location_delete_confirmed_btn" data-id=""><img
+                                        src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="area_close_delete_modal_btn_location"><img
+                                        src="{{asset('assets\images\close-button_11450177.png')}}"
+                                        style="width:30px"></button>
+
+                                <!-- <button type="button" class="btn btn-danger ">Delete</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- delete location modal end  -->
+
+
+          <!-- delete sector modal start  -->
+          <div class="popup sm" data-popup="sector-delete-data-popup" id="sector_delete_modal">
+            <div class="table_dv">
+                <div class="table_cell">
+                    <div class="contain">
+                        <div class="_inner editor_blk">
+                            <button type="button" class="hidden x_btn clode_delete_modal_default_btn_sector"></button>
+                            <h3 class="text-center">Are You Sure to Delete?</h3>
+                            <!-- <p>Are You Sure to Delete?</p> -->
+                            <div class="text-center row">
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="sector_delete_confirmed_btn" data-id=""><img
+                                        src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
+                                <button type="button" class="btn bg-transparent rounded-pill"
+                                    id="area_close_delete_modal_btn_location_sector"><img
+                                        src="{{asset('assets\images\close-button_11450177.png')}}"
+                                        style="width:30px"></button>
+
+                                <!-- <button type="button" class="btn btn-danger ">Delete</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- delete sector modal end  -->
 
 
 
@@ -411,7 +736,7 @@
                                         <td class="nowrap" data-center>
                                             <div class="act_btn">
                                                 <button type="button" class="edit pop_btn city_edit_btn" title="Edit"
-                                                    data-popup="edit-city-data-popup" data-id="{{ $city->id }}"
+                                                     data-id="{{ $city->id }}"
                                                     data-city='{{ $city }}'></button>
                                                 <button type="button" class="del pop_btn city_delete_btn" title="Delete"
                                                     data-popup="city-delete-data-popup" data-id="{{ $city->id }}"
@@ -471,10 +796,10 @@
                                             <td class="nowrap" data-center>
                                                 <div class="act_btn">
                                                     <button type="button" class="edit pop_btn area_edit_btn"
-                                                        title="Edit" data-popup="area-city-data-popup"
+                                                        title="Edit"
                                                         data-id="{{ $area->id }}" data-area='{{ $area }}'></button>
                                                     <button type="button" class="del pop_btn area_delete_btn"
-                                                        title="Delete" data-popup="area-delete-data-popup"
+                                                        title="Delete"
                                                         data-id="{{ $area->id }}" data-area='{{ $area }}'></button>
                                                 </div>
                                             </td>
@@ -537,7 +862,7 @@
                                                 <td class="nowrap" data-center>
                                                     <div class="act_btn">
                                                         <button type="button" class="edit pop_btn location_edit_btn"
-                                                            title="Edit" data-popup="location-city-data-popup"
+                                                            title="Edit"
                                                             data-id="{{ $location->id }}"
                                                             data-location='{{ $location }}'></button>
                                                         <button type="button" class="del pop_btn location_delete_btn"
@@ -612,7 +937,7 @@
                                                             <div class="act_btn">
                                                                 <button type="button"
                                                                     class="edit pop_btn sector_edit_btn" title="Edit"
-                                                                    data-popup="sector-city-data-popup"
+                                                                    
                                                                     data-id="{{ $sector->id }}"
                                                                     data-sector='{{ $sector }}'></button>
                                                                 <button type="button"
@@ -915,8 +1240,419 @@ function populateSectorLovLocation() {
 </script>
 
 
+{{-- edit city start --}}
+<script>
+    $(document).on('click', '.city_edit_btn', function() {
+        var city_id = $(this).attr('data-id');
+        let url = '/admin/city/getcitydetails';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('city_id', city_id);
+        SendAjaxRequestToServer(type, url, data, '', getcitydetailsResponse, '', '');
+    });
+
+    function getcitydetailsResponse(response){
+        if(response.success){
+            var city_name =  response.data.NAME;
+            var city_id =  response.data.id;
+            $('#edit_city_name').val(city_name);
+            $('#edit_city_id').val(city_id);
+            $('#edit-city-data-popup').show();
+        }
+        else{
+            toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
+        }
+    }
+
+    $('#edit_city_form').submit(function(e){
+        e.preventDefault();
+        let form = document.getElementById('edit_city_form');
+        let data = new FormData(form);
+        let url = '/admin/city/update';
+        let type = 'POST';
+        SendAjaxRequestToServer(type, url, data, '', updatecityResponse, '', '');
+
+    });
+
+    function updatecityResponse(response){
+        if(response.success){
+        toastr.success(response.message || "City updated successfully", '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+        toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
+        $('#edit-city-data-popup').hide();
+        $('#edit_city_form')[0].reset();
+        }
+    }
+
+</script>
+{{-- edit city end --}}
 
 
+{{-- edit area start  --}}
+<script>
+     $(document).on('click', '.area_edit_btn', function() {
+        var area_id = $(this).attr('data-id');
+        let url = '/admin/area/getareadetails';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('area_id', area_id);
+        SendAjaxRequestToServer(type, url, data, '', getareadetailsResponse, '', '');
+    });
+
+    function getareadetailsResponse(response){
+        if(response.success){
+            // var city_name =  response.data.NAME;
+            // var area_id =  response.data.id;
+            // $('#edit_city_name').val(city_name);
+            // $('#edit_area_id').val(area_id);
+            var area = response.data.area;
+            var cities = response.data.cities;
+            var cities_html = [];
+            cities.forEach(city => {
+            cities_html += `<option ${city.id == area.CITY_ID ? 'selected' : ''} value="${city.id}"> ${city.NAME} </option>`;
+             });
+
+            $('#edit_area_city').html(cities_html);
+            $('#edit_area_id').val(area.id);
+            $('#edit_area_area').val(area.NAME);
+            $('#edit-area-data-popup').show();
+        }
+        else{
+            toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
+        }
+    }
+
+
+    $('#edit_area_form').submit(function(e){
+        e.preventDefault();
+        let form = document.getElementById('edit_area_form');
+        let data = new FormData(form);
+        let url = '/admin/area/update';
+        let type = 'POST';
+        SendAjaxRequestToServer(type, url, data, '', updateareaResponse, '', '');
+
+    });
+
+    function updateareaResponse(response){
+        if(response.success){
+        toastr.success(response.message || "Area updated successfully", '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+        toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
+        $('#edit-area-data-popup').hide();
+        $('#edit_area_form')[0].reset();
+
+        }
+    }
+</script>
+{{-- edit area end  --}}
+
+{{-- delete area starts  --}}
+<script>
+    $('.area_delete_btn').click(function(){
+        var area_id = $(this).attr('data-id');
+        $('#area_delete_confirmed_btn_location').attr('data-id', area_id);
+        $('#area_delete_modal').show();
+
+    });
+
+    $('#area_delete_confirmed_btn_location').click(function(){
+        var area_id = $(this).attr('data-id');
+        let url = '/admin/area/delete';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('area_id', area_id);
+        SendAjaxRequestToServer(type, url, data, '', deleteareaResponse, '', '');
+    });
+
+    function deleteareaResponse(response){
+        if(response.success){
+        toastr.success(response.message || "Area deleted successfully", '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+            toastr.error(response.message, '', { timeOut: 3000 });
+        }
+    }
+
+    $('#area_close_delete_modal_btn_area').click(function(){
+        $('.clode_delete_modal_default_btn_area').click();
+    })
+</script>
+{{-- delete area ends  --}}
+
+{{-- edit location start  --}}
+<script>
+     $(document).on('click', '.location_edit_btn', function() {
+        $('#edit_location_form')[0].reset();
+        var location_id = $(this).attr('data-id');
+        let url = '/admin/location/getlocationdetails';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('location_id', location_id);
+        SendAjaxRequestToServer(type, url, data, '', getlocationdetailsResponse, '', '');
+    });
+
+    function getlocationdetailsResponse(response){
+        if(response.success){
+            
+            var location = response.data.location;
+            var areas = response.data.areas;
+            var cities = response.data.cities;
+            var areas_html = [];
+            var cities_html = [];
+            var location_city = location.area.city;
+            cities.forEach(city => {
+            cities_html += `<option ${city.id == location_city.id ? 'selected' : ''} value="${city.id}"> ${city.NAME} </option>`;
+             });
+            areas.forEach(area => {
+            areas_html += `<option ${area.id == location.AREA_ID ? 'selected' : ''} value="${area.id}"> ${area.NAME} </option>`;
+             });
+
+            $('#edit_location_city').html(cities_html);
+            $('#edit_location_area').html(areas_html);
+            $('#edit_location_id').val(location.id);
+            $('#edit_location_location').val(location.NAME);
+            $('#edit-location-data-popup').show();
+        }
+        else{
+            toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
+        }
+    }
+
+    $('#edit_location_city').change(function(){
+        var city = $(this).val();
+        if(city !=''){
+        let data = new FormData();
+        let url = '/admin/location/getcityareas';
+        let type = 'POST';
+        data.append('city_id', city);
+        SendAjaxRequestToServer(type, url, data, '', getcityareas, '', '');
+        }
+    });
+
+    function getcityareas(response){
+        var areas = response.data;
+        var areas_html = [];
+            areas.forEach(area => {
+            areas_html += `<option value="${area.id}"> ${area.NAME} </option>`;
+             });
+
+            $('#edit_location_area').html(areas_html);
+    }
+
+
+    $('#edit_location_form').submit(function(e){
+        e.preventDefault();
+        let form = document.getElementById('edit_location_form');
+        let data = new FormData(form);
+        let url = '/admin/location/update';
+        let type = 'POST';
+        SendAjaxRequestToServer(type, url, data, '', updatelocationResponse, '', '');
+
+    });
+
+    function updatelocationResponse(response){
+        if(response.success){
+        toastr.success(response.message || "Location updated successfully", '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+        toastr.error(response.message, '', { timeOut: 3000 });
+        // $('#edit-location-data-popup').hide();
+        // $('#edit_location_form')[0].reset();
+
+        }
+    }
+</script>
+{{-- edit location end  --}}
+
+{{-- delete location starts  --}}
+<script>
+    $('.location_delete_btn').click(function(){
+        var area_id = $(this).attr('data-id');
+        $('#location_delete_confirmed_btn').attr('data-id', area_id);
+        $('#area_delete_modal').show();
+
+    });
+
+    $('#location_delete_confirmed_btn').click(function(){
+        var location_id = $(this).attr('data-id');
+        let url = '/admin/location/delete';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('location_id', location_id);
+        SendAjaxRequestToServer(type, url, data, '', deletelocationResponse, '', '');
+    });
+
+    function deletelocationResponse(response){
+        if(response.success){
+        toastr.success(response.message, '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+            toastr.error(response.message, '', { timeOut: 3000 });
+        }
+    }
+    $('#area_close_delete_modal_btn_location').click(function(){
+        $('.clode_delete_modal_default_btn_location').click();
+    })
+</script>
+{{-- delete location ends  --}}
+
+
+
+{{-- edit sector start  --}}
+<script>
+     $(document).on('click', '.sector_edit_btn', function() {
+        $('#edit_sector_form')[0].reset();
+        var sector_id = $(this).attr('data-id');
+        let url = '/admin/sector/getsectordetails';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('sector_id', sector_id);
+        SendAjaxRequestToServer(type, url, data, '', getsectordetailsResponse, '', '');
+    });
+
+    function getsectordetailsResponse(response){
+        if(response.success){
+            
+            var sector = response.data.sector;
+            var areas = response.data.areas;
+            var cities = response.data.cities;
+            var locations = response.data.locations;
+            var areas_html = [];
+            var cities_html = [];
+            var location_html = [];
+            areas.forEach(area => {
+            areas_html += `<option ${area.id == sector.location.area.id ? 'selected' : ''} value="${area.id}"> ${area.NAME} </option>`;
+             });
+            cities_html+=`<option value="">Select City </option>`;
+            cities.forEach(city => {
+            cities_html += `<option ${city.id == sector.location.area.city.id ? 'selected' : ''}  value="${city.id}"> ${city.NAME} </option>`;
+             });
+             locations.forEach(location => {
+                location_html+= `<option ${location.id == sector.LOCATION_ID ? 'selected' : ''} value="${location.id}" > ${location.NAME} </option>`;
+             });
+
+
+            $('#edit_sector_area').html(areas_html);
+            $('#edit_sector_location').html(location_html);
+            $('#edit_sector_city').html(cities_html);
+            $('#edit_sector_id').val(sector.id);
+            $('#edit_sector_sector').val(sector.NAME);
+            $('#edit-sector-data-popup').show();
+        }
+        else{
+            toastr.error(response.message || "Something went wrong", '', { timeOut: 3000 });
+        }
+    }
+
+    $('#edit_sector_city').change(function(){
+        var city = $(this).val();
+        if(city !=''){
+        let data = new FormData();
+        let url = '/admin/location/getcityareas';
+        let type = 'POST';
+        data.append('city_id', city);
+        SendAjaxRequestToServer(type, url, data, '', getcityareasResponse, '', '');
+        }
+    });
+
+    function getcityareasResponse(response){
+        var areas = response.data;
+        var areas_html = [];
+        areas_html+=`<option value="">Select Area </option>`;
+            areas.forEach(area => {
+            areas_html += `<option value="${area.id}"> ${area.NAME} </option>`;
+             });
+
+            $('#edit_sector_area').html(areas_html);
+    }
+    $('#edit_sector_area').change(function(){
+        var area = $(this).val();
+        if(area !=''){
+        let data = new FormData();
+        let url = '/admin/sector/getarealocations';
+        let type = 'POST';
+        data.append('area_id', area);
+        SendAjaxRequestToServer(type, url, data, '', getarealocationsResponse, '', '');
+        }
+    });
+
+    function getarealocationsResponse(response){
+        $('#edit_sector_location').empty();
+        var locations = response.data;
+        var location_html = [];
+        location_html+=`<option value="">Select Location </option>`;
+        locations.forEach(location => {
+            location_html += `<option value="${location.id}"> ${location.NAME} </option>`;
+             });
+
+            $('#edit_sector_location').html(location_html);
+    }
+
+
+    $('#edit_sector_form').submit(function(e){
+        e.preventDefault();
+        let form = document.getElementById('edit_sector_form');
+        let data = new FormData(form);
+        let url = '/admin/sector/update';
+        let type = 'POST';
+        SendAjaxRequestToServer(type, url, data, '', updatesectorResponse, '', '');
+
+    });
+
+    function updatesectorResponse(response){
+        if(response.success){
+        toastr.success(response.message || "Sector updated successfully", '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+        toastr.error(response.message, '', { timeOut: 3000 });
+        // $('#edit-location-data-popup').hide();
+        // $('#edit_location_form')[0].reset();
+
+        }
+    }
+</script>
+{{-- edit location end  --}}
+
+{{-- delete location starts  --}}
+<script>
+    $('.sector_delete_btn').click(function(){
+        var sector_id = $(this).attr('data-id');
+        $('#sector_delete_confirmed_btn').attr('data-id', sector_id);
+        $('#sector_delete_modal').show();
+
+    });
+
+    $('#sector_delete_confirmed_btn').click(function(){
+        var sector_id = $(this).attr('data-id');
+        let url = '/admin/sector/delete';
+        let type = 'POST';
+        let data = new FormData();
+        data.append('sector_id', sector_id);
+        SendAjaxRequestToServer(type, url, data, '', deletesectorResponse, '', '');
+    });
+
+    function deletesectorResponse(response){
+        if(response.success){
+        toastr.success(response.message, '', { timeOut: 3000 });
+        window.location.reload();
+        }
+        else{
+            toastr.error(response.message, '', { timeOut: 3000 });
+        }
+    }
+    $('#area_close_delete_modal_btn_location_sector').click(function(){
+        $('.clode_delete_modal_default_btn_sector').click();
+    })
+</script>
+{{-- delete location ends  --}}
 
 
 
