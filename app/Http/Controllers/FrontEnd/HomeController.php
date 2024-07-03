@@ -96,29 +96,25 @@ class HomeController extends Controller
                     Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
                 }
 
+                $requestData = $request->all();
+
                 try {
                     // Send email
-                    $body = view('mail.mail_templates.common')->render();
-                    $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-                    // $userEmailsSend[] = $request->email;
+                    $body = view('mail.mail_templates.request', ['requestData' => $requestData])->render();
+                    $adminEmailsSend = 'devofd172@gmail.com';
+                    $userEmailsSend = $request->email;
                     // to username, to email, from username, subject, body html 
-                    $response = sendMail($request->firstName, $userEmailsSend, 'Sk Property', 'New Property has listed', $body);
+                    $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Property Listing Request Has Submitted Successfully', $body);
+                    $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New Property is listed', $body);
+                    // Log the current timestamp and response 
+                    Log::info('at: ' . now());
+                    Log::info('Email property response 1: ' . $response);
+                    Log::info('Email property response 2: ' . $response2);
                 } catch (Exception $e) {
                     // Log the error if email sending fails
-                    Log::error('Error sending email on new property listing from user side submission: ' . $e->getMessage());
+                    Log::error('Error sending email on contact from user side submission: ' . $e->getMessage());
                 }
-
-
-
-                // $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS'); //admin email
-                // $propertyListerEmail = $request->pInfo_email;
-                // // Send email
-                // $body = view('mail.mail_templates.common')->render();
-                // $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-                // if ($propertyListerEmail) {
-
-                //     // to username, to email, from username, subject, body html 
-                //     $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Contacting', $body);                }   
+                
             } catch (Exception $e) {
                 // Log the error if email sending fails
                 Log::error('Error sending email on property listing from user side: ' . $e->getMessage());
@@ -127,6 +123,12 @@ class HomeController extends Controller
 
             // Commit the transaction
             DB::commit();
+            try {
+                WhatsAppHelper::sendMessages($phoneno, $message, $id);
+            } catch (Exception $e) {
+                // Log the error if sending WhatsApp message fails
+                Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
+            }
 
             // Return success response
             return response()->json([
@@ -270,8 +272,7 @@ class HomeController extends Controller
             $propertyInfo = $query->get();
 
             return response()->json(['propertyInfo' => $propertyInfo]);
-        } 
-        catch (Exception $e) {
+        } catch (Exception $e) {
             // Log the exception for debugging purposes
             Log::error('Error fetching property info: ' . $e->getMessage());
             // Return a JSON response with an error message

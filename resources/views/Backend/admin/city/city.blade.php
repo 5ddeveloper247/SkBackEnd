@@ -727,7 +727,7 @@
                                 <tbody id="city_table_body">
                                     @foreach ($cities as $city )
                                     <tr>
-                                        <td>
+                                        <td class="nowrap">
                                             {{ $city->id }}
                                         </td>
                                         <td>
@@ -784,7 +784,7 @@
                                     <tbody id="area_table_body">
                                         @foreach ($areas as $area )
                                         <tr>
-                                            <td>
+                                            <td class="nowrap">
                                                 {{ $area->id }}
                                             </td>
                                             <td>
@@ -846,7 +846,7 @@
 
                                             @foreach ($locations as $location )
                                             <tr>
-                                                <td>
+                                                <td class="nowrap">
                                                     {{ $location->id }}
                                                 </td>
                                                 <td>
@@ -916,7 +916,7 @@
                                                 <tbody id="area_table_body">
                                                     @foreach ($sectors as $sector)
                                                     <tr>
-                                                        <td>{{ $sector->id }}</td>
+                                                        <td class="nowrap">{{ $sector->id }}</td>
                                                         <td>{{ $sector->NAME }}</td>
                                                         <td>
                                                             {{ $sector->location && $sector->location->area &&

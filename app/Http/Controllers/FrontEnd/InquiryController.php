@@ -25,13 +25,19 @@ class InquiryController extends Controller
             'agent' => 'nullable|array',
             'informed_me' => 'nullable|boolean',
         ]);
+        $inquiryData = $request->all();
         try {
             // Send email
-            $body = view('mail.mail_templates.common')->render();
-            $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-            $userEmailsSend[] = $request->email;
+            $body = view('mail.mail_templates.inquiry', ['inquiryData' => $inquiryData])->render();
+            $adminEmailsSend = 'devofd172@gmail.com';
+            $userEmailsSend = $request->email;
             // to username, to email, from username, subject, body html 
-            $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Submitting inquiry', $body);
+            $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Thanks For Submitting inquiry', $body);
+            $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New Property is listed', $body);
+            // Log the current timestamp and response 
+            Log::info('at: ' . now());
+            Log::info('Email response 1: ' . $response);
+            Log::info('Email response 2: ' . $response2);
         } catch (Exception $e) {
             // Log the error if email sending fails
             Log::error('Error sending email on Inquiry from user side submission: ' . $e->getMessage());
@@ -39,6 +45,7 @@ class InquiryController extends Controller
 
 
         // Send WhatsApp message
+        // $adminContact = env('ADMIN_WHATSAPP_NUMBER');
         $adminContact = env('ADMIN_WHATSAPP_NUMBER');
         $phoneno = [$request->phone, $adminContact];
         $message = $request->description;

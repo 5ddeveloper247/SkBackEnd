@@ -37,22 +37,29 @@ class ContactUsController extends Controller
             'message' => $request->input('message'),
         ]);
 
+        $contactData = $request->all();
+
         try {
             // Send email
-            $body = view('mail.mail_templates.common')->render();
-            $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-            $userEmailsSend[] = $request->email;
+            $body = view('mail.mail_templates.contactus', ['contactData' => $contactData])->render();
+            $adminEmailsSend = 'devofd172@gmail.com';
+            $userEmailsSend = $request->email;
             // to username, to email, from username, subject, body html 
-            $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Contacting', $body);
+            $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Thanks For Contacting us', $body);
+            $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New Contact query is submitted', $body);
+            // Log the current timestamp and response 
+            Log::info('at: ' . now());
+            Log::info('Email contact response 1: ' . $response);
+            Log::info('Email contact response 2: ' . $response2);
         } catch (Exception $e) {
             // Log the error if email sending fails
-            Log::error('Error sending email on contact us from user side submission: ' . $e->getMessage());
+            Log::error('Error sending email on contact from user side submission: ' . $e->getMessage());
         }
 
         // Send WhatsApp message
-        $adminContact=env('ADMIN_WHATSAPP_NUMBER');
-        $phoneno = [923106835826,$adminContact];
-        $message = "Hello whatsapp";
+        $adminContact = env('ADMIN_WHATSAPP_NUMBER');
+        $phoneno = [923106835826, $adminContact];
+        $message = $request->message;
         $id = 123;
 
 
@@ -64,6 +71,6 @@ class ContactUsController extends Controller
             Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
         }
         // Return a 201 response with the created contact record
-        return response()->json(['contact' => $contact], 201);
+        return response()->json(['contact' => $contact, 'fksd' => $adminEmailsSend], 201);
     }
 }

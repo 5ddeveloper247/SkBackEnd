@@ -141,6 +141,8 @@ class PropertyController extends Controller
                 ]);
             }
 
+
+            
             // Store the uploaded files
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $photo) {
@@ -163,23 +165,31 @@ class PropertyController extends Controller
                 }
             }
 
+
+            $requestData=$request->all();
             try {
                 // Send email
-                $body = view('mail.mail_templates.common')->render();
-                $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-               // $userEmailsSend[] = $request->email;
+                $body = view('mail.mail_templates.request_reply', ['requestData' => $requestData])->render();
+                $adminEmailsSend = 'devofd172@gmail.com';
+                $userEmailsSend = $request->email;
                 // to username, to email, from username, subject, body html 
-                $response = sendMail($userEmailsSend, $userEmailsSend, 'Sk Property', 'New Property has listed', $body);
+                $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
+                $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
+                // Log the current timestamp and response 
+                Log::info('at: ' . now());
+                Log::info('Email property response 1: ' . $response);
+               Log::info('Email property response 2: ' . $response2);
             } catch (Exception $e) {
                 // Log the error if email sending fails
-                Log::error('Error sending email on new property listing from user side submission: ' . $e->getMessage());
+                Log::error('Error sending email on contact from user side submission: ' . $e->getMessage());
             }
+            
 
             // Commit the transaction
             DB::commit();
 
             return redirect()->back()->with('success', 'Record has been saved successfully.');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Rollback the transaction
             DB::rollBack();
             // Log the error (optional)
