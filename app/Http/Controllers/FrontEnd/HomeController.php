@@ -77,10 +77,7 @@ class HomeController extends Controller
 
             // Send email
             try {
-                // Send email
-                $body = view('mail.mail_templates.common')->render();
-                $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-                $userEmailsSend[] = $request->email;
+
 
 
 
@@ -98,8 +95,30 @@ class HomeController extends Controller
                     // Log the error if sending WhatsApp message fails
                     Log::error('Error sending WhatsApp message on contact us from user side submission: ' . $e->getMessage());
                 }
-                // to username, to email, from username, subject, body html 
-                $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For submitting property detail', $body);
+
+                try {
+                    // Send email
+                    $body = view('mail.mail_templates.common')->render();
+                    $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
+                    // $userEmailsSend[] = $request->email;
+                    // to username, to email, from username, subject, body html 
+                    $response = sendMail($request->firstName, $userEmailsSend, 'Sk Property', 'New Property has listed', $body);
+                } catch (Exception $e) {
+                    // Log the error if email sending fails
+                    Log::error('Error sending email on new property listing from user side submission: ' . $e->getMessage());
+                }
+
+
+
+                // $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS'); //admin email
+                // $propertyListerEmail = $request->pInfo_email;
+                // // Send email
+                // $body = view('mail.mail_templates.common')->render();
+                // $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
+                // if ($propertyListerEmail) {
+
+                //     // to username, to email, from username, subject, body html 
+                //     $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Contacting', $body);                }   
             } catch (Exception $e) {
                 // Log the error if email sending fails
                 Log::error('Error sending email on property listing from user side: ' . $e->getMessage());
@@ -135,7 +154,7 @@ class HomeController extends Controller
     public function propertyHomeView(Request $request)
     {
         try {
-            // Retrieve property information
+            // Retrieve property information with relationships
             $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
                 ->where('status', '1')
                 ->get();
@@ -143,24 +162,35 @@ class HomeController extends Controller
             // Retrieve testimonials
             $testimonials = Testimonial::all();
 
-            // Check if propertyInfo is empty
+            // Retrieve max bedrooms using a subquery
+            $maxRoomsArray = PersonalInfo::whereHas('propertyListingPape', function ($q) {
+                $q->selectRaw('MAX(propertyDetail_bedrooms) as max_bedrooms')
+                    ->groupBy('property_record_id');
+            })->with('propertyListingPape')->first();
+
+            $maxRooms = $maxRoomsArray->propertyListingPape->propertyDetail_bedrooms;
+
+
+
+            // Check if propertyInfo or testimonials are empty
             if ($propertyInfo->isEmpty()) {
                 $propertyInfo = [];
             }
 
-            // Check if testimonials is empty
             if ($testimonials->isEmpty()) {
                 $testimonials = [];
             }
 
-            // Return JSON response with property information and testimonials
-            return response()->json(['propertyInfo' => $propertyInfo, 'testimonials' => $testimonials]);
+            // Return JSON response with property information, testimonials, and max rooms
+            return response()->json(['propertyInfo' => $propertyInfo, 'testimonials' => $testimonials, 'maxRooms' => $maxRooms]);
         } catch (Exception $e) {
+            //dd($e);
             // Log the error and return a server error response
             Log::error('Error fetching property info and testimonials: ' . $e->getMessage());
             return response()->json(['error' => 'Failed to fetch property information and testimonials.'], 500);
         }
     }
+
 
 
 
@@ -211,6 +241,44 @@ class HomeController extends Controller
             return response()->json(['error' => 'Failed to fetch property data. Please try again later.'], 500);
         }
     }
+
+    public function propertyLandDetailBottomSwipper(Request $request)
+    {
+        try {
+            $propertyType = $request->input('mediaSliderType');
+            $typeId = $request->input('typeId');
+
+            // Fetch the record based on the provided typeId
+            $record = PersonalInfo::with('propertyListingPape')->find($typeId);
+
+            $query = PersonalInfo::query();
+
+            // If a typeId is provided, filter based on the pupose_home field
+            if (!empty($typeId) && $record) {
+                $query->whereHas('propertyListingPape', function ($q) use ($record) {
+                    $q->where('pupose_home', 'LIKE', '%' . $record->propertyListingPape->pupose_home . '%');
+                });
+            }
+
+            // Always fetch the latest 7 records with status '1'
+            $query->orderBy('created_at', 'desc')
+                ->limit(7)
+                ->where('status', '1')
+                ->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+
+            // Execute the query and get the results
+            $propertyInfo = $query->get();
+
+            return response()->json(['propertyInfo' => $propertyInfo]);
+        } 
+        catch (Exception $e) {
+            // Log the exception for debugging purposes
+            Log::error('Error fetching property info: ' . $e->getMessage());
+            // Return a JSON response with an error message
+            return response()->json(['error' => 'Failed to fetch property data. Please try again later.'], 500);
+        }
+    }
+
 
 
 

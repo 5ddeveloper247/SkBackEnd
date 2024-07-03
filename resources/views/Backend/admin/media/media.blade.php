@@ -162,7 +162,7 @@
 
 
 
-{{-- pop up for add medi  pictures --}}
+{{-- pop up for add medi pictures --}}
 <section class="popup lg" id="popupAddMediaOnly" data-popup="search" style="display: none;">
     <div class="table_dv">
         <div class="table_cell">
@@ -244,9 +244,9 @@
             <li>Media</li>
         </ul>
         <ul class="tab_list">
-            <li class="active"><a href="#All" data-toggle="tab">Video Media</a></li>
+            <li id="tab_list_video" class="active"><a href="#All" data-toggle="tab">Video Media</a></li>
             {{-- <li><a href="#AddMediaUrl" data-toggle="tab">Add Media Url</a></li> --}}
-            <li><a href="#AddMedia" data-toggle="tab">Image Media</a></li>
+            <li id="tab_list_picture"><a href="#AddMedia" data-toggle="tab">Image Media</a></li>
             {{-- <li><a href="#Tracking" data-toggle="tab">Delivery Tracking</a></li> --}}
         </ul>
 
@@ -293,6 +293,7 @@
                                                     <ul class="social_links">
                                                         <li><a
                                                                 href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
+                                                                    id="video_delete"
                                                                     src="{{ asset('images/icons-delete.png')}}"
                                                                     alt=""></a></li>
 
@@ -358,6 +359,7 @@
                                                     <ul class="social_links">
                                                         <li><a
                                                                 href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
+                                                                    id="picture_delete"
                                                                     src="{{ asset('images/icons-delete.png')}}"></a>
                                                         </li>
 
@@ -683,23 +685,77 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
     });
 </script>
 
-{{-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Check if the flag is set in local storage
-        // alert('Current flag value: ' + localStorage.getItem('showPopup'));
-        if (localStorage.getItem('showPopup') === 'true') {
-            // Show the popup
-            document.getElementById('AddMedia').style.display = 'block';
-            document.getElementById('All').style.display = 'none';
 
-            // Remove the flag from local storage
-            localStorage.removeItem('showPopup');
-            // alert('Popup shown and flag removed');
+<script>
+    $(document).ready(function() {
+        const flagVideoVal = window.localStorage.getItem('video_delete') === 'true';
+        const flagPictureVal = window.localStorage.getItem('picture_delete') === 'true';
+
+        console.log('Video Flag:', flagVideoVal);  // Debugging log
+        console.log('Picture Flag:', flagPictureVal);  // Debugging log
+
+        if (flagPictureVal) {
+            console.log('Picture flag is true');
+            $('#tab_list_video').removeClass('active');
+            $('#All').removeClass('active');
+            $('#All').removeClass('in');
+            $('#tab_list_picture').addClass('active');
+            $('#AddMedia').addClass('in');
+            $('#AddMedia').addClass('active');
+            window.localStorage.removeItem('picture_delete');
+            window.localStorage.removeItem('video_delete');
+        } else if (flagVideoVal) {
+            console.log('Video flag is true');
+            $('#tab_list_picture').removeClass('active');
+            $('#AddMedia').removeClass('active');
+            $('#AddMedia').removeClass('in');
+            $('#tab_list_video').addClass('active');
+            $('#All').addClass('in');
+            $('#All').addClass('active');
+            window.localStorage.removeItem('picture_delete');
+            window.localStorage.removeItem('video_delete');
         } else {
-            // alert('Flag is not set to true');
+            console.log('No flags set, defaulting to video');
+            // Default to video if no flags are set
+            $('#tab_list_video').addClass('active');
+            $('#All').addClass('in');
+            $('#All').addClass('active');
         }
     });
-</script> --}}
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#video_delete').click(function() {
+            window.localStorage.setItem('video_delete', 'true');
+            window.localStorage.setItem('picture_delete', 'false');
+            console.log('Set video_delete to true and picture_delete to false');  // Debugging log
+
+            $('#tab_list_picture').removeClass('active');
+            $('#AddMedia').removeClass('active');
+            $('#AddMedia').removeClass('in');
+            $('#tab_list_video').addClass('active');
+            $('#All').addClass('in');
+            $('#All').addClass('active');
+        });
+
+        $('#picture_delete').click(function() {
+            window.localStorage.setItem('picture_delete', 'true');
+            window.localStorage.setItem('video_delete', 'false');
+            console.log('Set picture_delete to true and video_delete to false');  // Debugging log
+
+            $('#tab_list_video').removeClass('active');
+            $('#All').removeClass('active');
+            $('#All').removeClass('in');
+            $('#tab_list_picture').addClass('active');
+            $('#AddMedia').addClass('in');
+            $('#AddMedia').addClass('active');
+        });
+    });
+</script>
+
+
+
 
 
 

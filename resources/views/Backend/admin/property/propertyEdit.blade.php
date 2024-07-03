@@ -1,7 +1,14 @@
 @extends('Backend.includes.common-template')
 
 @push('styles')
-
+<style>
+    /* Chrome, Safari, Edge, Opera */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
 @endpush
 
 
@@ -105,7 +112,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6 col-xs-12">
+                <div class="col-sm-6 col-xs-12" style="margin-top: 24px; !important">
                     <h6>Home<sup>**</sup></h6>
                     <div class="form_blk">
                         @php
@@ -420,7 +427,8 @@
                 Upload edit ______________________________ --}}
 
                 <div class="blk">
-                    <h4 class="subheading">Upload Photos<sup class="text-red" style="font-size: 10px;">(Allowed formats:png, jpeg, jpg)</sup></h4>
+                    <h4 class="subheading">Upload Photos<sup class="text-red" style="font-size: 10px;">(Allowed
+                            formats:png, jpeg, jpg)</sup></h4>
                     <div class="form_row row">
                         <div class="col-xs-12">
                             <div class="uploader_blk text_box">
@@ -986,7 +994,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 
 
 <script>
- $(document).ready(function() {
+    $(document).ready(function() {
     
     function resetSelects(except) {
         if (except !== '#pupose_home_edit') {

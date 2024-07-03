@@ -57,7 +57,16 @@ function loadManagerListResponse(response) {
         var propertyRow = `<tr class="property_data_row">
                                 <td class="nowrap ">${index + 1}</td>
                                 <td class="grid-p-searchby">${property.pInfo_fName}</td>
-                                <td class="grid-p-searchby">${property.pInfo_email}</td>
+                                <td class="grid-p-searchby">${property.prop}</td>
+                                <td class="grid-p-searchby">
+                                    ${property.property_listing_pape.pupose_home !== null
+                ? property.property_listing_pape.pupose_home
+                : property.property_listing_pape.purpose_commercial !== null
+                    ? property.property_listing_pape.purpose_commercial
+                    : property.property_listing_pape.purpose_plot !== null
+                        ? property.property_listing_pape.purpose_plot
+                        : "No property type available"}
+                                </td>    
                                 <td class="nowrap grid-p-searchby" >${property.pInfo_phoneNumber ? property.pInfo_phoneNumber : ''}</td>
                                 <td class="nowrap grid-p-searchby">${formatDate(property.created_at)}</td>
                                 <td data-center>
