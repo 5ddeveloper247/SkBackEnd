@@ -166,28 +166,28 @@
                                                 <h6>First Name<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="pInfo_firstName" id="pInfo_firstName"
-                                                        class="text_box" placeholder="">
+                                                        class="text_box" placeholder="" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Last Name<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="pInfo_lastName" id="pInfo_lastName"
-                                                        class="text_box" placeholder="">
+                                                        class="text_box" placeholder="" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Email Address<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="email" name="pInfo_email" id="pInfo_email"
-                                                        class="text_box" placeholder="sample@gmail.com">
+                                                        class="text_box" placeholder="sample@gmail.com"maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Phone Number<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="pInfo_phoneNumber" id="pInfo_phoneNumber"
-                                                        class="text_box" placeholder="+92300 0000 000">
+                                                        class="text_box" placeholder="+92300 0000 000"maxlength="15">
                                                 </div>
                                             </div>
 
@@ -212,7 +212,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Home<sup>**</sup></h6>
+                                                <h6>Home<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="pupose_home" id="pupose_home" class="text_box"
                                                         data-container="body">
@@ -223,7 +223,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Plot<sup>**</sup></h6>
+                                                <h6>Plot<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_plot" id="purpose_plot" class="text_box"
                                                         data-container="body">
@@ -234,7 +234,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Commercial<sup>**</sup></h6>
+                                                <h6>Commercial<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_commercial" id="purpose_commercial"
                                                         class="text_box" data-container="body">
@@ -250,7 +250,7 @@
                                                 <h6>Price<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="price" id="price" class="text_box"
-                                                        placeholder="Price">
+                                                        placeholder="Price" maxlength="7">
                                                 </div>
                                             </div>
                                         </div>
@@ -307,14 +307,14 @@
                                                 <h6>Address<sup>*</sup></h6>
                                                 <textarea class="text_box" placeholder="Describe your address"
                                                     name="address_address" id="address_address"
-                                                    spellcheck="false"></textarea>
+                                                    spellcheck="false" maxlength="200"></textarea>
                                             </div>
 
                                             <div class="col-sm-12 col-xs-12">
                                                 <h6>Google Map Link<sup></sup></h6>
                                                 <input class="text_box" placeholder="Map Location"
                                                     name="address_map_location" id="address_map_location"
-                                                    spellcheck="false" />
+                                                    spellcheck="false" maxlength="1000" />
                                             </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
@@ -335,7 +335,7 @@
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_plot_num"
                                                         id="propertyDetail_plot_num" class="text_box"
-                                                        data-container="body" />
+                                                        data-container="body" maxlength="10" />
 
                                                     </select>
                                                 </div>
@@ -360,7 +360,7 @@
                                                         <div class="form_blk">
                                                             <input type="number" name="propertyDetail_area_unit"
                                                                 id="propertyDetail_area_unit" class="text_box"
-                                                                placeholder="eg: 10">
+                                                                placeholder="eg: 10" maxlength="5">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -370,7 +370,7 @@
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bedrooms"
                                                         id="propertyDetail_bedrooms" class="text_box "
-                                                        data-container="body" mx="10" />
+                                                        data-container="body" mx="10" maxlength="3" />
 
                                                 </div>
                                             </div>
@@ -379,7 +379,7 @@
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bathrooms"
                                                         id="propertyDetail_bathrooms" class="text_box"
-                                                        data-container="body" max="10" />
+                                                        data-container="body" max="10" maxlength="3" />
 
 
                                                 </div>
@@ -407,7 +407,7 @@
                                                         <div class="form_blk">
                                                             <input type="text" name="extra_info_title"
                                                                 id="extra_info_title" class="text_box" value=""
-                                                                placeholder="">
+                                                                placeholder="" maxlength="255">
                                                         </div>
                                                     </div>
 
@@ -416,7 +416,7 @@
                                                         <div class="form_blk">
                                                             <input type="text" name="extra_info_postingas"
                                                                 id="extra_info_postingas" class="text_box"
-                                                                placeholder="Agent Name">
+                                                                placeholder="Agent Name" maxlength="50">
                                                         </div>
                                                     </div>
 
@@ -425,7 +425,7 @@
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_mobile"
                                                                 id="extra_info_mobile" class="text_box"
-                                                                placeholder="eg: 285432584452">
+                                                                placeholder="eg: 285432584452" maxlength="15">
                                                         </div>
                                                     </div>
 
@@ -434,7 +434,7 @@
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_landline"
                                                                 id="extra_info_landline" class="text_box"
-                                                                placeholder="eg: 285432584452">
+                                                                placeholder="eg: 285432584452" maxlength="10">
                                                         </div>
                                                     </div>
 
@@ -443,7 +443,7 @@
                                                         <div class="form_blk">
                                                             <textarea name="extra_info_description"
                                                                 id="extra_info_description" class="text_box"
-                                                                placeholder="Describe your vehicle"></textarea>
+                                                                placeholder="Describe your vehicle" maxlength="1000"></textarea>
                                                         </div>
                                                     </div>
 
@@ -759,7 +759,11 @@ function handleTabHeadNextActive  (tab_head) {
     var email = $('#pInfo_email');
     var phone = $('#pInfo_phoneNumber');
     
-    
+    function isValidEmail(email) {
+    // Basic email pattern for validation
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+}
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
 
@@ -769,9 +773,15 @@ function handleTabHeadNextActive  (tab_head) {
     if (!lastName.val().trim()) {
         lastName.addClass('validation-failed');
     }
-    if (!email.val().trim()) {
-        email.addClass('validation-failed');
-    }
+    // if (!email.val().trim()) {
+    //     email.addClass('validation-failed');
+    // }
+    if (!email.val().trim() || !isValidEmail(email.val().trim())) {
+    email.addClass('validation-failed');
+    toastr.error('Please enter a valid email address', '', {
+            timeOut: 3000
+        });
+}
     if (!phone.val().trim()) {
         phone.addClass('validation-failed');
     }
@@ -789,7 +799,7 @@ function handleTabHeadNextActive  (tab_head) {
         handleTabHeadNextActive(tab_head_lst);
         $('#personal_info_tab').css('display', 'block');
         $('#purpose_tab').css('display', 'none');
-        toastr.error('Please fill out all mandatory fields!', '', {
+        toastr.error('Please fill out all mandatory fields correctly!', '', {
             timeOut: 2000
         });
         return;
@@ -827,7 +837,7 @@ function handleTabHeadNextActive  (tab_head) {
         purposeFields.forEach(function(field) {
             $(field).addClass('validation-failed');
         });
-        toastr.error('Please select a field from Home, Plot, or Commercial', '', {
+        toastr.error('Please select any one from Home, Plot, or Commercial', '', {
             timeOut: 3000
         });
     } else {
@@ -895,7 +905,7 @@ $('.address_continue_btn').click(function() {
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
-        toastr.error('Please select all in Address', '', {
+        toastr.error('Please fill all the required fields', '', {
                 timeOut: 3000
             });
         return;
@@ -1378,7 +1388,7 @@ function  handlePropertyFormsubmission(){
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
-            toastr.error('Please select all required fields in Extra Information', '', {
+            toastr.error('Please fill all required fields', '', {
                 timeOut: 3000
             });
             return;

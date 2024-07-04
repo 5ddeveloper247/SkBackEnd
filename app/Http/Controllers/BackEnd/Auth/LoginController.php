@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
+
 class LoginController extends Controller
 {
     //
@@ -54,7 +55,9 @@ class LoginController extends Controller
         }
     
         // Authentication failed
-        return redirect()->back()->with('error', 'Invalid email or password.');
+        // return redirect()->back()->with('error', 'Invalid email or password.');
+        return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
+
     }
     
 

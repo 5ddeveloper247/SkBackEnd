@@ -111,7 +111,7 @@
                                                     <div class="form_blk">
                                                         <h6>City Name<sup>*</sup></h6>
                                                         <input type="text" name="add_city_city" id="add_city_city"
-                                                            class="text_box">
+                                                            class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -163,7 +163,7 @@
                                                     <div class="form_blk">
                                                         <h6>City Name<sup>*</sup></h6>
                                                         <input type="text" name="edit_city_name" id="edit_city_name"
-                                                            class="text_box">
+                                                            class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -220,7 +220,7 @@
                                                     <div class="form_blk">
                                                         <h6>Area Name<sup>*</sup></h6>
                                                         <input type="text" name="add_area_area" id="add_area-area"
-                                                            class="text_box">
+                                                            class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -271,7 +271,7 @@
                                                     <div class="form_blk">
                                                         <h6>Area Name<sup>*</sup></h6>
                                                         <input type="text" name="edit_area_area" id="edit_area_area"
-                                                            class="text_box">
+                                                            class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -335,7 +335,7 @@
                                                     <div class="form_blk">
                                                         <h6>Location<sup>*</sup></h6>
                                                         <input type="text" name="add_location_location"
-                                                            id="add_location_location" class="text_box">
+                                                            id="add_location_location" class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -395,7 +395,7 @@
                                                     <div class="form_blk">
                                                         <h6>Location<sup>*</sup></h6>
                                                         <input type="text" name="edit_location_location"
-                                                            id="edit_location_location" class="text_box">
+                                                            id="edit_location_location" class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -468,7 +468,7 @@
                                                     <div class="form_blk">
                                                         <h6> Sector<sup>*</sup></h6>
                                                         <input type="text" name="add_sector_sector"
-                                                            id="add_sector_sector" class="text_box">
+                                                            id="add_sector_sector" class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -477,7 +477,7 @@
 
                                             <div class="btn_blk form_btn text-center margin-top-location">
                                                 <button type="submit" class="site_btn long add_city_btn"
-                                                    id="add_city_btn">Add City</button>
+                                                    id="add_city_btn">Add Location</button>
 
                                             </div>
                                         </div>
@@ -543,7 +543,7 @@
                                                     <div class="form_blk">
                                                         <h6> Sector<sup>*</sup></h6>
                                                         <input type="text" name="edit_sector_sector"
-                                                            id="edit_sector_sector" class="text_box">
+                                                            id="edit_sector_sector" class="text_box"maxlength="50">
                                                     </div>
                                                 </div>
 

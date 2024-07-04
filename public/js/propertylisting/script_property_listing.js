@@ -57,7 +57,7 @@ function loadManagerListResponse(response) {
         var propertyRow = `<tr class="property_data_row">
                                 <td class="nowrap ">${index + 1}</td>
                                 <td class="grid-p-searchby">${property.pInfo_fName}</td>
-                                <td class="grid-p-searchby">${property.prop}</td>
+                                <td class="grid-p-searchby">${property.pInfo_email}</td>
                                 <td class="grid-p-searchby">
                                     ${property.property_listing_pape.pupose_home !== null
                 ? property.property_listing_pape.pupose_home

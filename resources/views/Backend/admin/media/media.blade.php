@@ -119,36 +119,36 @@
                                     <div class="form_row row">
                                         <div class="col-xs-6">
                                             <div class="form_blk">
-                                                <h6>title<sup>*</sup></h6>
+                                                <h6>Title<sup>*</sup></h6>
                                                 <input type="text" name="mediaUrlTitle" id="mediaUrlTitle"
-                                                    class="text_box" placeholder="title">
+                                                    class="text_box" placeholder="title" maxlength="100">
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form_blk">
-                                                <h6>Video Media URL</h6>
+                                                <h6>Video Media URL<sup>*</sup></h6>
                                                 <input type="text" name="mediaUrl" id="mediaUrl" class="text_box"
-                                                    placeholder="Video Media must be youtube URL">
+                                                    placeholder="Video Media must be youtube URL" maxlength="200">
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="form_blk">
-                                                <h6>description<sup></sup></h6>
+                                                <h6>Description<sup></sup></h6>
                                                 <textarea type="text" name="mediaUrlDescription"
                                                     id="mediaUrlDescription" class="text_box"></textarea>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <hr>
+                                    {{-- <hr> --}}
+                                    <div class="btn_blk form_btn text-center">
 
+                                        <button type="button" id="AddMediaUrlSubmitBtn"
+                                            class="site_btn long">Submit</button>
+                                    </div>
 
                                 </div>
-                                <div class="btn_blk form_btn text-right">
-
-                                    <button type="button" id="AddMediaUrlSubmitBtn"
-                                        class="site_btn long">Submit</button>
-                                </div>
+                                
                             </fieldset>
 
                         </form>
@@ -162,7 +162,7 @@
 
 
 
-{{-- pop up for add medi pictures --}}
+{{-- pop up for add media pictures --}}
 <section class="popup lg" id="popupAddMediaOnly" data-popup="search" style="display: none;">
     <div class="table_dv">
         <div class="table_cell">
@@ -178,15 +178,15 @@
                                     <div class="form_row row">
                                         <div class="col-xs-12">
                                             <div class="form_blk">
-                                                <h6>title<sup>*</sup></h6>
+                                                <h6>Title<sup>*</sup></h6>
                                                 <input type="text" name="mediaOnlyTitle" id="mediaOnlyTitle"
-                                                    class="text_box" placeholder="title">
+                                                    class="text_box" placeholder="title" maxlength="100">
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
-                                            <div class="_inner">
-                                                <button type="button" class="x_btn"></button>
-                                                <h4>Upload Media</h4>
+                                            {{-- <div class="_inner"> --}}
+                                                {{-- <button type="button" class="x_btn"></button> --}}
+                                                <h6>Upload Media Images<sup>*</sup></h6>
 
                                                 <div class="form_row row">
                                                     <div class="col-sm-12">
@@ -200,13 +200,13 @@
                                                     </div>
 
                                                 </div>
-                                            </div>
+                                            {{-- </div> --}}
                                         </div>
 
 
                                         <div class="col-xs-12">
                                             <div class="form_blk">
-                                                <h6>description<sup></sup></h6>
+                                                <h6>Description<sup></sup></h6>
                                                 <textarea type="text" name="mediaOnlyDescription"
                                                     id="mediaUrlDescription" class="text_box"></textarea>
                                             </div>
@@ -217,7 +217,7 @@
 
 
                                 </div>
-                                <div class="btn_blk form_btn text-right">
+                                <div class="btn_blk form_btn text-center">
 
                                     <button type="button" id="AddMediaOnlySubmitBtn"
                                         class="site_btn long">Submit</button>
@@ -291,8 +291,8 @@
                                                 @endif
                                                 <div class="overlay p-0">
                                                     <ul class="social_links">
-                                                        <li><a
-                                                                href="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
+                                                        <li><a href="#"
+                                                                id="video_delete_btn" data-url="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
                                                                     id="video_delete"
                                                                     src="{{ asset('images/icons-delete.png')}}"
                                                                     alt=""></a></li>
@@ -358,7 +358,7 @@
                                                 <div class="overlay">
                                                     <ul class="social_links">
                                                         <li><a
-                                                                href="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"><img
+                                                                href="#" data-url="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}" id="picture_delete_btn"><img
                                                                     id="picture_delete"
                                                                     src="{{ asset('images/icons-delete.png')}}"></a>
                                                         </li>
@@ -755,7 +755,22 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
 </script>
 
 
+<script>
+    $(document).on('click','#video_delete_btn', function(e) {
+    e.preventDefault();
+    if (confirm('Are You sure you want to delete the video?')) {
+        window.location = $(this).attr('data-url');
+    }
+    });
+    
+    $(document).on('click','#picture_delete_btn', function(e) {
+    e.preventDefault();
+    if (confirm('Are You sure you want to delete the image?')) {
+        window.location = $(this).attr('data-url');
+    }
+    });
 
+</script>
 
 
 
