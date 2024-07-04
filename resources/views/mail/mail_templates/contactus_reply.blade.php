@@ -20,8 +20,8 @@
 
 
                     <p class="yiv7050401279MsoNormal" style="margin-bottom: 12.0pt;"><span
-                            style="font-size: 10.0pt;"><strong>&nbsp; &nbsp;Contact request Submitted
-                                Successfully</strong></span>
+                            style="font-size: 10.0pt;"><strong>&nbsp; &nbsp;Contact request Replied
+                            </strong></span>
                     </p>
                 </td>
             </tr>
@@ -61,7 +61,7 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; &nbsp;{{
-                            $contactData['fullName']
+                            $contactData->full_name
                             }}</span>
                     </p>
                 </td>
@@ -75,7 +75,7 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; &nbsp;{{
-                            $contactData['email']
+                            $contactData->email
                             }}</span>
                     </p>
                 </td>
@@ -90,7 +90,7 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
-                            &nbsp;{{ $contactData['subject']}}</span></p>
+                            &nbsp;{{ $contactData->subject}}</span></p>
                 </td>
             </tr>
             <tr style="min-height: 22.5pt;">
@@ -100,7 +100,17 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
-                            &nbsp;{{$contactData['message']}}</span></p>
+                            &nbsp;{{$contactData->message}}</span></p>
+                </td>
+            </tr>
+            <tr style="min-height: 22.5pt;">
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Reply
+                            </strong></span></p>
+                </td>
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
+                            &nbsp;{{$contactData->contact_reply_edit}}</span></p>
                 </td>
             </tr>
         </tbody>
@@ -129,6 +139,7 @@
             </tr>
         </tbody>
     </table>
+
 </body>
 
 </html>

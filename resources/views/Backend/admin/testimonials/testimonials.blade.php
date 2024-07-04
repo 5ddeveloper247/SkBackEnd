@@ -180,7 +180,7 @@
                                     id="testimonial_delete_confirmed_btn" data-id=""><img
                                         src="{{asset('assets\images\check_1828640.png')}}" style="width:30px"></button>
                                 <button type="button" class="btn bg-transparent rounded-pill"
-                                    id="inquiry_close_delete_modal_btn"><img
+                                    id="testimonial_close_delete_modal_btn"><img
                                         src="{{asset('assets\images\close-button_11450177.png')}}"
                                         style="width:30px"></button>
 

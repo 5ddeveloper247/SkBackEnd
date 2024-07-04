@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PersonalInfo;
 use App\Models\PropertyListingPaPe;
 use App\Models\Testimonial;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -101,7 +102,7 @@ class HomeController extends Controller
                 try {
                     // Send email
                     $body = view('mail.mail_templates.request', ['requestData' => $requestData])->render();
-                    $adminEmailsSend = 'devofd172@gmail.com';
+                    $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
                     $userEmailsSend = $request->email;
                     // to username, to email, from username, subject, body html 
                     $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Property Listing Request Has Submitted Successfully', $body);
@@ -114,7 +115,6 @@ class HomeController extends Controller
                     // Log the error if email sending fails
                     Log::error('Error sending email on contact from user side submission: ' . $e->getMessage());
                 }
-                
             } catch (Exception $e) {
                 // Log the error if email sending fails
                 Log::error('Error sending email on property listing from user side: ' . $e->getMessage());

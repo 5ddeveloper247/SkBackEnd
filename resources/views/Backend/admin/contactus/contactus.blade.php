@@ -447,18 +447,32 @@ function loadManagerListResponse(response) {
 
 //1
 $(document).on('click', '.contact_edit_btn', function () {
-   
     var id = $(this).attr('data-id');
-   
-    var contact = JSON.parse($(this).attr('data-contact'));
-   
-    $('#edit_id').val(contact.id)
-    $('#contact_name_edit').val(contact.full_name)
-    $('#contact_email_edit').val(contact.email)
-    $('#contact_subject_edit').val(contact.subject)
-    $('#contact_description_edit').val(contact.message)
-    // Add your edit logic here, e.g., populate a form with contact details for editing
-});  
+    var contactData = $(this).attr('data-contact');
+
+   // console.log("Raw contact data:", contactData); // Log the raw attribute value
+
+    try { 
+        // Check if the contactData is a valid JSON string
+        if (!contactData.endsWith('}')) {
+            throw new Error("The contact data appears to be truncated.");
+        }
+
+        var contact = JSON.parse(contactData);
+
+        $('#edit_id').val(contact.id);
+        $('#contact_name_edit').val(contact.full_name);
+        $('#contact_email_edit').val(contact.email);
+        $('#contact_subject_edit').val(contact.subject);
+        $('#contact_description_edit').val(contact.message);
+    } catch (e) {
+        
+        toastr.error('Contact us data is not properly entered or formatted', '', { timeOut: 3000 });
+        console.error("Error parsing JSON:", e.message);
+    }
+});
+
+ 
 
 
 
@@ -602,32 +616,6 @@ function deletcontactRepliedResponse(response) {
 
 
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

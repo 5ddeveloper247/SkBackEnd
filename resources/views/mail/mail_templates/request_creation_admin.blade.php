@@ -10,7 +10,7 @@
             <tr style="min-height: 22.5pt;">
                 <td style="width: 418.5pt; background: #7C1BEC;" colspan="4" valign="top" width="743"><strong><span
                             style="font-size: 15.0pt; font-family: Calibri,sans-serif; color: white; padding-left: 10px; float: left;">&nbsp;
-                            Sk  Property</span></strong>
+                            Sk Property</span></strong>
                     <p>&nbsp;</p>
                 </td>
             </tr>
@@ -20,8 +20,8 @@
 
 
                     <p class="yiv7050401279MsoNormal" style="margin-bottom: 12.0pt;"><span
-                            style="font-size: 10.0pt;"><strong>&nbsp; &nbsp;Property listing request reviewed 
-                                </strong></span>
+                            style="font-size: 10.0pt;"><strong>&nbsp; &nbsp;Property listing request reviewed
+                            </strong></span>
                     </p>
                 </td>
             </tr>
@@ -158,11 +158,6 @@
                             &nbsp;active</span></p>
                 </td>
             </tr>
-
-
-
-
-
         </tbody>
     </table>
 

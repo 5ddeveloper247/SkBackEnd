@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackEnd\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\Setting;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -33,38 +34,40 @@ class ContactUsController extends Controller
             'contact_reply_edit' => 'nullable|string|max:2550',
         ]);
 
-        // return redirect()->back()->with('success', 'contact reply sent successfully.');
+        //return redirect()->back()->with('success', 'contact reply sent successfully.');
         try {
             // Find the inquiry with the specified conditions
             $contact = Contact::where('id', $request->edit_id)
                 ->first();
-
             // If the inquiry exists, update its details
+
             if ($contact) {
                 $contact->contact_reply_edit = $request->contact_reply_edit ?? '';
                 $contact->save();
                 $site_user_phone_num = $contact->phone ?? " ";
-                try {
-                    //Send email
-                    $body = view('mail.mail_templates.common')->render();
-                    $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
-                    $userEmailsSend[] = $request->email;
-                    // to username, to email, from username, subject, body html 
-                    $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Contacting', $body);
-                } catch (Exception $e) {
-                    // Log the error if email sending fails
-                    Log::error('Error sending email on contact us from user side submission: ' . $e->getMessage());
-                }
-
-
                 // Send WhatsApp message
                 $adminContact = env('ADMIN_WHATSAPP_NUMBER');
                 $phoneno = [$site_user_phone_num, $adminContact];
                 $message = $request->contact_reply_edit ?? "There is no content or empty found in reply from Sk Marketing on contact us query!";
                 $id = 123;
 
+                try {
+                    //Send email
+                    $body = view('mail.mail_templates.contactus_reply', ['contactData' => $contact])->render();
+                    $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+                    $userEmailsSend[] = $request->email;
+                    // to username, to email, from username, subject, body html 
+                    $response = sendMail($contact->full_name, $userEmailsSend, 'Sk Property', 'Replied by Sk Property', $body);
+                    $response2 = sendMail($contact->full_name, $adminEmailsSend, 'Sk Property', 'Replied by Sk Property', $body);
+                    Log::info('at: ' . now());
+                    Log::info('Email contact response 1: ' . $response);
+                    Log::info('Email contact response 2: ' . $response2);
+                } catch (Exception $e) {
+                    // Log the error if email sending fails
+                    Log::error('Error sending email on contact us from admin side submission: ' . $e->getMessage());
+                }
 
-                // Call the helper method
+                // Call the helper method send on whatsapp
                 try {
                     WhatsAppHelper::sendMessages($phoneno, $message, $id);
                 } catch (Exception $e) {

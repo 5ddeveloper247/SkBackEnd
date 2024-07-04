@@ -12,6 +12,7 @@ use App\Models\Area;
 use App\Models\Location;
 use App\Models\Sector;
 use App\Models\PropertyRecordFiles;
+use App\Models\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -133,7 +134,7 @@ class PropertyController extends Controller
                 $amenityKey = 'check_' . $amenity;
                 $value = $request->has($amenityKey) ? 1 : 0;
 
-                // Save to the database
+                //Save to the database
                 Amenities::create([
                     'property_record_id' => $personalInfoRecord->property_record_id,
                     'amenities' => $amenity,
@@ -142,7 +143,7 @@ class PropertyController extends Controller
             }
 
 
-            
+
             // Store the uploaded files
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $photo) {
@@ -166,24 +167,27 @@ class PropertyController extends Controller
             }
 
 
-            $requestData=$request->all();
+
             try {
-                // Send email
-                $body = view('mail.mail_templates.request_reply', ['requestData' => $requestData])->render();
-                $adminEmailsSend = 'devofd172@gmail.com';
-                $userEmailsSend = $request->email;
-                // to username, to email, from username, subject, body html 
+                $requestData = $request->all();
+                //Send email
+                $body = view('mail.mail_templates.request_creation_admin', ['requestData' => $requestData])->render();
+                $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+                $userEmailsSend = $request->pInfo_email;
+                // to username, to email, from username, subject, body html
                 $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
                 $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
                 // Log the current timestamp and response 
                 Log::info('at: ' . now());
                 Log::info('Email property response 1: ' . $response);
-               Log::info('Email property response 2: ' . $response2);
+                Log::info('Email property response 2: ' . $response2);
             } catch (Exception $e) {
                 // Log the error if email sending fails
-                Log::error('Error sending email on contact from user side submission: ' . $e->getMessage());
+                Log::error('Error sending email on property from admin side submission: ' . $e->getMessage());
             }
-            
+
+
+
 
             // Commit the transaction
             DB::commit();
@@ -379,8 +383,25 @@ class PropertyController extends Controller
             }
 
             $propertyInfo->save();
+            $requestData = $request->all();
+            try {
+                //Send email
+                $body = view('mail.mail_templates.request_edit_admin', ['requestData' => $requestData])->render();
+                $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+                $userEmailsSend = $request->pInfo_email_edit; //user email address to send email on it
+                // to username, to email, from username, subject, body html
+                $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
+                $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
+                // Log the current timestamp and response 
+                Log::info('at: ' . now());
+                Log::info('Email property response 1: ' . $response);
+                Log::info('Email property response 2: ' . $response2);
+            } catch (Exception $e) {
+                // Log the error if email sending fails
+                Log::error('Error sending email on property from admin side edit submission: ' . $e->getMessage());
+            }
             return redirect()->to('admin/property/listing')->with('success', "Edited Successfully");
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Log the error message
             Log::error('Error in propertyMainSubmission_edit: ' . $e->getMessage());
             return redirect()->back()->with('error', "An unexpected error occurred. Please try.");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Inquiry;
+use App\Models\Setting;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +26,7 @@ class InquiryController extends Controller
   public function updateInquiries(Request $request)
   {
 
-    // dd($request->all());
+
     // Validate the request data
 
     $request->validate([
@@ -44,16 +45,23 @@ class InquiryController extends Controller
         $inquiry->status = 'completed';
         $inquiry->save();
         $site_user_phone_num = $inquiry->phone;
+
         try {
           // Send email
-          $body = view('mail.mail_templates.common')->render();
-          $userEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
+          $body = view('mail.mail_templates.inquiry_reply', ['inquiryData' => $inquiry])->render();
+          // $adminEmailsSend[] = env('ADMIN_EMAIL_ADDRESS');
+          $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+
           $userEmailsSend[] = $request->email;
           // to username, to email, from username, subject, body html 
-          $response = sendMail('devofd172@gmail.com', $userEmailsSend, 'Sk Property', 'Thanks For Contacting', $body);
+          $response = sendMail($inquiry->name, $userEmailsSend, 'Sk Property', 'Inquiry replied by Sk Property', $body);
+          $response2 = sendMail($inquiry->name, $adminEmailsSend, 'Sk Property', 'Inquiry replied by Sk Property', $body);
+          Log::info('at: ' . now());
+          Log::info('Email inquiry response 1: ' . $response);
+          Log::info('Email inquiry response 2: ' . $response2);
         } catch (Exception $e) {
           // Log the error if email sending fails
-          Log::error('Error sending email on contact us from user side submission: ' . $e->getMessage());
+          Log::error('Error sending email on inquiry reply from admin side submission: ' . $e->getMessage());
         }
 
 
@@ -87,7 +95,9 @@ class InquiryController extends Controller
 
   public function deleteInquiries(Request $request)
   {
+
     try {
+
       // Find the inquiry with the specified conditions
       $inquiry = Inquiry::where('id', $request->del_id)->first();
 

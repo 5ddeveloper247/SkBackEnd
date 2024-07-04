@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Inquiry;
+use App\Models\Setting;
 use App\Helpers\WhatsAppHelper;
 use Exception;
 
@@ -29,7 +30,7 @@ class InquiryController extends Controller
         try {
             // Send email
             $body = view('mail.mail_templates.inquiry', ['inquiryData' => $inquiryData])->render();
-            $adminEmailsSend = 'devofd172@gmail.com';
+            $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
             $userEmailsSend = $request->email;
             // to username, to email, from username, subject, body html 
             $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Thanks For Submitting inquiry', $body);

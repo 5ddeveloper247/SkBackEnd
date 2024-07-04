@@ -20,7 +20,7 @@
 
 
                     <p class="yiv7050401279MsoNormal" style="margin-bottom: 12.0pt;"><span
-                            style="font-size: 10.0pt;"><strong>&nbsp; &nbsp;Enquiry replied by Sk Property
+                            style="font-size: 10.0pt;"><strong>&nbsp; &nbsp;Property listing request reviewed
                             </strong></span>
                     </p>
                 </td>
@@ -61,19 +61,21 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; &nbsp;{{
-                            $inquiryData->name
+                            $requestData['pInfo_firstName_edit']
                             }}</span>
                     </p>
                 </td>
             </tr>
+
+
             <tr style="min-height: 22.5pt;">
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
-                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Agent
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Email
                             </strong></span></p>
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; &nbsp;{{
-                            $inquiryData->agent[0]
+                            $requestData['pInfo_email_edit']
                             }}</span>
                     </p>
                 </td>
@@ -85,19 +87,7 @@
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; &nbsp;{{
-                            $inquiryData->phone
-                            }}</span>
-                    </p>
-                </td>
-            </tr>
-            <tr style="min-height: 22.5pt;">
-                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
-                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Email
-                            </strong></span></p>
-                </td>
-                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
-                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; &nbsp;{{
-                            $inquiryData->email
+                            $requestData['pInfo_phoneNumber_edit']
                             }}</span>
                     </p>
                 </td>
@@ -107,19 +97,67 @@
 
             <tr style="min-height: 22.5pt;">
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
-                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Comments
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Purpose
                             </strong></span></p>
                 </td>
                 <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
                     <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
-                            &nbsp;{{ $inquiryData->description}}</span></p>
+                            &nbsp;{{ $requestData['purpose_purpose_edit']}}</span></p>
+                </td>
+            </tr>
+            <tr style="min-height: 22.5pt;">
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>City
+                            </strong></span></p>
+                </td>
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
+                            &nbsp;{{$requestData['address_city_edit']}}</span></p>
+                </td>
+            </tr>
+
+            <tr style="min-height: 22.5pt;">
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Area
+                            </strong></span></p>
+                </td>
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
+                            &nbsp;{{$requestData['address_area_edit']}}</span></p>
+                </td>
+            </tr>
+            <tr style="min-height: 22.5pt;">
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Location
+                            </strong></span></p>
+                </td>
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
+                            &nbsp;{{$requestData['address_location_edit']}}</span></p>
                 </td>
             </tr>
 
 
-
-
-
+            <tr style="min-height: 22.5pt;">
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Description
+                            </strong></span></p>
+                </td>
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
+                            &nbsp;{{$requestData['extra_info_description_edit']}}</span></p>
+                </td>
+            </tr>
+            <tr style="min-height: 22.5pt;">
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp; <strong>Status
+                            </strong></span></p>
+                </td>
+                <td style="border: solid #DFE0E2 1.0pt; padding: .75pt .75pt .75pt .75pt; min-height: 22.5pt;">
+                    <p class="yiv7050401279MsoNormal"><span style="font-size: 9.0pt;">&nbsp;
+                            &nbsp;active</span></p>
+                </td>
+            </tr>
         </tbody>
     </table>
 
