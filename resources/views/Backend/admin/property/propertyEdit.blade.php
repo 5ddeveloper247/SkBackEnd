@@ -54,14 +54,14 @@
                     <h6>First Name<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="text" name="pInfo_firstName_edit" id="pInfo_firstName_edit"
-                            value="{{$propertyInfo->pInfo_fName }}" class="text_box" placeholder="eg: John Wick">
+                            value="{{$propertyInfo->pInfo_fName }}" class="text_box" placeholder="eg: John Wick" maxlength="50">
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <h6>Last Name<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="text" name="pInfo_lastName_edit" id="pInfo_lastName_edit"
-                            value="{{ $propertyInfo->pInfo_lName }}" class="text_box" placeholder="eg: John doe">
+                            value="{{ $propertyInfo->pInfo_lName }}" class="text_box" placeholder="eg: John doe"maxlength="50">
                     </div>
                 </div>
                 <div class="col-xs-6">
@@ -69,7 +69,7 @@
                     <div class="form_blk">
                         <input type="email" name="pInfo_email_edit" id="pInfo_email_edit"
                             value="{{ $propertyInfo->pInfo_email }}" class="text_box"
-                            placeholder="eg: sample@gmail.com">
+                            placeholder="eg: sample@gmail.com"maxlength="50">
                     </div>
                 </div>
                 <div class="col-xs-6">
@@ -77,7 +77,7 @@
                     <div class="form_blk">
                         <input type="number" name="pInfo_phoneNumber_edit" id="pInfo_phoneNumber_edit"
                             value="{{ $propertyInfo->pInfo_phoneNumber }}" class="text_box"
-                            placeholder="eg: +92300 0000 000">
+                            placeholder="eg: +92300 0000 000"maxlength="15">
                     </div>
                 </div>
 
@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-xs-12" style="margin-top: 24px; !important">
-                    <h6>Home<sup>**</sup></h6>
+                    <h6>Home<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedHomePurpose = $propertyInfo->propertyListingPape->pupose_home ?? '';
@@ -135,7 +135,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Plot<sup>**</sup></h6>
+                    <h6>Plot<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedPlotPurpose = $propertyInfo->propertyListingPape->purpose_plot ?? '';
@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Commercial<sup>**</sup></h6>
+                    <h6>Commercial<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedCommercialPurpose = $propertyInfo->propertyListingPape->purpose_commercial ?? '';
@@ -186,7 +186,7 @@
                     <div class="form_blk">
 
                         <input type="number" name="price_edit" id="price_edit" value="{{$propertyInfo->price  }}"
-                            class="text_box" placeholder="pirce in pkr">
+                            class="text_box" placeholder="pirce in pkr"maxlength="7">
                     </div>
                 </div>
             </div>
@@ -278,13 +278,13 @@
                     <h6>Address<sup>*</sup></h6>
                     <textarea class="text_box" placeholder="Describe your address" name="address_address_edit"
                         id="address_address_edit" value="{{ $propertyInfo->propertyListingPape->address_address }}"
-                        spellcheck="false">{{ $propertyInfo->propertyListingPape->address_address }}</textarea>
+                        spellcheck="false" maxlength="200">{{ $propertyInfo->propertyListingPape->address_address }}</textarea>
                 </div>
                 <div class="col-sm-12 col-xs-12">
                     <h6>Google Map Link<sup></sup></h6>
                     <input class="text_box" placeholder="Map Location" name="address_map_location_edit"
                         id="address_map_location_edit"
-                        value="{{ $propertyInfo->propertyListingPape->address_map_location }}" spellcheck="false" />
+                        value="{{ $propertyInfo->propertyListingPape->address_map_location }}" spellcheck="false" maxlength="1000" />
                 </div>
 
             </div>
@@ -303,7 +303,7 @@
                     <div class="form_blk">
                         <input type="text" name="propertyDetail_plot_num_edit"
                             value="{{$propertyInfo->propertyListingPape->propertyDetail_plot_num }}"
-                            id="propertyDetail_plot_num_edit" class="text_box" data-container="body" />
+                            id="propertyDetail_plot_num_edit" class="text_box" data-container="body"maxlength="10" />
 
 
                     </div>
@@ -338,7 +338,7 @@
                                 <input type="number" name="propertyDetail_area_unit_edit"
                                     id="propertyDetail_area_unit_edit" class="text_box"
                                     value="{{ $propertyInfo->propertyListingPape->propertyDetail_area_unit }}"
-                                    placeholder="eg: 10">
+                                    placeholder="eg: 10" maxlength="5">
                             </div>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
                     <div class="form_blk">
                         <input type="text" name="propertyDetail_bedrooms_edit"
                             value="{{ $propertyInfo->propertyListingPape->propertyDetail_bedrooms }}"
-                            id="propertyDetail_bedrooms_edit" class="text_box" data-container="body" />
+                            id="propertyDetail_bedrooms_edit" class="text_box" data-container="body"maxlength="3" />
 
                     </div>
                 </div>
@@ -357,7 +357,7 @@
                     <div class="form_blk">
                         <input type="text" name="propertyDetail_bathrooms_edit"
                             value="{{ $propertyInfo->propertyListingPape->propertyDetail_bathrooms }}"
-                            id="propertyDetail_bathrooms_edit" class="text_box" data-container="body" />
+                            id="propertyDetail_bathrooms_edit" class="text_box" data-container="body"maxlength="3" />
                         </select>
                     </div>
                 </div>
@@ -377,7 +377,7 @@
                             <div class="form_blk">
                                 <input type="text" name="extra_info_title_edit" id="extra_info_title_edit"
                                     class="text_box" value="{{$propertyInfo->propertyListingPape->extra_info_title }}"
-                                    placeholder=" ">
+                                    placeholder=" "maxlength="255">
                             </div>
                         </div>
 
@@ -386,7 +386,7 @@
                             <div class="form_blk">
                                 <input type="text" name="extra_info_postingas_edit"
                                     value="{{$propertyInfo->propertyListingPape->extra_info_postingas }}"
-                                    id="extra_info_postingas_edit" class="text_box" placeholder="Agent Name">
+                                    id="extra_info_postingas_edit" class="text_box" placeholder="Agent Name"maxlength="50">
                             </div>
                         </div>
 
@@ -395,7 +395,7 @@
                             <div class="form_blk">
                                 <input type="number" name="extra_info_mobile_edit"
                                     value="{{$propertyInfo->propertyListingPape->extra_info_mobile }}"
-                                    id="extra_info_mobile_edit" class="text_box" placeholder="eg: 285432584452">
+                                    id="extra_info_mobile_edit" class="text_box" placeholder="eg: 285432584452"maxlength="15">
                             </div>
                         </div>
 
@@ -404,7 +404,7 @@
                             <div class="form_blk">
                                 <input type="number" name="extra_info_landline_edit"
                                     value="{{$propertyInfo->propertyListingPape->extra_info_landline }}"
-                                    id="extra_info_landline_edit" class="text_box" placeholder="eg: 285432584452">
+                                    id="extra_info_landline_edit" class="text_box" placeholder="eg: 285432584452"maxlength="10">
                             </div>
                         </div>
 
@@ -414,7 +414,7 @@
                                 <textarea name="extra_info_description_edit"
                                     value="{{$propertyInfo->propertyListingPape->extra_info_description }}"
                                     id="extra_info_description_edit" class="text_box"
-                                    placeholder="Describe your vehicle">{{$propertyInfo->propertyListingPape->extra_info_description }}</textarea>
+                                    placeholder="Describe your vehicle" maxlength="1000">{{$propertyInfo->propertyListingPape->extra_info_description }}</textarea>
                             </div>
                         </div>
 

@@ -84,7 +84,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+       $(document).on('keydown', 'input[type="number"]', function(e) {
+            var max = parseInt($(this).attr('maxlength'));
+            var valueLength = $(this).val().length;
+            var keyCode = e.keyCode || e.which;
+            
+            // Allow backspace, delete, tab, escape, enter, and arrow keys
+            if ($.inArray(keyCode, [8, 46, 9, 27, 13, 37, 38, 39, 40]) !== -1 ||
+                // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                (keyCode == 65 && (e.ctrlKey || e.metaKey)) ||
+                (keyCode == 67 && (e.ctrlKey || e.metaKey)) ||
+                // (keyCode == 86 && (e.ctrlKey || e.metaKey)) ||
+                (keyCode == 88 && (e.ctrlKey || e.metaKey))) {
+                return;
+            }
+            
+            // Ensure it is a number and stop the keypress if max length is reached
+            if ((keyCode < 48 || keyCode > 57) && (keyCode < 96 || keyCode > 105)) {
+                e.preventDefault();
+            }
+            
+            if (valueLength >= max) {
+                e.preventDefault();
+            }
+        });
 
+
+        
+    </script>
 
     @stack('scripts')
 </body>

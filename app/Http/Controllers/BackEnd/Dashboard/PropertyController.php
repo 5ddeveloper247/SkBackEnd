@@ -55,7 +55,7 @@ class PropertyController extends Controller
     public function propertyMainSubmission(Request $request)
     {
 
-
+        
         // Validate the incoming request
 
 
@@ -194,6 +194,7 @@ class PropertyController extends Controller
 
             return redirect()->back()->with('success', 'Record has been saved successfully.');
         } catch (Exception $e) {
+            
             // Rollback the transaction
             DB::rollBack();
             // Log the error (optional)

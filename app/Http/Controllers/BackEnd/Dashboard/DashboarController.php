@@ -38,9 +38,9 @@ class DashboarController extends Controller
     public function createAdmins(Request $request)
     {
         $rules = [
-            'EmailInput' => 'required|email',
-            'FullNameInput' => 'required|string',
-            'PasswordInput' => 'required|string',
+            'EmailInput' => 'required|email|max:50',
+            'FullNameInput' => 'required|string|max:50',
+            'PasswordInput' => 'required|string|50',
             //'PhoneInput' => 'required|string',
         ];
 

@@ -34,7 +34,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="FullNameInput" id="FullNameInput" type="text"
-                                                class="form-control mb-1" value="" />
+                                                class="form-control mb-1" value="" maxlength="50" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="EmailInput" id="EmailInput" type="text"
-                                                class="form-control mb-1" value="" />
+                                                class="form-control mb-1" value="" maxlength="50" />
                                         </div>
                                     </div>
 
@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="PasswordInput" id="PasswordInput" type="text"
-                                                class="form-control mb-1" required placeholder="" />
+                                                class="form-control mb-1" required placeholder=""maxlength="20" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -62,17 +62,25 @@
                                             </h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <div class="ms-3 form-check form-switch">
+                                            {{-- <div class="ms-3 form-check form-switch">
                                                 <input name="AddStatusInput" id="AddStatusInput"
                                                     style="font-size: 20px;" type="checkbox"
                                                     class="form-check-input mb-1" />
+                                            </div> --}}
+                                            <div class="d-flex" style="display: flex; align-items:center;">
+                                                <p style="margin-right: 10px; margin-top:10px">Inactive</p>
+                                                <div class="switch" style="width: 35px" >
+                                                    <input type="checkbox" name="AddStatusInput" id="AddStatusInput">
+                                                    <em></em>
+                                                </div>
+                                                <p style="margin-left: 10px; margin-top:-1px">Active</p>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-                                <div class="modal-footer">
+                                <div class="modal-footer"style="display: flex; justify-content:center;">
 
-                                    <button type="button" id="AddAdminBtn" class="btn btn-primary">Add</button>
+                                    <button type="button" id="AddAdminBtn" class="btn btn-primary" style="width:100px; margin-top:20px">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +155,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="editFullNameInput" id="editFullNameInput" type="text"
-                                                class="form-control mb-1" value="" />
+                                                class="form-control mb-1" value="" maxlength="50" />
                                         </div>
                                     </div>
                                     <div class="row mb-3" style="margin-bottom: 12px;">
@@ -156,7 +164,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="editEmailInput" id="editEmailInput" type="text"
-                                                class="form-control mb-1" value="" />
+                                                class="form-control mb-1" value=""  maxlength="50"/>
                                         </div>
                                     </div>
                                     {{-- <div class="row mb-3" style="margin-bottom: 12px;">
@@ -176,7 +184,7 @@
                                         <div class="col-sm-12 m-2">
                                             <input name="editPasswordInput" id="editPasswordInput" type="text"
                                                 class="form-control mb-1" required
-                                                placeholder="Leave it empty if you don't want to change password" />
+                                                placeholder="Leave it empty if you don't want to change password" maxlength="20" />
                                         </div>
                                     </div>
                                     <div class="row mb-3" style="margin-bottom: 12px;">
@@ -184,16 +192,24 @@
                                             <h6 class="mb-0">Status</h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <div class="ms-3 form-check form-switch">
+                                            {{-- <div class="ms-3 form-check form-switch">
                                                 <input name="editStatusInput" id="editStatusInput"
                                                     style="font-size: 20px;" type="checkbox"
                                                     class="form-check-input mb-1" />
+                                            </div> --}}
+                                            <div class="d-flex" style="display: flex; align-items:center;">
+                                                <p style="margin-right: 10px; margin-top:10px">Inactive</p>
+                                                <div class="switch" style="width: 35px" >
+                                                    <input type="checkbox" name="editStatusInput" id="editStatusInput">
+                                                    <em></em>
+                                                </div>
+                                                <p style="margin-left: 10px; margin-top:-1px">Active</p>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer">
+                            <div class="modal-footer"style="display: flex; justify-content:center;" >
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                     id="closeUpdateModalButton">Close</button>
                                 <button type="button" id="updateAdminBtn" class="btn btn-primary">Update</button>

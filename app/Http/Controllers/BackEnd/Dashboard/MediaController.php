@@ -58,9 +58,9 @@ class MediaController extends Controller
     public function createMedia(Request $request)
     {
         $rules = [
-            'mediaUrlTitle' => 'required|string|max:255',
+            'mediaUrlTitle' => 'required|string|max:100',
             // 'mediaUrlDescription' => 'required|string',
-            'mediaUrl' => 'required|url', // Adjust mime types and max size as needed
+            'mediaUrl' => 'required|url|max:200', // Adjust mime types and max size as needed
         ];
 
         // Create a validator instance
