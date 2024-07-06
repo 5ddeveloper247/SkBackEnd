@@ -3,13 +3,12 @@
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\SendMailJob;
 if (!function_exists('sendMail')) {
     function sendMail($send_to_name, $send_to_email, $email_from_name, $subject, $body)
     {
         try {
-
-
             $mail_val = [
                 'send_to_name' => $send_to_name,
                 'send_to' => $send_to_email,
@@ -18,26 +17,23 @@ if (!function_exists('sendMail')) {
                 'subject' => $subject,
             ];
 
-            Mail::send('mail.mail', ['body' => $body], function ($send) use ($mail_val) {
-                $send->from($mail_val['email_from'], $mail_val['email_from_name']);
-                $send->replyto($mail_val['email_from'], $mail_val['email_from_name']);
-                $send->to($mail_val['send_to'], $mail_val['send_to_name'])->subject($mail_val['subject']);
-            });
-            return true;
-        } 
-        catch (\Exception $e) {
-            Log::error($e->getMessage());
+            // Dispatch the job to send the email
+            Queue::push(new SendMailJob($mail_val, $body));
 
-            //  echo "An error occurred while sending the email: " . $e->getMessage();
+            return true;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return $e->getMessage();
         }
     }
 
 
-    function convertYouTubeUrlToEmbed($url) {
+
+    function convertYouTubeUrlToEmbed($url)
+    {
         // Parse the URL
         $parsedUrl = parse_url($url);
-        if(isset($parsedUrl['query'])){
+        if (isset($parsedUrl['query'])) {
             parse_str($parsedUrl['query'], $queryParams);
             if (isset($queryParams['v'])) {
                 return 'https://www.youtube.com/embed/' . $queryParams['v'] . '?autoplay=1&mute=1';

@@ -34,7 +34,7 @@ class InquiryController extends Controller
             $userEmailsSend = $request->email;
             // to username, to email, from username, subject, body html 
             $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Thanks For Submitting inquiry', $body);
-            $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New Property is listed', $body);
+            $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New inquiry has submitted', $body);
             // Log the current timestamp and response 
             Log::info('at: ' . now());
             Log::info('Email response 1: ' . $response);

@@ -40,7 +40,7 @@ class DashboarController extends Controller
         $rules = [
             'EmailInput' => 'required|email|max:50',
             'FullNameInput' => 'required|string|max:50',
-            'PasswordInput' => 'required|string|50',
+            'PasswordInput' => 'required|string|max:50',
             //'PhoneInput' => 'required|string',
         ];
 
