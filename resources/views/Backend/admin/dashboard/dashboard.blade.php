@@ -95,6 +95,11 @@
 
 
 
+        <div id="inquiry_chart" style="width: 100%;height:400px;"></div>
+        <div id="property_chart" style="width: 100%;height:400px;"></div>
+
+
+
 
 
 
@@ -107,7 +112,105 @@
 
 @push('scripts')
 <script>
+    loadCharts();
 
+    function loadCharts() {
+        let url = '/admin/chart/dashboard/ajax';
+        let type = 'GET';
+        SendAjaxRequestToServer(type, url, '', '', loadChartResponse, '', '');
+    }
+
+    function loadChartResponse(response) {
+        // Extract dates and counts from response
+        let inquiriesDates = response.inquiriesDates;
+        let inquiriesCounts = response.inquiriesCounts;
+        let propertiesDates = response.propertiesDates;
+        let propertiesCounts = response.propertiesCounts;
+
+        // Create a set of all unique dates from both inquiries and properties
+        let allDatesSet = new Set([...inquiriesDates, ...propertiesDates]);
+        let allDates = Array.from(allDatesSet).sort((a, b) => new Date(a) - new Date(b));
+
+        let inquiriesData = [];
+        let propertiesData = [];
+
+        // Populate the data arrays with counts corresponding to each date
+        allDates.forEach(date => {
+            let inquiryIndex = inquiriesDates.indexOf(date);
+            let propertyIndex = propertiesDates.indexOf(date);
+            
+            inquiriesData.push(inquiryIndex !== -1 ? inquiriesCounts[inquiryIndex] : 0);
+            propertiesData.push(propertyIndex !== -1 ? propertiesCounts[propertyIndex] : 0);
+        });
+
+        // Format dates for x-axis labels
+        let x_value_days = allDates.map(date => {
+            return new Date(date).toLocaleDateString('en-GB', {
+                day: 'numeric', 
+                month: 'short'
+            });
+        });
+
+        // Initialize the echarts instance based on the prepared DOM
+        var inquiryChart = echarts.init(document.getElementById('inquiry_chart'));
+        var propertyChart = echarts.init(document.getElementById('property_chart'));
+
+        // Specify the configuration items and data for the inquiry chart
+        var inquiryOption = {
+            title: {
+                text: 'Total Inquiries (Last 15 days)'
+            },
+            tooltip: {},
+            legend: {
+                data: ['Inquiries']
+            },
+            xAxis: {
+                data: x_value_days
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: 'Inquiries',
+                    type: 'bar',
+                    data: inquiriesData,
+                    itemStyle: {
+                        color: '#04D7E8'
+                    }
+                }
+            ]
+        };
+
+        // Specify the configuration items and data for the property chart
+        var propertyOption = {
+            title: {
+                text: 'Total Properties (Last 15 days)'
+            },
+            tooltip: {},
+            legend: {
+                data: ['Properties']
+            },
+            xAxis: {
+                data: x_value_days
+            },
+            yAxis: {},
+            series: [
+                {
+                    name: 'Properties',
+                    type: 'bar',
+                    data: propertiesData,
+                    itemStyle: {
+                        color: '#E84D04'
+                    }
+                }
+            ]
+        };
+
+        // Display the charts using the configuration items and data just specified.
+        inquiryChart.setOption(inquiryOption);
+        propertyChart.setOption(propertyOption);
+    }
 </script>
+
+
 {{-- <script src="{{ asset('js/custom-home.js') }}"></script> --}}
 @endpush

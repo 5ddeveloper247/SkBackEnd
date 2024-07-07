@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PersonalInfo;
 use App\Models\Contact;
+use App\Models\Inquiry;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 
 class DashboarController extends Controller
 {
@@ -29,6 +31,62 @@ class DashboarController extends Controller
             'activePropertyListings' => $activePropertyListings,
             'inactivePropertyListings' => $inactivePropertyListings,
             'pendingContacts' => $pendingContacts,
+        ]);
+    }
+
+
+
+    public function chartAjax(Request $request)
+    {
+        // Get inquiries created in the last 15 days
+        $inquiries = Inquiry::whereBetween('created_at', [Carbon::now()->subDays(15), Carbon::now()])->get();
+
+        // Initialize arrays to hold the dates and counts of inquiries per date
+        $inquiriesDates = [];
+        $inquiriesCounts = [];
+        $inquiriesCountMap = [];
+
+        foreach ($inquiries as $inquiry) {
+            $date = $inquiry->created_at->toDateString();
+            if (!isset($inquiriesCountMap[$date])) {
+                $inquiriesCountMap[$date] = 0;
+            }
+            $inquiriesCountMap[$date]++;
+        }
+
+        foreach ($inquiriesCountMap as $date => $count) {
+            $inquiriesDates[] = $date;
+            $inquiriesCounts[] = $count;
+        }
+
+        // Get properties created in the last 15 days
+        $properties = PersonalInfo::whereBetween('created_at', [Carbon::now()->subDays(15), Carbon::now()])->get();
+
+        // Initialize arrays to hold the dates and counts of properties per date
+        $propertiesDates = [];
+        $propertiesCounts = [];
+        $propertiesCountMap = [];
+
+        foreach ($properties as $property) {
+            $date = $property->created_at->toDateString();
+            if (!isset($propertiesCountMap[$date])) {
+                $propertiesCountMap[$date] = 0;
+            }
+            $propertiesCountMap[$date]++;
+        }
+
+        foreach ($propertiesCountMap as $date => $count) {
+            $propertiesDates[] = $date;
+            $propertiesCounts[] = $count;
+        }
+
+
+        // dd($propertiesDates, $propertiesCounts,$inquiriesDates,$inquiriesCounts);
+        return response()->json([
+            'inquiriesDates' => $inquiriesDates,
+            'inquiriesCounts' => $inquiriesCounts,
+            'propertiesDates' => $propertiesDates,
+            'propertiesCounts' => $propertiesCounts,
         ]);
     }
 

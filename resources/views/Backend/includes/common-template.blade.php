@@ -74,7 +74,9 @@
     <script src="{{ asset('js/propertylisting/script_property_listing.js') }}"></script>
     <script src="{{ asset('js/common.js') }}"></script>
 
+
     {{-- ---------------toastr js--------------------- --}}
+    <script src="{{ asset('js/echarts.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/bootstrap/bootstrap.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
 
@@ -85,7 +87,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-       $(document).on('keydown', 'input[type="number"]', function(e) {
+        $(document).on('keydown', 'input[type="number"]', function(e) {
             var max = parseInt($(this).attr('maxlength'));
             var valueLength = $(this).val().length;
             var keyCode = e.keyCode || e.which;

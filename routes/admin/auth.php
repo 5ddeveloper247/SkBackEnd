@@ -28,6 +28,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
 
     Route::get('/admin/dashboard', [DashboarController::class, 'Dashboard'])->name('admin.dashboard');
+    Route::get('/admin/chart/dashboard/ajax', [DashboarController::class, 'chartAjax'])->name('admin.dashboard.chart.ajax');
     Route::post('/admin/dashboard/create/admin', [DashboarController::class, 'createAdmins'])->name('admin.dashboard.create.admin');
     Route::get('/admin/admins', [AdminController::class, 'viewAdmins'])->name('admin.user.admins');
     Route::get('admin/users/admin/destroy/{id}', [AdminController::class, 'destroyAdmins'])->name('admin.user.destroy');
