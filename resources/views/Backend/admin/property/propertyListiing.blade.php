@@ -180,14 +180,14 @@
                                                 <h6>Email Address<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="email" name="pInfo_email" id="pInfo_email"
-                                                        class="text_box" placeholder="sample@gmail.com"maxlength="50">
+                                                        class="text_box" placeholder="sample@gmail.com" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Phone Number<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="pInfo_phoneNumber" id="pInfo_phoneNumber"
-                                                        class="text_box" placeholder="+92300 0000 000"maxlength="15">
+                                                        class="text_box" placeholder="+92300 0000 000" maxlength="15">
                                                 </div>
                                             </div>
 
@@ -306,8 +306,8 @@
                                             <div class="col-sm-12 col-xs-12">
                                                 <h6>Address<sup>*</sup></h6>
                                                 <textarea class="text_box" placeholder="Describe your address"
-                                                    name="address_address" id="address_address"
-                                                    spellcheck="false" maxlength="200"></textarea>
+                                                    name="address_address" id="address_address" spellcheck="false"
+                                                    maxlength="200"></textarea>
                                             </div>
 
                                             <div class="col-sm-12 col-xs-12">
@@ -443,7 +443,8 @@
                                                         <div class="form_blk">
                                                             <textarea name="extra_info_description"
                                                                 id="extra_info_description" class="text_box"
-                                                                placeholder="Describe your vehicle" maxlength="1000"></textarea>
+                                                                placeholder="Describe your Description"
+                                                                maxlength="1000"></textarea>
                                                         </div>
                                                     </div>
 

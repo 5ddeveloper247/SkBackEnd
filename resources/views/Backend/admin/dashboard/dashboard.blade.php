@@ -125,14 +125,18 @@
         let inquiriesDates = response.inquiriesDates;
         let inquiriesCounts = response.inquiriesCounts;
         let propertiesDates = response.propertiesDates;
-        let propertiesCounts = response.propertiesCounts;
+        let propertiesRentCounts = response.propertiesRentCounts;
+        let propertiesSaleCounts = response.propertiesSaleCounts;
 
         // Create a set of all unique dates from both inquiries and properties
         let allDatesSet = new Set([...inquiriesDates, ...propertiesDates]);
         let allDates = Array.from(allDatesSet).sort((a, b) => new Date(a) - new Date(b));
+        console.log("allDates",allDates);
+        console.log("allDatesSet",allDatesSet);
 
         let inquiriesData = [];
-        let propertiesData = [];
+        let propertiesRentData = [];
+        let propertiesSaleData = [];
 
         // Populate the data arrays with counts corresponding to each date
         allDates.forEach(date => {
@@ -140,9 +144,10 @@
             let propertyIndex = propertiesDates.indexOf(date);
             
             inquiriesData.push(inquiryIndex !== -1 ? inquiriesCounts[inquiryIndex] : 0);
-            propertiesData.push(propertyIndex !== -1 ? propertiesCounts[propertyIndex] : 0);
+            propertiesRentData.push(propertyIndex !== -1 ? propertiesRentCounts[propertyIndex] : 0);
+            propertiesSaleData.push(propertyIndex !== -1 ? propertiesSaleCounts[propertyIndex] : 0);
         });
-
+         console.log("inquiryData",inquiriesData)
         // Format dates for x-axis labels
         let x_value_days = allDates.map(date => {
             return new Date(date).toLocaleDateString('en-GB', {
@@ -187,7 +192,7 @@
             },
             tooltip: {},
             legend: {
-                data: ['Properties']
+                data: ['Rent', 'Sale']
             },
             xAxis: {
                 data: x_value_days
@@ -195,9 +200,17 @@
             yAxis: {},
             series: [
                 {
-                    name: 'Properties',
+                    name: 'Rent',
                     type: 'bar',
-                    data: propertiesData,
+                    data: propertiesRentData,
+                    itemStyle: {
+                        color: '#04D7E8'
+                    }
+                },
+                {
+                    name: 'Sale',
+                    type: 'bar',
+                    data: propertiesSaleData,
                     itemStyle: {
                         color: '#E84D04'
                     }

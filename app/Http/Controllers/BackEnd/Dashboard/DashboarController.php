@@ -59,36 +59,77 @@ class DashboarController extends Controller
             $inquiriesCounts[] = $count;
         }
 
-        // Get properties created in the last 15 days
-        $properties = PersonalInfo::whereBetween('created_at', [Carbon::now()->subDays(15), Carbon::now()])->get();
+        // Get properties for Rent created in the last 15 days
+        $queryRent = PersonalInfo::query();
+        $propertiesRent = $queryRent->whereHas('propertyListingPape', function ($query) {
+            $query->where('purpose_purpose', 'Rent');
+        })->whereBetween('created_at', [Carbon::now()->subDays(15), Carbon::now()])
+            ->get();
 
-        // Initialize arrays to hold the dates and counts of properties per date
-        $propertiesDates = [];
-        $propertiesCounts = [];
-        $propertiesCountMap = [];
+        // Get properties for Sale created in the last 15 days
+        $querySale = PersonalInfo::query();
+        $propertiesSale = $querySale->whereHas('propertyListingPape', function ($query) {
+            $query->where('purpose_purpose', 'Sale');
+        })->whereBetween('created_at', [Carbon::now()->subDays(15), Carbon::now()])
+            ->get();
 
-        foreach ($properties as $property) {
+        // Initialize arrays to hold the dates and counts of properties for Rent per date
+        $propertiesRentDates = [];
+        $propertiesRentCounts = [];
+        $propertiesRentCountMap = [];
+
+        foreach ($propertiesRent as $property) {
             $date = $property->created_at->toDateString();
-            if (!isset($propertiesCountMap[$date])) {
-                $propertiesCountMap[$date] = 0;
+            if (!isset($propertiesRentCountMap[$date])) {
+                $propertiesRentCountMap[$date] = 0;
             }
-            $propertiesCountMap[$date]++;
+            $propertiesRentCountMap[$date]++;
         }
 
-        foreach ($propertiesCountMap as $date => $count) {
-            $propertiesDates[] = $date;
-            $propertiesCounts[] = $count;
+        foreach ($propertiesRentCountMap as $date => $count) {
+            $propertiesRentDates[] = $date;
+            $propertiesRentCounts[] = $count;
         }
 
+        // Initialize arrays to hold the dates and counts of properties for Sale per date
+        $propertiesSaleDates = [];
+        $propertiesSaleCounts = [];
+        $propertiesSaleCountMap = [];
 
-        // dd($propertiesDates, $propertiesCounts,$inquiriesDates,$inquiriesCounts);
+        foreach ($propertiesSale as $property) {
+            $date = $property->created_at->toDateString();
+            if (!isset($propertiesSaleCountMap[$date])) {
+                $propertiesSaleCountMap[$date] = 0;
+            }
+            $propertiesSaleCountMap[$date]++;
+        }
+
+        foreach ($propertiesSaleCountMap as $date => $count) {
+            $propertiesSaleDates[] = $date;
+            $propertiesSaleCounts[] = $count;
+        }
+
+        // Merge Rent and Sale properties data
+        $propertiesDates = array_unique(array_merge($propertiesRentDates, $propertiesSaleDates));
+        sort($propertiesDates);
+
+        $propertiesRentCountsMerged = [];
+        $propertiesSaleCountsMerged = [];
+
+        foreach ($propertiesDates as $date) {
+            $propertiesRentCountsMerged[] = $propertiesRentCountMap[$date] ?? 0;
+            $propertiesSaleCountsMerged[] = $propertiesSaleCountMap[$date] ?? 0;
+        }
+
         return response()->json([
             'inquiriesDates' => $inquiriesDates,
             'inquiriesCounts' => $inquiriesCounts,
             'propertiesDates' => $propertiesDates,
-            'propertiesCounts' => $propertiesCounts,
+            'propertiesRentCounts' => $propertiesRentCountsMerged,
+            'propertiesSaleCounts' => $propertiesSaleCountsMerged,
         ]);
     }
+
 
 
 

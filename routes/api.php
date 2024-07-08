@@ -26,9 +26,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
+// Route::prefix('frontend')->middleware('check.domain')->group(function () {
 Route::prefix('frontend')->group(function () {
-    //property
-
+    // property
     Route::post('/home/register/property', [HomeController::class, 'index'])->name('api.frontend.home.register.property');
     Route::get('/home/property/get', [HomeController::class, 'propertyHomeView'])->name('api.frontend.home.property.homeView');
     Route::post('/home/property/swiper/land/detail', [HomeController::class, 'propertyLandDetailBottomSwipper'])->name('api.frontend.home.property.landdetail.swiper');
@@ -37,16 +37,15 @@ Route::prefix('frontend')->group(function () {
     Route::get('/home/property/getbyid/{id}', [HomeController::class, 'getPropertyDetailbyId'])->name('api.frontend.home.property.getbyid');
     Route::get('/home/property/max/range/price', [HomeController::class, 'maxRangePrice'])->name('api.frontend.home.property.max.range.price');
 
-
-    //media
+    // media
     Route::get('/home/media/get', [MediaController::class, 'mediaIndex'])->name('api.frontend.media.get');
-    //contact us
 
+    // contact us 
     Route::post('/contact/store', [ContactUsController::class, 'StoreContact'])->name('api.frontend.contact.store');
-    //inquiry
+
+    // inquiry
     Route::post('/inquiry/store', [InquiryController::class, 'StoreInquiry'])->name('api.frontend.inquiry.store');
 
-
-    //composable routes
+    // composable routes
     Route::get('composable/city', [HomeController::class, 'composableCity'])->name('composable.city');
 });
