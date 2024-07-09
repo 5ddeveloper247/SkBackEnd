@@ -165,29 +165,49 @@
                                             <div class="col-xs-6">
                                                 <h6>First Name<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="text" name="pInfo_firstName" id="pInfo_firstName"
+                                                    <input type="text" name="pInfo_firstName"
+                                                        value="{{ old('pInfo_firstName') }}" id="pInfo_firstName"
                                                         class="text_box" placeholder="" maxlength="50">
+                                                    @if ($errors->has('pInfo_firstName'))
+                                                    <span class="text-danger">{{ $errors->first('pInfo_firstName')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Last Name<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="text" name="pInfo_lastName" id="pInfo_lastName"
+                                                    <input type="text" name="pInfo_lastName"
+                                                        value="{{ old('pInfo_lastName') }}" id="pInfo_lastName"
                                                         class="text_box" placeholder="" maxlength="50">
+                                                    @if ($errors->has('pInfo_lastName'))
+                                                    <span class="text-danger">{{ $errors->first('pInfo_lastName')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Email Address<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="email" name="pInfo_email" id="pInfo_email"
+                                                    <input type="email" name="pInfo_email"
+                                                        value="{{ old('pInfo_email') }}" id="pInfo_email"
                                                         class="text_box" placeholder="sample@gmail.com" maxlength="50">
+                                                    @if ($errors->has('pInfo_email'))
+                                                    <span class="text-danger">{{ $errors->first('pInfo_email')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
                                                 <h6>Phone Number<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="number" name="pInfo_phoneNumber" id="pInfo_phoneNumber"
+                                                    <input type="number" name="pInfo_phoneNumber"
+                                                        value="{{ old('pInfo_phoneNumber') }}" id="pInfo_phoneNumber"
                                                         class="text_box" placeholder="+92300 0000 000" maxlength="15">
+                                                    @if ($errors->has('pInfo_phoneNumber'))
+                                                    <span class="text-danger">{{ $errors->first('pInfo_phoneNumber')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
@@ -201,36 +221,57 @@
                                     {{-- Purpose info tabl --}}
                                     <fieldset id="purpose_tab">
                                         <div class="form_row row">
-                                            <div class="col-sm-6 col-xs-12 ">
+                                            <div class="col-sm-6 col-xs-12">
                                                 <h6>Purpose<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_purpose" id="purpose_purpose" class="text_box"
                                                         data-container="body">
-                                                        <option value="Sale">Sale</option>
-                                                        <option value="Rent">Rent</option>
+                                                        <option value="Sale" {{ old('purpose_purpose')=='Sale'
+                                                            ? 'selected' : '' }}>Sale</option>
+                                                        <option value="Rent" {{ old('purpose_purpose')=='Rent'
+                                                            ? 'selected' : '' }}>Rent</option>
                                                     </select>
+                                                    @if ($errors->has('purpose_purpose'))
+                                                    <span class="text-danger">{{ $errors->first('purpose_purpose')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
+
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Home<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="pupose_home" id="pupose_home" class="text_box"
                                                         data-container="body">
                                                         <option value="">Select Home</option>
-                                                        <option value="House">House</option>
-                                                        <option value="Flat">Flat</option>
+                                                        <option value="House" {{ old('pupose_home')=='House'
+                                                            ? 'selected' : '' }}>House</option>
+                                                        <option value="Flat" {{ old('pupose_home')=='Flat' ? 'selected'
+                                                            : '' }}>Flat</option>
                                                     </select>
+                                                    @if ($errors->has('pupose_home'))
+                                                    <span class="text-danger">{{ $errors->first('pupose_home') }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
+
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Plot<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_plot" id="purpose_plot" class="text_box"
                                                         data-container="body">
                                                         <option value="">Select Plot</option>
-                                                        <option value="Residential Plot">Residential Plot</option>
-                                                        <option value="CommercialPlot">Commercial Plot</option>
+                                                        <option value="Residential Plot" {{
+                                                            old('purpose_plot')=='Residential Plot' ? 'selected' : ''
+                                                            }}>Residential Plot</option>
+                                                        <option value="Commercial Plot" {{
+                                                            old('purpose_plot')=='Commercial Plot' ? 'selected' : '' }}>
+                                                            Commercial Plot</option>
                                                     </select>
+                                                    @if ($errors->has('purpose_plot'))
+                                                    <span class="text-danger">{{ $errors->first('purpose_plot')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
@@ -239,18 +280,30 @@
                                                     <select name="purpose_commercial" id="purpose_commercial"
                                                         class="text_box" data-container="body">
                                                         <option value="">Select Commercial</option>
-                                                        <option value="Office">Office</option>
-                                                        <option value="Shop">Shop</option>
-                                                        <option value="Building">Building</option>
+                                                        <option value="Office" {{ old('purpose_commercial')=='Office'
+                                                            ? 'selected' : '' }}>Office</option>
+                                                        <option value="Shop" {{ old('purpose_commercial')=='Shop'
+                                                            ? 'selected' : '' }}>Shop</option>
+                                                        <option value="Building" {{
+                                                            old('purpose_commercial')=='Building' ? 'selected' : '' }}>
+                                                            Building</option>
                                                     </select>
+                                                    @if ($errors->has('purpose_commercial'))
+                                                    <span class="text-danger">{{ $errors->first('purpose_commercial')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
 
                                             <div class="col-xs-6">
                                                 <h6>Price<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="number" name="price" id="price" class="text_box"
-                                                        placeholder="Price" maxlength="7">
+                                                    <input type="number" name="price" value="{{ old('price') }}"
+                                                        id="price" class="text_box" placeholder="Price" maxlength="7">
+                                                    @if ($errors->has('price'))
+                                                    <span class="text-danger">{{ $errors->first('price')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -270,51 +323,78 @@
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>City<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_city" id="address_city" class="text_box"
-                                                        data-container="body">
+                                                    <select name="address_city" value="{{ old('address_city') }}"
+                                                        id="address_city" class="text_box" data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
+                                                    @if ($errors->has('address_city'))
+                                                    <span class="text-danger">{{ $errors->first('address_city')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Area<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_area" id="address_area" class="text_box "
-                                                        data-container="body">
+                                                    <select name="address_area" value="{{ old('address_area') }}"
+                                                        id="address_area" class="text_box " data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
+                                                    @if ($errors->has('address_area'))
+                                                    <span class="text-danger">{{ $errors->first('address_area')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>location<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_location" id="address_location"
+                                                    <select name="address_location"
+                                                        value="{{ old('address_location') }}" id="address_location"
                                                         class="text_box" data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
+                                                    @if ($errors->has('address_location'))
+                                                    <span class="text-danger">{{ $errors->first('address_location')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Sector<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_sector" id="address_sector" class="text_box "
-                                                        data-container="body">
+                                                    <select name="address_sector" value="{{ old('address_sector') }}"
+                                                        id="address_sector" class="text_box " data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
+                                                    @if ($errors->has('address_sector'))
+                                                    <span class="text-danger">{{ $errors->first('address_sector')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-xs-12">
                                                 <h6>Address<sup>*</sup></h6>
                                                 <textarea class="text_box" placeholder="Describe your address"
                                                     name="address_address" id="address_address" spellcheck="false"
-                                                    maxlength="200"></textarea>
+                                                    maxlength="200">{{ old('address_address') }}</textarea>
+
+                                                @if ($errors->has('address_address'))
+                                                <span class="text-danger">{{ $errors->first('address_address')
+                                                    }}</span>
+                                                @endif
                                             </div>
 
                                             <div class="col-sm-12 col-xs-12">
                                                 <h6>Google Map Link<sup></sup></h6>
                                                 <input class="text_box" placeholder="Map Location"
-                                                    name="address_map_location" id="address_map_location"
+                                                    name="address_map_location"
+                                                    value="{{ old('address_map_location') }}" id="address_map_location"
                                                     spellcheck="false" maxlength="1000" />
+                                                @if ($errors->has('address_map_location'))
+                                                <span class="text-danger">{{ $errors->first('address_map_location')
+                                                    }}</span>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
@@ -334,24 +414,40 @@
                                                 <h6>Plot No<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_plot_num"
+                                                        value="{{ old('propertyDetail_plot_num') }}"
                                                         id="propertyDetail_plot_num" class="text_box"
                                                         data-container="body" maxlength="10" />
+                                                    @if ($errors->has('propertyDetail_plot_num'))
+                                                    <span class="text-danger">{{
+                                                        $errors->first('propertyDetail_plot_num')
+                                                        }}</span>
+                                                    @endif
 
-                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Area Unit<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="propertyDetail_area" id="propertyDetail_area"
-                                                        class="text_box " data-container="body">
-                                                        <option value="Marla">Marla</option>
-                                                        <option value="Sq.Ft">Sq.Ft</option>
-                                                        <option value="Sq.M">Sq.M</option>
-                                                        <option value="Sq.Yd">Sq.Yd</option>
-                                                        <option value="Kanal">Kanal</option>
+                                                        class="text_box" data-container="body">
+                                                        <option value="Marla" {{ old('propertyDetail_area')=='Marla'
+                                                            ? 'selected' : '' }}>Marla</option>
+                                                        <option value="Sq.Ft" {{ old('propertyDetail_area')=='Sq.Ft'
+                                                            ? 'selected' : '' }}>Sq.Ft</option>
+                                                        <option value="Sq.M" {{ old('propertyDetail_area')=='Sq.M'
+                                                            ? 'selected' : '' }}>Sq.M</option>
+                                                        <option value="Sq.Yd" {{ old('propertyDetail_area')=='Sq.Yd'
+                                                            ? 'selected' : '' }}>Sq.Yd</option>
+                                                        <option value="Kanal" {{ old('propertyDetail_area')=='Kanal'
+                                                            ? 'selected' : '' }}>Kanal</option>
                                                     </select>
+                                                    @if ($errors->has('propertyDetail_area'))
+                                                    <span class="text-danger">{{ $errors->first('propertyDetail_area')
+                                                        }}</span>
+                                                    @endif
                                                 </div>
+
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <div class="form_blk">
@@ -359,8 +455,14 @@
                                                         <h6>Area<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="propertyDetail_area_unit"
+                                                                value="{{ old('propertyDetail_area_unit') }}"
                                                                 id="propertyDetail_area_unit" class="text_box"
                                                                 placeholder="eg: 10" maxlength="5">
+                                                            @if ($errors->has('propertyDetail_area_unit'))
+                                                            <span class="text-danger">{{
+                                                                $errors->first('propertyDetail_area_unit')
+                                                                }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -369,8 +471,14 @@
                                                 <h6>Bedrooms<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bedrooms"
+                                                        value="{{ old('propertyDetail_bedrooms') }}"
                                                         id="propertyDetail_bedrooms" class="text_box "
                                                         data-container="body" mx="10" maxlength="3" />
+                                                    @if ($errors->has('propertyDetail_bedrooms'))
+                                                    <span class="text-danger">{{
+                                                        $errors->first('propertyDetail_bedrooms')
+                                                        }}</span>
+                                                    @endif
 
                                                 </div>
                                             </div>
@@ -378,8 +486,14 @@
                                                 <h6>Bathrooms<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bathrooms"
+                                                        value="{{ old('propertyDetail_bathrooms') }}"
                                                         id="propertyDetail_bathrooms" class="text_box"
                                                         data-container="body" max="10" maxlength="3" />
+                                                    @if ($errors->has('propertyDetail_bathrooms'))
+                                                    <span class="text-danger">{{
+                                                        $errors->first('propertyDetail_bathrooms')
+                                                        }}</span>
+                                                    @endif
 
 
                                                 </div>
@@ -405,9 +519,15 @@
                                                     <div class="col-xs-12">
                                                         <h6>Title<sup>*</sup></h6>
                                                         <div class="form_blk">
-                                                            <input type="text" name="extra_info_title"
-                                                                id="extra_info_title" class="text_box" value=""
-                                                                placeholder="" maxlength="255">
+                                                            <input type="text" value="{{ old('extra_info_title') }}"
+                                                                name="extra_info_title" id="extra_info_title"
+                                                                class="text_box" value="" placeholder=""
+                                                                maxlength="255">
+                                                            @if ($errors->has('extra_info_title'))
+                                                            <span class="text-danger">{{
+                                                                $errors->first('extra_info_title')
+                                                                }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -415,8 +535,14 @@
                                                         <h6>Posting As<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="text" name="extra_info_postingas"
+                                                                value="{{ old('extra_info_postingas') }}"
                                                                 id="extra_info_postingas" class="text_box"
                                                                 placeholder="Agent Name" maxlength="50">
+                                                            @if ($errors->has('extra_info_postingas'))
+                                                            <span class="text-danger">{{
+                                                                $errors->first('extra_info_postingas')
+                                                                }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -424,8 +550,14 @@
                                                         <h6>Mobile<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_mobile"
+                                                                value="{{ old('extra_info_mobile') }}"
                                                                 id="extra_info_mobile" class="text_box"
                                                                 placeholder="eg: 285432584452" maxlength="15">
+                                                            @if ($errors->has('extra_info_mobile'))
+                                                            <span class="text-danger">{{
+                                                                $errors->first('extra_info_mobile')
+                                                                }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -433,8 +565,14 @@
                                                         <h6>Landline<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_landline"
+                                                                value="{{ old('extra_info_landline') }}"
                                                                 id="extra_info_landline" class="text_box"
                                                                 placeholder="eg: 285432584452" maxlength="10">
+                                                            @if ($errors->has('extra_info_landline'))
+                                                            <span class="text-danger">{{
+                                                                $errors->first('extra_info_landline')
+                                                                }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -444,7 +582,12 @@
                                                             <textarea name="extra_info_description"
                                                                 id="extra_info_description" class="text_box"
                                                                 placeholder="Describe your Description"
-                                                                maxlength="1000"></textarea>
+                                                                maxlength="1000">{{ old('extra_info_description') }}</textarea>
+                                                            @if ($errors->has('extra_info_description'))
+                                                            <span class="text-danger">{{
+                                                                $errors->first('extra_info_description')
+                                                                }}</span>
+                                                            @endif
                                                         </div>
                                                     </div>
 
@@ -691,7 +834,8 @@
                                         <div class="text-center">
                                             <div class="br"></div>
                                             <h3 class="color">Thank You!</h3>
-                                            <p>New property request is complete.</p>
+                                            <p>We are submitting your property listing request</p>
+                                            <p>submitting........</p>
                                             <p>An email with details of the property request has been sent.</p>
                                             <div class="br"></div>
                                         </div>

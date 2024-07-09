@@ -54,15 +54,9 @@ class PropertyController extends Controller
 
     public function propertyMainSubmission(Request $request)
     {
-
-        
         // Validate the incoming request
 
-
-        // Initialize an empty array to store file paths
-
         DB::beginTransaction();
-
         try {
             // Saving personal info
             $personalInfoRecord = PersonalInfo::create([
@@ -73,10 +67,8 @@ class PropertyController extends Controller
                 "pInfo_phoneNumber" => $request->pInfo_phoneNumber,
                 'price' => $request->price,
                 'status' => '1',
-
             ]);
 
-            // dd($personalInfoRecord);
             // Saving property listing page records
             $propertyListingPageRecord = PropertyListingPaPe::create([
                 "property_record_id" => $personalInfoRecord->property_record_id,
@@ -103,7 +95,7 @@ class PropertyController extends Controller
                 "extra_info_description" => $request->extra_info_description,
             ]);
 
-            //Saving amenities
+            // Saving amenities
             $amenities = [
                 'Possesion',
                 'Balloted',
@@ -129,80 +121,60 @@ class PropertyController extends Controller
                 'SatelliteorCableTVReady',
             ];
 
-            // Loop over the amenities and save them
             foreach ($amenities as $amenity) {
                 $amenityKey = 'check_' . $amenity;
                 $value = $request->has($amenityKey) ? 1 : 0;
 
-                //Save to the database
                 Amenities::create([
                     'property_record_id' => $personalInfoRecord->property_record_id,
                     'amenities' => $amenity,
-                    'value' => $value
+                    'value' => $value,
                 ]);
             }
-
-
 
             // Store the uploaded files
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $photo) {
-                    // Generate a unique file name
                     $fileName = uniqid('photo_') . '.' . $photo->getClientOriginalExtension();
-
-                    // Move the uploaded file to a public directory
                     $path = $photo->move(public_path('uploads'), $fileName);
 
-                    // Check if the file was moved successfully
                     if ($path) {
-                        // Save file details to the database
-                        $file = PropertyRecordFiles::create([
+                        PropertyRecordFiles::create([
                             'property_record_id' => $personalInfoRecord->property_record_id,
-                            'image_uri' => 'uploads/' . $fileName
+                            'image_uri' => 'uploads/' . $fileName,
                         ]);
-                    } else {
-                        // Handle file upload failure
                     }
                 }
             }
 
-
-
+            // Send email
             try {
                 $requestData = $request->all();
-                //Send email
                 $body = view('mail.mail_templates.request_creation_admin', ['requestData' => $requestData])->render();
                 $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
                 $userEmailsSend = $request->pInfo_email;
-                // to username, to email, from username, subject, body html
+
                 $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
                 $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
-                // Log the current timestamp and response 
+
                 Log::info('at: ' . now());
                 Log::info('Email property response 1: ' . $response);
                 Log::info('Email property response 2: ' . $response2);
             } catch (Exception $e) {
-                // Log the error if email sending fails
                 Log::error('Error sending email on property from admin side submission: ' . $e->getMessage());
             }
 
-
-
-
-            // Commit the transaction
             DB::commit();
 
             return redirect()->back()->with('success', 'Record has been saved successfully.');
         } catch (Exception $e) {
-            
-            // Rollback the transaction
             DB::rollBack();
-            // Log the error (optional)
             Log::error('Error saving property submission: ' . $e->getMessage());
 
-            return redirect()->back()->with('error', 'There was an error saving the record. Please try again.');
+            return redirect()->back()->withInput()->with('error', 'There was an error saving the record. Please try again.');
         }
     }
+
 
 
 
@@ -238,7 +210,7 @@ class PropertyController extends Controller
         $validator = Validator::make($request->all(), [
             'pInfo_firstName_edit' => 'required|string|max:255',
             'pInfo_lastName_edit' => 'required|string|max:255',
-            'pInfo_email_edit' => 'required|email|unique:personal_info,pInfo_email,' . $request->property_id_edit,
+            'pInfo_email_edit' => 'required|email',
             'pInfo_phoneNumber_edit' => 'required|string|max:15',
             'purpose_purpose_edit' => 'required|string|max:255',
             'pupose_home_edit' => 'nullable|string|max:255',
@@ -263,7 +235,6 @@ class PropertyController extends Controller
             'extra_info_description_edit' => 'required|string|max:5000',
             'photos_edit.*' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // validate each file
         ]);
-
         // Check validation results
         if ($validator->fails()) {
             return redirect()->back()

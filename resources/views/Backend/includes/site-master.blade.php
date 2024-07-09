@@ -1,17 +1,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="title" content="Your Next Auto">
-<meta name="description" content="Deals At Your Fingertip">
+
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ asset('index.php')}}">
-<meta property="og:title" content="Your Next Auto">
-<meta property="og:description" content="Deals At Your Fingertip">
-<meta property="og:image" content="{{ asset('/images/thumbnail.jpg')}}">
-<meta property="twitter:card" content="thumbnail">
-<meta property="twitter:url" content="{{ asset('index.php')}}">
-<meta property="twitter:title" content="Your Next Auto">
-<meta property="twitter:description" content="Deals At Your Fingertip">
-<meta property="twitter:image" content="{{ asset('images/thumbnail.jpg')}}">
+
 
 
 <!-- Css Files -->

@@ -4,7 +4,7 @@
             <div class="contain">
                 <div class="_inner">
                     <button type="button" class="x_btn"></button>
-                    <h4>Get the free Your Next Auto App</h4>
+
                     <form action="" method="POST">
                         <div class="form_blk">
                             <input type="text" name="" id="" class="text_box" placeholder="Enter your mobile number">
@@ -944,9 +944,7 @@
                 <div class="in_col">
                     <div class="logo">
                     </div>
-                    <p>Your Next Auto is here to help you find the car you are looking at price you can be confident in.
-                        We are here to make it happen with our easy, convenient and stress free way to find and sell
-                        your car.</p>
+
                 </div>
             </div>
             <div class="col">
@@ -1022,7 +1020,6 @@
                     <li><a href="privacy-policy.php">Privacy Policy</a></li>
                     <li><a href="terms-and-conditions.php">Terms & Conditions</a></li>
                 </ul>
-                <p>Copyright © 2022 <a href="index.php">Your Next Auto</a> All rights reserved.</p>
             </div>
         </div>
     </div>
