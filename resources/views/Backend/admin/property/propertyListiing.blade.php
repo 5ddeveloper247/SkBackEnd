@@ -119,8 +119,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="property_table_body">
-
-
                                 </tbody>
                             </table>
                         </div>

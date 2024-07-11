@@ -8,9 +8,13 @@ use App\Models\User;
 use App\Models\PersonalInfo;
 use App\Models\Contact;
 use App\Models\Inquiry;
+use App\Models\Setting;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Exception;
 
 class DashboarController extends Controller
 {
@@ -165,9 +169,25 @@ class DashboarController extends Controller
             }
             // Save the user
             $user->save();
+            try {
+                // Send email
+                $body = view('mail.mail_templates.welcomeUser', ['userData' => $user])->render();
+                $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+                $userEmailsSend = $request->EmailInput;
+                // to username, to email, from username, subject, body html 
+                $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Welcome! Your accoun has activated', $body);
+                $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New User has created', $body);
+                // Log the current timestamp and response 
+                Log::info('at: ' . now());
+                Log::info('Email response 1: ' . $response);
+                Log::info('Email response 2: ' . $response2);
+            } catch (Exception $e) {
+                // Log the error if email sending fails
+                Log::error('Error sending email on new user creation from admin side submission: ' . $e->getMessage());
+            }
             // Return success message in JSON format
             return response()->json(['message' => 'User created successfully', 'user' => $user], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Return failure message in JSON format
             return response()->json(['message' => 'Failed to create user', 'error' => $e->getMessage()], 500);
         }

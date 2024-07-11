@@ -69,5 +69,6 @@ class Kernel extends HttpKernel
         'admin.redirect' => \App\Http\Middleware\RedirectAdminIfAuthenticated::class,
         'superadmin' => \App\Http\Middleware\SuperAdmin::class,
         'check.domain' => \App\Http\Middleware\CheckDomain::class,
+        'admin.status'=>\App\Http\Middleware\AdminStatusMiddleware::class,
     ];
 }

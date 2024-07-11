@@ -53,33 +53,47 @@
                 <div class="col-xs-6">
                     <h6>First Name<sup>*</sup></h6>
                     <div class="form_blk">
-                        <input type="text" name="pInfo_firstName_edit" id="pInfo_firstName_edit"
-                            value="{{$propertyInfo->pInfo_fName }}" class="text_box" placeholder="eg: John Wick"
-                            maxlength="50">
+                        <input type="text" name="pInfo_firstName_edit" id="pInfo_firstName_edit" class="text_box"
+                            placeholder="eg: John Wick" maxlength="50"
+                            value="{{ old('pInfo_firstName_edit', $propertyInfo->pInfo_fName) }}">
+                        @if ($errors->has('pInfo_firstName_edit'))
+                        <span class="text-danger">{{ $errors->first('pInfo_firstName_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-xs-6">
                     <h6>Last Name<sup>*</sup></h6>
                     <div class="form_blk">
-                        <input type="text" name="pInfo_lastName_edit" id="pInfo_lastName_edit"
-                            value="{{ $propertyInfo->pInfo_lName }}" class="text_box" placeholder="eg: John doe"
-                            maxlength="50">
+                        <input type="text" name="pInfo_lastName_edit" id="pInfo_lastName_edit" class="text_box"
+                            placeholder="eg: John doe" maxlength="50"
+                            value="{{ old('pInfo_lastName_edit', $propertyInfo->pInfo_lName) }}">
+                        @if ($errors->has('pInfo_lastName_edit'))
+                        <span class="text-danger">{{ $errors->first('pInfo_lastName_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-xs-6">
                     <h6>Email Address<sup>*</sup></h6>
                     <div class="form_blk">
-                        <input type="email" name="pInfo_email_edit" id="pInfo_email_edit"
-                            value="{{ $propertyInfo->pInfo_email }}" class="text_box" placeholder="eg: sample@gmail.com"
-                            maxlength="50">
+                        <input type="email" name="pInfo_email_edit" id="pInfo_email_edit" class="text_box"
+                            placeholder="eg: sample@gmail.com" maxlength="50"
+                            value="{{ old('pInfo_email_edit', $propertyInfo->pInfo_email) }}">
+                        @if ($errors->has('pInfo_email_edit'))
+                        <span class="text-danger">{{ $errors->first('pInfo_email_edit') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <h6>Phone Number<sup>*</sup></h6>
                     <div class="form_blk">
-                        <input type="number" name="pInfo_phoneNumber_edit" id="pInfo_phoneNumber_edit"
-                            value="{{ $propertyInfo->pInfo_phoneNumber }}" class="text_box"
-                            placeholder="eg: +92300 0000 000" maxlength="15">
+                        <input type="tel" name="pInfo_phoneNumber_edit" id="pInfo_phoneNumber_edit" class="text_box"
+                            placeholder="eg: +92300 0000 000" maxlength="15"
+                            value="{{ old('pInfo_phoneNumber_edit', $propertyInfo->pInfo_phoneNumber) }}">
+                        @if ($errors->has('pInfo_phoneNumber_edit'))
+                        <span class="text-danger">{{ $errors->first('pInfo_phoneNumber_edit') }}</span>
+                        @endif
                     </div>
                 </div>
 
@@ -98,99 +112,118 @@
                     <br>
                     <h6>Purpose<sup>*</sup></h6>
                     <div class="form_blk">
-                        @php
-                        $selectedPurpose = $propertyInfo->propertyListingPape->purpose_purpose;
-                        $purposes = ['Sale', 'Rent'];
-                        @endphp
-
-                        <select name="purpose_purpose_edit" id="purpose_purpose_edit" class="text_box "
+                        <select name="purpose_purpose_edit" id="purpose_purpose_edit" class="text_box"
                             data-container="body">
-                            <option value="{{ $selectedPurpose }}">{{ $selectedPurpose }}</option>
+                            <option value="">Select Purpose</option>
+                            @php
+                            // Get the previously selected purpose from the propertyInfo model
+                            $selectedPurpose = old('purpose_purpose_edit',
+                            $propertyInfo->propertyListingPape->purpose_purpose ?? '');
+                            $purposes = ['Sale', 'Rent'];
+                            @endphp
                             @foreach ($purposes as $purpose)
-                            @if ($purpose != $selectedPurpose)
-                            <option value="{{ $purpose }}">{{ $purpose }}</option>
-                            @endif
+                            <option value="{{ $purpose }}" {{ $selectedPurpose==$purpose ? 'selected' : '' }}>
+                                {{ $purpose }}
+                            </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('purpose_purpose_edit'))
+                        <span class="text-danger">{{ $errors->first('purpose_purpose_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12" style="margin-top: 24px; !important">
                     <h6>Home<sup>*</sup></h6>
                     <div class="form_blk">
-                        @php
-                        $selectedHomePurpose = $propertyInfo->propertyListingPape->pupose_home ?? '';
-                        $homePurposes = ['House', 'Flat'];
-                        @endphp
-
-                        <select name="pupose_home_edit" id="pupose_home_edit" class="text_box " data-container="body">
+                        <select name="pupose_home_edit" id="pupose_home_edit" class="text_box" data-container="body">
                             <option value="">Select Home</option>
-                            @if ($selectedHomePurpose)
-                            <option value="{{ $selectedHomePurpose }}" selected>{{ $selectedHomePurpose }}</option>
-                            @endif
+                            @php
+                            // Get the previously selected home purpose from the propertyInfo model
+                            $selectedHomePurpose = old('pupose_home_edit',
+                            $propertyInfo->propertyListingPape->pupose_home ?? '');
+                            $homePurposes = ['House', 'Flat'];
+                            @endphp
                             @foreach ($homePurposes as $homePurpose)
-                            @if ($homePurpose != $selectedHomePurpose)
-                            <option value="{{ $homePurpose }}">{{ $homePurpose }}</option>
-                            @endif
+                            <option value="{{ $homePurpose }}" {{ $selectedHomePurpose==$homePurpose ? 'selected' : ''
+                                }}>
+                                {{ $homePurpose }}
+                            </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('pupose_home_edit'))
+                        <span class="text-danger">{{ $errors->first('pupose_home_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
+
 
                 <div class="col-sm-6 col-xs-12">
                     <h6>Plot<sup>*</sup></h6>
                     <div class="form_blk">
-                        @php
-                        $selectedPlotPurpose = $propertyInfo->propertyListingPape->purpose_plot ?? '';
-                        $plotPurposes = ['Residential Plot', 'Commercial Plot'];
-                        @endphp
-
                         <select name="purpose_plot_edit" id="purpose_plot_edit" class="text_box" data-container="body">
                             <option value="">Select Plot</option>
-                            @if ($selectedPlotPurpose)
-                            <option value="{{ $selectedPlotPurpose }}" selected>{{ $selectedPlotPurpose }}</option>
-                            @endif
+                            @php
+                            // Get the previously selected plot purpose from the propertyInfo model
+                            $selectedPlotPurpose = old('purpose_plot_edit',
+                            $propertyInfo->propertyListingPape->purpose_plot ?? '');
+                            $plotPurposes = ['Residential Plot', 'Commercial Plot'];
+                            @endphp
                             @foreach ($plotPurposes as $plotPurpose)
-                            @if ($plotPurpose != $selectedPlotPurpose)
-                            <option value="{{ $plotPurpose }}">{{ $plotPurpose }}</option>
-                            @endif
+                            <option value="{{ $plotPurpose }}" {{ $selectedPlotPurpose==$plotPurpose ? 'selected' : ''
+                                }}>
+                                {{ $plotPurpose }}
+                            </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('purpose_plot_edit'))
+                        <span class="text-danger">{{ $errors->first('purpose_plot_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
 
                 <div class="col-sm-6 col-xs-12">
                     <h6>Commercial<sup>*</sup></h6>
                     <div class="form_blk">
-                        @php
-                        $selectedCommercialPurpose = $propertyInfo->propertyListingPape->purpose_commercial ?? '';
-                        $commercialPurposes = ['Office', 'Shop', 'Building'];
-                        @endphp
-
-                        <select name="purpose_commercial_edit" id="purpose_commercial_edit" class="text_box "
+                        <select name="purpose_commercial_edit" id="purpose_commercial_edit" class="text_box"
                             data-container="body">
                             <option value="">Select Commercial</option>
-                            @if ($selectedCommercialPurpose)
-                            <option value="{{ $selectedCommercialPurpose }}" selected>{{ $selectedCommercialPurpose }}
-                            </option>
-                            @endif
+                            @php
+                            // Get the previously selected commercial purpose from the propertyInfo model
+                            $selectedCommercialPurpose = old('purpose_commercial_edit',
+                            $propertyInfo->propertyListingPape->purpose_commercial ?? '');
+                            $commercialPurposes = ['Office', 'Shop', 'Building'];
+                            @endphp
                             @foreach ($commercialPurposes as $commercialPurpose)
-                            @if ($commercialPurpose != $selectedCommercialPurpose)
-                            <option value="{{ $commercialPurpose }}">{{ $commercialPurpose }}</option>
-                            @endif
+                            <option value="{{ $commercialPurpose }}" {{ $selectedCommercialPurpose==$commercialPurpose
+                                ? 'selected' : '' }}>
+                                {{ $commercialPurpose }}
+                            </option>
                             @endforeach
                         </select>
+                        @if ($errors->has('purpose_commercial_edit'))
+                        <span class="text-danger">{{ $errors->first('purpose_commercial_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
+
 
 
                 <div class="col-xs-6">
                     <h6>Price<sup>*</sup></h6>
                     <div class="form_blk">
-
-                        <input type="number" name="price_edit" id="price_edit" value="{{$propertyInfo->price  }}"
-                            class="text_box" placeholder="pirce in pkr" maxlength="7">
+                        <input type="number" name="price_edit" id="price_edit"
+                            value="{{ old('price_edit', $propertyInfo->price) }}" class="text_box"
+                            placeholder="Price in PKR" maxlength="7">
+                        @if ($errors->has('price_edit'))
+                        <span class="text-danger">{{ $errors->first('price_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
             </div>
             {{-- Address --}}
 
@@ -208,49 +241,54 @@
                         <select name="address_city_edit" id="address_city_edit" class="text_box" data-container="body"
                             onchange="populateAreasLov();">
                             <option value="">Choose City</option>
-                            @if (count($cities) > 0)
-
                             @foreach ($cities as $city)
-                            <option value="{{ $city->NAME }}">{{$city->NAME}}</option>
+                            <option value="{{ $city->NAME }}" {{ old('address_city_edit', $propertyInfo->
+                                propertyListingPape->address_city ?? '') == $city->NAME ? 'selected' : '' }}>
+                                {{ $city->NAME }}
+                            </option>
                             @endforeach
-
-                            @endif
-                            {{-- city will be append here --}}
                         </select>
+                        @if ($errors->has('address_city_edit'))
+                        <span class="text-danger">{{ $errors->first('address_city_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12">
                     <h6>Area<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="address_area_edit" id="address_area_edit" class="text_box" data-container="body"
                             onchange="populateLocationLov();">
                             <option value="">Choose Area</option>
-                            @if (count($areas) > 0)
-
                             @foreach ($areas as $area)
-                            <option value="{{ $area->NAME }}">{{$area->NAME}}</option>
+                            <option value="{{ $area->NAME }}" {{ old('address_area_edit', $propertyInfo->
+                                propertyListingPape->address_area ?? '') == $area->NAME ? 'selected' : '' }}>
+                                {{ $area->NAME }}
+                            </option>
                             @endforeach
-
-                            @endif
-
                         </select>
+                        @if ($errors->has('address_area_edit'))
+                        <span class="text-danger">{{ $errors->first('address_area_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12">
-                    <h6>location<sup>*</sup></h6>
+                    <h6>Location<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="address_location_edit" id="address_location_edit" class="text_box"
                             data-container="body" onchange="populateSectorLov();">
                             <option value="">Choose Location</option>
-                            @if (count($locations) > 0)
-
                             @foreach ($locations as $location)
-                            <option value="{{ $location->NAME }}">{{$location->NAME}}</option>
+                            <option value="{{ $location->NAME }}" {{ old('address_location_edit', $propertyInfo->
+                                propertyListingPape->address_location ?? '') == $location->NAME ? 'selected' : '' }}>
+                                {{ $location->NAME }}
+                            </option>
                             @endforeach
-
-                            @endif
-                            <!-- Options will be populated dynamically -->
                         </select>
+                        @if ($errors->has('address_location_edit'))
+                        <span class="text-danger">{{ $errors->first('address_location_edit') }}</span>
+                        @endif
                     </div>
                 </div>
 
@@ -260,38 +298,41 @@
                         <select name="address_sector_edit" id="address_sector_edit" class="text_box"
                             data-container="body">
                             <option value="">Choose Sector</option>
-                            @if (count($sectors) > 0)
-
                             @foreach ($sectors as $sector)
-                            <option value="{{ $sector->NAME }}">{{$sector->NAME}}</option>
+                            <option value="{{ $sector->NAME }}" {{ old('address_sector_edit', $propertyInfo->
+                                propertyListingPape->address_sector ?? '') == $sector->NAME ? 'selected' : '' }}>
+                                {{ $sector->NAME }}
+                            </option>
                             @endforeach
-
-                            @endif
-                            {{-- sectors will be append here --}}
                         </select>
+                        @if ($errors->has('address_sector_edit'))
+                        <span class="text-danger">{{ $errors->first('address_sector_edit') }}</span>
+                        @endif
                     </div>
                 </div>
-
-
-
-
 
                 <div class="col-sm-12 col-xs-12">
                     <h6>Address<sup>*</sup></h6>
                     <textarea class="text_box" placeholder="Describe your address" name="address_address_edit"
-                        id="address_address_edit" value="{{ $propertyInfo->propertyListingPape->address_address }}"
-                        spellcheck="false"
-                        maxlength="200">{{ $propertyInfo->propertyListingPape->address_address }}</textarea>
+                        id="address_address_edit" spellcheck="false"
+                        maxlength="200">{{ old('address_address_edit', $propertyInfo->propertyListingPape->address_address ?? '') }}</textarea>
+                    @if ($errors->has('address_address_edit'))
+                    <span class="text-danger">{{ $errors->first('address_address_edit') }}</span>
+                    @endif
                 </div>
+
                 <div class="col-sm-12 col-xs-12">
                     <h6>Google Map Link<sup></sup></h6>
                     <input class="text_box" placeholder="Map Location" name="address_map_location_edit"
                         id="address_map_location_edit"
-                        value="{{ $propertyInfo->propertyListingPape->address_map_location }}" spellcheck="false"
-                        maxlength="1000" />
+                        value="{{ old('address_map_location_edit', $propertyInfo->propertyListingPape->address_map_location ?? '') }}"
+                        spellcheck="false" maxlength="1000" />
+                    @if ($errors->has('address_map_location_edit'))
+                    <span class="text-danger">{{ $errors->first('address_map_location_edit') }}</span>
+                    @endif
                 </div>
-
             </div>
+
 
 
 
@@ -306,34 +347,37 @@
                     <h6>Plot No<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="text" name="propertyDetail_plot_num_edit"
-                            value="{{$propertyInfo->propertyListingPape->propertyDetail_plot_num }}"
+                            value="{{ old('propertyDetail_plot_num_edit', $propertyInfo->propertyListingPape->propertyDetail_plot_num ?? '') }}"
                             id="propertyDetail_plot_num_edit" class="text_box" data-container="body" maxlength="10" />
-
-
+                        @if ($errors->has('propertyDetail_plot_num_edit'))
+                        <span class="text-danger">{{ $errors->first('propertyDetail_plot_num_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12">
                     <h6>Area Unit<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
-                        $selectedAreaUnit = $propertyInfo->propertyListingPape->propertyDetail_area ?? ''; // Use a
-
+                        $selectedAreaUnit = old('propertyDetail_area_edit',
+                        $propertyInfo->propertyListingPape->propertyDetail_area ?? '');
                         $areaUnits = ['Marla', 'Sq.Ft', 'Sq.M', 'Sq.Yd', 'Kanal'];
                         @endphp
 
-                        <select name="propertyDetail_area_edit" id="propertyDetail_area_edit" class="text_box "
+                        <select name="propertyDetail_area_edit" id="propertyDetail_area_edit" class="text_box"
                             data-container="body">
-                            @if ($selectedAreaUnit && !in_array($selectedAreaUnit, $areaUnits))
-                            <option value="{{ $selectedAreaUnit }}">{{ $selectedAreaUnit }}</option>
-                            @endif
                             @foreach ($areaUnits as $areaUnit)
-                            <option value="{{ $areaUnit }}" {{ $selectedAreaUnit===$areaUnit ? 'selected' : '' }}>{{
-                                $areaUnit }}</option>
+                            <option value="{{ $areaUnit }}" {{ $selectedAreaUnit===$areaUnit ? 'selected' : '' }}>
+                                {{ $areaUnit }}
+                            </option>
                             @endforeach
                         </select>
-
+                        @if ($errors->has('propertyDetail_area_edit'))
+                        <span class="text-danger">{{ $errors->first('propertyDetail_area_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12">
                     <div class="form_blk">
                         <div>
@@ -341,31 +385,41 @@
                             <div class="form_blk">
                                 <input type="number" name="propertyDetail_area_unit_edit"
                                     id="propertyDetail_area_unit_edit" class="text_box"
-                                    value="{{ $propertyInfo->propertyListingPape->propertyDetail_area_unit }}"
+                                    value="{{ old('propertyDetail_area_unit_edit', $propertyInfo->propertyListingPape->address_address ?? '') }}"
                                     placeholder="eg: 10" maxlength="5">
+                                @if ($errors->has('propertyDetail_area_unit_edit'))
+                                <span class="text-danger">{{ $errors->first('propertyDetail_area_unit_edit') }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12">
                     <h6>Bedrooms<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="text" name="propertyDetail_bedrooms_edit"
-                            value="{{ $propertyInfo->propertyListingPape->propertyDetail_bedrooms }}"
+                            value="{{ old('propertyDetail_bedrooms_edit', $propertyInfo->propertyListingPape->propertyDetail_bedrooms ?? '') }}"
                             id="propertyDetail_bedrooms_edit" class="text_box" data-container="body" maxlength="3" />
-
+                        @if ($errors->has('propertyDetail_bedrooms_edit'))
+                        <span class="text-danger">{{ $errors->first('propertyDetail_bedrooms_edit') }}</span>
+                        @endif
                     </div>
                 </div>
+
                 <div class="col-sm-6 col-xs-12">
                     <h6>Bathrooms<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="text" name="propertyDetail_bathrooms_edit"
-                            value="{{ $propertyInfo->propertyListingPape->propertyDetail_bathrooms }}"
+                            value="{{ old('propertyDetail_bathrooms_edit', $propertyInfo->propertyListingPape->propertyDetail_bathrooms ?? '') }}"
                             id="propertyDetail_bathrooms_edit" class="text_box" data-container="body" maxlength="3" />
-                        </select>
+                        @if ($errors->has('propertyDetail_bathrooms_edit'))
+                        <span class="text-danger">{{ $errors->first('propertyDetail_bathrooms_edit') }}</span>
+                        @endif
                     </div>
                 </div>
             </div>
+
 
             <br>
             <div>
@@ -380,28 +434,45 @@
                             <h6>Title<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="text" name="extra_info_title_edit" id="extra_info_title_edit"
-                                    class="text_box" value="{{$propertyInfo->propertyListingPape->extra_info_title }}"
+                                    class="text_box"
+                                    value="{{ old('extra_info_title_edit', $propertyInfo->propertyListingPape->extra_info_title ?? '') }}"
                                     placeholder=" " maxlength="255">
+                                @if ($errors->has('extra_info_title_edit'))
+                                <span class="text-danger">{{ $errors->first('extra_info_title_edit') }}</span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="col-xs-12">
                             <h6>Posting As<sup>*</sup></h6>
                             <div class="form_blk">
-                                <input type="text" name="extra_info_postingas_edit"
-                                    value="{{$propertyInfo->propertyListingPape->extra_info_postingas }}"
-                                    id="extra_info_postingas_edit" class="text_box" placeholder="Agent Name"
-                                    maxlength="50">
+                                <select name="extra_info_postingas_edit" id="extra_info_postingas_edit"
+                                    class="text_box">
+                                    @foreach($postingAs as $name)
+                                    <option value="{{ $name ->name}}" {{ old('extra_info_postingas_edit',
+                                        $propertyInfo->propertyListingPape->extra_info_postingas ?? '') == $name ?
+                                        'selected' : '' }}>
+                                        {{ $name->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('extra_info_postingas_edit'))
+                                <span class="text-danger">{{ $errors->first('extra_info_postingas_edit') }}</span>
+                                @endif
                             </div>
+
                         </div>
 
                         <div class="col-xs-12">
                             <h6>Mobile<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="extra_info_mobile_edit"
-                                    value="{{$propertyInfo->propertyListingPape->extra_info_mobile }}"
+                                    value="{{ old('extra_info_mobile_edit', $propertyInfo->propertyListingPape->extra_info_mobile ?? '') }}"
                                     id="extra_info_mobile_edit" class="text_box" placeholder="eg: 285432584452"
                                     maxlength="15">
+                                @if ($errors->has('extra_info_mobile_edit'))
+                                <span class="text-danger">{{ $errors->first('extra_info_mobile_edit') }}</span>
+                                @endif
                             </div>
                         </div>
 
@@ -409,24 +480,28 @@
                             <h6>Landline<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="extra_info_landline_edit"
-                                    value="{{$propertyInfo->propertyListingPape->extra_info_landline }}"
+                                    value="{{ old('extra_info_landline_edit', $propertyInfo->propertyListingPape->extra_info_landline ?? '') }}"
                                     id="extra_info_landline_edit" class="text_box" placeholder="eg: 285432584452"
                                     maxlength="10">
+                                @if ($errors->has('extra_info_landline_edit'))
+                                <span class="text-danger">{{ $errors->first('extra_info_landline_edit') }}</span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="col-xs-12">
                             <h6>Description</h6>
                             <div class="form_blk">
-                                <textarea name="extra_info_description_edit"
-                                    value="{{$propertyInfo->propertyListingPape->extra_info_description }}"
-                                    id="extra_info_description_edit" class="text_box"
-                                    placeholder="Describe your vehicle"
-                                    maxlength="1000">{{$propertyInfo->propertyListingPape->extra_info_description }}</textarea>
+                                <textarea name="extra_info_description_edit" id="extra_info_description_edit"
+                                    class="text_box" placeholder="Describe your vehicle"
+                                    maxlength="1000">{{ old('extra_info_description_edit', $propertyInfo->propertyListingPape->extra_info_description ?? '') }}</textarea>
+                                @if ($errors->has('extra_info_description_edit'))
+                                <span class="text-danger">{{ $errors->first('extra_info_description_edit') }}</span>
+                                @endif
                             </div>
                         </div>
-
                     </div>
+
                 </div>
 
 
@@ -482,156 +557,244 @@
                         <h6>Amenities</h6>
                         <div class="form_blk">
                             <ul class="check_lst flex amenities_list_edit">
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="check_Possesion_edit" id="check_Possesion_edit">
-                                        <span>Possesion</span>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label>
-                                        <input type="checkbox" name="check_Balloted_edit" id="check_Balloted_edit">
-                                        <span>Balloted</span>
-                                    </label>
-                                </li>
 
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_Electricity_edit"
-                                            id="check_Electricity_edit">
+                                        <input type="checkbox" name="check_Possesion_edit" id="check_Possesion_edit" {{
+                                            old('check_Possesion_edit',
+                                            isset($propertyInfo->propertyListingPape->check_Possesion_edit) &&
+                                        $propertyInfo->propertyListingPape->check_Possesion_edit) ? 'checked' : '' }}>
+                                        <span>Possession</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="check_Balloted_edit" id="check_Balloted_edit" {{
+                                            old('check_Balloted_edit',
+                                            isset($propertyInfo->propertyListingPape->check_Balloted_edit) &&
+                                        $propertyInfo->propertyListingPape->check_Balloted_edit ? 'checked' : '') }}>
+                                        <span>Balloted</span>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="check_Electricity_edit" id="check_Electricity_edit"
+                                            {{ old('check_Electricity_edit',
+                                            isset($propertyInfo->propertyListingPape->check_Electricity_edit) &&
+                                        $propertyInfo->propertyListingPape->check_Electricity_edit ? 'checked' : '') }}>
                                         <span>Electricity</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_WaterSupply_edit"
-                                            id="check_WaterSupply_edit">
+                                        <input type="checkbox" name="check_WaterSupply_edit" id="check_WaterSupply_edit"
+                                            {{ old('check_WaterSupply_edit',
+                                            isset($propertyInfo->propertyListingPape->check_WaterSupply_edit) &&
+                                        $propertyInfo->propertyListingPape->check_WaterSupply_edit ? 'checked' : '') }}>
                                         <span>Water Supply</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_SuiGas_edit" id="check_SuiGas_edit">
+                                        <input type="checkbox" name="check_SuiGas_edit" id="check_SuiGas_edit" {{
+                                            old('check_SuiGas_edit',
+                                            isset($propertyInfo->propertyListingPape->check_SuiGas_edit) &&
+                                        $propertyInfo->propertyListingPape->check_SuiGas_edit ? 'checked' : '') }}>
                                         <span>Sui Gas</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_BoundryWall_edit"
-                                            id="check_BoundryWall_edit">
-                                        <span>Boundry Wall</span>
+                                        <input type="checkbox" name="check_BoundaryWall_edit"
+                                            id="check_BoundaryWall_edit" {{ old('check_BoundaryWall_edit',
+                                            isset($propertyInfo->propertyListingPape->check_BoundaryWall_edit) &&
+                                        $propertyInfo->propertyListingPape->check_BoundaryWall_edit ? 'checked' : '')
+                                        }}>
+                                        <span>Boundary Wall</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_NearbySchool_edit"
-                                            id="check_NearbySchool_edit">
+                                            id="check_NearbySchool_edit" {{ old('check_NearbySchool_edit',
+                                            isset($propertyInfo->propertyListingPape->check_NearbySchool_edit) &&
+                                        $propertyInfo->propertyListingPape->check_NearbySchool_edit ? 'checked' : '')
+                                        }}>
                                         <span>Nearby School</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_NearbyHospitals_edit"
-                                            id="check_NearbyHospitals_edit">
+                                            id="check_NearbyHospitals_edit" {{ old('check_NearbyHospitals_edit',
+                                            isset($propertyInfo->propertyListingPape->check_NearbyHospitals_edit) &&
+                                        $propertyInfo->propertyListingPape->check_NearbyHospitals_edit ? 'checked' : '')
+                                        }}>
                                         <span>Nearby Hospitals</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_NearbyShoppingMalls_edit"
-                                            id="check_NearbyShoppingMalls_edit">
+                                            id="check_NearbyShoppingMalls_edit" {{ old('check_NearbyShoppingMalls_edit',
+                                            isset($propertyInfo->propertyListingPape->check_NearbyShoppingMalls_edit) &&
+                                        $propertyInfo->propertyListingPape->check_NearbyShoppingMalls_edit ? 'checked' :
+                                        '') }}>
                                         <span>Nearby Shopping Malls</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_NearbyRestaurant_edit"
-                                            id="check_NearbyRestaurant_edit">
+                                            id="check_NearbyRestaurant_edit" {{ old('check_NearbyRestaurant_edit',
+                                            isset($propertyInfo->propertyListingPape->check_NearbyRestaurant_edit) &&
+                                        $propertyInfo->propertyListingPape->check_NearbyRestaurant_edit ? 'checked' :
+                                        '') }}>
                                         <span>Nearby Restaurant</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_NearbyPubicTransportService_edit"
-                                            id="check_NearbyPubicTransportService_edit">
-                                        <span>Nearby Pubic Transport Service</span>
+                                        <input type="checkbox" name="check_NearbyPublicTransportService_edit"
+                                            id="check_NearbyPublicTransportService_edit" {{
+                                            old('check_NearbyPublicTransportService_edit',
+                                            isset($propertyInfo->propertyListingPape->check_NearbyPublicTransportService_edit)
+                                        && $propertyInfo->propertyListingPape->check_NearbyPublicTransportService_edit ?
+                                        'checked' : '') }}>
+                                        <span>Nearby Public Transport Service</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_SecurityStaff_edit"
-                                            id="check_SecurityStaff_edit">
+                                            id="check_SecurityStaff_edit" {{ old('check_SecurityStaff_edit',
+                                            isset($propertyInfo->propertyListingPape->check_SecurityStaff_edit) &&
+                                        $propertyInfo->propertyListingPape->check_SecurityStaff_edit ? 'checked' : '')
+                                        }}>
                                         <span>Security Staff</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_CentralAirConditioning_edit"
-                                            id="check_CentralAirConditioning_edit">
+                                            id="check_CentralAirConditioning_edit" {{
+                                            old('check_CentralAirConditioning_edit',
+                                            isset($propertyInfo->propertyListingPape->check_CentralAirConditioning_edit)
+                                        && $propertyInfo->propertyListingPape->check_CentralAirConditioning_edit ?
+                                        'checked' : '') }}>
                                         <span>Central Air Conditioning</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_WasteDisposal_edit"
-                                            id="check_WasteDisposal_edit">
-                                        <span>Waste Disposal </span>
+                                            id="check_WasteDisposal_edit" {{ old('check_WasteDisposal_edit',
+                                            isset($propertyInfo->propertyListingPape->check_WasteDisposal_edit) &&
+                                        $propertyInfo->propertyListingPape->check_WasteDisposal_edit ? 'checked' : '')
+                                        }}>
+                                        <span>Waste Disposal</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_DoubleGlazedWindows_edit"
-                                            id="check_DoubleGlazedWindows_edit">
+                                            id="check_DoubleGlazedWindows_edit" {{ old('check_DoubleGlazedWindows_edit',
+                                            isset($propertyInfo->propertyListingPape->check_DoubleGlazedWindows_edit) &&
+                                        $propertyInfo->propertyListingPape->check_DoubleGlazedWindows_edit ? 'checked' :
+                                        '') }}>
                                         <span>Double Glazed Windows</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_CentralHeating_edit"
-                                            id="check_CentralHeating_edit">
+                                            id="check_CentralHeating_edit" {{ old('check_CentralHeating_edit',
+                                            isset($propertyInfo->propertyListingPape->check_CentralHeating_edit) &&
+                                        $propertyInfo->propertyListingPape->check_CentralHeating_edit ? 'checked' : '')
+                                        }}>
                                         <span>Central Heating</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_StudyRoom_edit" id="check_StudyRoom_edit">
+                                        <input type="checkbox" name="check_StudyRoom_edit" id="check_StudyRoom_edit" {{
+                                            old('check_StudyRoom_edit',
+                                            isset($propertyInfo->propertyListingPape->check_StudyRoom_edit) &&
+                                        $propertyInfo->propertyListingPape->check_StudyRoom_edit ? 'checked' : '') }}>
                                         <span>Study Room</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_LaundryRoom_edit"
-                                            id="check_LaundryRoom_edit">
+                                        <input type="checkbox" name="check_LaundryRoom_edit" id="check_LaundryRoom_edit"
+                                            {{ old('check_LaundryRoom_edit',
+                                            isset($propertyInfo->propertyListingPape->check_LaundryRoom_edit) &&
+                                        $propertyInfo->propertyListingPape->check_LaundryRoom_edit ? 'checked' : '') }}>
                                         <span>Laundry Room</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_BroadbandInternetAccess_edit"
-                                            id="check_BroadbandInternetAccess_edit">
+                                            id="check_BroadbandInternetAccess_edit" {{
+                                            old('check_BroadbandInternetAccess_edit',
+                                            isset($propertyInfo->propertyListingPape->check_BroadbandInternetAccess_edit)
+                                        && $propertyInfo->propertyListingPape->check_BroadbandInternetAccess_edit ?
+                                        'checked' : '') }}>
                                         <span>Broadband Internet Access</span>
                                     </label>
                                 </li>
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_PowerWindows_edit"
-                                            id="check_PowerWindows_edit">
+                                            id="check_PowerWindows_edit" {{ old('check_PowerWindows_edit',
+                                            isset($propertyInfo->propertyListingPape->check_PowerWindows_edit) &&
+                                        $propertyInfo->propertyListingPape->check_PowerWindows_edit ? 'checked' : '')
+                                        }}>
                                         <span>Power Windows</span>
                                     </label>
                                 </li>
+
                                 <li>
                                     <label>
                                         <input type="checkbox" name="check_SatelliteorCableTVReady_edit"
-                                            id="check_SatelliteorCableTVReady_edit">
+                                            id="check_SatelliteorCableTVReady_edit" {{
+                                            old('check_SatelliteorCableTVReady_edit',
+                                            isset($propertyInfo->propertyListingPape->check_SatelliteorCableTVReady_edit)
+                                        && $propertyInfo->propertyListingPape->check_SatelliteorCableTVReady_edit ?
+                                        'checked' : '') }}>
                                         <span>Satellite or Cable TV Ready</span>
                                     </label>
                                 </li>
-
-
                             </ul>
-
+                            @if ($errors->any() && in_array(true, [
+                            $errors->has('check_Possesion_edit'),
+                            $errors->has('check_Balloted_edit'),
+                            $errors->has('check_Electricity_edit'),
+                            $errors->has('check_WaterSupply_edit'),
+                            $errors->has('check_SuiGas_edit'),
+                            $errors->has('check_BoundaryWall_edit'),
+                            $errors->has('check_NearbySchool_edit'),
+                            $errors->has('check_NearbyHospitals_edit'),
+                            $errors->has('check_NearbyShoppingMalls_edit'),
+                            $errors->has('check_NearbyRestaurant_edit'),
+                            $errors->has('check_NearbyPublicTransportService_edit'),
+                            $errors->has('check_SecurityStaff_edit'),
+                            $errors->has('check_CentralAirConditioning_edit'),
+                            $errors->has('check_WasteDisposal_edit'),
+                            $errors->has('check_DoubleGlazedWindows_edit'),
+                            $errors->has('check_CentralHeating_edit'),
+                            $errors->has('check_StudyRoom_edit'),
+                            $errors->has('check_LaundryRoom_edit'),
+                            $errors->has('check_BroadbandInternetAccess_edit'),
+                            $errors->has('check_PowerWindows_edit'),
+                            $errors->has('check_SatelliteorCableTVReady_edit')
+                            ]))
+                            <span class="text-danger">Please select at least one amenity.</span>
+                            @endif
                         </div>
                     </div>
+
                 </div>
 
 

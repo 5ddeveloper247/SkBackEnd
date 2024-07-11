@@ -13,6 +13,7 @@ use App\Models\Location;
 use App\Models\Sector;
 use App\Models\PropertyRecordFiles;
 use App\Models\Setting;
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -191,10 +192,12 @@ class PropertyController extends Controller
         $areas = Area::where('CITY_ID', $city_id)->get();
         $locations = Location::where('AREA_ID', $area_id)->get();
         $sectors = Sector::where('LOCATION_ID', $location_id)->get();
+        $postingAs = User::whereIn('role', ['admin', 'super_admin'])->where('status', '1')->get('name');
+
 
         //dd($propertyInfo);
 
-        return view('Backend.admin.property.propertyEdit', ['id' => $id, 'propertyInfo' => $propertyInfo, 'cities' => $cities, 'areas' => $areas, 'locations' => $locations, 'sectors' => $sectors, 'city' => $propertyCity]);
+        return view('Backend.admin.property.propertyEdit', ['id' => $id, 'propertyInfo' => $propertyInfo, 'cities' => $cities, 'areas' => $areas, 'locations' => $locations, 'sectors' => $sectors, 'city' => $propertyCity, 'postingAs' => $postingAs]);
     }
 
 

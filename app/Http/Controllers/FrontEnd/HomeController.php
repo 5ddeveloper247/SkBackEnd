@@ -34,6 +34,7 @@ class HomeController extends Controller
             'commercial' => 'nullable|string|max:255',
             'plot' => 'nullable|string|max:255',
             'size' => 'required|max:255',
+            'areaUnit'=>'required|max:20',
         ]);
 
         if ($validator->fails()) {
@@ -73,6 +74,7 @@ class HomeController extends Controller
                 "purpose_plot" => $request->plot,
                 "purpose_commercial" => $request->commercial,
                 "address_city" => $request->city,
+                "propertyDetail_area"=>$request->areaUnit,
                 "address_area" => $request->size,
             ]);
 

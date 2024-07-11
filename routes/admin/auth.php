@@ -22,7 +22,7 @@ Route::middleware(['admin.redirect'])->group(function () {
 
 
 //check role admin before access
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['admin','admin.status'])->group(function () {
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::get('/admin/admin/list', [AdminController::class, 'adminList'])->name('admin.list');
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
@@ -137,15 +137,5 @@ Route::middleware(['admin'])->group(function () {
     Route::post('admin/sector/update', [CityController::class, 'updatesector'])->name('admin.sector.update');
     Route::post('admin/sector/delete', [CityController::class, 'deleteSector'])->name('admin.sector.delete');
     Route::post('admin/location/getcityareas', [CityController::class, 'getcityareas'])->name('admin.location.getcityareas');
-
-
-
-
-
-
-
-
-
-
 
 });
