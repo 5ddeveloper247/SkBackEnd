@@ -51,7 +51,6 @@
             <li><a href="#Area" data-toggle="tab">Areas</a></li>
             <li><a href="#Location" data-toggle="tab">Locations</a></li>
             <li><a href="#Sector" data-toggle="tab">Sectors</a></li>
-
         </ul>
 
 

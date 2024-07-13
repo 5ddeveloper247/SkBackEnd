@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('address_address')->nullable();
             $table->string('propertyDetail_plot_num')->nullable();
             $table->string('propertyDetail_area')->nullable();
-            $table->integer('propertyDetail_area_unit')->nullable();
+            $table->string('propertyDetail_area_unit')->nullable();
             $table->string('propertyDetail_bedrooms')->nullable();
             $table->string('propertyDetail_bathrooms')->nullable();
             $table->string('extra_info_title')->nullable();

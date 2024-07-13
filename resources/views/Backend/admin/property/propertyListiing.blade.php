@@ -259,12 +259,12 @@
                                                     <select name="purpose_plot" id="purpose_plot" class="text_box"
                                                         data-container="body">
                                                         <option value="">Select Plot</option>
-                                                        <option value="Residential Plot" {{
-                                                            old('purpose_plot')=='Residential Plot' ? 'selected' : ''
-                                                            }}>Residential Plot</option>
-                                                        <option value="Commercial Plot" {{
-                                                            old('purpose_plot')=='Commercial Plot' ? 'selected' : '' }}>
-                                                            Commercial Plot</option>
+                                                        <option value="Residential" {{
+                                                            old('purpose_plot')=='Residential' ? 'selected' : ''
+                                                            }}>Residential</option>
+                                                        <option value="Commercial" {{
+                                                            old('purpose_plot')=='Commercial' ? 'selected' : '' }}>
+                                                            Commercial</option>
                                                     </select>
                                                     @if ($errors->has('purpose_plot'))
                                                     <span class="text-danger">{{ $errors->first('purpose_plot')

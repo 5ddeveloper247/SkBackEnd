@@ -266,9 +266,22 @@ class PropertyController extends Controller
             // Update property listing info
             if ($propertyInfo->propertyListingPape) {
                 $propertyInfo->propertyListingPape->purpose_purpose = $request->purpose_purpose_edit;
-                $propertyInfo->propertyListingPape->pupose_home = $request->pupose_home_edit;
-                $propertyInfo->propertyListingPape->purpose_plot = $request->purpose_plot_edit;
-                $propertyInfo->propertyListingPape->purpose_commercial = $request->purpose_commercial_edit;
+                
+                // Set all to null initially
+                $propertyInfo->propertyListingPape->pupose_home = null;
+                $propertyInfo->propertyListingPape->purpose_plot = null;
+                $propertyInfo->propertyListingPape->purpose_commercial = null;
+            
+                // Check and update based on priority
+                if ($request->filled('pupose_home_edit')) {
+                    $propertyInfo->propertyListingPape->pupose_home = $request->pupose_home_edit;
+                } elseif ($request->filled('purpose_plot_edit')) {
+                    $propertyInfo->propertyListingPape->purpose_plot = $request->purpose_plot_edit;
+                } elseif ($request->filled('purpose_commercial_edit')) {
+                    $propertyInfo->propertyListingPape->purpose_commercial = $request->purpose_commercial_edit;
+                }
+            
+                // Update other fields
                 $propertyInfo->propertyListingPape->address_city = $request->address_city_edit;
                 $propertyInfo->propertyListingPape->address_area = $request->address_area_edit;
                 $propertyInfo->propertyListingPape->address_phase = $request->address_phase_edit;
@@ -286,11 +299,12 @@ class PropertyController extends Controller
                 $propertyInfo->propertyListingPape->extra_info_mobile = $request->extra_info_mobile_edit;
                 $propertyInfo->propertyListingPape->extra_info_landline = $request->extra_info_landline_edit;
                 $propertyInfo->propertyListingPape->extra_info_description = $request->extra_info_description_edit;
-
+            
                 $propertyInfo->propertyListingPape->save();
             }
+            
 
-            // Update amenities
+            // Update amenities 
             $amenities = [
                 'Possesion' => $request->has('check_Possesion_edit') ? 1 : 0,
                 'Balloted' => $request->has('check_Balloted_edit') ? 1 : 0,

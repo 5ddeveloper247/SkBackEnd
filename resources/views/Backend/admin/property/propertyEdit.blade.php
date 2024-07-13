@@ -168,7 +168,7 @@
                             // Get the previously selected plot purpose from the propertyInfo model
                             $selectedPlotPurpose = old('purpose_plot_edit',
                             $propertyInfo->propertyListingPape->purpose_plot ?? '');
-                            $plotPurposes = ['Residential Plot', 'Commercial Plot'];
+                            $plotPurposes = ['Residential', 'Commercial'];
                             @endphp
                             @foreach ($plotPurposes as $plotPurpose)
                             <option value="{{ $plotPurpose }}" {{ $selectedPlotPurpose==$plotPurpose ? 'selected' : ''
@@ -217,7 +217,7 @@
                     <div class="form_blk">
                         <input type="number" name="price_edit" id="price_edit"
                             value="{{ old('price_edit', $propertyInfo->price) }}" class="text_box"
-                            placeholder="Price in PKR" maxlength="7">
+                            placeholder="Price in PKR" maxlength="15">
                         @if ($errors->has('price_edit'))
                         <span class="text-danger">{{ $errors->first('price_edit') }}</span>
                         @endif
@@ -356,7 +356,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Area Unit<sup>*</sup></h6>
+                    <h6>Area<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedAreaUnit = old('propertyDetail_area_edit',
@@ -381,13 +381,13 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="form_blk">
                         <div>
-                            <h6>Area<sup>*</sup></h6>
+                            <h6>Area Unit<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="propertyDetail_area_unit_edit"
                                     id="propertyDetail_area_unit_edit" class="text_box"
-                                    value="{{ old('propertyDetail_area_unit_edit', $propertyInfo->propertyListingPape->address_address ?? '') }}"
+                                    value="{{ old('propertyDetail_area_unit_edit', $propertyInfo->propertyListingPape->propertyDetail_area_unit ?? '') }}"
                                     placeholder="eg: 10" maxlength="5">
-                                @if ($errors->has('propertyDetail_area_unit_edit'))
+                                @if($errors->has('propertyDetail_area_unit_edit'))
                                 <span class="text-danger">{{ $errors->first('propertyDetail_area_unit_edit') }}</span>
                                 @endif
                             </div>

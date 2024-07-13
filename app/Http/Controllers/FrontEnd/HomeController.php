@@ -33,8 +33,8 @@ class HomeController extends Controller
             'city' => 'required|string|max:255',
             'commercial' => 'nullable|string|max:255',
             'plot' => 'nullable|string|max:255',
-            'size' => 'required|max:255',
-            'areaUnit'=>'required|max:20',
+            'size' => 'required',
+            'areaUnit' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -74,8 +74,8 @@ class HomeController extends Controller
                 "purpose_plot" => $request->plot,
                 "purpose_commercial" => $request->commercial,
                 "address_city" => $request->city,
-                "propertyDetail_area"=>$request->areaUnit,
-                "address_area" => $request->size,
+                "propertyDetail_area" => $request->areaUnit, //marla sq.ft
+                "propertyDetail_area_unit" => $request->size, //e.g 24324
             ]);
 
             // Send email
