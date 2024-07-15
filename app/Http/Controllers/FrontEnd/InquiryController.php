@@ -21,9 +21,9 @@ class InquiryController extends Controller
             // 'location' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'nullable|integer',
+            'phone' => 'nullable|string',
             'description' => 'required|string',
-            'agent' => 'nullable|array',
+            'agent' => 'nullable|string',
             'informed_me' => 'nullable|boolean',
         ]);
         $inquiryData = $request->all();

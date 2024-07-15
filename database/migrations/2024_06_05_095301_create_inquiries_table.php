@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->text('description')->nullable();
 
-            $table->json('agent')->nullable();
+            $table->string('agent')->nullable();
             $table->enum('status', ['uploaded', 'completed'])->default('uploaded');
             $table->text('reply')->nullable();
             $table->boolean('informed_me')->nullable();
