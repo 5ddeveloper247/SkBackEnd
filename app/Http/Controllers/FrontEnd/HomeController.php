@@ -290,7 +290,7 @@ class HomeController extends Controller
         try {
             // Retrieve all filter data from the request
             $filterData = $request->all();
-
+            //  return response()->json($filterData['homeType']);
             // Start building the query
             $query = PersonalInfo::query();
 
@@ -315,11 +315,13 @@ class HomeController extends Controller
                     });
                 }
 
+                //city is in string 
                 if (isset($filterData['city']) && !empty($filterData['city'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('address_city', $filterData['city'])->where('status', '1');
+                        $q->where('address_city', $filterData['city'])->where('status', '1');
                     });
                 }
+
 
                 if (isset($filterData['location']) && !empty($filterData['location'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
@@ -341,7 +343,14 @@ class HomeController extends Controller
 
                 if (isset($filterData['plot']) && !empty($filterData['plot'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('purpose_plot', $filterData['plot'])->where('status', '1');
+                        $q->where(function ($q) use ($filterData) {
+                            if (in_array('Residential Plot', $filterData['plot'])) {
+                                $q->orWhere('purpose_plot', 'LIKE', '%Residential%')->where('status', '1');
+                            }
+                            if (in_array('Commercial Plot', $filterData['plot'])) {
+                                $q->orWhere('purpose_commercial', 'LIKE', '%Commercial%')->where('status', '1');
+                            }
+                        });
                     });
                 }
 
@@ -351,13 +360,18 @@ class HomeController extends Controller
                     });
                 }
 
-                if (isset($filterData['minPrice']) && isset($filterData['maxPrice'])) {
-                    $query->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']])->where('status', '1');
+                if (isset($filterData['minPrice']) && isset($filterData['maxPrice']) && !empty($filterData['minPrice']) && !empty($filterData['maxPrice'])) {
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']])->where('status', '1');
+                    });
                 }
             });
 
             // Eager load relationships
             $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+
+            // Order by latest first
+            $query->orderBy('id', 'desc');
 
             // Execute the query and return the results
             $propertyInfo = $query->where('status', '1')->get();
@@ -371,6 +385,8 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
+
 
 
 

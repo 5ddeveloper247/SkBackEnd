@@ -136,7 +136,7 @@
                                             <div class="btn_blk form_btn text-center">
 
                                                 <button type="submit" class="site_btn long edit_contact_btn"
-                                                    id="edit_contact_btn">Update</button>
+                                                    id="edit_contact_btn">Send</button>
 
                                             </div>
                                         </div>
@@ -221,7 +221,7 @@
                                             <div class="btn_blk form_btn text-center">
 
                                                 <button type="submit" class="site_btn long edit_replied_contact_btn"
-                                                    id="edit_replied_contact_btn">Update</button>
+                                                    id="edit_replied_contact_btn">Send</button>
 
                                             </div>
                                         </div>
@@ -383,6 +383,11 @@
 @endsection
 
 @push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#uiBlocker').show();
+    })
+</script>
 <script>
     $('.contact_search_box').on("keyup", function (e) {
   

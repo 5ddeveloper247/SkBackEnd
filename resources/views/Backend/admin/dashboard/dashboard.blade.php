@@ -112,6 +112,11 @@
 
 @push('scripts')
 <script>
+    $(document).ready(function() {
+        $('#uiBlocker').show();
+    });
+</script>
+<script>
     loadCharts();
 
     function loadCharts() {

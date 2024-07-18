@@ -13,7 +13,6 @@ use Exception;
 class InquiryController extends Controller
 {
     //
-
     public function StoreInquiry(Request $request)
     {
 

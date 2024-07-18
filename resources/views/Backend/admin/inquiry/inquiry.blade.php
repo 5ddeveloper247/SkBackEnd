@@ -142,7 +142,7 @@
                                             <div class="btn_blk form_btn text-center">
 
                                                 <button type="submit" class="site_btn long edit_inquiry_btn"
-                                                    id="edit_inquiry_btn">Update</button>
+                                                    id="edit_inquiry_btn">Send</button>
 
                                             </div>
                                         </div>
@@ -233,7 +233,7 @@
                                             <div class="btn_blk form_btn text-center">
 
                                                 <button type="submit" class="site_btn long edit_replied_inquiry_btn"
-                                                    id="edit_replied_inquiry_btn">Update</button>
+                                                    id="edit_replied_inquiry_btn">Send</button>
 
                                             </div>
                                         </div>
@@ -400,6 +400,19 @@
 @endsection
 
 @push('scripts')
+<script>
+    $(document).ready(function() {
+        $('body').on('click', '#edit_replied_inquiry_btn', function() {
+            $('#uiBlocker').show();
+        });
+        $('body').on('click', '#edit_inquiry_btn', function() {
+            alert("jflkdjlkfsaf")
+            $('#uiBlocker').show();
+        });
+    });
+</script>
+
+
 
 <script>
     $('.inquiry_search_box').on("keyup", function (e) {
@@ -437,10 +450,10 @@
 
 function loadManagerListResponse(response) {
 
-          var inquiryListingTable = $('#inquiry_table_body');
+        var inquiryListingTable = $('#inquiry_table_body');
         inquiryListingTable.empty();
        var inquiries = response.data;
-       console.log(inquiries);
+      
     $.each(inquiries, function (index, inquiry) {
 
         var inquiryRow = `<tr class="inquiry_data_row">
@@ -502,14 +515,17 @@ $('#inquiry_request_delete_confirmed_btn').click(function () {
 
 
 function deletinquiryResponse(response) {
+    
+    $('#uiBlocker').show();
     $('#inquiry_close_delete_modal_btn').click(); // Close the modal in all cases
 
     if (response.status == 200) {
-        toastr.success(response.message, '', { timeOut: 3000 });
         $('#uiBlocker').hide();
+        toastr.success(response.message, '', { timeOut: 3000 });
         $('#delete_modal').hide();
         window.location.reload(); // Reload the page
     } else {
+        $('#uiBlocker').hide();
         $('#delete_modal').hide();
         toastr.error(response.message, '', { timeOut: 3000 });
     }
@@ -535,7 +551,7 @@ function deletinquiryResponse(response) {
 }
 
 function loadRepliedInquiriesResponse(response) {
-
+        $('#uiBlocker').show()
         var inquiryListingTable = $('#inquiry_replied_table_body');
         inquiryListingTable.empty();
        var inquiries = response.data;
@@ -595,6 +611,7 @@ $('#inquiry_replied_close_delete_modal_btn').click(function () {
 
 // 2
 $('#delete_replied_confirmed_btn').click(function () {
+    $('#uiBlocker').show();
     var del_id = $(this).attr('data-id');
     let url = '/admin/inquiry/delete';
     let type = 'POST';

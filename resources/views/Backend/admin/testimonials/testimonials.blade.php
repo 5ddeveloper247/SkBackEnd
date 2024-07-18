@@ -151,7 +151,7 @@
                                             <div class="btn_blk form_btn text-center">
 
                                                 <button type="submit" class="site_btn long testimonial_update_btn"
-                                                    id="testimonial_update_btn">Update</button>
+                                                    id="testimonial_update_btn">Send</button>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -283,6 +283,7 @@
 {{-- ______________________________________table searching script _______________________________ --}}
 <script>
     function loadTestimonialList() {
+        $('#uiBlocker').show();
         let url = '/admin/testimonials/view/ajax';
         let type = 'GET';
         SendAjaxRequestToServer(type, url, '', '', loadTestimonialsResponse, '', '');
@@ -402,7 +403,7 @@
     $('#testimonial_add_btn').on('click', function (e) {
         e.preventDefault();
         var formData = new FormData($('#add_testimonial_form')[0]);
-
+         $('#uiBlocker').show();
         $.ajax({
             url: '{{ route('admin.testimonial.add') }}', // Add your route for adding testimonial
             type: 'POST',
@@ -411,6 +412,7 @@
             processData: false,
             success: function (response) {
                 if (response.status === 200) {
+                    $('#uiBlocker').hide();
                     toastr.success(response.message, 'Success', { timeOut: 2000 });
                     // Reset the form
                     $('#add_testimonial_form')[0].reset();
@@ -418,10 +420,12 @@
                     // Close the modal
                     $('#popupAddTestimonial').hide();
                 } else {
+                    $('#uiBlocker').hide();
                     toastr.error(response.message, 'Error', { timeOut: 2000 });
                 }
             },
             error: function (xhr) {
+                $('#uiBlocker').hide();
                 var errors = xhr.responseJSON.errors;
                 $.each(errors, function (key, value) {
                     toastr.error(value[0], 'Error', { timeOut: 2000 });

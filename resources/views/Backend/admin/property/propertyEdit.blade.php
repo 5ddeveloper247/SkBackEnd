@@ -89,13 +89,15 @@
                     <h6>Phone Number<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="tel" name="pInfo_phoneNumber_edit" id="pInfo_phoneNumber_edit" class="text_box"
-                            placeholder="eg: +92300 0000 000" maxlength="15"
+                            placeholder="eg: +92300 0000 000" maxlength="15" minlength="7" pattern="\d{7,15}"
                             value="{{ old('pInfo_phoneNumber_edit', $propertyInfo->pInfo_phoneNumber) }}">
+                        <span id="pInfo_phoneNumber_edit_error" class="text-danger"></span>
                         @if ($errors->has('pInfo_phoneNumber_edit'))
                         <span class="text-danger">{{ $errors->first('pInfo_phoneNumber_edit') }}</span>
                         @endif
                     </div>
                 </div>
+
 
             </div>
 
@@ -105,6 +107,10 @@
             <div>
                 <h3>
                     Purpose
+
+                    <sup style="font-size: 10px;">(Choose at least one type Home**, Plot**, Commercial**)</sup>
+
+
                 </h3>
             </div>
             <div class="form_row row">
@@ -134,7 +140,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12" style="margin-top: 24px; !important">
-                    <h6>Home<sup>*</sup></h6>
+                    <h6>Home<sup>**</sup></h6>
                     <div class="form_blk">
                         <select name="pupose_home_edit" id="pupose_home_edit" class="text_box" data-container="body">
                             <option value="">Select Home</option>
@@ -160,7 +166,7 @@
 
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Plot<sup>*</sup></h6>
+                    <h6>Plot<sup>**</sup></h6>
                     <div class="form_blk">
                         <select name="purpose_plot_edit" id="purpose_plot_edit" class="text_box" data-container="body">
                             <option value="">Select Plot</option>
@@ -185,7 +191,7 @@
 
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Commercial<sup>*</sup></h6>
+                    <h6>Commercial<sup>**</sup></h6>
                     <div class="form_blk">
                         <select name="purpose_commercial_edit" id="purpose_commercial_edit" class="text_box"
                             data-container="body">
@@ -217,7 +223,7 @@
                     <div class="form_blk">
                         <input type="number" name="price_edit" id="price_edit"
                             value="{{ old('price_edit', $propertyInfo->price) }}" class="text_box"
-                            placeholder="Price in PKR" maxlength="15">
+                            placeholder="Price in PKR" maxlength="15" minlength="7">
                         @if ($errors->has('price_edit'))
                         <span class="text-danger">{{ $errors->first('price_edit') }}</span>
                         @endif
@@ -463,18 +469,22 @@
 
                         </div>
 
+
+                        {{-- mobilex --}}
                         <div class="col-xs-12">
                             <h6>Mobile<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="extra_info_mobile_edit"
                                     value="{{ old('extra_info_mobile_edit', $propertyInfo->propertyListingPape->extra_info_mobile ?? '') }}"
                                     id="extra_info_mobile_edit" class="text_box" placeholder="eg: 285432584452"
-                                    maxlength="15">
+                                    maxlength="15" minlength="7" pattern="\d{7,15}">
+                                <span id="extra_info_mobile_edit_error" class="text-danger"></span>
                                 @if ($errors->has('extra_info_mobile_edit'))
                                 <span class="text-danger">{{ $errors->first('extra_info_mobile_edit') }}</span>
                                 @endif
                             </div>
                         </div>
+
 
                         <div class="col-xs-12">
                             <h6>Landline<sup>*</sup></h6>
@@ -482,15 +492,17 @@
                                 <input type="number" name="extra_info_landline_edit"
                                     value="{{ old('extra_info_landline_edit', $propertyInfo->propertyListingPape->extra_info_landline ?? '') }}"
                                     id="extra_info_landline_edit" class="text_box" placeholder="eg: 285432584452"
-                                    maxlength="10">
+                                    maxlength="10" minlength="7" pattern="\d{7,10}">
+                                <span id="extra_info_landline_edit_error" class="text-danger"></span>
                                 @if ($errors->has('extra_info_landline_edit'))
                                 <span class="text-danger">{{ $errors->first('extra_info_landline_edit') }}</span>
                                 @endif
                             </div>
                         </div>
 
+
                         <div class="col-xs-12">
-                            <h6>Description</h6>
+                            <h6>Description<sup>*</sup></h6>
                             <div class="form_blk">
                                 <textarea name="extra_info_description_edit" id="extra_info_description_edit"
                                     class="text_box" placeholder="Describe your vehicle"
@@ -804,8 +816,10 @@
                     <button type="submit" class="site_btn long ">
                         <a class="site_btn" href="{{route('admin.property.listing')}}">Back</a>
                     </button>
-                    <button type="submit" class="site_btn extra_info_continue-btn_edit long ">Submit</button>
+                    <button type="submit" id="propertyFormSubmitEditBtn"
+                        class="site_btn extra_info_continue-btn_edit long ">Submit</button>
                 </div>
+
             </div>
 
 
@@ -818,6 +832,20 @@
 
 
 @push('scripts')
+
+<script>
+    $(document).ready(function() {
+      
+        $('#uiBlocker').show();
+        
+        $('#propertyFormSubmitEditBtn').on('submit', function(e) {
+            e.preventDefault();
+            $('#uiBlocker').show();
+            $('.propertySubmissionForm_edit').submit();
+        });
+    });
+</script>
+
 
 <script>
     var citySelected = '{{ $propertyInfo->propertyListingPape->address_city }}';
@@ -1315,6 +1343,77 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
 
 
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var mobileInput = document.getElementById('extra_info_mobile_edit');
+        var mobileErrorMessage = document.getElementById('extra_info_mobile_edit_error');
+        var landlineInput = document.getElementById('extra_info_landline_edit');
+        var landlineErrorMessage = document.getElementById('extra_info_landline_edit_error');
+        var phoneNumberInput = document.getElementById('pInfo_phoneNumber_edit');
+        var phoneNumberErrorMessage = document.getElementById('pInfo_phoneNumber_edit_error');
+        var submitButton = document.getElementById('propertyFormSubmitEditBtn');
+
+        function validateInputs() {
+            var isMobileValid = mobileInput.value.length >= 7 && mobileInput.value.length <= 15;
+            var isLandlineValid = landlineInput.value.length >= 7 && landlineInput.value.length <= 10;
+            var isPhoneNumberValid = phoneNumberInput.value.length >= 7 && phoneNumberInput.value.length <= 15;
+            return isMobileValid && isLandlineValid && isPhoneNumberValid;
+        }
+
+        function updateValidation() {
+            if (mobileInput.value.length < 7 || mobileInput.value.length > 15) {
+                if (mobileInput.value.length < 7) {
+                    mobileErrorMessage.textContent = 'The mobile number must be at least 7 digits long.';
+                } else {
+                    mobileErrorMessage.textContent = 'The mobile number must be no more than 15 digits long.';
+                }
+                mobileErrorMessage.style.display = 'block';
+            } else {
+                mobileErrorMessage.textContent = '';
+                mobileErrorMessage.style.display = 'none';
+            }
+
+            if (landlineInput.value.length < 7 || landlineInput.value.length > 10) {
+                if (landlineInput.value.length < 7) {
+                    landlineErrorMessage.textContent = 'The landline number must be at least 7 digits long.';
+                } else {
+                    landlineErrorMessage.textContent = 'The landline number must be no more than 10 digits long.';
+                }
+                landlineErrorMessage.style.display = 'block';
+            } else {
+                landlineErrorMessage.textContent = '';
+                landlineErrorMessage.style.display = 'none';
+            }
+
+            if (phoneNumberInput.value.length < 7 || phoneNumberInput.value.length > 15) {
+                if (phoneNumberInput.value.length < 7) {
+                    phoneNumberErrorMessage.textContent = 'The phone number must be at least 7 digits long.';
+                } else {
+                    phoneNumberErrorMessage.textContent = 'The phone number must be no more than 15 digits long.';
+                }
+                phoneNumberErrorMessage.style.display = 'block';
+            } else {
+                phoneNumberErrorMessage.textContent = '';
+                phoneNumberErrorMessage.style.display = 'none';
+            }
+
+            // Enable or disable the submit button based on validation
+            submitButton.disabled = !validateInputs();
+        }
+
+        mobileInput.addEventListener('input', updateValidation);
+        landlineInput.addEventListener('input', updateValidation);
+        phoneNumberInput.addEventListener('input', updateValidation);
+
+        // Initial validation check
+        updateValidation();
+    });
+</script>
+
+
+
+
 
 
 

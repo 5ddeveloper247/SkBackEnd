@@ -138,8 +138,8 @@
         </div>
 
 
-         {{-- edit city popup --}}
-         <div class="popup lg" data-popup="edit-city-data-popup" id="edit-city-data-popup">
+        {{-- edit city popup --}}
+        <div class="popup lg" data-popup="edit-city-data-popup" id="edit-city-data-popup">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
@@ -162,7 +162,7 @@
                                                     <div class="form_blk">
                                                         <h6>City Name<sup>*</sup></h6>
                                                         <input type="text" name="edit_city_name" id="edit_city_name"
-                                                            class="text_box"maxlength="50">
+                                                            class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -219,7 +219,7 @@
                                                     <div class="form_blk">
                                                         <h6>Area Name<sup>*</sup></h6>
                                                         <input type="text" name="add_area_area" id="add_area-area"
-                                                            class="text_box"maxlength="50">
+                                                            class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -270,7 +270,7 @@
                                                     <div class="form_blk">
                                                         <h6>Area Name<sup>*</sup></h6>
                                                         <input type="text" name="edit_area_area" id="edit_area_area"
-                                                            class="text_box"maxlength="50">
+                                                            class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -334,7 +334,7 @@
                                                     <div class="form_blk">
                                                         <h6>Location<sup>*</sup></h6>
                                                         <input type="text" name="add_location_location"
-                                                            id="add_location_location" class="text_box"maxlength="50">
+                                                            id="add_location_location" class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -366,7 +366,8 @@
                             <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
                             <div id="Inspection" class="tab-pane fade active in">
 
-                                <form method="POST" id="edit_location_form" action="{{ route('admin.location.update') }}">
+                                <form method="POST" id="edit_location_form"
+                                    action="{{ route('admin.location.update') }}">
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
@@ -378,7 +379,7 @@
                                                         <h6>City Name<sup>*</sup></h6>
                                                         <select type="text" name="edit_location_city"
                                                             id="edit_location_city" class="text_box">
-                                                            
+
                                                         </select>
                                                     </div>
                                                 </div>
@@ -394,7 +395,7 @@
                                                     <div class="form_blk">
                                                         <h6>Location<sup>*</sup></h6>
                                                         <input type="text" name="edit_location_location"
-                                                            id="edit_location_location" class="text_box"maxlength="50">
+                                                            id="edit_location_location" class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -467,7 +468,7 @@
                                                     <div class="form_blk">
                                                         <h6> Sector<sup>*</sup></h6>
                                                         <input type="text" name="add_sector_sector"
-                                                            id="add_sector_sector" class="text_box"maxlength="50">
+                                                            id="add_sector_sector" class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -492,8 +493,8 @@
 
 
 
-          {{-- edit sector popup --}}
-          <div class="popup lg" data-popup="edit-sector-data-popup" id="edit-sector-data-popup">
+        {{-- edit sector popup --}}
+        <div class="popup lg" data-popup="edit-sector-data-popup" id="edit-sector-data-popup">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
@@ -512,8 +513,8 @@
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>City Name<sup>*</sup></h6>
-                                                        <select type="text" name="edit_sector_city" id="edit_sector_city"
-                                                            class="text_box">
+                                                        <select type="text" name="edit_sector_city"
+                                                            id="edit_sector_city" class="text_box">
                                                             <option value="">Select City</option>
                                                             @foreach ($cities as $city )
                                                             <option value="{{ $city->id }}">{{ $city->NAME }}</option>
@@ -524,8 +525,8 @@
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Area Name<sup>*</sup></h6>
-                                                        <select type="text" name="edit_sector_area" id="edit_sector_area"
-                                                            class="text_box">
+                                                        <select type="text" name="edit_sector_area"
+                                                            id="edit_sector_area" class="text_box">
                                                         </select>
                                                     </div>
                                                 </div>
@@ -542,7 +543,7 @@
                                                     <div class="form_blk">
                                                         <h6> Sector<sup>*</sup></h6>
                                                         <input type="text" name="edit_sector_sector"
-                                                            id="edit_sector_sector" class="text_box"maxlength="50">
+                                                            id="edit_sector_sector" class="text_box" maxlength="50">
                                                     </div>
                                                 </div>
 
@@ -627,8 +628,8 @@
 
 
 
-         <!-- delete location modal start  -->
-         <div class="popup sm" data-popup="location-delete-data-popup" id="location_delete_modal">
+        <!-- delete location modal start  -->
+        <div class="popup sm" data-popup="location-delete-data-popup" id="location_delete_modal">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
@@ -655,8 +656,8 @@
         <!-- delete location modal end  -->
 
 
-          <!-- delete sector modal start  -->
-          <div class="popup sm" data-popup="sector-delete-data-popup" id="sector_delete_modal">
+        <!-- delete sector modal start  -->
+        <div class="popup sm" data-popup="sector-delete-data-popup" id="sector_delete_modal">
             <div class="table_dv">
                 <div class="table_cell">
                     <div class="contain">
@@ -735,8 +736,7 @@
                                         <td class="nowrap" data-center>
                                             <div class="act_btn">
                                                 <button type="button" class="edit pop_btn city_edit_btn" title="Edit"
-                                                     data-id="{{ $city->id }}"
-                                                    data-city='{{ $city }}'></button>
+                                                    data-id="{{ $city->id }}" data-city='{{ $city }}'></button>
                                                 <button type="button" class="del pop_btn city_delete_btn" title="Delete"
                                                     data-popup="city-delete-data-popup" data-id="{{ $city->id }}"
                                                     data-city='{{ $city }}'></button>
@@ -795,11 +795,11 @@
                                             <td class="nowrap" data-center>
                                                 <div class="act_btn">
                                                     <button type="button" class="edit pop_btn area_edit_btn"
-                                                        title="Edit"
-                                                        data-id="{{ $area->id }}" data-area='{{ $area }}'></button>
+                                                        title="Edit" data-id="{{ $area->id }}"
+                                                        data-area='{{ $area }}'></button>
                                                     <button type="button" class="del pop_btn area_delete_btn"
-                                                        title="Delete"
-                                                        data-id="{{ $area->id }}" data-area='{{ $area }}'></button>
+                                                        title="Delete" data-id="{{ $area->id }}"
+                                                        data-area='{{ $area }}'></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -861,8 +861,7 @@
                                                 <td class="nowrap" data-center>
                                                     <div class="act_btn">
                                                         <button type="button" class="edit pop_btn location_edit_btn"
-                                                            title="Edit"
-                                                            data-id="{{ $location->id }}"
+                                                            title="Edit" data-id="{{ $location->id }}"
                                                             data-location='{{ $location }}'></button>
                                                         <button type="button" class="del pop_btn location_delete_btn"
                                                             title="Delete" data-popup="location-delete-data-popup"
@@ -936,7 +935,6 @@
                                                             <div class="act_btn">
                                                                 <button type="button"
                                                                     class="edit pop_btn sector_edit_btn" title="Edit"
-                                                                    
                                                                     data-id="{{ $sector->id }}"
                                                                     data-sector='{{ $sector }}'></button>
                                                                 <button type="button"
@@ -965,7 +963,11 @@
 @endsection
 
 @push('scripts')
-
+<script>
+    $(document).ready(function() {
+        $('#uiBlocker').show();
+    });
+</script>
 <script>
     $('.inquiry_search_box').on("keyup", function (e) {
   
@@ -1289,9 +1291,9 @@ function populateSectorLovLocation() {
 {{-- edit city end --}}
 
 
-{{-- edit area start  --}}
+{{-- edit area start --}}
 <script>
-     $(document).on('click', '.area_edit_btn', function() {
+    $(document).on('click', '.area_edit_btn', function() {
         var area_id = $(this).attr('data-id');
         let url = '/admin/area/getareadetails';
         let type = 'POST';
@@ -1347,9 +1349,9 @@ function populateSectorLovLocation() {
         }
     }
 </script>
-{{-- edit area end  --}}
+{{-- edit area end --}}
 
-{{-- delete area starts  --}}
+{{-- delete area starts --}}
 <script>
     $('.area_delete_btn').click(function(){
         var area_id = $(this).attr('data-id');
@@ -1381,11 +1383,11 @@ function populateSectorLovLocation() {
         $('.clode_delete_modal_default_btn_area').click();
     })
 </script>
-{{-- delete area ends  --}}
+{{-- delete area ends --}}
 
-{{-- edit location start  --}}
+{{-- edit location start --}}
 <script>
-     $(document).on('click', '.location_edit_btn', function() {
+    $(document).on('click', '.location_edit_btn', function() {
         $('#edit_location_form')[0].reset();
         var location_id = $(this).attr('data-id');
         let url = '/admin/location/getlocationdetails';
@@ -1467,9 +1469,9 @@ function populateSectorLovLocation() {
         }
     }
 </script>
-{{-- edit location end  --}}
+{{-- edit location end --}}
 
-{{-- delete location starts  --}}
+{{-- delete location starts --}}
 <script>
     $('.location_delete_btn').click(function(){
         var area_id = $(this).attr('data-id');
@@ -1500,13 +1502,13 @@ function populateSectorLovLocation() {
         $('.clode_delete_modal_default_btn_location').click();
     })
 </script>
-{{-- delete location ends  --}}
+{{-- delete location ends --}}
 
 
 
-{{-- edit sector start  --}}
+{{-- edit sector start --}}
 <script>
-     $(document).on('click', '.sector_edit_btn', function() {
+    $(document).on('click', '.sector_edit_btn', function() {
         $('#edit_sector_form')[0].reset();
         var sector_id = $(this).attr('data-id');
         let url = '/admin/sector/getsectordetails';
@@ -1618,9 +1620,9 @@ function populateSectorLovLocation() {
         }
     }
 </script>
-{{-- edit location end  --}}
+{{-- edit location end --}}
 
-{{-- delete location starts  --}}
+{{-- delete location starts --}}
 <script>
     $('.sector_delete_btn').click(function(){
         var sector_id = $(this).attr('data-id');
@@ -1651,7 +1653,7 @@ function populateSectorLovLocation() {
         $('.clode_delete_modal_default_btn_sector').click();
     })
 </script>
-{{-- delete location ends  --}}
+{{-- delete location ends --}}
 
 
 

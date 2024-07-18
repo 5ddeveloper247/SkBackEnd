@@ -237,7 +237,7 @@
                                             </div>
 
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Home<sup>*</sup></h6>
+                                                <h6>Home<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="pupose_home" id="pupose_home" class="text_box"
                                                         data-container="body">
@@ -254,16 +254,16 @@
                                             </div>
 
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Plot<sup>*</sup></h6>
+                                                <h6>Plot<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_plot" id="purpose_plot" class="text_box"
                                                         data-container="body">
                                                         <option value="">Select Plot</option>
                                                         <option value="Residential" {{
-                                                            old('purpose_plot')=='Residential' ? 'selected' : ''
-                                                            }}>Residential</option>
-                                                        <option value="Commercial" {{
-                                                            old('purpose_plot')=='Commercial' ? 'selected' : '' }}>
+                                                            old('purpose_plot')=='Residential' ? 'selected' : '' }}>
+                                                            Residential</option>
+                                                        <option value="Commercial" {{ old('purpose_plot')=='Commercial'
+                                                            ? 'selected' : '' }}>
                                                             Commercial</option>
                                                     </select>
                                                     @if ($errors->has('purpose_plot'))
@@ -273,7 +273,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Commercial<sup>*</sup></h6>
+                                                <h6>Commercial<sup>**</sup></h6>
                                                 <div class="form_blk">
                                                     <select name="purpose_commercial" id="purpose_commercial"
                                                         class="text_box" data-container="body">
@@ -297,7 +297,7 @@
                                                 <h6>Price<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="price" value="{{ old('price') }}"
-                                                        id="price" class="text_box" placeholder="Price" maxlength="7">
+                                                        id="price" class="text_box" placeholder="Price" maxlength="15">
                                                     @if ($errors->has('price'))
                                                     <span class="text-danger">{{ $errors->first('price')
                                                         }}</span>
@@ -823,8 +823,10 @@
                                             <button type="button"
                                                 class="site_btn long simple border prev_btn">Back</button>
                                             <button type="button"
-                                                class="site_btn amenities_continue_btn long ">Continue</button>
+                                                class="site_btn amenities_continue_btn long ">Submit</button>
                                         </div>
+
+
                                     </fieldset>
 
                                     {{-- Done tabl --}}
@@ -855,6 +857,13 @@
 
 
 @push('scripts')
+
+<script>
+    $(document).ready(function() {
+        $('#uiBlocker').show();
+        
+    });
+</script>
 <script>
     $(window).on("load", function() {
         $(".head_lst > li:nth-child(1)").addClass("current");
@@ -1210,10 +1219,16 @@ $('.prev_btn').click(function() {
 
   
 function  handlePropertyFormsubmission(){
+    $('#uiBlocker').show();
     setTimeout(() => {
+       
         $('.propertySubmissionForm').submit();
+        $('#uiBlocker').show();
         
-    }, 2000);
+    }, 1000);
+    setTimeout(()=>{
+        $('#uiBlocker').hide();
+    },3000)
 }
 
 </script>

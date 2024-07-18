@@ -140,7 +140,8 @@
                                         </div>
 
                                     </div>
-                                    {{-- <hr> --}}
+                                    {{--
+                                    <hr> --}}
                                     <div class="btn_blk form_btn text-center">
 
                                         <button type="button" id="AddMediaUrlSubmitBtn"
@@ -148,7 +149,7 @@
                                     </div>
 
                                 </div>
-                                
+
                             </fieldset>
 
                         </form>
@@ -200,7 +201,8 @@
                                                     </div>
 
                                                 </div>
-                                            {{-- </div> --}}
+                                                {{--
+                                            </div> --}}
                                         </div>
 
 
@@ -291,8 +293,8 @@
                                                 @endif
                                                 <div class="overlay p-0">
                                                     <ul class="social_links">
-                                                        <li><a href="#"
-                                                                id="video_delete_btn" data-url="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
+                                                        <li><a href="#" id="video_delete_btn"
+                                                                data-url="{{ url('/').'/admin/media/delete/mediaurl/'.$mediaRecord->id }}"><img
                                                                     id="video_delete"
                                                                     src="{{ asset('images/icons-delete.png')}}"
                                                                     alt=""></a></li>
@@ -357,9 +359,9 @@
                                                 <img src="{{ asset($mediaOnlyRecord->url) }}" alt="">
                                                 <div class="overlay">
                                                     <ul class="social_links">
-                                                        <li><a
-                                                                href="#" data-url="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}" id="picture_delete_btn"><img
-                                                                    id="picture_delete"
+                                                        <li><a href="#"
+                                                                data-url="{{ url('/').'/admin/media/delete/mediaonly/'.$mediaOnlyRecord->id }}"
+                                                                id="picture_delete_btn"><img id="picture_delete"
                                                                     src="{{ asset('images/icons-delete.png')}}"></a>
                                                         </li>
 
@@ -408,6 +410,11 @@
 
 
 @push('scripts')
+<script>
+    $(document).ready(function() {
+        $('#uiBlocker').show();
+    });
+</script>
 
 <script type="text/javascript">
     $(function() {
@@ -524,7 +531,7 @@
 
 
     $(document).on('click', '.delete', function() {
-
+        $('#uiBlocker').show()
         // Handle delete button click
         var userId = $(this).data('id');
         var userData = $(this).data('user');
@@ -556,16 +563,14 @@
     $(document).ready(function() {
 
 $('#showMediaUrlPopUpBtn').on('click',function(e){
-  
     $('#popupAddMediaUrl').css('display', 'block');
 
 });
 
 
     $('#AddMediaUrlSubmitBtn').on('click', function(e) {
-      
         e.preventDefault(); // Prevent the default form submission
-
+        $('$uiBlocker').show();
         var formData = {
             mediaUrlTitle: $('#mediaUrlTitle').val(),
             mediaUrl: $('#mediaUrl').val(),
@@ -628,7 +633,7 @@ $('#showMediaPopUpBtn').on('click',function(e){
 
 $('#AddMediaOnlySubmitBtn').on('click', function(e) {
     e.preventDefault(); // Prevent the default form submission
-
+    $('#uiBlocker').show();
     const form = $('#addMediaFormOnly'); // Use the correct ID of the form
     const formData = new FormData(form[0]);
     const uri='/admin/dashboard/media/upload'
@@ -771,7 +776,5 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
     });
 
 </script>
-
-
 
 @endpush

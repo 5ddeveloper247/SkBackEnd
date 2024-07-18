@@ -43,20 +43,15 @@ class PropertyController extends Controller
             ->orderBy('id', 'desc')
             ->get();
         $cityData = City::with('areas.locations.sectors')->get();
-        if ($cityData) {
-            $cities = $cityData;
-        } else {
-            $cities = [];
-        }
-
+        $cities = $cityData ?: [];
         return response()->json(['responseData' => $responseData, 'cityData' => $cities]);
     }
 
 
-    public function propertyMainSubmission(Request $request)
-    {
-        // Validate the incoming request
 
+    public function propertyMainSubmission(Request $request)
+    { 
+        // Validate the incoming request
         DB::beginTransaction();
         try {
             // Saving personal info
@@ -69,7 +64,6 @@ class PropertyController extends Controller
                 'price' => $request->price,
                 'status' => '1',
             ]);
-
             // Saving property listing page records
             $propertyListingPageRecord = PropertyListingPaPe::create([
                 "property_record_id" => $personalInfoRecord->property_record_id,
@@ -266,12 +260,12 @@ class PropertyController extends Controller
             // Update property listing info
             if ($propertyInfo->propertyListingPape) {
                 $propertyInfo->propertyListingPape->purpose_purpose = $request->purpose_purpose_edit;
-                
+
                 // Set all to null initially
                 $propertyInfo->propertyListingPape->pupose_home = null;
                 $propertyInfo->propertyListingPape->purpose_plot = null;
                 $propertyInfo->propertyListingPape->purpose_commercial = null;
-            
+
                 // Check and update based on priority
                 if ($request->filled('pupose_home_edit')) {
                     $propertyInfo->propertyListingPape->pupose_home = $request->pupose_home_edit;
@@ -280,7 +274,7 @@ class PropertyController extends Controller
                 } elseif ($request->filled('purpose_commercial_edit')) {
                     $propertyInfo->propertyListingPape->purpose_commercial = $request->purpose_commercial_edit;
                 }
-            
+
                 // Update other fields
                 $propertyInfo->propertyListingPape->address_city = $request->address_city_edit;
                 $propertyInfo->propertyListingPape->address_area = $request->address_area_edit;
@@ -299,10 +293,10 @@ class PropertyController extends Controller
                 $propertyInfo->propertyListingPape->extra_info_mobile = $request->extra_info_mobile_edit;
                 $propertyInfo->propertyListingPape->extra_info_landline = $request->extra_info_landline_edit;
                 $propertyInfo->propertyListingPape->extra_info_description = $request->extra_info_description_edit;
-            
+
                 $propertyInfo->propertyListingPape->save();
             }
-            
+
 
             // Update amenities 
             $amenities = [

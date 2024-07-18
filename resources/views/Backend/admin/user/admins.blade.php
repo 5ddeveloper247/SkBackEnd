@@ -11,7 +11,9 @@
 @endpush
 
 @section('content')
+
 <section id="deliveries">
+   
     <div class="contain-fluid">
         <ul class="crumbs">
             <li><a href="{{ url('admin/users')}}">Dashboard</a></li>
@@ -53,7 +55,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="PasswordInput" id="PasswordInput" type="text"
-                                                class="form-control mb-1" required placeholder=""maxlength="20" />
+                                                class="form-control mb-1" required placeholder="" maxlength="20" />
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -69,7 +71,7 @@
                                             </div> --}}
                                             <div class="d-flex" style="display: flex; align-items:center;">
                                                 <p style="margin-right: 10px; margin-top:10px">Inactive</p>
-                                                <div class="switch" style="width: 35px" >
+                                                <div class="switch" style="width: 35px">
                                                     <input type="checkbox" name="AddStatusInput" id="AddStatusInput">
                                                     <em></em>
                                                 </div>
@@ -78,9 +80,10 @@
                                         </div>
                                     </div>
                                 </form>
-                                <div class="modal-footer"style="display: flex; justify-content:center;">
+                                <div class="modal-footer" style="display: flex; justify-content:center;">
 
-                                    <button type="button" id="AddAdminBtn" class="btn btn-primary" style="width:100px; margin-top:20px">Add</button>
+                                    <button type="button" id="AddAdminBtn" class="btn btn-primary"
+                                        style="width:100px; margin-top:20px">Add</button>
                                 </div>
                             </div>
                         </div>
@@ -164,7 +167,7 @@
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="editEmailInput" id="editEmailInput" type="text"
-                                                class="form-control mb-1" value=""  maxlength="50"/>
+                                                class="form-control mb-1" value="" maxlength="50" />
                                         </div>
                                     </div>
                                     {{-- <div class="row mb-3" style="margin-bottom: 12px;">
@@ -184,7 +187,8 @@
                                         <div class="col-sm-12 m-2">
                                             <input name="editPasswordInput" id="editPasswordInput" type="text"
                                                 class="form-control mb-1" required
-                                                placeholder="Leave it empty if you don't want to change password" maxlength="20" />
+                                                placeholder="Leave it empty if you don't want to change password"
+                                                maxlength="20" />
                                         </div>
                                     </div>
                                     <div class="row mb-3" style="margin-bottom: 12px;">
@@ -199,7 +203,7 @@
                                             </div> --}}
                                             <div class="d-flex" style="display: flex; align-items:center;">
                                                 <p style="margin-right: 10px; margin-top:10px">Inactive</p>
-                                                <div class="switch" style="width: 35px" >
+                                                <div class="switch" style="width: 35px">
                                                     <input type="checkbox" name="editStatusInput" id="editStatusInput">
                                                     <em></em>
                                                 </div>
@@ -209,7 +213,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="modal-footer"style="display: flex; justify-content:center;" >
+                            <div class="modal-footer" style="display: flex; justify-content:center;">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                     id="closeUpdateModalButton">Close</button>
                                 <button type="button" id="updateAdminBtn" class="btn btn-primary">Update</button>
@@ -366,8 +370,16 @@
 
 
 <script>
+    $(document).ready(function() {
+    $('#uiBlocker').show();
+    setTimeout(function() {
+        $('#uiBlocker').hide();
+    }, 2000);
+});
+
+</script>
+<script>
     $('.property_search_box').on("keyup", function (e) {
-  
   var tr = $('.property_data_row');
   if ($(this).val().length >= 1) {//character limit in search box.
       var noElem = true;
@@ -397,7 +409,7 @@ $('#AddAdminBtn').on('click',function(){
 function handleCreateAdminx() {
 var formData = $('#AddAdminForm').serialize();
 const uri ='/admin/dashboard/create/admin';
-
+$('#uiBlocker').show();
 $.ajax({
     type: 'POST',
     url: uri, // Add quotes around the URL
@@ -406,6 +418,7 @@ $.ajax({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     },
     success: function(response) {
+        $('#uiBlocker').hide();
         toastr.success("Submitted Successfully", '', { timeOut: 5000 }); // Set timeout to 5 seconds
         // window.location.reload();
         // Handle success response 
@@ -415,6 +428,7 @@ $.ajax({
         $('#exampleModal').modal('hide');
     },
     error: function(xhr, status, error) {
+        $('#uiBlocker').hide();$('#uiBlocker').hide();
         var errorMessages = "";
         if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
@@ -422,7 +436,7 @@ $.ajax({
                 toastr.error(errors[key][0] + '<br>', '', { timeOut: 5000 }); // Set timeout to 5 seconds
             }
         } else {
-            toastr.error('Error:', error, { timeOut: 5000 }); // Set timeout to 5 seconds
+            toastr.error('Error:', error, { timeOut: 3000 }); // Set timeout to 5 seconds
         }
         $('#exampleModal').modal('show');
         console.error('Error submitting form:', error);
