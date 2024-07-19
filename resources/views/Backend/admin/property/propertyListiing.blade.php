@@ -11,7 +11,15 @@
     input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    }
+    } 
+
+    /* Add this to your CSS file */
+input:focus {
+    border-color: green;
+    outline: none; /* Removes the default focus outline */
+    box-shadow: 0 0 5px rgba(0, 128, 0, 0.5); /* Optional: adds a green shadow for better visibility */
+}
+
 </style>
 @endpush
 
@@ -1028,7 +1036,7 @@ $('.address_continue_btn').click(function() {
     var city = $('#address_city');
     var area = $('#address_area');
     var location = $('#address_location');
-    // var sector = $('#address_sector');
+     var sector = $('#address_sector');
     var address = $('#address_address');
    // var address_map_location = $('#address_map_location');
 
@@ -1045,9 +1053,9 @@ $('.address_continue_btn').click(function() {
     if (!location.val().trim()) {
         location.addClass('validation-failed');
     }
-    // if (!sector.val().trim()) {
-    //     sector.addClass('validation-failed');
-    // }
+    if (!sector.val().trim()) {
+        sector.addClass('validation-failed');
+    }
     if (!address.val().trim()) {
         address.addClass('validation-failed');
     }
@@ -1816,7 +1824,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
     
-            // Ensure only one of the purpose fields is selected
+            //Ensure only one of the purpose fields is selected 
             var purposeFields = [
                 '#pupose_home',
                 '#purpose_plot',

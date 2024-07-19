@@ -290,91 +290,123 @@ class HomeController extends Controller
         try {
             // Retrieve all filter data from the request
             $filterData = $request->all();
-            //  return response()->json($filterData['homeType']);
-            // Start building the query
-            $query = PersonalInfo::query();
 
-            // Apply filters if they are provided
-            $query->where(function ($query) use ($filterData) {
-                // Filters on PropertyListingPape attributes
-                if (isset($filterData['purpose'])) {
-                    if ($filterData['purpose'] == 'All') {
-                        $query->whereHas('propertyListingPape', function ($q) {
-                            $q->whereIn('purpose_purpose', ['Rent', 'Sale'])->where('status', '1');
-                        });
-                    } else {
-                        $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                            $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%')->where('status', '1');
+            // Function to build the query
+            $buildQuery = function ($filterData, $broadFilters = false) {
+                $query = PersonalInfo::query();
+
+                $query->where(function ($query) use ($filterData, $broadFilters) {
+                    // Filters on PropertyListingPape attributes
+                    if (isset($filterData['purpose'])) {
+                        if ($filterData['purpose'] == 'All') {
+                            $query->whereHas('propertyListingPape', function ($q) {
+                                $q->whereIn('purpose_purpose', ['Rent', 'Sale'])->where('status', '1');
+                            });
+                        } else {
+                            $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                                $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%')->where('status', '1');
+                            });
+                        }
+                    }
+
+                    if (isset($filterData['area']) && !empty($filterData['area'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            if ($broadFilters) {
+                                $q->where('address_area', 'LIKE', '%' . $filterData['area'][0] . '%')->where('status', '1');
+                            } else {
+                                $q->whereIn('address_area', $filterData['area'])->where('status', '1');
+                            }
                         });
                     }
-                }
 
-                if (isset($filterData['area']) && !empty($filterData['area'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('address_area', $filterData['area'])->where('status', '1');
-                    });
-                }
-
-                //city is in string 
-                if (isset($filterData['city']) && !empty($filterData['city'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('address_city', $filterData['city'])->where('status', '1');
-                    });
-                }
-
-
-                if (isset($filterData['location']) && !empty($filterData['location'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('address_location', $filterData['location'])->where('status', '1');
-                    });
-                }
-
-                if (isset($filterData['commercial']) && !empty($filterData['commercial'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('purpose_commercial', $filterData['commercial'])->where('status', '1');
-                    });
-                }
-
-                if (isset($filterData['homeType']) && !empty($filterData['homeType'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('pupose_home', $filterData['homeType'])->where('status', '1');
-                    });
-                }
-
-                if (isset($filterData['plot']) && !empty($filterData['plot'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where(function ($q) use ($filterData) {
-                            if (in_array('Residential Plot', $filterData['plot'])) {
-                                $q->orWhere('purpose_plot', 'LIKE', '%Residential%')->where('status', '1');
-                            }
-                            if (in_array('Commercial Plot', $filterData['plot'])) {
-                                $q->orWhere('purpose_commercial', 'LIKE', '%Commercial%')->where('status', '1');
+                    if (isset($filterData['city']) && !empty($filterData['city'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            if ($broadFilters) {
+                                $q->where('address_city', 'LIKE', '%' . $filterData['city'] . '%')->where('status', '1');
+                            } else {
+                                $q->where('address_city', $filterData['city'])->where('status', '1');
                             }
                         });
-                    });
-                }
+                    }
 
-                if (isset($filterData['sector']) && !empty($filterData['sector'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('address_sector', $filterData['sector'])->where('status', '1');
-                    });
-                }
+                    if (isset($filterData['location']) && !empty($filterData['location'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            if ($broadFilters) {
+                                $q->where('address_location', 'LIKE', '%' . $filterData['location'][0] . '%')->where('status', '1');
+                            } else {
+                                $q->whereIn('address_location', $filterData['location'])->where('status', '1');
+                            }
+                        });
+                    }
 
-                if (isset($filterData['minPrice']) && isset($filterData['maxPrice']) && !empty($filterData['minPrice']) && !empty($filterData['maxPrice'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']])->where('status', '1');
-                    });
-                }
-            });
+                    if (isset($filterData['commercial']) && !empty($filterData['commercial'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            if ($broadFilters) {
+                                $q->where('purpose_commercial', 'LIKE', '%' . $filterData['commercial'][0] . '%')->where('status', '1');
+                            } else {
+                                $q->whereIn('purpose_commercial', $filterData['commercial'])->where('status', '1');
+                            }
+                        });
+                    }
 
-            // Eager load relationships
-            $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+                    if (isset($filterData['homeType']) && !empty($filterData['homeType'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            if ($broadFilters) {
+                                $q->where('pupose_home', 'LIKE', '%' . $filterData['homeType'][0] . '%')->where('status', '1');
+                            } else {
+                                $q->whereIn('pupose_home', $filterData['homeType'])->where('status', '1');
+                            }
+                        });
+                    }
 
-            // Order by latest first
-            $query->orderBy('id', 'desc');
+                    if (isset($filterData['plot']) && !empty($filterData['plot'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            $q->where(function ($q) use ($filterData, $broadFilters) {
+                                if (in_array('Residential Plot', $filterData['plot'])) {
+                                    $q->orWhere('purpose_plot', 'LIKE', '%Residential%')->where('status', '1');
+                                }
+                                if (in_array('Commercial Plot', $filterData['plot'])) {
+                                    $q->orWhere('purpose_commercial', 'LIKE', '%Commercial%')->where('status', '1');
+                                }
+                            });
+                        });
+                    }
 
-            // Execute the query and return the results
-            $propertyInfo = $query->where('status', '1')->get();
+                    if (isset($filterData['sector']) && !empty($filterData['sector'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $broadFilters) {
+                            if ($broadFilters) {
+                                $q->where('address_sector', 'LIKE', '%' . $filterData['sector'][0] . '%')->where('status', '1');
+                            } else {
+                                $q->whereIn('address_sector', $filterData['sector'])->where('status', '1');
+                            }
+                        });
+                    }
+
+                    if (isset($filterData['minPrice']) && isset($filterData['maxPrice']) && !empty($filterData['minPrice']) && !empty($filterData['maxPrice'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']])->where('status', '1');
+                        });
+                    }
+                });
+
+                // Eager load relationships
+                $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
+
+                // Order by latest first
+                $query->orderBy('id', 'desc');
+
+                return $query;
+            };
+
+            // Build and execute the initial query
+            $initialQuery = $buildQuery($filterData);
+            $propertyInfo = $initialQuery->where('status', '1')->get();
+
+            // If no records found, broaden the filter
+            if ($propertyInfo->isEmpty()) {
+                $broadenedQuery = $buildQuery($filterData, true);
+                $propertyInfo = $broadenedQuery->where('status', '1')->get();
+            }
 
             return response()->json(['propertyInfo' => $propertyInfo]);
         } catch (Exception $e) {
@@ -385,6 +417,7 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
 
 
 

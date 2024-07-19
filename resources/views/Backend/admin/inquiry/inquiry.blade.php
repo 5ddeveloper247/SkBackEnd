@@ -406,7 +406,7 @@
             $('#uiBlocker').show();
         });
         $('body').on('click', '#edit_inquiry_btn', function() {
-            alert("jflkdjlkfsaf")
+            
             $('#uiBlocker').show();
         });
     });
