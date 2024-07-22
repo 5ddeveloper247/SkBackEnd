@@ -153,10 +153,14 @@ class ContactUsController extends Controller
     public function viewContactAjax(Request $request)
     {
         try {
-            // Fetch all inquiries
-            $contactData = DB::table('contacts')->where('contact_reply_edit', Null)->get();
-            // $contactData = Contact::where('contact_reply_edit', null);
-            if ($contactData) {
+            // Fetch all contacts ordered by latest first
+            $contactData = DB::table('contacts')
+                ->whereNull('contact_reply_edit')
+                ->orderBy('created_at', 'desc')
+                ->get();
+                
+            // Check if data is retrieved successfully
+            if ($contactData->isNotEmpty()) {
                 return response()->json([
                     'success' => true,
                     'data' => $contactData
@@ -170,7 +174,7 @@ class ContactUsController extends Controller
         } catch (Exception $e) {
             // Log the error
             Log::error('Error fetching inquiries: ' . $e->getMessage());
-
+    
             // Return error response
             return response()->json([
                 'success' => false,
@@ -179,13 +183,18 @@ class ContactUsController extends Controller
             ], 500);
         }
     }
+    
     public function viewRepliedContactAjax(Request $request)
     {
         try {
-            // Fetch all inquiries
-            $contactData = DB::table('contacts')->whereNotNull('contact_reply_edit')->get();
-            // $contactData = Contact::where('contact_reply_edit', null);
-            if ($contactData) {
+            // Fetch all contacts ordered by latest first
+            $contactData = DB::table('contacts')
+                ->whereNotNull('contact_reply_edit')
+                ->orderBy('created_at', 'desc')
+                ->get();
+                
+            // Check if data is retrieved successfully
+            if ($contactData->isNotEmpty()) {
                 return response()->json([
                     'success' => true,
                     'data' => $contactData
@@ -199,7 +208,7 @@ class ContactUsController extends Controller
         } catch (Exception $e) {
             // Log the error
             Log::error('Error fetching inquiries: ' . $e->getMessage());
-
+    
             // Return error response
             return response()->json([
                 'success' => false,
@@ -208,4 +217,5 @@ class ContactUsController extends Controller
             ], 500);
         }
     }
+    
 }

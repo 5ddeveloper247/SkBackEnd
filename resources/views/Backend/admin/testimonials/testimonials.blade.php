@@ -5,6 +5,10 @@
     .validation-failed {
         border: 1px solid red;
     }
+
+    .error-message {
+        color: red;
+    }
 </style>
 @endpush
 
@@ -37,7 +41,6 @@
 
                                 <form method="POST" id="add_testimonial_form"
                                     action="{{ route('admin.testimonial.update') }}">
-
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
@@ -48,6 +51,8 @@
                                                         <h6>Name<sup>*</sup></h6>
                                                         <input type="text" name="testimonial_name" id="testimonial_name"
                                                             class="text_box" maxlength="15">
+                                                        <small class="error-message"
+                                                            id="testimonial_name_error"></small>
                                                     </div>
                                                 </div>
 
@@ -57,6 +62,8 @@
                                                         <input type="text" name="testimonial_title"
                                                             id="testimonial_title" class="text_box" placeholder=""
                                                             maxlength="15">
+                                                        <small class="error-message"
+                                                            id="testimonial_title_error"></small>
                                                     </div>
                                                 </div>
 
@@ -65,7 +72,10 @@
                                                         <h6>Description<sup>*</sup></h6>
                                                         <textarea name="testimonial_description"
                                                             id="testimonial_description" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            maxlength="300"
+                                                            placeholder="Description should not exceed more than 300 words"></textarea>
+                                                        <small class="error-message"
+                                                            id="testimonial_description_error"></small>
                                                     </div>
                                                 </div>
 
@@ -74,19 +84,19 @@
                                                         <h6>Picture<sup></sup></h6>
                                                         <input type="file" name="pic" id="pic" class="text_box"
                                                             placeholder="">
+                                                        <small class="error-message" id="pic_error"></small>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="modal-footer">
-
                                                 <button type="button" id="testimonial_add_btn"
                                                     class="btn btn-primary">Add</button>
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
+
 
                             </div>
                         </div>
@@ -105,7 +115,6 @@
 
                                 <form method="POST" id="edit_testimonial_form"
                                     action="{{ route('admin.testimonial.update') }}">
-
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
@@ -116,8 +125,11 @@
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Name<sup>*</sup></h6>
-                                                        <input type="email" name="testimonial_name_edit"
-                                                            id="testimonial_name_edit" class="text_box" maxlength="15">
+                                                        <input type="text" name="testimonial_name_edit"
+                                                            id="testimonial_name_edit" class="text_box" maxlength="15"
+                                                            required>
+                                                        <small class="error-message"
+                                                            id="testimonial_name_edit_error"></small>
                                                     </div>
                                                 </div>
 
@@ -126,7 +138,9 @@
                                                         <h6>Title<sup>*</sup></h6>
                                                         <input type="text" name="testimonial_title_edit"
                                                             id="testimonial_title_edit" class="text_box" placeholder=""
-                                                            maxlength="15">
+                                                            maxlength="15" required>
+                                                        <small class="error-message"
+                                                            id="testimonial_title_edit_error"></small>
                                                     </div>
                                                 </div>
 
@@ -135,28 +149,31 @@
                                                         <h6>Comment<sup>*</sup></h6>
                                                         <textarea name="testimonial_description_edit"
                                                             id="testimonial_description_edit" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            placeholder="Comment should not exceed more than 300 words"
+                                                            maxlength="300" required></textarea>
+                                                        <small class="error-message"
+                                                            id="testimonial_description_edit_error"></small>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
                                                         <h6>Profile Pic<sup></sup></h6>
-                                                        <input type="file" name="pic" id="pic" class="text_box"
+                                                        <input type="file" name="pic" id="pic_edit" class="text_box"
                                                             placeholder="">
+                                                        <small class="error-message" id="pic_edit_error"></small>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="btn_blk form_btn text-center">
-
                                                 <button type="submit" class="site_btn long testimonial_update_btn"
                                                     id="testimonial_update_btn">Send</button>
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -290,10 +307,10 @@
     }
 
     function loadTestimonialsResponse(response) {
-        console.log(response);
+       
         var testimonialsListingTable = $('#testimonials_table_body');
         testimonialsListingTable.empty();
-        console.log(response.data);
+      
         var testimonials = response.data;
         $.each(testimonials, function (index, testimonial) {
         var testimonialRow =`<tr class="testimonial_data_row"> 
@@ -327,7 +344,7 @@
     });
 
     function getpropertydataResponse(response) {
-        console.log(response.propertyInfo);
+      
         if (response.propertyInfo) {
             var property = response.propertyInfo;
             $('#inquiry_id_edit').val(property.id);
@@ -403,6 +420,7 @@
     $('#testimonial_add_btn').on('click', function (e) {
         e.preventDefault();
         var formData = new FormData($('#add_testimonial_form')[0]);
+        $('#popupAddTestimonial').hide();
          $('#uiBlocker').show();
         $.ajax({
             url: '{{ route('admin.testimonial.add') }}', // Add your route for adding testimonial
@@ -499,8 +517,154 @@
 </script>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('add_testimonial_form');
+    const nameInput = document.getElementById('testimonial_name');
+    const titleInput = document.getElementById('testimonial_title');
+    const descriptionInput = document.getElementById('testimonial_description');
+    const picInput = document.getElementById('pic');
+    const addButton = document.getElementById('testimonial_add_btn');
+
+    const nameError = document.getElementById('testimonial_name_error');
+    const titleError = document.getElementById('testimonial_title_error');
+    const descriptionError = document.getElementById('testimonial_description_error');
+    const picError = document.getElementById('pic_error');
+
+    const validateForm = () => {
+        let isValid = true;
+
+        if (nameInput.value.trim() === '') {
+            nameError.textContent = 'Name is required.';
+            isValid = false;
+        } else {
+            nameError.textContent = '';
+        }
+
+        if (titleInput.value.trim() === '') {
+            titleError.textContent = 'Title is required.';
+            isValid = false;
+        } else {
+            titleError.textContent = '';
+        }
+
+        if (descriptionInput.value.trim() === '') {
+            descriptionError.textContent = 'Description is required.';
+            isValid = false;
+        } else if (descriptionInput.value.length > 300) {
+            descriptionError.textContent = 'Description should not exceed 300 words.';
+            isValid = false;
+        } else {
+            descriptionError.textContent = '';
+        }
+
+        // Validate picture input (optional)
+        // if (picInput.files.length === 0) {
+        //     picError.textContent = 'Picture is required.';
+        //     isValid = false;
+        // } else {
+        //     picError.textContent = '';
+        // }
+
+        // Disable the button if the form is invalid
+        addButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listeners for real-time validation
+    nameInput.addEventListener('input', validateForm);
+    titleInput.addEventListener('input', validateForm);
+    descriptionInput.addEventListener('input', validateForm);
+    picInput.addEventListener('change', validateForm);
+
+    // Attach click event listener to the Add button
+    addButton.addEventListener('click', function(event) {
+        if (validateForm()) {
+            // form.submit();
+        } else {
+            event.preventDefault();
+        }
+    });
+    validateForm();
+});
+
+</script>
 
 
+{{-- edit form validation --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const formEdit = document.getElementById('edit_testimonial_form');
+    const nameEditInput = document.getElementById('testimonial_name_edit');
+    const titleEditInput = document.getElementById('testimonial_title_edit');
+    const descriptionEditInput = document.getElementById('testimonial_description_edit');
+    const picEditInput = document.getElementById('pic_edit');
+    const updateButton = document.getElementById('testimonial_update_btn');
+
+    const nameEditError = document.getElementById('testimonial_name_edit_error');
+    const titleEditError = document.getElementById('testimonial_title_edit_error');
+    const descriptionEditError = document.getElementById('testimonial_description_edit_error');
+    const picEditError = document.getElementById('pic_edit_error');
+
+    const validateEditForm = () => {
+        let isValid = true;
+
+        if (nameEditInput.value.trim() === '') {
+            nameEditError.textContent = 'Name is required.';
+            isValid = false;
+        } else {
+            nameEditError.textContent = '';
+        }
+
+        if (titleEditInput.value.trim() === '') {
+            titleEditError.textContent = 'Title is required.';
+            isValid = false;
+        } else {
+            titleEditError.textContent = '';
+        }
+
+        if (descriptionEditInput.value.trim() === '') {
+            descriptionEditError.textContent = 'Description is required.';
+            isValid = false;
+        } else if (descriptionEditInput.value.length > 300) {
+            descriptionEditError.textContent = 'Description should not exceed 300 words.';
+            isValid = false;
+        } else {
+            descriptionEditError.textContent = '';
+        }
+
+        // Validate picture input (optional)
+        // if (picEditInput.files.length === 0) {
+        //     picEditError.textContent = 'Picture is required.';
+        //     isValid = false;
+        // } else {
+        //     picEditError.textContent = '';
+        // }
+
+        // Disable the button if the form is invalid
+        updateButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listeners for real-time validation
+    nameEditInput.addEventListener('input', validateEditForm);
+    titleEditInput.addEventListener('input', validateEditForm);
+    descriptionEditInput.addEventListener('input', validateEditForm);
+    picEditInput.addEventListener('change', validateEditForm);
+
+    // Attach click event listener to the Update button
+    updateButton.addEventListener('click', function(event) {
+        if (validateEditForm()) {
+            // formEdit.submit();
+        } else {
+            event.preventDefault();
+        }
+    });
+}); 
+
+</script>
 
 
 

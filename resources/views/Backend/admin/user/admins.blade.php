@@ -7,13 +7,48 @@
     .col-sm-9 {
         margin: 2px;
     }
+
+    .error-message {
+        color: red;
+        font-size: 0.875em;
+        /* Adjust font size as needed */
+        margin-top: 0.25em;
+    }
 </style>
 @endpush
 
 @section('content')
 
 <section id="deliveries">
-   
+    <!-- Display Success Alert -->
+    @if($errors->any())
+    <div class="alert alert-danger alert-dismissible  show" role="alert">
+        <ul class="mb-0">
+            @foreach($errors->all() as $error)
+            <li style="list-style: none">
+                {{ $error }}
+            </li>
+            @endforeach
+        </ul>
+
+    </div>
+    @endif
+
+    <!-- Display Success Alert -->
+    @if(session('success'))
+    <div class="alert alert-success alert-dismissible  show" role="alert">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <!-- Display Error Alert -->
+    @if(session('e'))
+    <div class="alert alert-danger alert-dismissible  show" role="alert">
+        {{ session('e') }}
+
+    </div>
+    @endif
+
     <div class="contain-fluid">
         <ul class="crumbs">
             <li><a href="{{ url('admin/users')}}">Dashboard</a></li>
@@ -28,15 +63,21 @@
                             <button class="x_btn" id="closeCustomModalButton"></button>
                             <div class="modal-body">
 
-                                <form action="#" id="AddAdminForm">
+                                <form action="{{ route('admin.dashboard.create.admin') }}" id="AddAdminForm"
+                                    method="POST">
+                                    @csrf
                                     <div class="row mb-3">
-
                                         <div class="col-sm-12">
                                             <h6 class="mb-1">Full Name<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="FullNameInput" id="FullNameInput" type="text"
-                                                class="form-control mb-1" value="" maxlength="50" />
+                                                class="form-control mb-1" maxlength="50" required
+                                                value="{{ old('FullNameInput') }}" />
+                                            @error('FullNameInput')
+                                            <small class="error-message FullNameError">{{ $message }}</small>
+                                            @enderror
+                                            <small class="error-message" id="FullNameError"></small>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -44,31 +85,33 @@
                                             <h6 class="mb-0">Email<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <input name="EmailInput" id="EmailInput" type="text"
-                                                class="form-control mb-1" value="" maxlength="50" />
+                                            <input name="EmailInput" id="EmailInput" type="email"
+                                                class="form-control mb-1" maxlength="50" required
+                                                value="{{ old('EmailInput') }}" />
+                                            @error('EmailInput')
+                                            <small class="error-message EmailError">{{ $message }}</small>
+                                            @enderror
+                                            <small class="error-message" id="EmailError"></small>
                                         </div>
                                     </div>
-
                                     <div class="row mb-5">
                                         <div class="col-sm-12">
                                             <h6 class="mb-0">Password<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <input name="PasswordInput" id="PasswordInput" type="text"
-                                                class="form-control mb-1" required placeholder="" maxlength="20" />
+                                            <input name="PasswordInput" id="PasswordInput" type="password"
+                                                class="form-control mb-1" required maxlength="20" />
+                                            @error('PasswordInput')
+                                            <small class="error-message PasswordError">{{ $message }}</small>
+                                            @enderror
+                                            <small class="error-message" id="PasswordError"></small>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
-                                            <h6 class="mb-0">Status<sup< /sup>
-                                            </h6>
+                                            <h6 class="mb-0">Status</h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            {{-- <div class="ms-3 form-check form-switch">
-                                                <input name="AddStatusInput" id="AddStatusInput"
-                                                    style="font-size: 20px;" type="checkbox"
-                                                    class="form-check-input mb-1" />
-                                            </div> --}}
                                             <div class="d-flex" style="display: flex; align-items:center;">
                                                 <p style="margin-right: 10px; margin-top:10px">Inactive</p>
                                                 <div class="switch" style="width: 35px">
@@ -79,12 +122,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row mb-3">
+                                        <div class="col-sm-12">
+                                            <button type="submit" class="site_btn sm">Submit</button>
+                                        </div>
+                                    </div>
                                 </form>
-                                <div class="modal-footer" style="display: flex; justify-content:center;">
 
-                                    <button type="button" id="AddAdminBtn" class="btn btn-primary"
-                                        style="width:100px; margin-top:20px">Add</button>
-                                </div>
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -102,7 +150,7 @@
                             <div class="modal-body">
                                 <div class="row mb-3" style="margin-bottom: 12px;">
                                     <div class="col-sm-12">
-                                        <h6 class="mb-0"><b>Full Name</b></h6>
+                                        <h6 class="mb-0"><b>Full Name<sup>*</sup></b></h6>
                                     </div>
                                     <div class="col-sm-12">
                                         <span id="viewFullName"></span>
@@ -110,7 +158,7 @@
                                 </div>
                                 <div class="row mb-3" style="margin-bottom: 12px;">
                                     <div class="col-sm-12">
-                                        <h6 class="mb-0"><b>Email</b></h6>
+                                        <h6 class="mb-0"><b>Email<sup>*</sup></b></h6>
                                     </div>
                                     <div class="col-sm-12">
                                         <span id="viewEmail"></span>
@@ -154,23 +202,25 @@
                                 <form action="#" id="updateAdminForm">
                                     <div class="row mb-3" style="margin-bottom: 12px;">
                                         <div class="col-sm-12">
-                                            <h6 class="mb-1">Full Name</h6>
+                                            <h6 class="mb-1">Full Name<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="editFullNameInput" id="editFullNameInput" type="text"
                                                 class="form-control mb-1" value="" maxlength="50" />
+                                            <small class="error-message" id="editFullNameInputError"></small>
                                         </div>
                                     </div>
                                     <div class="row mb-3" style="margin-bottom: 12px;">
                                         <div class="col-sm-12">
-                                            <h6 class="mb-0">Email</h6>
+                                            <h6 class="mb-0">Email<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
                                             <input name="editEmailInput" id="editEmailInput" type="text"
                                                 class="form-control mb-1" value="" maxlength="50" />
+                                            <small class="error-message" id="editEmailInputError"></small>
                                         </div>
                                     </div>
-                                    {{-- <div class="row mb-3" style="margin-bottom: 12px;">
+                                    <!-- <div class="row mb-3" style="margin-bottom: 12px;">
                                         <div class="col-sm-12">
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
@@ -179,7 +229,7 @@
                                                 class="form-control"
                                                 oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
                                         </div>
-                                    </div> --}}
+                                    </div> -->
                                     <div class="row mb-5" style="margin-bottom: 12px;">
                                         <div class="col-sm-12">
                                             <h6 class="mb-0">Password</h6>
@@ -189,6 +239,7 @@
                                                 class="form-control mb-1" required
                                                 placeholder="Leave it empty if you don't want to change password"
                                                 maxlength="20" />
+                                            <small class="error-message" id="editPasswordInputError"></small>
                                         </div>
                                     </div>
                                     <div class="row mb-3" style="margin-bottom: 12px;">
@@ -196,11 +247,11 @@
                                             <h6 class="mb-0">Status</h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            {{-- <div class="ms-3 form-check form-switch">
+                                            <!-- <div class="ms-3 form-check form-switch">
                                                 <input name="editStatusInput" id="editStatusInput"
                                                     style="font-size: 20px;" type="checkbox"
                                                     class="form-check-input mb-1" />
-                                            </div> --}}
+                                            </div> -->
                                             <div class="d-flex" style="display: flex; align-items:center;">
                                                 <p style="margin-right: 10px; margin-top:10px">Inactive</p>
                                                 <div class="switch" style="width: 35px">
@@ -211,7 +262,9 @@
                                             </div>
                                         </div>
                                     </div>
+
                                 </form>
+
                             </div>
                             <div class="modal-footer" style="display: flex; justify-content:center;">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
@@ -266,35 +319,42 @@
                         </div>
                     </div>
                     <div class="blk">
-                        <div class="top_head">
-                            <div class="card_blk" id="">
-                                <div class="icon">
-                                    <p id="totalUserCounter">{{ $activeAdmins }}</p>
+                        {{-- top_head --}}
+                        <div class="block_row flex_row" style="padding-bottom: 30px">
+                            <div class="col">
+                                <div class="card_blk" id="">
+                                    <div class="icon">
+                                        <p id="totalUserCounter">{{ $activeAdmins }}</p>
+                                    </div>
+                                    <strong>Active Users</strong>
+                                    <a type="button"></a>
                                 </div>
-                                <strong>Active Users</strong>
-                                <a type="button"></a>
                             </div>
-                            <div class="card_blk" id="">
-                                <div class="icon">
-                                    <p id="totalUserCounter">{{ $inactiveAdmins }}</p>
+                            <div class="col">
+                                <div class="card_blk" id="">
+                                    <div class="icon">
+                                        <p id="totalUserCounter">{{ $inactiveAdmins }}</p>
+                                    </div>
+                                    <strong>In-Active Users</strong>
+                                    <a type="button"></a>
                                 </div>
-                                <strong>In-Active Users</strong>
-                                <a type="button"></a>
                             </div>
-                            <div class="card_blk" id="">
-                                <div class="icon">
-                                    <p id="totalUserCounter">{{$totalAdmins }}</p>
+                            <div class="col">
+                                <div class="card_blk" id="">
+                                    <div class="icon">
+                                        <p id="totalUserCounter">{{$totalAdmins }}</p>
+                                    </div>
+                                    <strong>Total Users</strong>
+                                    <a type="button"></a>
                                 </div>
-                                <strong>Total Users</strong>
-                                <a type="button"></a>
                             </div>
-
-
-                            <div class="card_blk" id="showAddAdminPopUpBtn">
-                                <div class="icon"><img src="{{ asset('/images/icon-plus.svg') }}" alt="">
+                            <div class="col">
+                                <div class="card_blk" id="showAddAdminPopUpBtn">
+                                    <div class="icon"><img src="{{ asset('/images/icon-plus.svg') }}" alt="">
+                                    </div>
+                                    <strong>Add Admin</strong>
+                                    <a type="button"></a>
                                 </div>
-                                <strong>Add Admin</strong>
-                                <a type="button"></a>
                             </div>
                         </div>
                         <div class="tbl_blk">
@@ -325,7 +385,7 @@
                                         <td class="grid-p-searchby">
                                             {{ $user->email }}
                                         </td>
-                                        <td class="grid-p-searchby">
+                                        <td class="grid-p-searchby date-formate" data-date="{{ $user->created_at }}">
                                             {{ $user->created_at }}
                                         </td>
                                         <td class="grid-p-searchby">
@@ -402,51 +462,7 @@
 
 {{-- __________________________ table searching ended_______________ --}}
 <script>
-    // Define the functaion
-$('#AddAdminBtn').on('click',function(){
-    handleCreateAdminx();
-});
-function handleCreateAdminx() {
-var formData = $('#AddAdminForm').serialize();
-const uri ='/admin/dashboard/create/admin';
-$('#uiBlocker').show();
-$.ajax({
-    type: 'POST',
-    url: uri, // Add quotes around the URL
-    data: formData,
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    success: function(response) {
-        $('#uiBlocker').hide();
-        toastr.success("Submitted Successfully", '', { timeOut: 5000 }); // Set timeout to 5 seconds
-        // window.location.reload();
-        // Handle success response 
-        // Close the modal if needed  
-        window.location.reload();
-        $('.data-table').DataTable().ajax.reload();
-        $('#exampleModal').modal('hide');
-    },
-    error: function(xhr, status, error) {
-        $('#uiBlocker').hide();$('#uiBlocker').hide();
-        var errorMessages = "";
-        if (xhr.status === 422) {
-            var errors = xhr.responseJSON.errors;
-            for (var key in errors) {
-                toastr.error(errors[key][0] + '<br>', '', { timeOut: 5000 }); // Set timeout to 5 seconds
-            }
-        } else {
-            toastr.error('Error:', error, { timeOut: 3000 }); // Set timeout to 5 seconds
-        }
-        $('#exampleModal').modal('show');
-        console.error('Error submitting form:', error);
-    }
-});  
-                       
-}
-
-
-///////////////////////////////
+    ///////////////////////////////
 
 // Event delegation for handling click events on action buttons
 $(document).on('click', '.admin_view', function() {
@@ -591,9 +607,188 @@ $('.close_delete_modal_btn').click(function(){
 <script>
     $(document).ready(function() {
     $('#showAddAdminPopUpBtn').on('click', function() {
+       
         $('#popupAddAdminUrl').show();
     });
 });  
   
+</script>
+
+<script>
+    const fullNameInput = document.getElementById('FullNameInput');
+    const emailInput = document.getElementById('EmailInput');
+    const passwordInput = document.getElementById('PasswordInput');
+    const submitButton = document.querySelector('button[type="submit"]');
+    const fullNameError = document.getElementById('FullNameError');
+    const emailError = document.getElementById('EmailError');
+    const passwordError = document.getElementById('PasswordError');
+
+    function validateForm() {
+        let isValid = true;
+
+        // Full Name Validation
+        const fullName = fullNameInput.value;
+        if (/[^a-zA-Z\s]/.test(fullName)) {
+            fullNameError.textContent='';
+            $('.FullNameError').text('');
+            fullNameError.textContent = 'Name should contain only alphabets and spaces.';
+            isValid = false;
+        } else if (fullName.length > 10) {
+            fullNameError.textContent='';
+            $('.FullNameError').text('');
+            fullNameError.textContent = 'Name should not exceed 10 characters.';
+            isValid = false;
+        } else {
+            $('.FullNameError').text('');
+            fullNameError.textContent = '';
+        }
+
+        // Email Validation
+        const email = emailInput.value;
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(email)) {
+            emailError.textContent='';
+            $('.EmailError').text('');
+            emailError.textContent = 'Please enter a valid email address.';
+            isValid = false;
+        } else if (email.length > 50) {
+            emailError.textContent='';
+            $('.EmailError').text('');
+            emailError.textContent = 'Email should not exceed 50 characters.';
+            isValid = false;
+        } else {
+            $('.EmailError').text('');
+            emailError.textContent = '';
+        }
+
+        // Password Validation
+        const password = passwordInput.value;
+        if (password.length < 8) {
+            passwordError.textContent='';
+            $('.PasswordError').text('');
+            passwordError.textContent = 'Password must be at least 8 characters long.';
+            isValid = false;
+        } else if (password.length > 20) {
+            passwordError.textContent='';
+            $('.PasswordError').text('');
+            passwordError.textContent = 'Password should not exceed 20 characters.';
+            isValid = false;
+        } else {
+            $('.PasswordError').text('');
+            passwordError.textContent = '';
+        }
+
+        // Disable or enable submit button based on validation
+        submitButton.disabled = !isValid;
+    }
+
+    fullNameInput.addEventListener('input', validateForm);
+    emailInput.addEventListener('input', validateForm);
+    passwordInput.addEventListener('input', validateForm);
+
+    document.getElementById('AddAdminForm').addEventListener('submit', (event) => {
+        if (!submitButton.disabled) {
+            $('#popupAddAdminUrl').hide();
+            $('#uiBlocker').show();
+            return true;
+        }
+        event.preventDefault();
+        alert('Please fix the errors in the form.');
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('updateAdminForm');
+    const fullNameInput = document.getElementById('editFullNameInput');
+    const emailInput = document.getElementById('editEmailInput');
+    const passwordInput = document.getElementById('editPasswordInput');
+    const updateButton = document.getElementById('updateAdminBtn');
+
+    const fullNameError = document.getElementById('editFullNameInputError');
+    const emailError = document.getElementById('editEmailInputError');
+    const passwordError = document.getElementById('editPasswordInputError');
+
+    const validateForm = () => {
+        let isValid = true;
+
+        // Validate Full Name
+        if (fullNameInput.value.trim() === '') {
+            fullNameError.textContent = 'Full Name is required.';
+            isValid = false;
+        } else {
+            fullNameError.textContent = '';
+        }
+
+        // Validate Email
+        if (emailInput.value.trim() === '') {
+            emailError.textContent = 'Email is required.';
+            isValid = false;
+        } else if (!emailInput.value.includes('@')) {
+            emailError.textContent = 'Email must be valid.';
+            isValid = false;
+        } else {
+            emailError.textContent = '';
+        }
+
+        // Validate Password
+        if (passwordInput.value.trim() !== '' && passwordInput.value.length < 8) {
+            passwordError.textContent = 'Password must be at least 8 characters long.';
+            isValid = false;
+        } else {
+            passwordError.textContent = '';
+        }
+
+        // Enable or disable the button based on validity
+        updateButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listeners for real-time validation
+    fullNameInput.addEventListener('input', validateForm);
+    emailInput.addEventListener('input', validateForm);
+    passwordInput.addEventListener('input', validateForm);
+
+    // Attach submit event listener to the form
+    form.addEventListener('submit', function(event) {
+        if (!validateForm()) {
+            event.preventDefault();
+        }
+    });
+
+    // Initial validation to set the button state on page load
+   // validateForm();
+});
+
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const formatDate = (dateString) => {
+        const months = [
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        ];
+
+        const date = new Date(dateString);
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = months[date.getMonth()];
+        const year = date.getFullYear();
+
+        return `${day} ${month} ${year}`;
+    };
+
+    // Select all table cells with the class 'grid-p-searchby'
+    const dateCells = document.querySelectorAll('.date-formate');
+
+    // Loop through each cell and format the date
+    dateCells.forEach(cell => {
+        const rawDate = cell.getAttribute('data-date');
+        const formattedDate = formatDate(rawDate);
+        cell.textContent = formattedDate;
+    });
+});
 </script>
 @endpush

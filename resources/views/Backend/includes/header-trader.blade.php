@@ -1,3 +1,14 @@
+<style>
+    #pro_btn {
+        display: none !important;
+    }
+
+    @media (min-width: 1025px) {
+        #pro_btn {
+            display: block !important;
+        }
+    }
+</style>
 <header>
     <div class="contain-fluid">
         <div id="uiBlocker"

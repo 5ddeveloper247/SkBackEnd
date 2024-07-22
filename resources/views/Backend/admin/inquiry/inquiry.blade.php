@@ -5,6 +5,12 @@
     .validation-failed {
         border: 1px solid red;
     }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+    }
 </style>
 @endpush
 
@@ -81,7 +87,7 @@
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
-                                            <h5 class="color">Reply inquiry</h5>
+                                            <h5 class="color">Reply Inquiry</h5>
                                             <div class="form_row row">
                                                 <input type="hidden" name="edit_id" id="edit_id">
 
@@ -89,8 +95,10 @@
                                                     <div class="form_blk">
                                                         <h6>Email<sup>*</sup></h6>
                                                         <input type="email" name="inquiry_email_edit"
-                                                            id="inquiry_email_edit" class="text_box" maxlength="15"
+                                                            id="inquiry_email_edit" class="text_box" maxlength="50"
                                                             readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_email_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
@@ -99,6 +107,8 @@
                                                         <input type="text" name="inquiry_agent_edit"
                                                             id="inquiry_agent_edit" class="text_box" maxlength="15"
                                                             readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_agent_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
@@ -107,48 +117,52 @@
                                                         <input type="text" name="inquiry_name_edit"
                                                             id="inquiry_name_edit" class="text_box" maxlength="15"
                                                             readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_name_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Contact Number<sup>*</sup></h6>
                                                         <input type="number" name="inquiry_contact_number_edit"
                                                             id="inquiry_contact_number_edit" class="text_box"
-                                                            placeholder="" maxlength="15" readonly>
+                                                            maxlength="15" readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_contact_number_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Comment <sup>*</sup></h6>
+                                                        <h6>Comment<sup>*</sup></h6>
+                                                        <small id="inquiry_description_edit_created_at"><sup>Created
+                                                                at</sup></small>
                                                         <textarea name="inquiry_description_edit"
                                                             id="inquiry_description_edit" class="text_box"
-                                                            placeholder="" readonly></textarea>
+                                                            readonly></textarea>
+                                                        <small class="error-message"
+                                                            id="inquiry_description_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Reply <sup>*</sup></h6>
+                                                        <h6>Reply<sup>*</sup></h6>
                                                         <textarea required name="inquiry_reply_edit"
-                                                            id="inquiry_reply_edit" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            id="inquiry_reply_edit" class="text_box" maxlength="300"
+                                                            placeholder="Reply should not exceed more than 300 words"></textarea>
+                                                        <small class="error-message"
+                                                            id="inquiry_reply_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div class="btn_blk form_btn text-center">
-
                                                 <button type="submit" class="site_btn long edit_inquiry_btn"
                                                     id="edit_inquiry_btn">Send</button>
-
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -167,12 +181,13 @@
                             <button type="button" class="x_btn" id="close_update_modal_default_btn"></button>
                             <div id="Inspection" class="tab-pane fade active in">
 
-                                <form method="POST" id="edit_inquiry_form" action="{{ route('admin.inquiry.update') }}">
+                                <form method="POST" id="edit_replied_inquiry_form"
+                                    action="{{ route('admin.inquiry.update') }}">
                                     <input type="hidden" name="property_id_edit" id="property_id_edit">
                                     @csrf
                                     <fieldset>
                                         <div class="blk">
-                                            <h5 class="color">Reply inquiry</h5>
+                                            <h5 class="color">Reply Inquiry</h5>
                                             <div class="form_row row">
                                                 <input type="hidden" name="edit_id" id="edit_replied_id">
 
@@ -181,7 +196,9 @@
                                                         <h6>Email<sup>*</sup></h6>
                                                         <input type="email" name="inquiry_email_edit"
                                                             id="inquiry_replied_email_edit" class="text_box"
-                                                            maxlength="15" readonly>
+                                                            maxlength="50" readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_replied_email_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
@@ -190,6 +207,8 @@
                                                         <input type="text" name="inquiry_agent_edit"
                                                             id="inquiry_replied_agent_edit" class="text_box"
                                                             maxlength="15" readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_replied_agent_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
@@ -198,48 +217,55 @@
                                                         <input type="text" name="inquiry_replied_name_edit"
                                                             id="inquiry_replied_name_edit" class="text_box"
                                                             maxlength="15" readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_replied_name_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Contact Number<sup>*</sup></h6>
                                                         <input type="number" name="inquiry_contact_number_edit"
                                                             id="inquiry_replied_contact_number_edit" class="text_box"
-                                                            placeholder="" maxlength="15" readonly>
+                                                            maxlength="15" readonly>
+                                                        <small class="error-message"
+                                                            id="inquiry_replied_contact_number_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Description <sup>*</sup></h6>
+                                                        <h6>Comment<sup>*</sup></h6>
+                                                        <small id="inquiry_replied_reply_edit_created_at"><sup>Created
+                                                                at</sup></small>
                                                         <textarea name="inquiry_description_edit"
                                                             id="inquiry_replied_description_edit" class="text_box"
-                                                            placeholder="" readonly></textarea>
+                                                            readonly></textarea>
+                                                        <small class="error-message"
+                                                            id="inquiry_replied_description_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Reply <sup>*</sup></h6>
+                                                        <h6>Reply<sup>*</sup></h6>
+                                                        <small id="inquiry_replied_reply_edit_replied_at"><sup>Replied
+                                                                at</sup></small>
                                                         <textarea required name="inquiry_reply_edit"
                                                             id="inquiry_replied_reply_edit" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            maxlength="300"
+                                                            placeholder="Reply should not exceed more than 300 words"></textarea>
+                                                        <small class="error-message"
+                                                            id="inquiry_replied_reply_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div class="btn_blk form_btn text-center">
-
                                                 <button type="submit" class="site_btn long edit_replied_inquiry_btn"
                                                     id="edit_replied_inquiry_btn">Send</button>
-
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -482,14 +508,30 @@ $(document).on('click', '.inquiry_edit_btn', function () {
 
     $('#edit_id').val(inquiry.id)
     
-    $('#inquiry_email_edit').val(inquiry.email)
-    $('#inquiry_name_edit').val(inquiry?.name)
-    $('#inquiry_agent_edit').val(inquiry?.agent)
-    $('#inquiry_contact_number_edit').val(inquiry.phone)
-    $('#inquiry_description_edit').val(inquiry.description)
+    const formattedDate = formatDate(inquiry.created_at);
+
+
+$('#inquiry_email_edit').val(inquiry.email);
+$('#inquiry_name_edit').val(inquiry?.name);
+$('#inquiry_agent_edit').val(inquiry?.agent);
+$('#inquiry_contact_number_edit').val(inquiry.phone);
+$('#inquiry_description_edit').val(inquiry.description);
+$('#inquiry_description_edit_created_at').prepend(formattedDate);
     // Add your edit logic here, e.g., populate a form with inquiry details for editing
 });  
+function formatDate(dateString) {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+}
 
 
 // _________________________________Delete 1 functions_______________________________
@@ -582,7 +624,8 @@ function loadRepliedInquiriesResponse(response) {
 $(document).on('click', '.inquiry_replied_edit_btn', function () {
     var id = $(this).attr('data-id');
     var inquiry = JSON.parse($(this).attr('data-inquiry'));
-      
+    const formattedDate = formatDate(inquiry.updated_at);
+    const formattedDateCreatedAt = formatDate(inquiry.created_at);
     $('#edit_replied_id').val(inquiry.id)
     $('#inquiry_replied_email_edit').val(inquiry.email)
     $('#inquiry_replied_name_edit').val(inquiry?.name)
@@ -590,6 +633,9 @@ $(document).on('click', '.inquiry_replied_edit_btn', function () {
     $('#inquiry_replied_contact_number_edit').val(inquiry.phone)
     $('#inquiry_replied_description_edit').val(inquiry.description)
     $('#inquiry_replied_reply_edit').val(inquiry.reply)
+    $('#inquiry_replied_reply_edit_replied_at').prepend(formattedDate)
+    $('#inquiry_replied_reply_edit_created_at').prepend(formattedDateCreatedAt)
+
 
     // Add your edit logic here, e.g., populate a form with inquiry details for editing
 });  
@@ -651,11 +697,115 @@ function deletinquiryRepliedResponse(response) {
     });
 </script>
 
+<script>
+    $(document).ready(function() {
+        $('#edit_inquiry_form').on('submit', function(e) {
+            // Use plain JavaScript to set the display property
+            $('#edit-data-popup').hide();
+           $('#uiBlocker').show();
+        });
+        $('#edit_replied_inquiry_form').on('submit', function(e) {
+            // Use plain JavaScript to set the display property
+            $('#edit-replied-data-popup').hide();
+           $('#uiBlocker').show();
+        });
 
+    });
+</script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const formInquiry = document.getElementById('edit_inquiry_form');
+    const replyInput = document.getElementById('inquiry_reply_edit');
+    const sendButton = document.getElementById('edit_inquiry_btn');
 
+    const replyError = document.getElementById('inquiry_reply_edit_error');
 
+    const validateInquiryForm = () => {
+        let isValid = true;
 
+        if (replyInput.value.trim() === '') {
+            replyError.textContent = 'Reply is required.';
+            isValid = false;
+        } else if (replyInput.value.length > 300) {
+            replyError.textContent = 'Reply should not exceed 300 characters.';
+            isValid = false;
+        } else {
+            replyError.textContent = '';
+        }
+
+        // Disable the button if the form is invalid
+        sendButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listener for real-time validation
+    replyInput.addEventListener('input', validateInquiryForm);
+
+    // Attach submit event listener to the form
+    formInquiry.addEventListener('submit', function(event) {
+        if (!validateInquiryForm()) {
+            event.preventDefault();
+        }
+    });
+
+    // Initial validation to set the button state on page load
+    validateInquiryForm();
+});
+
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const formRepliedInquiry = document.getElementById('edit_replied_inquiry_form');
+    const replyInput = document.getElementById('inquiry_replied_reply_edit');
+    const sendButton = document.getElementById('edit_replied_inquiry_btn');
+    const replyError2 = document.getElementById('inquiry_replied_reply_edit_error');
+
+    // Debugging logs
+    console.log('Initial value of reply input:', replyInput.value);
+
+    const validateRepliedInquiryForm = () => {
+        let isValid = true;
+
+        // Debugging logs
+        console.log('Value of reply input during validation:', replyInput.value);
+
+        if (replyInput.value.trim() === '') {
+            replyError2.textContent = 'Reply is required.';
+            isValid = false;
+        } else if (replyInput.value.length > 300) {
+            replyError2.textContent = 'Reply should not exceed 300 characters.';
+            isValid = false;
+        } else {
+            replyError2.textContent = '';
+        }
+
+        // Disable the button if the form is invalid
+        sendButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listener for real-time validation
+    replyInput.addEventListener('input', validateRepliedInquiryForm);
+
+    // Attach submit event listener to the form
+    formRepliedInquiry.addEventListener('submit', function(event) {
+        if (!validateRepliedInquiryForm()) {
+            event.preventDefault();
+            console.log('Form submission prevented due to validation failure.');
+        } else {
+            console.log('Form submission allowed.');
+        }
+    });
+
+    // Initial validation to set the button state on page load
+   // validateRepliedInquiryForm();
+});
+
+</script>
 
 
 @endpush

@@ -16,7 +16,8 @@ class AdminController extends Controller
     {
         // Assuming 'role' is a column in your 'users' table to distinguish admins from other users.
         // Adjust the condition based on your actual schema.
-        $dataAdmin = User::where('role', 'admin')->get();
+        $dataAdmin = User::where('role', 'admin')->orderBy('created_at', 'desc')->get();
+
         $adminCounter = $dataAdmin->count();
         $activeAdmins = User::where('role', 'admin')->where('status', '1')->count();
         $inactiveAdmins = User::where('role', 'admin')->where('status', '0')->count();

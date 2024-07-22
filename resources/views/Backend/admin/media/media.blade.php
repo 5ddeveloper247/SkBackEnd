@@ -696,11 +696,10 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
         const flagVideoVal = window.localStorage.getItem('video_delete') === 'true';
         const flagPictureVal = window.localStorage.getItem('picture_delete') === 'true';
 
-        console.log('Video Flag:', flagVideoVal);  // Debugging log
-        console.log('Picture Flag:', flagPictureVal);  // Debugging log
+     
 
         if (flagPictureVal) {
-            console.log('Picture flag is true');
+           
             $('#tab_list_video').removeClass('active');
             $('#All').removeClass('active');
             $('#All').removeClass('in');
@@ -710,7 +709,7 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
             window.localStorage.removeItem('picture_delete');
             window.localStorage.removeItem('video_delete');
         } else if (flagVideoVal) {
-            console.log('Video flag is true');
+           
             $('#tab_list_picture').removeClass('active');
             $('#AddMedia').removeClass('active');
             $('#AddMedia').removeClass('in');
@@ -720,7 +719,7 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
             window.localStorage.removeItem('picture_delete');
             window.localStorage.removeItem('video_delete');
         } else {
-            console.log('No flags set, defaulting to video');
+           
             // Default to video if no flags are set
             $('#tab_list_video').addClass('active');
             $('#All').addClass('in');
@@ -734,7 +733,7 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
         $('#video_delete').click(function() {
             window.localStorage.setItem('video_delete', 'true');
             window.localStorage.setItem('picture_delete', 'false');
-            console.log('Set video_delete to true and picture_delete to false');  // Debugging log
+           
 
             $('#tab_list_picture').removeClass('active');
             $('#AddMedia').removeClass('active');
@@ -747,7 +746,7 @@ $('#AddMediaOnlySubmitBtn').on('click', function(e) {
         $('#picture_delete').click(function() {
             window.localStorage.setItem('picture_delete', 'true');
             window.localStorage.setItem('video_delete', 'false');
-            console.log('Set picture_delete to true and video_delete to false');  // Debugging log
+           
 
             $('#tab_list_video').removeClass('active');
             $('#All').removeClass('active');

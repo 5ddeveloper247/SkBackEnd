@@ -136,8 +136,7 @@
         // Create a set of all unique dates from both inquiries and properties
         let allDatesSet = new Set([...inquiriesDates, ...propertiesDates]);
         let allDates = Array.from(allDatesSet).sort((a, b) => new Date(a) - new Date(b));
-        console.log("allDates",allDates);
-        console.log("allDatesSet",allDatesSet);
+      ;
 
         let inquiriesData = [];
         let propertiesRentData = [];
@@ -152,7 +151,7 @@
             propertiesRentData.push(propertyIndex !== -1 ? propertiesRentCounts[propertyIndex] : 0);
             propertiesSaleData.push(propertyIndex !== -1 ? propertiesSaleCounts[propertyIndex] : 0);
         });
-         console.log("inquiryData",inquiriesData)
+        
         // Format dates for x-axis labels
         let x_value_days = allDates.map(date => {
             return new Date(date).toLocaleDateString('en-GB', {

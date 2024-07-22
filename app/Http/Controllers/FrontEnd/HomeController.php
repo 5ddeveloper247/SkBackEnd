@@ -74,6 +74,7 @@ class HomeController extends Controller
                 "purpose_plot" => $request->plot,
                 "purpose_commercial" => $request->commercial,
                 "address_city" => $request->city,
+                "address_address" => $request->address,
                 "propertyDetail_area" => $request->areaUnit, //marla sq.ft
                 "propertyDetail_area_unit" => $request->size, //e.g 24324
             ]);
@@ -172,9 +173,13 @@ class HomeController extends Controller
                     ->groupBy('property_record_id');
             })->with('propertyListingPape')->first();
 
-            $maxRooms = $maxRoomsArray->propertyListingPape->propertyDetail_bedrooms;
+            // Initialize maxRooms as null
+            $maxRooms = null;
 
-
+            // Check if $maxRoomsArray is not null and set $maxRooms accordingly
+            if ($maxRoomsArray && $maxRoomsArray->propertyListingPape) {
+                $maxRooms = $maxRoomsArray->propertyListingPape->propertyDetail_bedrooms;
+            }
 
             // Check if propertyInfo or testimonials are empty
             if ($propertyInfo->isEmpty()) {
@@ -186,14 +191,21 @@ class HomeController extends Controller
             }
 
             // Return JSON response with property information, testimonials, and max rooms
-            return response()->json(['propertyInfo' => $propertyInfo, 'testimonials' => $testimonials, 'maxRooms' => $maxRooms]);
+            return response()->json([
+                'propertyInfo' => $propertyInfo,
+                'testimonials' => $testimonials,
+                'maxRooms' => $maxRooms
+            ]);
         } catch (Exception $e) {
-            //dd($e);
             // Log the error and return a server error response
             Log::error('Error fetching property info and testimonials: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to fetch property information and testimonials.'], 500);
+            return response()->json([
+                'error' => 'Failed to fetch property information and testimonials.',
+                'errorx' => $e->getMessage()
+            ], 500);
         }
     }
+
 
 
 

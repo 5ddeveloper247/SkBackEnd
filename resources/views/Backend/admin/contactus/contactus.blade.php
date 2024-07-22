@@ -5,6 +5,18 @@
     .validation-failed {
         border: 1px solid red;
     }
+
+    #contact_reply_edit_error {
+        color: red;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 </style>
 @endpush
 
@@ -94,55 +106,67 @@
                                                         <input type="text" name="contact_name_edit"
                                                             id="contact_name_edit" class="text_box" maxlength="15"
                                                             readonly>
+                                                        <small class="error-message"
+                                                            id="contact_name_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <div class="form_blk">
                                                         <h6>Email<sup>*</sup></h6>
                                                         <input type="email" name="contact_email_edit"
-                                                            id="contact_email_edit" class="text_box" maxlength="15"
+                                                            id="contact_email_edit" class="text_box" maxlength="50"
                                                             readonly>
+                                                        <small class="error-message"
+                                                            id="contact_email_edit_error"></small>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Subject <sup>*</sup></h6>
+                                                        <h6>Subject<sup>*</sup></h6>
                                                         <textarea name="contact_subject_edit" id="contact_subject_edit"
                                                             class="text_box" placeholder="" readonly></textarea>
+                                                        <small class="error-message"
+                                                            id="contact_subject_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
                                                         <h6>Description<sup>*</sup></h6>
+                                                        <small id="contact_description_edit_created_at"><sup>Created
+                                                                at</sup></small>
                                                         <textarea name="contact_description_edit"
                                                             id="contact_description_edit" class="text_box"
-                                                            placeholder="" readonly></textarea>
+                                                            placeholder="Description should not exceed more than 300 words"
+                                                            readonly></textarea>
+                                                        <small class="error-message"
+                                                            id="contact_description_edit_error"></small>
                                                     </div>
                                                 </div>
-
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Reply <sup>*</sup></h6>
+                                                        <h6>Reply<sup>*</sup></h6>
                                                         <textarea required name="contact_reply_edit"
                                                             id="contact_reply_edit" class="text_box"
-                                                            placeholder=""></textarea>
+                                                            placeholder="Reply should not exceed more than 300 words"
+                                                            maxlength="300"></textarea>
+                                                        <small class="error-message"
+                                                            id="contact_reply_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div class="btn_blk form_btn text-center">
-
                                                 <button type="submit" class="site_btn long edit_contact_btn"
                                                     id="edit_contact_btn">Send</button>
-
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -161,7 +185,8 @@
                             <button type="button" class="x_btn" id="close_replied_update_modal_default_btn"></button>
                             <div id="Inspection" class="tab-pane fade active in">
 
-                                <form method="POST" id="edit_contact_form" action="{{ route('admin.contact.update') }}">
+                                <form method="POST" id="edit_replied_contact_form"
+                                    action="{{ route('admin.contact.update') }}">
                                     <input type="hidden" name="property_replied_id_edit" id="property_replied_id_edit">
                                     @csrf
                                     <fieldset>
@@ -177,6 +202,8 @@
                                                         <input type="text" name="contact_replied_name_edit"
                                                             id="contact_replied_name_edit" class="text_box"
                                                             maxlength="15" readonly>
+                                                        <small class="error-message"
+                                                            id="contact_replied_name_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6">
@@ -184,50 +211,59 @@
                                                         <h6>Email<sup>*</sup></h6>
                                                         <input type="email" name="contact_replied_email_edit"
                                                             id="contact_replied_email_edit" class="text_box"
-                                                            maxlength="15" readonly>
+                                                            maxlength="50" readonly>
+                                                        <small class="error-message"
+                                                            id="contact_replied_email_edit_error"></small>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Subject <sup>*</sup></h6>
+                                                        <h6>Subject<sup>*</sup></h6>
                                                         <textarea name="contact_replied_subject_edit"
                                                             id="contact_replied_subject_edit" class="text_box"
                                                             placeholder="" readonly></textarea>
+                                                        <small class="error-message"
+                                                            id="contact_replied_subject_edit_error"></small>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
                                                         <h6>Description<sup>*</sup></h6>
+                                                        <small id="contact_replied_description_edit_created_at"><sup>Created
+                                                                at</sup></small>
                                                         <textarea name="contact_replied_description_edit"
                                                             id="contact_replied_description_edit" class="text_box"
-                                                            placeholder="" readonly></textarea>
+                                                            placeholder="Description should not exceed more than 300 words"
+                                                            readonly></textarea>
+                                                        <small class="error-message"
+                                                            id="contact_replied_description_edit_error"></small>
                                                     </div>
                                                 </div>
-
 
                                                 <div class="col-xs-12">
                                                     <div class="form_blk">
-                                                        <h6>Reply <sup>*</sup></h6>
+                                                        <h6>Reply<sup>*</sup></h6>
+                                                        <small class="contact_replied_reply_edit_replied_at"><sup>Replied
+                                                                at</sup></small>
                                                         <textarea required name="contact_reply_edit"
-                                                            id="contact_reply_edit"
+                                                            id="contact_replied_reply_edit"
                                                             class="text_box contact_replied_reply_edit"
                                                             placeholder=""></textarea>
+                                                        <small class="error-message"
+                                                            id="contact_replied_reply_edit_error"></small>
                                                     </div>
                                                 </div>
-
                                             </div>
 
                                             <div class="btn_blk form_btn text-center">
-
                                                 <button type="submit" class="site_btn long edit_replied_contact_btn"
                                                     id="edit_replied_contact_btn">Send</button>
-
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -383,11 +419,17 @@
 @endsection
 
 @push('scripts')
+
+
+
 <script>
     $(document).ready(function() {
         $('#uiBlocker').show();
+
     })
 </script>
+
+
 <script>
     $('.contact_search_box').on("keyup", function (e) {
   
@@ -470,6 +512,8 @@ $(document).on('click', '.contact_edit_btn', function () {
         $('#contact_email_edit').val(contact.email);
         $('#contact_subject_edit').val(contact.subject);
         $('#contact_description_edit').val(contact.message);
+        const createdAt=formatDate(contact.created_at)
+        $('#contact_description_edit_created_at').prepend(createdAt);
     } catch (e) {
         
         toastr.error('Contact us data is not properly entered or formatted', '', { timeOut: 3000 });
@@ -567,7 +611,19 @@ function loadContactRepliedResponse(response) {
 }
 
 
+function formatDate(dateString) {
+    const months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${day} ${month} ${year}`;
+}
 //2
 $(document).on('click', '.contact_replied_edit_btn', function () {
     var id = $(this).attr('data-id');
@@ -577,7 +633,11 @@ $(document).on('click', '.contact_replied_edit_btn', function () {
     $('#contact_replied_email_edit').val(contact.email)
     $('#contact_replied_subject_edit').val(contact.subject)
     $('#contact_replied_description_edit').val(contact.message)
+    var contactCreatedAt = formatDate(contact.created_at) 
+    $('#contact_replied_description_edit_created_at').prepend(contactCreatedAt)
     $('.contact_replied_reply_edit').val(contact.contact_reply_edit)
+    var contactRepliedAt = formatDate(contact.updated_at)  // Format the date for display
+    $('.contact_replied_reply_edit_replied_at').prepend(contactRepliedAt)
     // Add your edit logic here, e.g., populate a form with contact details for editing
 });  
 
@@ -623,5 +683,117 @@ function deletcontactRepliedResponse(response) {
 </script>
 
 
+
+<script>
+    $(document).ready(function() {
+        $('#edit_replied_contact_btn').on('click', function(e) {
+            e.preventDefault();
+            // Use plain JavaScript to set the display property
+            $('#edit-replied-data-popup').hide();
+           $('#uiBlocker').show();
+            setTimeout(() => {
+                $('#edit_replied_contact_form').submit();
+            }, 1000);
+        });
+        $('#edit_contact_btn').on('click', function(e) {
+            e.preventDefault();
+            // Use plain JavaScript to set the display property
+            $('#edit-data-popup').hide();
+           $('#uiBlocker').show();
+            setTimeout(() => {
+                $('#edit_contact_form').submit();
+            }, 1000);
+        });
+
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const formContact = document.getElementById('edit_contact_form');
+    const replyInput = document.getElementById('contact_reply_edit');
+    const sendButton = document.getElementById('edit_contact_btn');
+
+    const replyError = document.getElementById('contact_reply_edit_error');
+
+    const validateContactForm = () => {
+        let isValid = true;
+
+        if (replyInput.value.trim() === '') {
+            replyError.textContent = 'Reply is required.';
+            isValid = false;
+        } else if (replyInput.value.length > 300) {
+            replyError.textContent = 'Reply should not exceed 300 words.';
+            isValid = false;
+        } else {
+            replyError.textContent = '';
+        }
+
+        // Disable the button if the form is invalid
+        sendButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listeners for real-time validation
+    replyInput.addEventListener('input', validateContactForm);
+
+    // Attach submit event listener to the form
+    formContact.addEventListener('submit', function(event) {
+        if (!validateContactForm()) {
+            event.preventDefault();
+        }
+    });
+
+    // Initial validation to set the button state on page load
+    validateContactForm();
+});
+
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const formRepliedContact = document.getElementById('edit_replied_contact_form');
+    const replyInput = document.getElementById('contact_replied_reply_edit');
+    const sendButton = document.getElementById('edit_replied_contact_btn');
+
+    const replyError = document.getElementById('contact_replied_reply_edit_error');
+
+    const validateRepliedContactForm = () => {
+        let isValid = true;
+
+        if (replyInput.value.trim() === '') {
+            replyError.textContent = 'Reply is required.';
+            isValid = false;
+        } else if (replyInput.value.length > 300) {
+            replyError.textContent = 'Reply should not exceed 300 characters.';
+            isValid = false;
+        } else {
+            replyError.textContent = '';
+        }
+
+        // Disable the button if the form is invalid
+        sendButton.disabled = !isValid;
+
+        return isValid;
+    };
+
+    // Attach input event listeners for real-time validation
+    replyInput.addEventListener('input', validateRepliedContactForm);
+
+    // Attach submit event listener to the form
+    formRepliedContact.addEventListener('submit', function(event) {
+        if (!validateRepliedContactForm()) {
+            event.preventDefault();
+        }
+    });
+
+    // Initial validation to set the button state on page load
+    validateRepliedContactForm();
+});
+
+
+</script>
 
 @endpush

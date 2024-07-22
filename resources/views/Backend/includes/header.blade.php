@@ -50,7 +50,7 @@ $page='';
                 <a href="{{ url('index.php') }}"
                     style="background-image: url('{{ asset('/images/SK-logo.png') }}');"></a>
             </div>
-            <button type="button" class="toggle"><span></span></button>
+            {{-- <button type="button" class="toggle"><span></span></button> --}}
 
 
             <nav class="ease">

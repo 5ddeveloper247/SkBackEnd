@@ -11,15 +11,16 @@
     input[type="number"]::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    } 
+    }
 
     /* Add this to your CSS file */
-input:focus {
-    border-color: green;
-    outline: none; /* Removes the default focus outline */
-    box-shadow: 0 0 5px rgba(0, 128, 0, 0.5); /* Optional: adds a green shadow for better visibility */
-}
-
+    input:focus {
+        border-color: green;
+        outline: none;
+        /* Removes the default focus outline */
+        box-shadow: 0 0 5px rgba(0, 128, 0, 0.5);
+        /* Optional: adds a green shadow for better visibility */
+    }
 </style>
 @endpush
 
@@ -166,18 +167,13 @@ input:focus {
 
                                     <fieldset id="personal_info_tab">
                                         <div class="form_row row">
-
-
                                             <div class="col-xs-6">
                                                 <h6>First Name<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="pInfo_firstName"
                                                         value="{{ old('pInfo_firstName') }}" id="pInfo_firstName"
                                                         class="text_box" placeholder="" maxlength="50">
-                                                    @if ($errors->has('pInfo_firstName'))
-                                                    <span class="text-danger">{{ $errors->first('pInfo_firstName')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="pInfo_firstName_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
@@ -186,10 +182,7 @@ input:focus {
                                                     <input type="text" name="pInfo_lastName"
                                                         value="{{ old('pInfo_lastName') }}" id="pInfo_lastName"
                                                         class="text_box" placeholder="" maxlength="50">
-                                                    @if ($errors->has('pInfo_lastName'))
-                                                    <span class="text-danger">{{ $errors->first('pInfo_lastName')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="pInfo_lastName_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
@@ -198,10 +191,7 @@ input:focus {
                                                     <input type="email" name="pInfo_email"
                                                         value="{{ old('pInfo_email') }}" id="pInfo_email"
                                                         class="text_box" placeholder="sample@gmail.com" maxlength="50">
-                                                    @if ($errors->has('pInfo_email'))
-                                                    <span class="text-danger">{{ $errors->first('pInfo_email')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="pInfo_email_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-xs-6">
@@ -209,18 +199,14 @@ input:focus {
                                                 <div class="form_blk">
                                                     <input type="number" name="pInfo_phoneNumber"
                                                         value="{{ old('pInfo_phoneNumber') }}" id="pInfo_phoneNumber"
-                                                        class="text_box" placeholder="+92300 0000 000" maxlength="15">
-                                                    @if ($errors->has('pInfo_phoneNumber'))
-                                                    <span class="text-danger">{{ $errors->first('pInfo_phoneNumber')
-                                                        }}</span>
-                                                    @endif
+                                                        class="text_box" placeholder="92300 0000 000" maxlength="15">
+                                                    <span class="text-danger" id="pInfo_phoneNumber_error"></span>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="btn_blk form_btn text-right">
-                                            <button type="button" class="site_btn personal_info_continue_btn long "
-                                                id="p-info_continue_btn">Continue</button>
+                                            <button type="button" class="site_btn personal_info_continue_btn long"
+                                                id="p-info_continue_btn" disabled>Continue</button>
                                         </div>
                                     </fieldset>
 
@@ -237,27 +223,22 @@ input:focus {
                                                         <option value="Rent" {{ old('purpose_purpose')=='Rent'
                                                             ? 'selected' : '' }}>Rent</option>
                                                     </select>
-                                                    @if ($errors->has('purpose_purpose'))
-                                                    <span class="text-danger">{{ $errors->first('purpose_purpose')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="purpose_purpose_error"></span>
                                                 </div>
                                             </div>
 
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Home<sup>**</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="pupose_home" id="pupose_home" class="text_box"
+                                                    <select name="purpose_home" id="purpose_home" class="text_box"
                                                         data-container="body">
                                                         <option value="">Select Home</option>
-                                                        <option value="House" {{ old('pupose_home')=='House'
+                                                        <option value="House" {{ old('purpose_home')=='House'
                                                             ? 'selected' : '' }}>House</option>
-                                                        <option value="Flat" {{ old('pupose_home')=='Flat' ? 'selected'
+                                                        <option value="Flat" {{ old('purpose_home')=='Flat' ? 'selected'
                                                             : '' }}>Flat</option>
                                                     </select>
-                                                    @if ($errors->has('pupose_home'))
-                                                    <span class="text-danger">{{ $errors->first('pupose_home') }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="purpose_home_error"></span>
                                                 </div>
                                             </div>
 
@@ -271,15 +252,12 @@ input:focus {
                                                             old('purpose_plot')=='Residential' ? 'selected' : '' }}>
                                                             Residential</option>
                                                         <option value="Commercial" {{ old('purpose_plot')=='Commercial'
-                                                            ? 'selected' : '' }}>
-                                                            Commercial</option>
+                                                            ? 'selected' : '' }}>Commercial</option>
                                                     </select>
-                                                    @if ($errors->has('purpose_plot'))
-                                                    <span class="text-danger">{{ $errors->first('purpose_plot')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="purpose_plot_error"></span>
                                                 </div>
                                             </div>
+
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Commercial<sup>**</sup></h6>
                                                 <div class="form_blk">
@@ -294,10 +272,7 @@ input:focus {
                                                             old('purpose_commercial')=='Building' ? 'selected' : '' }}>
                                                             Building</option>
                                                     </select>
-                                                    @if ($errors->has('purpose_commercial'))
-                                                    <span class="text-danger">{{ $errors->first('purpose_commercial')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="purpose_commercial_error"></span>
                                                 </div>
                                             </div>
 
@@ -306,18 +281,15 @@ input:focus {
                                                 <div class="form_blk">
                                                     <input type="number" name="price" value="{{ old('price') }}"
                                                         id="price" class="text_box" placeholder="Price" maxlength="15">
-                                                    @if ($errors->has('price'))
-                                                    <span class="text-danger">{{ $errors->first('price')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="price_error"></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
                                             <button type="button"
                                                 class="site_btn long simple border purpose_back_btn prev_btn">Back</button>
-                                            <button type="button"
-                                                class="site_btn purpose_continue_btn long ">Continue</button>
+                                            <button type="button" class="site_btn purpose_continue_btn long"
+                                                id="purpose_continue_btn" disabled>Continue</button>
                                         </div>
                                     </fieldset>
 
@@ -329,54 +301,41 @@ input:focus {
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>City<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_city" value="{{ old('address_city') }}"
-                                                        id="address_city" class="text_box" data-container="body">
+                                                    <select name="address_city" id="address_city" class="text_box"
+                                                        data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
-                                                    @if ($errors->has('address_city'))
-                                                    <span class="text-danger">{{ $errors->first('address_city')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="address_city_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Area<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_area" value="{{ old('address_area') }}"
-                                                        id="address_area" class="text_box " data-container="body">
+                                                    <select name="address_area" id="address_area" class="text_box"
+                                                        data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
-                                                    @if ($errors->has('address_area'))
-                                                    <span class="text-danger">{{ $errors->first('address_area')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="address_area_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>location<sup>*</sup></h6>
+                                                <h6>Location<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_location"
-                                                        value="{{ old('address_location') }}" id="address_location"
+                                                    <select name="address_location" id="address_location"
                                                         class="text_box" data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
-                                                    @if ($errors->has('address_location'))
-                                                    <span class="text-danger">{{ $errors->first('address_location')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="address_location_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Sector<sup>*</sup></h6>
                                                 <div class="form_blk">
-                                                    <select name="address_sector" value="{{ old('address_sector') }}"
-                                                        id="address_sector" class="text_box " data-container="body">
+                                                    <select name="address_sector" id="address_sector" class="text_box"
+                                                        data-container="body">
                                                         <!-- Options will be populated dynamically -->
                                                     </select>
-                                                    @if ($errors->has('address_sector'))
-                                                    <span class="text-danger">{{ $errors->first('address_sector')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="address_sector_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-xs-12">
@@ -384,23 +343,15 @@ input:focus {
                                                 <textarea class="text_box" placeholder="Describe your address"
                                                     name="address_address" id="address_address" spellcheck="false"
                                                     maxlength="200">{{ old('address_address') }}</textarea>
-
-                                                @if ($errors->has('address_address'))
-                                                <span class="text-danger">{{ $errors->first('address_address')
-                                                    }}</span>
-                                                @endif
+                                                <span class="text-danger" id="address_address_error"></span>
                                             </div>
 
                                             <div class="col-sm-12 col-xs-12">
                                                 <h6>Google Map Link<sup></sup></h6>
                                                 <input class="text_box" placeholder="Map Location"
-                                                    name="address_map_location"
-                                                    value="{{ old('address_map_location') }}" id="address_map_location"
+                                                    name="address_map_location" id="address_map_location"
                                                     spellcheck="false" maxlength="1000" />
-                                                @if ($errors->has('address_map_location'))
-                                                <span class="text-danger">{{ $errors->first('address_map_location')
-                                                    }}</span>
-                                                @endif
+                                                <span class="text-danger" id="address_map_location_error"></span>
                                             </div>
                                         </div>
                                         <div class="btn_blk form_btn text-right">
@@ -408,10 +359,9 @@ input:focus {
                                                 class="site_btn long simple border address_back_btn prev_btn"
                                                 id="address_back_btn">Back</button>
                                             <button type="button" class="site_btn address_continue_btn long"
-                                                id="address_continue_btn">Continue</button>
+                                                id="address_continue_btn" disabled>Continue</button>
                                         </div>
                                     </fieldset>
-
 
                                     {{-- Property detail --}}
                                     <fieldset id="property_detail_tab">
@@ -420,16 +370,9 @@ input:focus {
                                                 <h6>Plot No<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="text" name="propertyDetail_plot_num"
-                                                        value="{{ old('propertyDetail_plot_num') }}"
                                                         id="propertyDetail_plot_num" class="text_box"
                                                         data-container="body" maxlength="10" />
-                                                    @if ($errors->has('propertyDetail_plot_num'))
-                                                    <span class="text-danger">{{
-                                                        $errors->first('propertyDetail_plot_num')
-                                                        }}</span>
-                                                    @endif
-
-
+                                                    <span class="text-danger" id="propertyDetail_plot_num_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
@@ -437,23 +380,14 @@ input:focus {
                                                 <div class="form_blk">
                                                     <select name="propertyDetail_area" id="propertyDetail_area"
                                                         class="text_box" data-container="body">
-                                                        <option value="Marla" {{ old('propertyDetail_area')=='Marla'
-                                                            ? 'selected' : '' }}>Marla</option>
-                                                        <option value="Sq.Ft" {{ old('propertyDetail_area')=='Sq.Ft'
-                                                            ? 'selected' : '' }}>Sq.Ft</option>
-                                                        <option value="Sq.M" {{ old('propertyDetail_area')=='Sq.M'
-                                                            ? 'selected' : '' }}>Sq.M</option>
-                                                        <option value="Sq.Yd" {{ old('propertyDetail_area')=='Sq.Yd'
-                                                            ? 'selected' : '' }}>Sq.Yd</option>
-                                                        <option value="Kanal" {{ old('propertyDetail_area')=='Kanal'
-                                                            ? 'selected' : '' }}>Kanal</option>
+                                                        <option value="Marla">Marla</option>
+                                                        <option value="Sq.Ft">Sq.Ft</option>
+                                                        <option value="Sq.M">Sq.M</option>
+                                                        <option value="Sq.Yd">Sq.Yd</option>
+                                                        <option value="Kanal">Kanal</option>
                                                     </select>
-                                                    @if ($errors->has('propertyDetail_area'))
-                                                    <span class="text-danger">{{ $errors->first('propertyDetail_area')
-                                                        }}</span>
-                                                    @endif
+                                                    <span class="text-danger" id="propertyDetail_area_error"></span>
                                                 </div>
-
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <div class="form_blk">
@@ -461,14 +395,10 @@ input:focus {
                                                         <h6>Area<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="propertyDetail_area_unit"
-                                                                value="{{ old('propertyDetail_area_unit') }}"
                                                                 id="propertyDetail_area_unit" class="text_box"
                                                                 placeholder="eg: 10" maxlength="5">
-                                                            @if ($errors->has('propertyDetail_area_unit'))
-                                                            <span class="text-danger">{{
-                                                                $errors->first('propertyDetail_area_unit')
-                                                                }}</span>
-                                                            @endif
+                                                            <span class="text-danger"
+                                                                id="propertyDetail_area_unit_error"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -477,48 +407,32 @@ input:focus {
                                                 <h6>Bedrooms<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bedrooms"
-                                                        value="{{ old('propertyDetail_bedrooms') }}"
-                                                        id="propertyDetail_bedrooms" class="text_box "
-                                                        data-container="body" mx="10" maxlength="3" />
-                                                    @if ($errors->has('propertyDetail_bedrooms'))
-                                                    <span class="text-danger">{{
-                                                        $errors->first('propertyDetail_bedrooms')
-                                                        }}</span>
-                                                    @endif
-
+                                                        id="propertyDetail_bedrooms" class="text_box" max="10"
+                                                        maxlength="3" />
+                                                    <span class="text-danger" id="propertyDetail_bedrooms_error"></span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
                                                 <h6>Bathrooms<sup>*</sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bathrooms"
-                                                        value="{{ old('propertyDetail_bathrooms') }}"
-                                                        id="propertyDetail_bathrooms" class="text_box"
-                                                        data-container="body" max="10" maxlength="3" />
-                                                    @if ($errors->has('propertyDetail_bathrooms'))
-                                                    <span class="text-danger">{{
-                                                        $errors->first('propertyDetail_bathrooms')
-                                                        }}</span>
-                                                    @endif
-
-
+                                                        id="propertyDetail_bathrooms" class="text_box" max="10"
+                                                        maxlength="3" />
+                                                    <span class="text-danger"
+                                                        id="propertyDetail_bathrooms_error"></span>
                                                 </div>
                                             </div>
-
-
-
                                         </div>
                                         <div class="btn_blk form_btn text-right">
                                             <button type="button"
-                                                class="site_btn long simple border property_detail_back-btn prev_btn">Back</button>
-                                            <button type="button"
-                                                class="site_btn property_detail_continue_btn long ">Continue</button>
+                                                class="site_btn long simple border property_detail_back_btn prev_btn">Back</button>
+                                            <button type="button" class="site_btn property_detail_continue_btn long"
+                                                id="property_detail_continue_btn" disabled>Continue</button>
                                         </div>
                                     </fieldset>
 
                                     {{-- Extra information tabl --}}
                                     <fieldset id="extra_info_tab">
-
                                         <div class="contain">
                                             <div class="blk">
                                                 <div class="form_row row">
@@ -527,13 +441,9 @@ input:focus {
                                                         <div class="form_blk">
                                                             <input type="text" value="{{ old('extra_info_title') }}"
                                                                 name="extra_info_title" id="extra_info_title"
-                                                                class="text_box" value="" placeholder=""
-                                                                maxlength="255">
-                                                            @if ($errors->has('extra_info_title'))
-                                                            <span class="text-danger">{{
-                                                                $errors->first('extra_info_title')
-                                                                }}</span>
-                                                            @endif
+                                                                class="text_box" maxlength="255">
+                                                            <span class="text-danger"
+                                                                id="extra_info_title_error"></span>
                                                         </div>
                                                     </div>
 
@@ -544,11 +454,8 @@ input:focus {
                                                                 value="{{ old('extra_info_postingas') }}"
                                                                 id="extra_info_postingas" class="text_box"
                                                                 placeholder="Agent Name" maxlength="50">
-                                                            @if ($errors->has('extra_info_postingas'))
-                                                            <span class="text-danger">{{
-                                                                $errors->first('extra_info_postingas')
-                                                                }}</span>
-                                                            @endif
+                                                            <span class="text-danger"
+                                                                id="extra_info_postingas_error"></span>
                                                         </div>
                                                     </div>
 
@@ -559,11 +466,8 @@ input:focus {
                                                                 value="{{ old('extra_info_mobile') }}"
                                                                 id="extra_info_mobile" class="text_box"
                                                                 placeholder="eg: 285432584452" maxlength="15">
-                                                            @if ($errors->has('extra_info_mobile'))
-                                                            <span class="text-danger">{{
-                                                                $errors->first('extra_info_mobile')
-                                                                }}</span>
-                                                            @endif
+                                                            <span class="text-danger"
+                                                                id="extra_info_mobile_error"></span>
                                                         </div>
                                                     </div>
 
@@ -574,37 +478,24 @@ input:focus {
                                                                 value="{{ old('extra_info_landline') }}"
                                                                 id="extra_info_landline" class="text_box"
                                                                 placeholder="eg: 285432584452" maxlength="10">
-                                                            @if ($errors->has('extra_info_landline'))
-                                                            <span class="text-danger">{{
-                                                                $errors->first('extra_info_landline')
-                                                                }}</span>
-                                                            @endif
+                                                            <span class="text-danger"
+                                                                id="extra_info_landline_error"></span>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-xs-12">
-                                                        <h6>Description</h6>
+                                                        <h6>Description<sup>*</sup></h6>
                                                         <div class="form_blk">
                                                             <textarea name="extra_info_description"
                                                                 id="extra_info_description" class="text_box"
                                                                 placeholder="Describe your Description"
-                                                                maxlength="1000">{{ old('extra_info_description') }}</textarea>
-                                                            @if ($errors->has('extra_info_description'))
-                                                            <span class="text-danger">{{
-                                                                $errors->first('extra_info_description')
-                                                                }}</span>
-                                                            @endif
+                                                                maxlength="250">{{ old('extra_info_description') }}</textarea>
+                                                            <span class="text-danger"
+                                                                id="extra_info_description_error"></span>
                                                         </div>
                                                     </div>
-
                                                 </div>
                                             </div>
-
-
-
-                                            {{-- ________________________________________________________File
-                                            Upload______________________________ --}}
-
 
                                             <div class="blk">
                                                 <h4 class="subheading">Upload Photos <sup>*</sup>
@@ -628,6 +519,7 @@ input:focus {
                                                                     onclick="document.getElementById('fileInput').click();">Browse
                                                                     Files</button>
                                                             </div>
+                                                            <span class="text-danger" id="fileInput_error"></span>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12">
@@ -640,17 +532,13 @@ input:focus {
                                                 </div>
                                             </div>
 
-
-                                            {{-- ________________________________________________________File
-                                            Upload ends______________________________ --}}
-
                                             <div class="btn_blk text-center">
                                                 <button type="button"
                                                     class="site_btn extra_info_back-btn long light prev_btn"><img
                                                         src="{{ asset('/images/arrow-left-sm.svg')}}" alt="">
                                                     Back</button>
-                                                <button type="button"
-                                                    class="site_btn extra_info_continue-btn long">Continue</button>
+                                                <button type="button" class="site_btn extra_info_continue-btn long"
+                                                    id="extra_info_continue_btn" disabled>Continue</button>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -739,8 +627,8 @@ input:focus {
                                                         <li>
                                                             <label>
                                                                 <input type="checkbox"
-                                                                    name="check_NearbyPubicTransportService"
-                                                                    id="check_NearbyPubicTransportService">
+                                                                    name="check_NearbyPublicTransportService"
+                                                                    id="check_NearbyPublicTransportService">
                                                                 <span>Nearby Pubic Transport Service</span>
                                                             </label>
                                                         </li>
@@ -972,60 +860,16 @@ function handleTabHeadNextActive  (tab_head) {
 });
 
 
-
    // Step 2:purpose Validation and Navigation
    $('.purpose_continue_btn').click(function() {
     const tab_head_lst = 2;
-    var purpose = $('#purpose_purpose');
-    var price = $('#price');
-
-    // Remove red borders from previously failed fields
-    $('.validation-failed').removeClass('validation-failed');
-
-    // Ensure only one of the purpose fields is selected
-    var purposeFields = [
-        '#pupose_home',
-        '#purpose_plot',
-        '#purpose_commercial'
-    ];
-
-    var purposeSelected = purposeFields.some(function(field) {
-        return $(field).val().trim() !== '';
-    });
-
-    if (!purposeSelected) {
-        purposeFields.forEach(function(field) {
-            $(field).addClass('validation-failed');
-        });
-        toastr.error('Please select any one from Home, Plot, or Commercial', '', {
-            timeOut: 3000
-        });
-    } else {
-        purposeFields.forEach(function(field) {
-            $(field).removeClass('validation-failed');
-        });
-    }
-
-    // Add validation logic for Purpose and Price fields
-    if (!purpose.val().trim()) {
-        purpose.addClass('validation-failed');
-    }
-    if (!price.val().trim()) {
-        price.addClass('validation-failed');
-    }
-
+   
     // Check if any field failed validation
-    if ($('.validation-failed').length > 0) {
-        toastr.error('Please fill out all mandatory fields!', '', {
-            timeOut: 2000
-        });
-        return;
-    } else {
         // If all fields pass validation, proceed to the next tab
         handleTabHeadNextActive(tab_head_lst + 1);
         $('#purpose_tab').hide();
         $('#address_tab').show();
-    }
+    
 });
 
 
@@ -1245,11 +1089,11 @@ function  handlePropertyFormsubmission(){
 <script>
     $(document).ready(function() {
     $('.prev_btn').click(function() {
-        console.log("Previous button clicked");
+       
 
         // Get the current tab index
         var currentIndex = $('#head_lst li').index($('#head_lst li.current'));
-        console.log("Current tab index:", currentIndex);
+       
 
         // If it's the first tab, return early
         if (currentIndex === 0) {
@@ -1284,14 +1128,17 @@ function  handlePropertyFormsubmission(){
 {{-- file preview handled here --}}
 <script>
     document.getElementById('fileInput').addEventListener('change', function(event) {
-        const files = event.target.files;
+        const files = event.target.files; 
         const previewList = document.getElementById('previewList');
         previewList.innerHTML = ''; // Clear previous previews
 
         Array.from(files).forEach((file, index) => {
-            const validImageTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-            if (!validImageTypes.includes(file.type)) {
-                alert('Only PNG and JPEG image files are allowed.');
+            // Check if the file has a valid image extension
+            const validImageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'];
+            const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+
+            if (!validImageExtensions.includes(fileExtension)) {
+                alert('Only image files are allowed.');
                 return;
             }
 
@@ -1314,7 +1161,7 @@ function  handlePropertyFormsubmission(){
         const previewList = document.getElementById('previewList');
         const li = btn.parentElement.parentElement;
         const inputFile = document.getElementById('fileInput');
-        
+
         // Convert FileList to Array
         const files = Array.from(inputFile.files);
         files.splice(index, 1); // Remove the file at the given index
@@ -1391,9 +1238,9 @@ function  handlePropertyFormsubmission(){
     $('.purpose_continue_btn_edit').click(function() {
         const tab_head_lst = 2;
         var purpose = $('#purpose_purpose_edit');
-        // var home = $('#pupose_home_edit');
-        // var plot = $('#purpose_plot_edit'); 
-        // var commercial = $('#purpose_commercial_edit');
+        var home = $('#pupose_home_edit');
+        var plot = $('#purpose_plot_edit'); 
+        var commercial = $('#purpose_commercial_edit');
     
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
@@ -1402,15 +1249,15 @@ function  handlePropertyFormsubmission(){
         if (!purpose.val().trim()) {
             purpose.addClass('validation-failed');
         }
-        // if (!home.val().trim()) {
-        //     home.addClass('validation-failed');
-        // }
-        // if (!plot.val().trim()) {
-        //     plot.addClass('validation-failed');
-        // }
-        // if (!commercial.val().trim()) {
-        //     commercial.addClass('validation-failed');
-        // }
+        if (!home.val().trim()) {
+            home.addClass('validation-failed');
+        }
+        if (!plot.val().trim()) {
+            plot.addClass('validation-failed');
+        }
+        if (!commercial.val().trim()) {
+            commercial.addClass('validation-failed');
+        }
     
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
@@ -1756,20 +1603,20 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
     $(document).ready(function() {
         function resetSelects(except) {
-            if (except !== '#pupose_home') {
-                $('#pupose_home').val('').selectpicker('refresh');
+            if (except !== '#purpose_home') {
+                $('#purpose_home').val('');
             }
             if (except !== '#purpose_plot') {
-                $('#purpose_plot').val('').selectpicker('refresh');
+                $('#purpose_plot').val('');
             }
             if (except !== '#purpose_commercial') {
-                $('#purpose_commercial').val('').selectpicker('refresh');
+                $('#purpose_commercial').val('');
             }
         }
     
-        $('#pupose_home').change(function() {
+        $('#purpose_home').change(function() {
             if ($(this).val() !== '') {
-                resetSelects('#pupose_home');
+                resetSelects('#purpose_home');
             }
         });
     
@@ -1858,5 +1705,383 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 </script>
 
+
+
+{{-- validing on field typing --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const pInfoFirstName = document.getElementById('pInfo_firstName');
+        const pInfoLastName = document.getElementById('pInfo_lastName');
+        const pInfoEmail = document.getElementById('pInfo_email');
+        const pInfoPhoneNumber = document.getElementById('pInfo_phoneNumber');
+        const continueButton = document.getElementById('p-info_continue_btn');
+    
+        const pInfoFirstNameError = document.getElementById('pInfo_firstName_error');
+        const pInfoLastNameError = document.getElementById('pInfo_lastName_error');
+        const pInfoEmailError = document.getElementById('pInfo_email_error');
+        const pInfoPhoneNumberError = document.getElementById('pInfo_phoneNumber_error');
+    
+        const validateFirstName = () => {
+            const value = pInfoFirstName.value.trim();
+            if (value.length === 0) {
+                pInfoFirstNameError.textContent = 'First Name is required.';
+                return false;
+            } else if (!/^[a-zA-Z]{1,15}$/.test(value)) {
+                pInfoFirstNameError.textContent = 'First Name should only contain letters and be up to 15 characters long.';
+                return false;
+            } else {
+                pInfoFirstNameError.textContent = '';
+                return true;
+            }
+        };
+    
+        const validateLastName = () => {
+    const value = pInfoLastName.value.trim();
+    if (value.length === 0) {
+        pInfoLastNameError.textContent = 'Last Name is required.';
+        return false;
+    } else if (value.length > 15) {
+        pInfoLastNameError.textContent = 'Last Name must not exceed 15 characters long.';
+        return false;
+    } else if (!/^[a-zA-Z]+$/.test(value)) {
+        pInfoLastNameError.textContent = 'Last Name should only contain letters.';
+        return false;
+    } else {
+        pInfoLastNameError.textContent = '';
+        return true;
+    }
+};
+
+
+    
+const validateEmail = () => {
+    const value = pInfoEmail.value.trim();
+    // Regex pattern to match an email address excluding the '+' sign
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    // Check if the email contains a '+' sign
+    if (value.includes('+')) {
+        pInfoEmailError.textContent = 'Email Address should not contain a "+" sign.';
+        return false;
+    }
+
+    // Validate the email format
+    if (value.length === 0) {
+        pInfoEmailError.textContent = 'Email Address is required.';
+        return false;
+    } else if (!emailRegex.test(value)) {
+        pInfoEmailError.textContent = 'Please enter a valid email address.';
+        return false;
+    } else {
+        pInfoEmailError.textContent = '';
+        return true;
+    }
+};
+
+
+    
+        const validatePhoneNumber = () => {
+    const value = pInfoPhoneNumber.value.trim();
+    if (value.length === 0) {
+        pInfoPhoneNumberError.textContent = 'Phone Number is required.';
+        return false;
+    } else if (value.length < 11 || value.length > 15) {
+        pInfoPhoneNumberError.textContent = 'Phone Number must be between 11 and 15 characters.';
+        return false;
+    } else if (!/^\+?[0-9]*$/.test(value)) {
+        pInfoPhoneNumberError.textContent = 'Please enter a valid phone number.';
+        return false;
+    } else {
+        pInfoPhoneNumberError.textContent = '';
+        return true;
+    }
+};
+    
+        const validateForm = () => {
+            const isFirstNameValid = validateFirstName();
+            const isLastNameValid = validateLastName();
+            const isEmailValid = validateEmail();
+            const isPhoneNumberValid = validatePhoneNumber();
+            
+            continueButton.disabled = !(isFirstNameValid && isLastNameValid && isEmailValid && isPhoneNumberValid);
+        };
+    
+        pInfoFirstName.addEventListener('input', validateForm);
+        pInfoLastName.addEventListener('input', validateForm);
+        pInfoEmail.addEventListener('input', validateForm);
+        pInfoPhoneNumber.addEventListener('input', validateForm);
+    
+        // Initial validation check
+        validateForm();
+    });
+</script>
+
+{{-- //step 2 validtion --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const purposePurpose = document.getElementById('purpose_purpose');
+        const purposeHome = document.getElementById('purpose_home');
+        const purposePlot = document.getElementById('purpose_plot');
+        const purposeCommercial = document.getElementById('purpose_commercial');
+        const price = document.getElementById('price');
+        const continueButton = document.getElementById('purpose_continue_btn');
+    
+        const purposePurposeError = document.getElementById('purpose_purpose_error');
+        const purposeHomeError = document.getElementById('purpose_home_error');
+        const purposePlotError = document.getElementById('purpose_plot_error');
+        const purposeCommercialError = document.getElementById('purpose_commercial_error');
+        const priceError = document.getElementById('price_error');
+    
+        const validatePurpose = () => {
+            const value = purposePurpose.value.trim();
+            if (value.length === 0) {
+                purposePurposeError.textContent = 'Purpose is required.';
+                return false;
+            } else {
+                purposePurposeError.textContent = '';
+                return true;
+            }
+        };
+    
+        const validateHomePlotCommercial = () => {
+            const homeValue = purposeHome.value.trim();
+            const plotValue = purposePlot.value.trim();
+            const commercialValue = purposeCommercial.value.trim();
+    
+            if (homeValue.length === 0 && plotValue.length === 0 && commercialValue.length === 0) {
+                purposeHomeError.textContent = 'One of Home, Plot, or Commercial is required.';
+                purposePlotError.textContent = 'One of Home, Plot, or Commercial is required.';
+                purposeCommercialError.textContent = 'One of Home, Plot, or Commercial is required.';
+                return false;
+            } else {
+                purposeHomeError.textContent = '';
+                purposePlotError.textContent = '';
+                purposeCommercialError.textContent = '';
+                return true;
+            }
+        };
+    
+        const validatePrice = () => {
+            const value = price.value.trim();
+            if (value.length === 0) {
+                priceError.textContent = 'Price is required.';
+                return false;
+            } else if (!/^\d+$/.test(value)) {
+                priceError.textContent = 'Please enter a valid price.';
+                return false;
+            } else {
+                priceError.textContent = '';
+                return true;
+            }
+        };
+    
+        const validateForm = () => {
+            const isPurposeValid = validatePurpose();
+            const isHomePlotCommercialValid = validateHomePlotCommercial();
+            const isPriceValid = validatePrice();
+            
+            continueButton.disabled = !(isPurposeValid && isHomePlotCommercialValid && isPriceValid);
+        };
+    
+        purposePurpose.addEventListener('input', validateForm);
+        purposeHome.addEventListener('input', validateForm);
+        purposePlot.addEventListener('input', validateForm);
+        purposeCommercial.addEventListener('input', validateForm);
+        price.addEventListener('input', validateForm);
+    
+        // Initial validation check
+        validateForm();
+    });
+</script>
+
+{{-- step 3 --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const addressCity = document.getElementById('address_city');
+        const addressArea = document.getElementById('address_area');
+        const addressLocation = document.getElementById('address_location');
+        const addressSector = document.getElementById('address_sector');
+        const addressAddress = document.getElementById('address_address');
+        const addressMapLocation = document.getElementById('address_map_location');
+        const continueButton = document.getElementById('address_continue_btn');
+    
+        const addressCityError = document.getElementById('address_city_error');
+        const addressAreaError = document.getElementById('address_area_error');
+        const addressLocationError = document.getElementById('address_location_error');
+        const addressSectorError = document.getElementById('address_sector_error');
+        const addressAddressError = document.getElementById('address_address_error');
+        const addressMapLocationError = document.getElementById('address_map_location_error');
+    
+        const validateField = (field, errorElement, errorMessage) => {
+            if (field.value.trim() === '') {
+                errorElement.textContent = errorMessage;
+                return false;
+            } else {
+                errorElement.textContent = '';
+                return true;
+            }
+        };
+    
+        const validateForm = () => {
+            const isCityValid = validateField(addressCity, addressCityError, 'City is required.');
+            const isAreaValid = validateField(addressArea, addressAreaError, 'Area is required.');
+            const isLocationValid = validateField(addressLocation, addressLocationError, 'Location is required.');
+            const isSectorValid = validateField(addressSector, addressSectorError, 'Sector is required.');
+            const isAddressValid = validateField(addressAddress, addressAddressError, 'Address is required.');
+            const isMapLocationValid = true; // Google Map Link is optional, no validation required
+    
+            continueButton.disabled = !(isCityValid && isAreaValid && isLocationValid && isSectorValid && isAddressValid && isMapLocationValid);
+        };
+    
+        addressCity.addEventListener('input', validateForm);
+        addressArea.addEventListener('input', validateForm);
+        addressLocation.addEventListener('input', validateForm);
+        addressSector.addEventListener('input', validateForm);
+        addressAddress.addEventListener('input', validateForm);
+        addressMapLocation.addEventListener('input', validateForm);
+    
+        // Initial validation check
+        validateForm();
+    });
+</script>
+
+{{-- step 4 --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const propertyDetailPlotNum = document.getElementById('propertyDetail_plot_num');
+        const propertyDetailArea = document.getElementById('propertyDetail_area');
+        const propertyDetailAreaUnit = document.getElementById('propertyDetail_area_unit');
+        const propertyDetailBedrooms = document.getElementById('propertyDetail_bedrooms');
+        const propertyDetailBathrooms = document.getElementById('propertyDetail_bathrooms');
+        const continueButton = document.getElementById('property_detail_continue_btn');
+    
+        const propertyDetailPlotNumError = document.getElementById('propertyDetail_plot_num_error');
+        const propertyDetailAreaError = document.getElementById('propertyDetail_area_error');
+        const propertyDetailAreaUnitError = document.getElementById('propertyDetail_area_unit_error');
+        const propertyDetailBedroomsError = document.getElementById('propertyDetail_bedrooms_error');
+        const propertyDetailBathroomsError = document.getElementById('propertyDetail_bathrooms_error');
+    
+        const validateField = (field, errorElement, errorMessage) => {
+            if (field.value.trim() === '') {
+                errorElement.textContent = errorMessage;
+                return false;
+            } else {
+                errorElement.textContent = '';
+                return true;
+            }
+        };
+    
+        const validateForm = () => {
+            const isPlotNumValid = validateField(propertyDetailPlotNum, propertyDetailPlotNumError, 'Plot No is required.');
+            const isAreaValid = validateField(propertyDetailArea, propertyDetailAreaError, 'Area Unit is required.');
+            const isAreaUnitValid = validateField(propertyDetailAreaUnit, propertyDetailAreaUnitError, 'Area is required.');
+            const isBedroomsValid = validateField(propertyDetailBedrooms, propertyDetailBedroomsError, 'Bedrooms are required.');
+            const isBathroomsValid = validateField(propertyDetailBathrooms, propertyDetailBathroomsError, 'Bathrooms are required.');
+    
+            continueButton.disabled = !(isPlotNumValid && isAreaValid && isAreaUnitValid && isBedroomsValid && isBathroomsValid);
+        };
+    
+        propertyDetailPlotNum.addEventListener('input', validateForm);
+        propertyDetailArea.addEventListener('change', validateForm);
+        propertyDetailAreaUnit.addEventListener('input', validateForm);
+        propertyDetailBedrooms.addEventListener('input', validateForm);
+        propertyDetailBathrooms.addEventListener('input', validateForm);
+    
+        // Initial validation check
+        validateForm();
+    });
+</script>
+
+{{-- step 5 --}}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const extraInfoTitle = document.getElementById('extra_info_title');
+        const extraInfoPostingAs = document.getElementById('extra_info_postingas');
+        const extraInfoMobile = document.getElementById('extra_info_mobile');
+        const extraInfoLandline = document.getElementById('extra_info_landline');
+        const extraInfoDescription = document.getElementById('extra_info_description');
+        const fileInput = document.getElementById('fileInput');
+        const continueButton = document.getElementById('extra_info_continue_btn');
+    
+        const extraInfoTitleError = document.getElementById('extra_info_title_error');
+        const extraInfoPostingAsError = document.getElementById('extra_info_postingas_error');
+        const extraInfoMobileError = document.getElementById('extra_info_mobile_error');
+        const extraInfoLandlineError = document.getElementById('extra_info_landline_error');
+        const extraInfoDescriptionError = document.getElementById('extra_info_description_error');
+        const fileInputError = document.getElementById('fileInput_error');
+    
+        const validateField = (field, errorElement, errorMessage) => {
+            if (field.value.trim() === '') {
+                errorElement.textContent = errorMessage;
+                return false;
+            } else {
+                errorElement.textContent = '';
+                return true;
+            }
+        };
+    
+        const validatePhoneNumber = (field, errorElement) => {
+            const value = field.value.trim();
+            const length = value.length;
+            if (length < 11 || length > 15) {
+                errorElement.textContent = 'Mobile number must be between 11 and 15 digits.';
+                return false;
+            } else if (!/^\d+$/.test(value)) {
+                errorElement.textContent = 'Mobile number must contain only digits.';
+                return false;
+            } else {
+                errorElement.textContent = '';
+                return true;
+            }
+        };
+
+        const validateLandline = (field, errorElement) => {
+            const value = field.value.trim();
+            const length = value.length;
+            if (length < 7 || length > 11) {
+                errorElement.textContent = 'Landline number must be between 7 and 11 digits.';
+                return false;
+            } else if (!/^\d+$/.test(value)) {
+                errorElement.textContent = 'Landline number must contain only digits.';
+                return false;
+            } else {
+                errorElement.textContent = '';
+                return true;
+            }
+        };
+
+        const validateFiles = () => {
+            if (fileInput.files.length === 0) {
+                fileInputError.textContent = 'Please upload at least one photo.';
+                return false;
+            } else {
+                fileInputError.textContent = '';
+                return true;
+            }
+        };
+    
+        const validateForm = () => {
+            const isTitleValid = validateField(extraInfoTitle, extraInfoTitleError, 'Title is required.');
+            const isPostingAsValid = validateField(extraInfoPostingAs, extraInfoPostingAsError, 'Posting As is required.');
+            const isMobileValid = validatePhoneNumber(extraInfoMobile, extraInfoMobileError);
+            const isLandlineValid = validateLandline(extraInfoLandline, extraInfoLandlineError);
+            const isDescriptionValid = validateField(extraInfoDescription, extraInfoDescriptionError, 'Description is required.');
+            const areFilesValid = validateFiles();
+    
+            continueButton.disabled = !(isTitleValid && isPostingAsValid && isMobileValid && isLandlineValid && isDescriptionValid && areFilesValid);
+        };
+    
+        extraInfoTitle.addEventListener('input', validateForm);
+        extraInfoPostingAs.addEventListener('input', validateForm);
+        extraInfoMobile.addEventListener('input', validateForm);
+        extraInfoLandline.addEventListener('input', validateForm);
+        extraInfoDescription.addEventListener('input', validateForm);
+        fileInput.addEventListener('change', validateForm);
+    
+        // Initial validation check
+        validateForm();
+    });
+</script>
 
 @endpush

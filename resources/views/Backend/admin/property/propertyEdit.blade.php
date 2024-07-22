@@ -225,7 +225,7 @@
                     </div>
                 </div>
 
-                <div class="col-xs-6">
+                <div class="col-sm-6 col-xs-12">
                     <h6>Price<sup>*</sup></h6>
                     <div class="form_blk">
                         <input type="number" name="price_edit" id="price_edit"
@@ -560,10 +560,11 @@
                                 <div class="btn_blk text-center">
                                     <input type="hidden" id="existingFiles" name="existing_files">
                                     <input type="file" id="fileInput_edit" name="photos_edit[]" multiple
-                                        style="display:none;">
+                                           style="display:none;" accept=".jpg, .jpeg, .png">
                                     <button type="button" class="site_btn sm"
-                                        onclick="document.getElementById('fileInput_edit').click();">Browse
-                                        Files</button>
+                                            onclick="document.getElementById('fileInput_edit').click();">Browse
+                                        Files
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -642,10 +643,10 @@
                                 </li>
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="check_BoundaryWall_edit"
-                                            id="check_BoundaryWall_edit" {{ old('check_BoundaryWall_edit',
-                                            isset($propertyInfo->propertyListingPape->check_BoundaryWall_edit) &&
-                                        $propertyInfo->propertyListingPape->check_BoundaryWall_edit ? 'checked' : '')
+                                        <input type="checkbox" name="check_BoundryWall_edit" id="check_BoundryWall_edit"
+                                            {{ old('check_BoundryWall_edit',
+                                            isset($propertyInfo->propertyListingPape->check_BoundryWall_edit) &&
+                                        $propertyInfo->propertyListingPape->check_BoundryWall_edit ? 'checked' : '')
                                         }}>
                                         <span>Boundary Wall</span>
                                     </label>
@@ -810,7 +811,7 @@
                             $errors->has('check_Electricity_edit'),
                             $errors->has('check_WaterSupply_edit'),
                             $errors->has('check_SuiGas_edit'),
-                            $errors->has('check_BoundaryWall_edit'),
+                            $errors->has('check_BoundryWall_edit'),
                             $errors->has('check_NearbySchool_edit'),
                             $errors->has('check_NearbyHospitals_edit'),
                             $errors->has('check_NearbyShoppingMalls_edit'),
@@ -1086,7 +1087,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Usage
 citiesList().then(cityData => {
-    console.log(cityData); // Do something with the city data
+     // Do something with the city data
 }); 
   
    
@@ -1104,7 +1105,7 @@ citiesList().then(cityData => {
     $(document).ready(() => {
         // var id = $(this).attr('data-id');
         var id = {{ $id }};
-        console.log(id);
+       
         let url = '/admin/getpropertydata';
         let type = 'POST';
         let data = new FormData();
@@ -1171,6 +1172,14 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
     const previewList = document.getElementById('previewList_edit');
 
     Array.from(files).forEach((file, index) => {
+        const fileType = file.type;
+        const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        
+        if (!validImageTypes.includes(fileType)) {
+            alert('Only JPG, JPEG, and PNG images are allowed.');
+            return;
+        }
+
         const reader = new FileReader();
         reader.onload = function(e) {
             const li = document.createElement('li');
@@ -1185,6 +1194,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
         reader.readAsDataURL(file);
     });
 });
+
 
 </script>
 
@@ -1218,13 +1228,13 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
     $(document).ready(function() {
     function resetSelects(except) {
         if (except !== '#pupose_home_edit') {
-            $('#pupose_home_edit').val('').selectpicker('refresh');
+            $('#pupose_home_edit').val('');
         }
         if (except !== '#purpose_plot_edit') {
-            $('#purpose_plot_edit').val('').selectpicker('refresh');
+            $('#purpose_plot_edit').val('');
         }
         if (except !== '#purpose_commercial_edit') {
-            $('#purpose_commercial_edit').val('').selectpicker('refresh');
+            $('#purpose_commercial_edit').val('');
         }
     }
 
@@ -1424,8 +1434,8 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
             var isValid = true;
     
             // Mobile Validation
-            if (mobileInput.value.length < 7 || mobileInput.value.length > 15) {
-                mobileErrorMessage.textContent = 'The mobile number must be between 7 and 15 digits long.';
+            if (mobileInput.value.length < 11 || mobileInput.value.length > 15) {
+                mobileErrorMessage.textContent = 'The mobile number must be between 11 and 15 digits long.';
                 mobileErrorMessage.style.display = 'block';
                 isValid = false;
             } else {
@@ -1434,8 +1444,8 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
             }
     
             // Landline Validation
-            if (landlineInput.value.length < 7 || landlineInput.value.length > 10) {
-                landlineErrorMessage.textContent = 'The landline number must be between 7 and 10 digits long.';
+            if (landlineInput.value.length < 7 || landlineInput.value.length > 11) {
+                landlineErrorMessage.textContent = 'The landline number must be between 7 and 11 digits long.';
                 landlineErrorMessage.style.display = 'block';
                 isValid = false;
             } else {
@@ -1444,8 +1454,8 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
             }
     
             // Phone Number Validation
-            if (phoneNumberInput.value.length < 7 || phoneNumberInput.value.length > 15) {
-                phoneNumberErrorMessage.textContent = 'The phone number must be between 7 and 15 digits long.';
+            if (phoneNumberInput.value.length < 11 || phoneNumberInput.value.length > 15) {
+                phoneNumberErrorMessage.textContent = 'The phone number must be between 11 and 15 digits long.';
                 phoneNumberErrorMessage.style.display = 'block';
                 isValid = false;
             } else {

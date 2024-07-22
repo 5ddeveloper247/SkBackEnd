@@ -129,10 +129,14 @@ class InquiryController extends Controller
   public function viewInquiriesAjax(Request $request)
   {
     try {
-      // Fetch all inquiries
-      $inquiriesData = Inquiry::where('status', 'uploaded')->whereNull('reply')->get();
+      // Fetch all inquiries ordered by latest first
+      $inquiriesData = Inquiry::where('status', 'uploaded')
+        ->whereNull('reply')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
       // Check if data is retrieved successfully
-      if ($inquiriesData) {
+      if ($inquiriesData->isNotEmpty()) {
         return response()->json([
           'success' => true,
           'data' => $inquiriesData
@@ -159,14 +163,18 @@ class InquiryController extends Controller
 
 
 
+
   public function viewRepliedInquiriesAjax(Request $request)
   {
     try {
-      // Fetch all inquiries
-      $inquiriesData = Inquiry::where('status', 'completed')->whereNotNull('reply')->get();
+      // Fetch all inquiries ordered by latest first
+      $inquiriesData = Inquiry::where('status', 'completed')
+        ->whereNotNull('reply')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
       // Check if data is retrieved successfully
-      if ($inquiriesData) {
+      if ($inquiriesData->isNotEmpty()) {
         return response()->json([
           'success' => true,
           'data' => $inquiriesData

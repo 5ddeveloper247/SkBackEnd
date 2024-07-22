@@ -477,7 +477,7 @@
 
                                             <div class="btn_blk form_btn text-center margin-top-location">
                                                 <button type="submit" class="site_btn long add_city_btn"
-                                                    id="add_city_btn">Add Location</button>
+                                                    id="add_city_btn">Add Sector</button>
 
                                             </div>
                                         </div>
@@ -726,11 +726,11 @@
                                 </thead>
                                 <tbody id="city_table_body">
                                     @foreach ($cities as $city )
-                                    <tr>
-                                        <td class="nowrap">
+                                    <tr class="city_data_row ">
+                                        <td class="nowrap grid-p-searchby">
                                             {{ $city->id }}
                                         </td>
-                                        <td>
+                                        <td class="grid-p-searchby">
                                             {{ $city->NAME }}
                                         </td>
                                         <td class="nowrap" data-center>
@@ -782,14 +782,14 @@
                                     </thead>
                                     <tbody id="area_table_body">
                                         @foreach ($areas as $area )
-                                        <tr>
-                                            <td class="nowrap">
+                                        <tr class="area_data_row">
+                                            <td class="nowrap grid-p-searchby">
                                                 {{ $area->id }}
                                             </td>
-                                            <td>
+                                            <td class="grid-p-searchby">
                                                 {{ $area->NAME }}
                                             </td>
-                                            <td>
+                                            <td class="grid-p-searchby">
                                                 {{ $area->city ? $area->city->NAME : 'No city assigned' }}
                                             </td>
                                             <td class="nowrap" data-center>
@@ -844,17 +844,17 @@
                                         <tbody id="location_table_body">
 
                                             @foreach ($locations as $location )
-                                            <tr>
-                                                <td class="nowrap">
+                                            <tr class="location_data_row">
+                                                <td class="nowrap grid-p-searchby">
                                                     {{ $location->id }}
                                                 </td>
-                                                <td>
+                                                <td class="grid-p-searchby">
                                                     {{ $location->NAME }}
                                                 </td>
-                                                <td>
+                                                <td class="grid-p-searchby">
                                                     {{ $location->area ? $location->area->NAME : 'No area assigned' }}
                                                 </td>
-                                                <td>
+                                                <td class="grid-p-searchby">
                                                     {{ $location->area && $location->area->city ?
                                                     $location->area->city->NAME : 'No city assigned' }}
                                                 </td>
@@ -913,20 +913,20 @@
                                                 </thead>
                                                 <tbody id="area_table_body">
                                                     @foreach ($sectors as $sector)
-                                                    <tr>
-                                                        <td class="nowrap">{{ $sector->id }}</td>
-                                                        <td>{{ $sector->NAME }}</td>
-                                                        <td>
+                                                    <tr class="sector_data_row">
+                                                        <td class="nowrap grid-p-searchby">{{ $sector->id }}</td>
+                                                        <td class="grid-p-searchby">{{ $sector->NAME }}</td>
+                                                        <td class="grid-p-searchby">
                                                             {{ $sector->location && $sector->location->area &&
                                                             $sector->location->area->city ?
                                                             $sector->location->area->city->NAME : 'No city assigned' }}
                                                         </td>
-                                                        <td>
+                                                        <td class="grid-p-searchby">
                                                             {{ $sector->location && $sector->location->area &&
                                                             $sector->location->area ?
                                                             $sector->location->area->NAME : 'No area assigned' }}
                                                         </td>
-                                                        <td>
+                                                        <td class="grid-p-searchby">
                                                             {{ $sector->location && $sector->location &&
                                                             $sector->location?
                                                             $sector->location->NAME : 'No location assigned' }}
@@ -1655,7 +1655,76 @@ function populateSectorLovLocation() {
 </script>
 {{-- delete location ends --}}
 
-
+<script>
+    $('.city_search_box').on("keyup", function (e) {
+  var tr = $('.city_data_row');
+  if ($(this).val().length >= 1) {//character limit in search box.
+      var noElem = true;
+      var val = $.trim(this.value).toLowerCase();
+      el = tr.filter(function () {
+          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+      });
+      if (el.length >= 1) {
+          noElem = false;
+      }
+      tr.not(el).hide();
+      el.fadeIn().show();
+  } else {
+      tr.fadeIn().show();
+  }
+});
+    $('.area_search_box').on("keyup", function (e) {
+  var tr = $('.area_data_row');
+  if ($(this).val().length >= 1) {//character limit in search box.
+      var noElem = true;
+      var val = $.trim(this.value).toLowerCase();
+      el = tr.filter(function () {
+          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+      });
+      if (el.length >= 1) {
+          noElem = false;
+      }
+      tr.not(el).hide();
+      el.fadeIn().show();
+  } else {
+      tr.fadeIn().show();
+  }
+});
+    $('.location_search_box').on("keyup", function (e) {
+  var tr = $('.location_data_row');
+  if ($(this).val().length >= 1) {//character limit in search box.
+      var noElem = true;
+      var val = $.trim(this.value).toLowerCase();
+      el = tr.filter(function () {
+          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+      });
+      if (el.length >= 1) {
+          noElem = false;
+      }
+      tr.not(el).hide();
+      el.fadeIn().show();
+  } else {
+      tr.fadeIn().show();
+  }
+});
+    $('.sector_search_box').on("keyup", function (e) {
+  var tr = $('.sector_data_row');
+  if ($(this).val().length >= 1) {//character limit in search box.
+      var noElem = true;
+      var val = $.trim(this.value).toLowerCase();
+      el = tr.filter(function () {
+          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+      });
+      if (el.length >= 1) {
+          noElem = false;
+      }
+      tr.not(el).hide();
+      el.fadeIn().show();
+  } else {
+      tr.fadeIn().show();
+  }
+});
+</script>
 
 
 @endpush

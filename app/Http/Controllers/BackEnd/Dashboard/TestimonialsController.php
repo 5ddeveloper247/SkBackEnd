@@ -21,7 +21,8 @@ class TestimonialsController extends Controller
     public function viewTestimonialAjax(Request $request)
     {
         try {
-            $testimonials = Testimonial::all();
+            // Fetch testimonials sorted by created_at in descending order
+            $testimonials = Testimonial::orderBy('created_at', 'desc')->get();
 
             if ($testimonials->isEmpty()) {
                 return response()->json([
@@ -46,21 +47,21 @@ class TestimonialsController extends Controller
 
 
 
+
     public function deleteTestimonial(Request $request)
     {
-       
+
         try {
             // Find the testimonial by ID or throw a ModelNotFoundException
             $testimonial = Testimonial::findOrFail($request->del_id);
-    
+
             // Delete the testimonial
             $testimonial->delete();
-    
+
             return response()->json([
                 'status' => 200,
                 'message' => 'Testimonial deleted successfully.'
             ]);
-    
         } catch (Exception $e) {
             // Log the error and return a not found response
             Log::error('Testimonial not found: ' . $e->getMessage());
@@ -68,7 +69,6 @@ class TestimonialsController extends Controller
                 'status' => 404,
                 'message' => 'Testimonial not found.'
             ]);
-    
         } catch (Exception $e) {
             // Log the error and return a server error response
             Log::error('Error deleting testimonial: ' . $e->getMessage());
@@ -78,7 +78,7 @@ class TestimonialsController extends Controller
             ]);
         }
     }
-    
+
 
 
 
