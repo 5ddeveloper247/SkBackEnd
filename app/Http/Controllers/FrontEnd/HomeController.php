@@ -307,10 +307,51 @@ class HomeController extends Controller
             $buildQuery = function ($filterData) {
                 $query = PersonalInfo::query();
 
+                // Ensure the status is 1
+                $query->where('status', '1');
+
                 // Apply filters on PropertyListingPape attributes
                 if (isset($filterData['purpose']) && !empty($filterData['purpose'])) {
                     $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
                         $q->where('purpose_purpose', 'LIKE', '%' . $filterData['purpose'] . '%');
+                    });
+                }
+
+                // Handle commercial filters
+                if (in_array($filterData['selectedFilterOption'], ['Shop', 'Office', 'Building'])) {
+                    
+                        $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('purpose_commercial', $filterData['selectedFilterOption']);
+                        });
+                    
+                }
+
+                // Handle home type filters
+                if (in_array($filterData['selectedFilterOption'], ['House', 'Flat'])) {
+                        $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('pupose_home', $filterData['selectedFilterOption']);
+                        });
+                    
+                }
+
+                // Handle plot filters
+                if (in_array($filterData['selectedFilterOption'], ['Residential', 'Commercial'])) {
+                   
+                        $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('purpose_plot', $filterData['selectedFilterOption']);
+                        });
+                    
+                }
+
+                if (isset($filterData['sector']) && !empty($filterData['sector'])) {
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereIn('address_sector', $filterData['sector']);
+                    });
+                }
+
+                if (isset($filterData['minPrice']) && isset($filterData['maxPrice']) && !empty($filterData['minPrice']) && !empty($filterData['maxPrice'])) {
+                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']]);
                     });
                 }
 
@@ -332,44 +373,8 @@ class HomeController extends Controller
                     });
                 }
 
-                if (isset($filterData['commercial']) && !empty($filterData['commercial'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('purpose_commercial', $filterData['commercial']);
-                    });
-                }
-
-                if (isset($filterData['homeType']) && !empty($filterData['homeType'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('pupose_home', $filterData['homeType']);
-                    });
-                }
-
-                if (isset($filterData['plot']) && !empty($filterData['plot'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('purpose_plot', $filterData['plot']);
-                    });
-                }
-
-                if (isset($filterData['sector']) && !empty($filterData['sector'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereIn('address_sector', $filterData['sector']);
-                    });
-                }
-
-                if (isset($filterData['minPrice']) && isset($filterData['maxPrice']) && !empty($filterData['minPrice']) && !empty($filterData['maxPrice'])) {
-                    $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->whereBetween('price', [$filterData['minPrice'], $filterData['maxPrice']]);
-                    });
-                }
-
                 // Apply other filters if they exist
-                foreach (['min_area', 'max_area', 'min_bathrooms', 'max_bathrooms', 'min_bedrooms', 'max_bedrooms', 'min_garages', 'max_garages', 'min_year', 'rooms'] as $field) {
-                    if (isset($filterData[$field]) && !empty($filterData[$field])) {
-                        $query->whereHas('propertyListingPape', function ($q) use ($filterData, $field) {
-                            $q->where($field, $filterData[$field]);
-                        });
-                    }
-                }
+
 
                 // Eager load relationships
                 $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
@@ -393,6 +398,8 @@ class HomeController extends Controller
             ], 500);
         }
     }
+
+
 
 
 
