@@ -86,9 +86,9 @@ class TestimonialsController extends Controller
     {
         // Validate the request data
         $validator = Validator::make($request->all(), [
-            'testimonial_name' => 'required|string|max:255',
-            'testimonial_title' => 'required|string|max:255',
-            'testimonial_description' => 'required|string',
+            'testimonial_name' => 'required|string|max:500',
+            'testimonial_title' => 'required|string|max:500',
+            'testimonial_description' => 'required|string |max:500',
             'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -137,9 +137,9 @@ class TestimonialsController extends Controller
         // Validate the request data
         $validator = Validator::make($request->all(), [
             'edit_id' => 'required|exists:testimonials,id',
-            'testimonial_name_edit' => 'required|string|max:255',
-            'testimonial_title_edit' => 'required|string|max:255',
-            'testimonial_description_edit' => 'required|string',
+            'testimonial_name_edit' => 'required|string|max:500',
+            'testimonial_title_edit' => 'required|string|max:500',
+            'testimonial_description_edit' => 'required|string|max:500',
             'pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 

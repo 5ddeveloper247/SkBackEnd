@@ -790,7 +790,7 @@ function deletcontactRepliedResponse(response) {
     });
 
     // Initial validation to set the button state on page load
-    validateRepliedContactForm();
+  //  validateRepliedContactForm();
 });
 
 
