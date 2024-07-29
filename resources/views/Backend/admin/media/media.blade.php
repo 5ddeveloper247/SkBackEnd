@@ -121,21 +121,25 @@
                                             <div class="form_blk">
                                                 <h6>Title<sup>*</sup></h6>
                                                 <input type="text" name="mediaUrlTitle" id="mediaUrlTitle"
-                                                    class="text_box" placeholder="title" maxlength="100">
+                                                    class="text_box"
+                                                    placeholder="Title should not exceed more than 100 words"
+                                                    maxlength="100">
                                             </div>
                                         </div>
                                         <div class="col-xs-6">
                                             <div class="form_blk">
                                                 <h6>Video Media URL<sup>*</sup></h6>
                                                 <input type="text" name="mediaUrl" id="mediaUrl" class="text_box"
-                                                    placeholder="Video Media must be youtube URL" maxlength="200">
+                                                    placeholder="Video Media must be youtube URL" maxlength="500">
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
                                             <div class="form_blk">
                                                 <h6>Description<sup></sup></h6>
                                                 <textarea type="text" name="mediaUrlDescription"
-                                                    id="mediaUrlDescription" class="text_box"></textarea>
+                                                    id="mediaUrlDescription" class="text_box"
+                                                    placeholder="Description should not exceed more than 150 words"
+                                                    maxlength="150"></textarea>
                                             </div>
                                         </div>
 
@@ -181,7 +185,9 @@
                                             <div class="form_blk">
                                                 <h6>Title<sup>*</sup></h6>
                                                 <input type="text" name="mediaOnlyTitle" id="mediaOnlyTitle"
-                                                    class="text_box" placeholder="title" maxlength="100">
+                                                    class="text_box"
+                                                    placeholder="Title should not exceed more than 100 words "
+                                                    maxlength="100">
                                             </div>
                                         </div>
                                         <div class="col-xs-12">
@@ -210,7 +216,8 @@
                                             <div class="form_blk">
                                                 <h6>Description<sup></sup></h6>
                                                 <textarea type="text" name="mediaOnlyDescription"
-                                                    id="mediaUrlDescription" class="text_box"></textarea>
+                                                    placeholder="Description should not exceed more than 150 words"
+                                                    id="mediaUrlDescription" class="text_box"></textarea maxlength="150">
                                             </div>
                                         </div>
 
@@ -570,7 +577,7 @@ $('#showMediaUrlPopUpBtn').on('click',function(e){
 
     $('#AddMediaUrlSubmitBtn').on('click', function(e) {
         e.preventDefault(); // Prevent the default form submission
-        $('$uiBlocker').show();
+        $('#uiBlocker').show();
         var formData = {
             mediaUrlTitle: $('#mediaUrlTitle').val(),
             mediaUrl: $('#mediaUrl').val(),

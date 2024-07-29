@@ -256,14 +256,13 @@
                             required>
                             <option value="">Choose City</option>
                             @foreach ($cities as $city)
-                            @if (old('address_city_edit', $propertyInfo->propertyListingPape->address_city ?? '') ==
-                            $city->NAME)
-                            <option value="{{ $city->NAME }}" selected>
+                            <option value="{{ $city->NAME }}" {{ old('address_city_edit', $propertyInfo->
+                                propertyListingPape->address_city ?? '') == $city->NAME ? 'selected' : '' }}>
                                 {{ $city->NAME }}
                             </option>
-                            @endif
                             @endforeach
                         </select>
+
 
                         <span id="address_city_edit_error" class="text-danger" style="display: none;">The city is
                             required.</span>
@@ -560,9 +559,9 @@
                                 <div class="btn_blk text-center">
                                     <input type="hidden" id="existingFiles" name="existing_files">
                                     <input type="file" id="fileInput_edit" name="photos_edit[]" multiple
-                                           style="display:none;" accept=".jpg, .jpeg, .png">
+                                        style="display:none;" accept=".jpg, .jpeg, .png">
                                     <button type="button" class="site_btn sm"
-                                            onclick="document.getElementById('fileInput_edit').click();">Browse
+                                        onclick="document.getElementById('fileInput_edit').click();">Browse
                                         Files
                                     </button>
                                 </div>
@@ -858,7 +857,15 @@
 
 
 @push('scripts')
+<script>
+    $(document).ready(function(){
+    setTimeout(()=>{
+        var citySelected = '{{ $propertyInfo->propertyListingPape->address_city }}';
+        $('#address_city_edit').val(citySelected);
+    },4000)
+    })
 
+</script>
 <script>
     $(document).ready(function() {
       
@@ -955,30 +962,30 @@
         $("#address_sector_edit").val('');
     }
 
-    // function loadCityListingAndPropertyListing() {
-    //     let url = '/admin/property/loadpropertyList';
-    //     let type = 'GET';
-    //     SendAjaxRequestToServer(type, url, '', '', loadPropertyandCityListing, '', '');
-    // }
+    function loadCityListingAndPropertyListing() {
+        let url = '/admin/property/loadpropertyList';
+        let type = 'GET';
+        SendAjaxRequestToServer(type, url, '', '', loadPropertyandCityListing, '', '');
+    }
 
-// function loadPropertyandCityListing(response) {
-//     const cityData = response.cityData;
+function loadPropertyandCityListing(response) {
+    const cityData = response.cityData;
 
-//     // Populate city dropdown with initial "Select City" option
-//     // let cityDropdown = document.getElementById('address_city_edit');
-//  // cityDropdown.innerHTML = '<option value="">Select City</option>';
-//     // cityData.forEach(city => {
-//     //     let option = document.createElement('option');
-//     //     option.value = city.NAME;
-//     //     option.textContent = city.NAME;
-//     //     cityDropdown.appendChild(option);
-//     // });
+   
+    let cityDropdown = document.getElementById('address_city_edit');
+ cityDropdown.innerHTML = '<option value="">Select City</option>';
+    cityData.forEach(city => {
+        let option = document.createElement('option');
+        option.value = city.NAME;
+        option.textContent = city.NAME;
+        cityDropdown.appendChild(option);
+    });
 
-//     // Add event listener to update areas and locations when city is changed
-//     // cityDropdown.addEventListener('change', function() {
-//     //     populateAreas(cityData);
-//     // });
-// }
+   // Add event listener to update areas and locations when city is changed
+    cityDropdown.addEventListener('change', function() {
+        populateAreas(cityData);
+    });
+}
 
 function populateAreas(cityData) {
     let selectedCity = document.getElementById('address_city_edit').value;
@@ -1691,7 +1698,6 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
        
     })
 </script>
-
 
 
 

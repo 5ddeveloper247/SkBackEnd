@@ -18,10 +18,9 @@ use Yajra\DataTables\Facades\DataTables;
 Route::get('/', function () {
     return view('welcome');
 })->middleware('admin');
-
-
-
-
+Route::get('webxr', function () {
+    return view('webxr');
+});
 
 
 require_once __DIR__ . '/admin/auth.php';

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AR.js Example</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.7.2/aframe/build/aframe-ar.min.js"></script>
+    <script src="https://unpkg.com/aframe-gps-projection-component@latest/dist/aframe-gps-projection-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+</head>
+
+<body style="margin: 0; overflow: hidden;">
+    <a-scene embedded arjs="trackingMethod: best;" vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true;">
+        <a-entity id="ar-object" gps-projected-entity-place="latitude: 37.7749; longitude: -122.4194;"
+            look-at="[gps-projected-camera]">
+            <a-box color="red" depth="0.1" height="0.1" width="0.1"></a-box>
+        </a-entity>
+        <a-camera gps-projected-camera rotation-reader></a-camera>
+    </a-scene>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const arObject = document.getElementById("ar-object");
+            let isFixed = false;
+
+            // Adjust the position of the AR object based on device orientation
+            window.addEventListener("deviceorientation", (event) => {
+                if (isFixed) return; // Skip updating the position if the object is fixed
+
+                const { beta, gamma } = event;
+
+                // Limit the movement range
+                const limitedBeta = Math.min(Math.max(beta, -20), 20);
+                const limitedGamma = Math.min(Math.max(gamma, -20), 20);
+
+                // Normalize the values to range [0, 1]
+                const normalizedBeta = (limitedBeta + 20) / 40;
+                const normalizedGamma = (limitedGamma + 20) / 40;
+
+                // Adjust the position based on the device's orientation with further reduced sensitivity
+                const positionY = 1.5 + normalizedBeta * 0.05; // Adjust the range and sensitivity
+                const positionX = normalizedGamma * 0.05; // Adjust the range and sensitivity
+
+                arObject.setAttribute("position", `${positionX} ${positionY} -1`);
+            });
+
+            // Add double-click event listener to fix the position
+            arObject.addEventListener("dblclick", () => {
+                isFixed = !isFixed; // Toggle the fixed state
+                if (isFixed) {
+                    console.log("Position fixed");
+                } else {
+                    console.log("Position unfixed");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

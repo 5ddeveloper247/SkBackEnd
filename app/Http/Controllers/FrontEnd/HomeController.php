@@ -319,28 +319,24 @@ class HomeController extends Controller
 
                 // Handle commercial filters
                 if (in_array($filterData['selectedFilterOption'], ['Shop', 'Office', 'Building'])) {
-                    
-                        $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
-                            $q->where('purpose_commercial', $filterData['selectedFilterOption']);
-                        });
-                    
+
+                    $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('purpose_commercial', $filterData['selectedFilterOption']);
+                    });
                 }
 
                 // Handle home type filters
                 if (in_array($filterData['selectedFilterOption'], ['House', 'Flat'])) {
-                        $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
-                            $q->where('pupose_home', $filterData['selectedFilterOption']);
-                        });
-                    
+                    $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('pupose_home', $filterData['selectedFilterOption']);
+                    });
                 }
 
-                // Handle plot filters
+                // Handle plot filters 
                 if (in_array($filterData['selectedFilterOption'], ['Residential', 'Commercial'])) {
-                   
-                        $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
-                            $q->where('purpose_plot', $filterData['selectedFilterOption']);
-                        });
-                    
+                    $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
+                        $q->where('purpose_plot', $filterData['selectedFilterOption']);
+                    });
                 }
 
                 if (isset($filterData['sector']) && !empty($filterData['sector'])) {

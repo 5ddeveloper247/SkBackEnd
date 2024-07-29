@@ -15,7 +15,7 @@
     <div class="side" style="background-image: url({{ asset('/images/SK-logo.png')}})">
         <div class="content text-center">
             <h1>Please Login to continue</h1>
-            <p>A platform with efficient integration of many features and so much more</p>
+            <p>Streamlined Real Estate Platform: All the Features You Need, All in One Place</p>
         </div>
     </div>
     <div class="contain ">
@@ -24,7 +24,7 @@
                 <div class="in_col" style="margin-top: 10px; !important">
                     <form id="loginForm" action="{{ route('admin.login.view') }}" method="POST">
                         @csrf
-                        <div class="log_blk " >
+                        <div class="log_blk ">
                             <div class="txt text-center">
                                 <h2>Admin Login</h2>
                             </div>
