@@ -22,7 +22,7 @@ class DashboarController extends Controller
 
     public function Dashboard(Request $request)
     {
-        $adminUsers = User::where('role', 'admin')->count();
+        $adminUsers = User::where('role', 'admin')->where('super_admin', '0')->count();
         $propertyListings = PersonalInfo::all()->count();
         $activePropertyListings = PersonalInfo::where('status', '1')->count();
         $inactivePropertyListings = PersonalInfo::where('status', '0')->count();
@@ -139,65 +139,95 @@ class DashboarController extends Controller
 
     //create amdins
     public function createAdmins(Request $request)
-    {
-        $rules = [
-            'EmailInput' => 'required|email|max:50|unique:users,email',
-            'FullNameInput' => [
-                'required',
-                'string',
-                'max:10',
-                'regex:/^[a-zA-Z\s]+$/'
-            ],
-            'PasswordInput' => 'required|string|min:8|max:20',
-        ];
+    {       
+        if($request->user_id == ''){
+            $validatedData = $request->validate([
+                'FullName' => [
+                    'required',
+                    'string',
+                    'max:50',
+                    'regex:/^[a-zA-Z\s]+$/'
+                ],
+                'Email' => 'required|email|max:50|unique:users,email',
+                
+                'Password' => 'required|string|min:8|max:20',
+            ]);
+        }else{
+            $validatedData = $request->validate([
+                'FullName' => [
+                    'required',
+                    'string',
+                    'max:50',
+                    'regex:/^[a-zA-Z\s]+$/'
+                ],
+                'Email' => 'required|email|max:50',
+                
+                'Password' => 'nullable|string|min:8|max:20',
+            ]);
 
-        // Validate the request data
-        $validator = Validator::make($request->all(), $rules);
+            $exist = User::where('email', $request->EmailInput)->where('id','!=', $request->user_id)->count();
 
-        // If validation fails, redirect back with errors and old inputs
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput();
+            if($exist>0){
+                return response()->json(['status' => 402, 'message' => 'Email is already been taken.']);
+                die();
+            }
         }
-
+        
         // If validation succeeds, create a new user
         try {
-            $user = new User();
-            $user->email = $request->EmailInput;
-            $user->name = $request->FullNameInput;
-            $user->password = Hash::make($request->PasswordInput);
+            
+            if($request->user_id == ''){
+                $user = new User();
+            }else{
+                $user = User::where('id', $request->user_id)->first();
+            }
+            $user->email = $request->Email;
+            $user->name = $request->FullName;
+            
+            if($request->user_id != '' && $request->Password != ''){
+                $user->password = Hash::make($request->Password);
+            }else{
+                $user->password = Hash::make($request->Password);
+            }
+            
             $user->role = "admin";
-            $user->status = $request->has('AddStatusInput') ? '1' : '0';
+            $user->status = $request->has('status') ? '1' : '0';
 
             // Save the user
             $user->save();
 
-            try {
-                // Send email
-                $body = view('mail.mail_templates.welcomeUser', ['userData' => $user])->render();
-                $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
-                $userEmailsSend = $request->EmailInput;
-                // Send emails to user and admin
-                $response = sendMail($request->FullNameInput, $userEmailsSend, 'Sk Property', 'Welcome! Your account has been activated', $body);
-                $response2 = sendMail($request->FullNameInput, $adminEmailsSend, 'Sk Property', 'New User has been created', $body);
+            if($request->user_id == ''){
+                try {
+                    // Send email
+                    $body = view('mail.mail_templates.welcomeUser', ['userData' => $user])->render();
+                    $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+                    $userEmailsSend = $request->Email;
+                    // Send emails to user and admin
+                    $response = sendMail($request->FullName, $userEmailsSend, 'Sk Property', 'Welcome! Your account has been activated', $body);
+                    $response2 = sendMail($request->FullName, $adminEmailsSend, 'Sk Property', 'New User has been created', $body);
 
-                // Log the current timestamp and response 
-                Log::info('at: ' . now());
-                Log::info('Email response 1: ' . $response);
-                Log::info('Email response 2: ' . $response2);
-            } catch (Exception $e) {
-                // Log the error if email sending fails
-                Log::error('Error sending email on new user creation from admin side submission: ' . $e->getMessage());
+                    // Log the current timestamp and response 
+                    Log::info('at: ' . now());
+                    Log::info('Email response 1: ' . $response);
+                    Log::info('Email response 2: ' . $response2);
+                } catch (Exception $e) {
+                    // Log the error if email sending fails
+                    Log::error('Error sending email on new user creation from admin side submission: ' . $e->getMessage());
+                }
             }
 
             // Redirect to a success page with a success message
-            return redirect()->back()->with('success', 'User created successfully');
+            if($request->user_id == ''){
+                return response()->json(['status' => 200, 'message' => "User created successfully"]);
+            }else{
+                return response()->json(['status' => 200, 'message' => "User updated successfully"]);
+            }
+            
         } catch (Exception $e) {
             // Log the error and redirect back with error message
             Log::error('Error creating user: ' . $e->getMessage());
-            return redirect()->back()->with('e', 'Failed to create user');
+            // return redirect()->back()->with('e', 'Failed to create user');
+            return response()->json(['status' => 402, 'message' => 'Failed to create user']);
         }
     }
 

@@ -63,18 +63,19 @@
                             <button class="x_btn" id="closeCustomModalButton"></button>
                             <div class="modal-body">
 
-                                <form action="{{ route('admin.dashboard.create.admin') }}" id="AddAdminForm"
-                                    method="POST">
+                                <form action="" id="AddAdminForm"
+                                    method="">{{-- {{ route('admin.dashboard.create.admin') }} --}}
                                     @csrf
+                                    <input type="hidden" id="user_id" name="user_id" value="">
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
                                             <h6 class="mb-1">Full Name<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <input name="FullNameInput" id="FullNameInput" type="text"
+                                            <input name="FullName" id="FullNameInput" type="text"
                                                 class="form-control mb-1" maxlength="50" required
-                                                value="{{ old('FullNameInput') }}" />
-                                            @error('FullNameInput')
+                                                value="{{ old('FullName') }}" />
+                                            @error('FullName')
                                             <small class="error-message FullNameError">{{ $message }}</small>
                                             @enderror
                                             <small class="error-message" id="FullNameError"></small>
@@ -85,10 +86,10 @@
                                             <h6 class="mb-0">Email<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <input name="EmailInput" id="EmailInput" type="email"
+                                            <input name="Email" id="EmailInput" type="email"
                                                 class="form-control mb-1" maxlength="50" required
-                                                value="{{ old('EmailInput') }}" />
-                                            @error('EmailInput')
+                                                value="{{ old('Email') }}" />
+                                            @error('Email')
                                             <small class="error-message EmailError">{{ $message }}</small>
                                             @enderror
                                             <small class="error-message" id="EmailError"></small>
@@ -99,9 +100,9 @@
                                             <h6 class="mb-0">Password<sup>*</sup></h6>
                                         </div>
                                         <div class="col-sm-12 m-2">
-                                            <input name="PasswordInput" id="PasswordInput" type="password"
+                                            <input name="Password" id="PasswordInput" type="password"
                                                 class="form-control mb-1" required maxlength="20" />
-                                            @error('PasswordInput')
+                                            @error('Password')
                                             <small class="error-message PasswordError">{{ $message }}</small>
                                             @enderror
                                             <small class="error-message" id="PasswordError"></small>
@@ -115,7 +116,7 @@
                                             <div class="d-flex" style="display: flex; align-items:center;">
                                                 <p style="margin-right: 10px; margin-top:10px">Inactive</p>
                                                 <div class="switch" style="width: 35px">
-                                                    <input type="checkbox" name="AddStatusInput" id="AddStatusInput">
+                                                    <input type="checkbox" name="status" id="AddStatusInput">
                                                     <em></em>
                                                 </div>
                                                 <p style="margin-left: 10px; margin-top:-1px">Active</p>
@@ -124,7 +125,7 @@
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-sm-12">
-                                            <button type="submit" class="site_btn sm">Submit</button>
+                                            <button type="button" class="site_btn sm" id="addUser_submit">Submit</button>
                                         </div>
                                     </div>
                                 </form>
@@ -190,95 +191,9 @@
         {{-- view user popup ends here --}}
 
 
-        {{-- edit property popup --}}
-        <!-- _______________update popu_________________ -->
-        <section class="popup md" id="popupUpdate" data-popup="search" style="display: none;">
-            <div class="table_dv">
-                <div class="table_cell">
-                    <div class="contain">
-                        <div class="_inner">
-                            <button class="x_btn" id="closeUpdateModalButtonx"></button>
-                            <div class="modal-body">
-                                <form action="#" id="updateAdminForm">
-                                    <div class="row mb-3" style="margin-bottom: 12px;">
-                                        <div class="col-sm-12">
-                                            <h6 class="mb-1">Full Name<sup>*</sup></h6>
-                                        </div>
-                                        <div class="col-sm-12 m-2">
-                                            <input name="editFullNameInput" id="editFullNameInput" type="text"
-                                                class="form-control mb-1" value="" maxlength="50" />
-                                            <small class="error-message" id="editFullNameInputError"></small>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3" style="margin-bottom: 12px;">
-                                        <div class="col-sm-12">
-                                            <h6 class="mb-0">Email<sup>*</sup></h6>
-                                        </div>
-                                        <div class="col-sm-12 m-2">
-                                            <input name="editEmailInput" id="editEmailInput" type="text"
-                                                class="form-control mb-1" value="" maxlength="50" />
-                                            <small class="error-message" id="editEmailInputError"></small>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="row mb-3" style="margin-bottom: 12px;">
-                                        <div class="col-sm-12">
-                                            <h6 class="mb-0">Phone</h6>
-                                        </div>
-                                        <div class="col-sm-12">
-                                            <input name="editPhoneInput" id="editPhoneInput" type="text"
-                                                class="form-control"
-                                                oninput="this.value = this.value.replace(/[^0-9]/g, '')" required />
-                                        </div>
-                                    </div> -->
-                                    <div class="row mb-5" style="margin-bottom: 12px;">
-                                        <div class="col-sm-12">
-                                            <h6 class="mb-0">Password</h6>
-                                        </div>
-                                        <div class="col-sm-12 m-2">
-                                            <input name="editPasswordInput" id="editPasswordInput" type="text"
-                                                class="form-control mb-1" required
-                                                placeholder="Leave it empty if you don't want to change password"
-                                                maxlength="20" />
-                                            <small class="error-message" id="editPasswordInputError"></small>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3" style="margin-bottom: 12px;">
-                                        <div class="col-sm-12">
-                                            <h6 class="mb-0">Status</h6>
-                                        </div>
-                                        <div class="col-sm-12 m-2">
-                                            <!-- <div class="ms-3 form-check form-switch">
-                                                <input name="editStatusInput" id="editStatusInput"
-                                                    style="font-size: 20px;" type="checkbox"
-                                                    class="form-check-input mb-1" />
-                                            </div> -->
-                                            <div class="d-flex" style="display: flex; align-items:center;">
-                                                <p style="margin-right: 10px; margin-top:10px">Inactive</p>
-                                                <div class="switch" style="width: 35px">
-                                                    <input type="checkbox" name="editStatusInput" id="editStatusInput">
-                                                    <em></em>
-                                                </div>
-                                                <p style="margin-left: 10px; margin-top:-1px">Active</p>
-                                            </div>
-                                        </div>
-                                    </div>
+        
 
-                                </form>
-
-                            </div>
-                            <div class="modal-footer" style="display: flex; justify-content:center;">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                                    id="closeUpdateModalButton">Close</button>
-                                <button type="button" id="updateAdminBtn" class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- _______________update popu end_________________ -->
+        
 
         <!-- delete modal start  -->
         <div class="popup sm" data-popup="delete-data-popup" id="delete_modal">
@@ -431,163 +346,136 @@
 
 <script>
     $(document).ready(function() {
-    $('#uiBlocker').show();
-    setTimeout(function() {
-        $('#uiBlocker').hide();
-    }, 2000);
-});
+        $('#uiBlocker').show();
+        setTimeout(function() {
+            $('#uiBlocker').hide();
+        }, 2000);
+    });
 
 </script>
+
 <script>
     $('.property_search_box').on("keyup", function (e) {
-  var tr = $('.property_data_row');
-  if ($(this).val().length >= 1) {//character limit in search box.
-      var noElem = true;
-      var val = $.trim(this.value).toLowerCase();
-      el = tr.filter(function () {
-          return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
-      });
-      if (el.length >= 1) {
-          noElem = false;
-      }
-      tr.not(el).hide();
-      el.fadeIn().show();
-  } else {
-      tr.fadeIn().show();
-  }
-});
+        var tr = $('.property_data_row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.grid-p-searchby').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
 </script>
 
-
-
-{{-- __________________________ table searching ended_______________ --}}
 <script>
-    ///////////////////////////////
 
-// Event delegation for handling click events on action buttons
-$(document).on('click', '.admin_view', function() {
-    // Get user data from the button's data attributes
-    var userData = $(this).data('user');
-    // Populate the modal with user data
-    $('#viewFullName').text(userData.name);
-    $('#viewEmail').text(userData.email);
-    $('#viewPhone').text(userData.phone);
-    $('#viewStatus').text(userData.status ? 'Active' : 'Inactive');
-     
-    // Show the modal
-    
-    $('#popupView').css('display', 'block');
+$(document).ready(function() {
+    $('#showAddAdminPopUpBtn').on('click', function() {
+        let form = $('#AddAdminForm');
+        
+        form.trigger("reset");
+        $('#user_id').val('');
+        $('#PasswordInput').attr('placeholder', "");
+        $('#popupAddAdminUrl').show();
+    });
+}); 
 
+$(document).on('click', '#addUser_submit', function (e) {
+    e.preventDefault();
+
+    $('#uiBlocker').show();
+    let form = document.getElementById('AddAdminForm');
+    let data = new FormData(form);
+    let type = 'POST';
+    let url = "{{route('admin.dashboard.create.admin')}}";
+    SendAjaxRequestToServer(type, url, data, '', addUserResponse, '', '#addUser_submit');
 });
 
+function addUserResponse(response) {
+    
+    $('#uiBlocker').hide();
+    
+    if (response.status == 200) {
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
 
+        let form = $('#AddAdminForm');
+        
+        form.trigger("reset");
+        $('#popupAddAdminUrl').hide();
+        setTimeout(function() {
+            window.location.reload();
+        }, 1500);
+    }
 
- // Handle edit button click
- $('.admin_edit').on('click', function() {
+    if (response.status == 402) {
+
+        error = response.message;
+
+    } else {
+
+        error = response.responseJSON.message;
+        var is_invalid = response.responseJSON.errors;
+
+        $.each(is_invalid, function (key) {
+            // Assuming 'key' corresponds to the form field name
+            var inputField = $('[name="' + key + '"]');
+            // Add the 'is-invalid' class to the input field's parent or any desired container
+            inputField.addClass('is-invalid');
+        });
+    }
+    toastr.error(error, '', {
+        timeOut: 3000
+    });
+}
+
+// Handle edit button click
+$('.admin_edit').on('click', function() {
     var userData = $(this).data('user');
+
     if (userData) {
-        $('#editFullNameInput').val(userData.name || '');
-        $('#editEmailInput').val(userData.email || '');
-        $('#editPasswordInput').val('');
+        $('#FullNameInput').val(userData.name || '');
+        $('#FullNameInput').val(userData.name || '');
+        $('#EmailInput').val(userData.email || '');
+        $('#PasswordInput').val('').attr('placeholder', "Leave it empty if you don't want to change password");
+        $('#AddStatusInput').prop('checked', userData.status == 1);
+        $('#user_id').val(userData.id);
 
-        // Set checkbox checked state based on userData.status
-        $('#editStatusInput').prop('checked', userData.status == 1);
-
-        // Show the modal using Bootstrap
-        $('#popupUpdate').css('display', 'block');
-
-        // Store user ID for update
-        $('#updateAdminBtn').data('id', userData.id);
+        $('#popupAddAdminUrl').show();
     } else {
         console.error('User data not found or is invalid');
     }
 });
 
-
-    // Handle update button click
-    $('#updateAdminBtn').click(function() {
-        var userId = $(this).data('id');
-        var formData = {
-            name: $('#editFullNameInput').val(),
-            email: $('#editEmailInput').val(),
-            phone: $('#editPhoneInput').val(),
-            password: $('#editPasswordInput').val(),
-            status: $('#editStatusInput').is(':checked') ? 1 : 0
-        };
-
-        $.ajax({
-            type: 'POST',
-            url: '/admin/users/admin/update/' + userId,
-            data: formData,
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                toastr.success("Updated Successfully");
-                $('#popupUpdate').css('display', 'none');
-                window.location.reload()
-            },
-            error: function(xhr, status, error) {
-                var errorMessages = "";
-                if (xhr.responseJSON && xhr.responseJSON.errors) {
-                    var errors = xhr.responseJSON.errors;
-                    for (var key in errors) {
-                        errorMessages += errors[key] + "<br>";
-                    }
-                } else {
-                    errorMessages = 'An error occurred while updating the user.';
-                }
-                toastr.error(errorMessages, '', {
-                    timeOut: 3000
-                });
-                console.error('Error updating user:', error);
-            }
-        });
-    });
-
-
-
-    // Close modals on close button click
-    $('#closeCustomModalButton').click(function() {
-        $('#popupView').css('display', 'none');
-    });
-
-    $('#closeUpdateModalButtonx').click(function() {
-        $('#popupUpdate').css('display', 'none');
-    });
-    $('#closeUpdateModalButton').click(function() {
-        $('#popupUpdate').css('display', 'none');
-    });
-
-    // Close modals on close button click end
- 
-
-
-
 $('.admin_delete').click(function(){
     var del_id = $(this).attr('data-id');
     $('#admin_delete_confirmed_btn').attr('data-id', del_id);
-$('#delete_modal').show();
+    $('#delete_modal').show();
 });
 
-
 $('#admin_delete_confirmed_btn').click( function() {
-    
     // Handle delete button click
     var id = $(this).data('id');
     $.ajax({
         type: 'GET',
-        url: '/admin/users/admin/destroy/' + id,// Adjust the URL according to your route configuration
+        url: '/admin/users/admin/destroy/' + id,
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
         success: function(response) {
             if (response.success) {
                 toastr.success(response.success, '', { timeOut: 3000 });
-                // Reload the DataTable or update it to reflect the changes
                 setTimeout(function() {
                     window.location.reload();
-                }, 3000);
+                }, 1500);
             } else if (response.error) {
                 toastr.error(response.error, '', { timeOut: 3000 });
             }
@@ -601,18 +489,91 @@ $('#admin_delete_confirmed_btn').click( function() {
 $('.close_delete_modal_btn').click(function(){
     $('#admin_delete_confirmed_btn').attr('data-id', '');
 });
+
 </script>
 
 
 <script>
-    $(document).ready(function() {
-    $('#showAddAdminPopUpBtn').on('click', function() {
-       
-        $('#popupAddAdminUrl').show();
-    });
-});  
-  
+
+// Event delegation for handling click events on action buttons
+// $(document).on('click', '.admin_view', function() {
+//     var userData = $(this).data('user');
+//     $('#viewFullName').text(userData.name);
+//     $('#viewEmail').text(userData.email);
+//     $('#viewPhone').text(userData.phone);
+//     $('#viewStatus').text(userData.status ? 'Active' : 'Inactive');
+     
+//     $('#popupView').css('display', 'block');
+// });
+
+
+
+ 
+
+
+    // Handle update button click
+    // $('#updateAdminBtn').click(function() {
+    //     var userId = $(this).data('id');
+    //     var formData = {
+    //         name: $('#editFullNameInput').val(),
+    //         email: $('#editEmailInput').val(),
+    //         phone: $('#editPhoneInput').val(),
+    //         password: $('#editPasswordInput').val(),
+    //         status: $('#editStatusInput').is(':checked') ? 1 : 0
+    //     };
+
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: '/admin/users/admin/update/' + userId,
+    //         data: formData,
+    //         headers: {
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //         },
+    //         success: function(response) {
+    //             toastr.success("Updated Successfully");
+    //             $('#popupUpdate').css('display', 'none');
+    //             window.location.reload();
+    //         },
+    //         error: function(xhr, status, error) {
+    //             var errorMessages = "";
+    //             if (xhr.responseJSON && xhr.responseJSON.errors) {
+    //                 var errors = xhr.responseJSON.errors;
+    //                 for (var key in errors) {
+    //                     errorMessages += errors[key] + "<br>";
+    //                 }
+    //             } else {
+    //                 errorMessages = 'An error occurred while updating the user.';
+    //             }
+    //             toastr.error(errorMessages, '', {
+    //                 timeOut: 3000
+    //             });
+    //             console.error('Error updating user:', error);
+    //         }
+    //     });
+    // });
+
+
+
+    // Close modals on close button click
+    // $('#closeCustomModalButton').click(function() {
+    //     $('#popupView').css('display', 'none');
+    // });
+
+    // $('#closeUpdateModalButtonx').click(function() {
+    //     $('#popupUpdate').css('display', 'none');
+    // });
+    // $('#closeUpdateModalButton').click(function() {
+    //     $('#popupUpdate').css('display', 'none');
+    // });
+
+    // Close modals on close button click end
+ 
+
+
+
+
 </script>
+
 
 <script>
     const fullNameInput = document.getElementById('FullNameInput');
@@ -633,10 +594,10 @@ $('.close_delete_modal_btn').click(function(){
             $('.FullNameError').text('');
             fullNameError.textContent = 'Name should contain only alphabets and spaces.';
             isValid = false;
-        } else if (fullName.length > 10) {
+        } else if (fullName.length > 50) {
             fullNameError.textContent='';
             $('.FullNameError').text('');
-            fullNameError.textContent = 'Name should not exceed 10 characters.';
+            fullNameError.textContent = 'Name should not exceed 50 characters.';
             isValid = false;
         } else {
             $('.FullNameError').text('');
@@ -663,20 +624,40 @@ $('.close_delete_modal_btn').click(function(){
 
         // Password Validation
         const password = passwordInput.value;
-        if (password.length < 8) {
-            passwordError.textContent='';
-            $('.PasswordError').text('');
-            passwordError.textContent = 'Password must be at least 8 characters long.';
-            isValid = false;
-        } else if (password.length > 20) {
-            passwordError.textContent='';
-            $('.PasswordError').text('');
-            passwordError.textContent = 'Password should not exceed 20 characters.';
-            isValid = false;
+        if($("#user_id").val() != ''){      // for edit case validation
+            if(password != ''){
+                if (password.length < 8) {
+                    passwordError.textContent='';
+                    $('.PasswordError').text('');
+                    passwordError.textContent = 'Password must be at least 8 characters long.';
+                    isValid = false;
+                } else if (password.length > 20) {
+                    passwordError.textContent='';
+                    $('.PasswordError').text('');
+                    passwordError.textContent = 'Password should not exceed 20 characters.';
+                    isValid = false;
+                } else {
+                    $('.PasswordError').text('');
+                    passwordError.textContent = '';
+                }
+            }
         } else {
-            $('.PasswordError').text('');
-            passwordError.textContent = '';
+            if (password.length < 8) {
+                passwordError.textContent='';
+                $('.PasswordError').text('');
+                passwordError.textContent = 'Password must be at least 8 characters long.';
+                isValid = false;
+            } else if (password.length > 20) {
+                passwordError.textContent='';
+                $('.PasswordError').text('');
+                passwordError.textContent = 'Password should not exceed 20 characters.';
+                isValid = false;
+            } else {
+                $('.PasswordError').text('');
+                passwordError.textContent = '';
+            }
         }
+        
 
         // Disable or enable submit button based on validation
         submitButton.disabled = !isValid;
@@ -698,68 +679,76 @@ $('.close_delete_modal_btn').click(function(){
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('updateAdminForm');
-    const fullNameInput = document.getElementById('editFullNameInput');
-    const emailInput = document.getElementById('editEmailInput');
-    const passwordInput = document.getElementById('editPasswordInput');
-    const updateButton = document.getElementById('updateAdminBtn');
+//     document.addEventListener('DOMContentLoaded', function() {
+//     const form = document.getElementById('updateAdminForm');
+//     const fullNameInput = document.getElementById('editFullNameInput');
+//     const emailInput = document.getElementById('editEmailInput');
+//     const passwordInput = document.getElementById('editPasswordInput');
+//     const updateButton = document.getElementById('updateAdminBtn');
 
-    const fullNameError = document.getElementById('editFullNameInputError');
-    const emailError = document.getElementById('editEmailInputError');
-    const passwordError = document.getElementById('editPasswordInputError');
+//     const fullNameError = document.getElementById('editFullNameInputError');
+//     const emailError = document.getElementById('editEmailInputError');
+//     const passwordError = document.getElementById('editPasswordInputError');
 
-    const validateForm = () => {
-        let isValid = true;
+//     const validateForm = () => {
+//         let isValid = true;
 
-        // Validate Full Name
-        if (fullNameInput.value.trim() === '') {
-            fullNameError.textContent = 'Full Name is required.';
-            isValid = false;
-        } else {
-            fullNameError.textContent = '';
-        }
+//         const fullName = fullNameInput.value;
+//         if (/[^a-zA-Z\s]/.test(fullName)) {
+//             fullNameError.textContent='';
+//             $('.FullNameError').text('');
+//             fullNameError.textContent = 'Name should contain only alphabets and spaces.';
+//             isValid = false;
+//         } else if (fullName.length > 50) {
+//             fullNameError.textContent='';
+//             $('.FullNameError').text('');
+//             fullNameError.textContent = 'Name should not exceed 50 characters.';
+//             isValid = false;
+//         } else {
+//             $('.FullNameError').text('');
+//             fullNameError.textContent = '';
+//         }
 
-        // Validate Email
-        if (emailInput.value.trim() === '') {
-            emailError.textContent = 'Email is required.';
-            isValid = false;
-        } else if (!emailInput.value.includes('@')) {
-            emailError.textContent = 'Email must be valid.';
-            isValid = false;
-        } else {
-            emailError.textContent = '';
-        }
+//         // Validate Email
+//         if (emailInput.value.trim() === '') {
+//             emailError.textContent = 'Email is required.';
+//             isValid = false;
+//         } else if (!emailInput.value.includes('@')) {
+//             emailError.textContent = 'Email must be valid.';
+//             isValid = false;
+//         } else {
+//             emailError.textContent = '';
+//         }
 
-        // Validate Password
-        if (passwordInput.value.trim() !== '' && passwordInput.value.length < 8) {
-            passwordError.textContent = 'Password must be at least 8 characters long.';
-            isValid = false;
-        } else {
-            passwordError.textContent = '';
-        }
+//         // Validate Password
+//         if (passwordInput.value.trim() !== '' && passwordInput.value.length < 8) {
+//             passwordError.textContent = 'Password must be at least 8 characters long.';
+//             isValid = false;
+//         } else {
+//             passwordError.textContent = '';
+//         }
 
-        // Enable or disable the button based on validity
-        updateButton.disabled = !isValid;
+//         // Enable or disable the button based on validity
+//         updateButton.disabled = !isValid;
 
-        return isValid;
-    };
+//         return isValid;
+//     };
 
-    // Attach input event listeners for real-time validation
-    fullNameInput.addEventListener('input', validateForm);
-    emailInput.addEventListener('input', validateForm);
-    passwordInput.addEventListener('input', validateForm);
+//     // Attach input event listeners for real-time validation
+//     fullNameInput.addEventListener('input', validateForm);
+//     emailInput.addEventListener('input', validateForm);
+//     passwordInput.addEventListener('input', validateForm);
 
-    // Attach submit event listener to the form
-    form.addEventListener('submit', function(event) {
-        if (!validateForm()) {
-            event.preventDefault();
-        }
-    });
+//     // Attach submit event listener to the form
+//     form.addEventListener('submit', function(event) {
+//         if (!validateForm()) {
+//             event.preventDefault();
+//         }
+//     });
 
-    // Initial validation to set the button state on page load
-   // validateForm();
-});
+//     // Initial validation to set the button state on page load
+//    // validateForm();
+// });
 
 
 </script>

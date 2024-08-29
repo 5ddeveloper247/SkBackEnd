@@ -150,8 +150,7 @@
                                 <h4>Add Property</h4>
                             </div>
                             <div class="blk">
-                                <form action="{{ route('admin.property.main.submission') }}"
-                                    class="propertySubmissionForm" method="POST" enctype="multipart/form-data">
+                                <form action="" id="propertyAdd_form" class="propertySubmissionForm" method="" enctype="multipart/form-data">
                                     @csrf
                                     <ul class="head_lst" id="head_lst">
                                         <li id="tab_head_lst1"><span>Personal Info</span></li>
@@ -309,8 +308,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Area<sup>*</sup></h6>
+                                                <h6>Area<sup id="area_mandatory_staric" style="display:none;">**</sup></h6>
                                                 <div class="form_blk">
+                                                    <input type="hidden" id="area_mandatory_flag" name="area_mandatory_flag" value="0">
                                                     <select name="address_area" id="address_area" class="text_box"
                                                         data-container="body">
                                                         <!-- Options will be populated dynamically -->
@@ -319,8 +319,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Location<sup>*</sup></h6>
+                                                <h6>Location<sup id="location_mandatory_staric" style="display:none;">**</sup></h6>
                                                 <div class="form_blk">
+                                                    <input type="hidden" id="location_mandatory_flag" name="location_mandatory_flag" value="0">
                                                     <select name="address_location" id="address_location"
                                                         class="text_box" data-container="body">
                                                         <!-- Options will be populated dynamically -->
@@ -329,8 +330,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Sector<sup>*</sup></h6>
+                                                <h6>Sector<sup id="sector_mandatory_staric" style="display:none;">**</sup></h6>
                                                 <div class="form_blk">
+                                                    <input type="hidden" id="sector_mandatory_flag" name="sector_mandatory_flag" value="0">
                                                     <select name="address_sector" id="address_sector" class="text_box"
                                                         data-container="body">
                                                         <!-- Options will be populated dynamically -->
@@ -404,7 +406,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Bedrooms<sup>*</sup></h6>
+                                                <h6>Bedrooms<sup></sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bedrooms"
                                                         id="propertyDetail_bedrooms" class="text_box" max="10"
@@ -413,7 +415,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Bathrooms<sup>*</sup></h6>
+                                                <h6>Bathrooms<sup></sup></h6>
                                                 <div class="form_blk">
                                                     <input type="number" name="propertyDetail_bathrooms"
                                                         id="propertyDetail_bathrooms" class="text_box" max="10"
@@ -450,10 +452,15 @@
                                                     <div class="col-xs-12">
                                                         <h6>Posting As<sup>*</sup></h6>
                                                         <div class="form_blk">
-                                                            <input type="text" name="extra_info_postingas"
+                                                        <select name="extra_info_postingas" id="extra_info_postingas" class="text_box">
+                                                            @foreach($postingAs as $name)
+                                                            <option value="{{ $name ->name}}">{{ $name->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                            <!-- <input type="text" name="extra_info_postingas"
                                                                 value="{{ old('extra_info_postingas') }}"
                                                                 id="extra_info_postingas" class="text_box"
-                                                                placeholder="Agent Name" maxlength="50">
+                                                                placeholder="Agent Name" maxlength="50"> -->
                                                             <span class="text-danger"
                                                                 id="extra_info_postingas_error"></span>
                                                         </div>
@@ -472,7 +479,7 @@
                                                     </div>
 
                                                     <div class="col-xs-12">
-                                                        <h6>Landline<sup>*</sup></h6>
+                                                        <h6>Landline<sup></sup></h6>
                                                         <div class="form_blk">
                                                             <input type="number" name="extra_info_landline"
                                                                 value="{{ old('extra_info_landline') }}"
@@ -512,12 +519,9 @@
                                                             <h6></h6>
                                                             <div class="or"></div>
                                                             <div class="btn_blk text-center">
-                                                                <input type="file" id="fileInput" name="photos[]"
-                                                                    accept=".png, .jpg, .jpeg" multiple
-                                                                    style="display:none;">
-                                                                <button type="button" class="site_btn sm"
-                                                                    onclick="document.getElementById('fileInput').click();">Browse
-                                                                    Files</button>
+                                                                <input type="file" id="fileInputTemp" name="fileInputTemp" accept=".png, .jpg, .jpeg" multiple="false" style="display:none;">
+                                                                <!-- <input type="file" id="fileInput" name="photos[]" accept=".png, .jpg, .jpeg" multiple style="display:none;"> -->
+                                                                <button type="button" class="site_btn sm" onclick="document.getElementById('fileInputTemp').click();">Browse Files</button>
                                                             </div>
                                                             <span class="text-danger" id="fileInput_error"></span>
                                                         </div>
@@ -527,6 +531,9 @@
                                                             <ul class="img_list flex" id="previewList">
                                                                 <!-- Previews will be added here dynamically -->
                                                             </ul>
+                                                            <div id="fileInputsContainer">
+                                                                <!-- images file container -->
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -758,7 +765,84 @@
     $(document).ready(function() {
         $('#uiBlocker').show();
         
+
     });
+    
+    var selectedFiles = [];
+    $('#fileInputTemp').on('change', function (event) {
+        const files = event.target.files;
+        
+        $('#previewList').empty();
+
+        // Validate and add selected files to selectedFiles array
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+
+            // Check if the file is an image
+            if (!file.type.startsWith('image/')) {
+                toastr.error('Please select only image files.');
+                continue;
+            }
+            selectedFiles.push(file);
+        }
+        // Update the display
+        displaySelectedFiles();
+        $("#fileInputTemp").val('');
+    });
+    function displaySelectedFiles() {
+        const $imageContainer = $('#previewList');
+        $imageContainer.empty(); // Clear previous images
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const $imageDiv = document.createElement('li');
+                $imageDiv.innerHTML = `
+                    <div class="thumb">
+                        <img src="${e.target.result}" alt="">
+                        <button type="button" class="x_btn" onclick="removeFile(this, ${index})"></button>
+                    </div>`;
+                $imageContainer.append($imageDiv);
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+</script>
+{{-- file preview handled here --}}
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const files = event.target.files; 
+        const previewList = document.getElementById('previewList');
+        previewList.innerHTML = ''; // Clear previous previews
+
+        Array.from(files).forEach((file, index) => {
+            // Check if the file has a valid image extension
+            const validImageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'];
+            const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
+
+            if (!validImageExtensions.includes(fileExtension)) {
+                alert('Only image files are allowed.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="thumb">
+                        <img src="${e.target.result}" alt="">
+                        <button type="button" class="x_btn" onclick="removeFile(this, ${index})"></button>
+                    </div>
+                `;
+                previewList.appendChild(li);
+            };
+            reader.readAsDataURL(file);
+        });
+    });
+
+    function removeFile(btn, index) {
+        selectedFiles.splice(index, 1);
+        displaySelectedFiles();
+    }
 </script>
 <script>
     $(window).on("load", function() {
@@ -891,13 +975,13 @@ $('.address_continue_btn').click(function() {
     if (!city.val().trim()) {
         city.addClass('validation-failed');
     }
-    if (!area.val().trim()) {
+    if (!area.val().trim() && $("#area_mandatory_flag").val() == '1') {
         area.addClass('validation-failed');
     }
-    if (!location.val().trim()) {
+    if (!location.val().trim() && $("#location_mandatory_flag").val() == '1') {
         location.addClass('validation-failed');
     }
-    if (!sector.val().trim()) {
+    if (!sector.val().trim() && $("#sector_mandatory_flag").val() == '1') {
         sector.addClass('validation-failed');
     }
     if (!address.val().trim()) {
@@ -953,15 +1037,15 @@ $('.property_detail_continue_btn').click(function() {
         areaUnit.addClass('validation-failed');
     }
 
-    if(hometype !=='')
-    {
-    if (!bedrooms.val().trim()) {
-        bedrooms.addClass('validation-failed');
-    }
-    if (!bathrooms.val().trim()) {
-        bathrooms.addClass('validation-failed');
-    } 
-    } 
+    // if(hometype !=='')
+    // {
+    // if (!bedrooms.val().trim()) {
+    //     bedrooms.addClass('validation-failed');
+    // }
+    // if (!bathrooms.val().trim()) {
+    //     bathrooms.addClass('validation-failed');
+    // } 
+    // } 
    
 
     // Check if any field failed validation
@@ -979,9 +1063,6 @@ $('.property_detail_continue_btn').click(function() {
     }
 });
 
-
-
-
 $('.extra_info_continue-btn').click(function() {
     const tab_head_lst = 5;
     var title = $('#extra_info_title');
@@ -989,7 +1070,7 @@ $('.extra_info_continue-btn').click(function() {
     var mobile = $('#extra_info_mobile');
     var landline = $('#extra_info_landline');
     var description = $('#extra_info_description');
-    var images = $('#fileInput');
+    var images = $('#fileInputTemp'); //$('#fileInput');
 
     // Remove red borders from previously failed fields
     $('.validation-failed').removeClass('validation-failed');
@@ -1011,10 +1092,10 @@ $('.extra_info_continue-btn').click(function() {
         });
     }
     
-    if (!landline.val().trim()) {
-        landline.addClass('validation-failed');
-    }
-    if (landline.val().trim().length > 10) {
+    // if (!landline.val().trim()) {
+    //     landline.addClass('validation-failed');
+    // }
+    if (landline.val().trim() != '' && landline.val().trim().length > 11) {
         landline.addClass('validation-failed');
         toastr.error('Landline number should not be greater than 10 characters', '', {
             timeOut: 3000
@@ -1023,7 +1104,14 @@ $('.extra_info_continue-btn').click(function() {
     if (!description.val().trim()) {
         description.addClass('validation-failed');
     }
-    if(!images.val()){
+    // if(!images.val()){
+    //     images.addClass('validation-failed');
+    //     toastr.error('Please upload image first', '', {
+    //         timeOut: 3000
+    //     });
+    // }
+
+    if(selectedFiles.length <= 0){
         images.addClass('validation-failed');
         toastr.error('Please upload image first', '', {
             timeOut: 3000
@@ -1048,11 +1136,9 @@ $('.extra_info_continue-btn').click(function() {
 
 
 
-
 $('.amenities_continue_btn').click(function(){
     const tab_head_lst = 6;
-    $('#amenities_tab').hide();
-    $('#done_tab').show();
+    
     handleTabHeadNextActive(tab_head_lst + 1);
     handlePropertyFormsubmission();
 
@@ -1070,17 +1156,60 @@ $('.prev_btn').click(function() {
 });
 
   
+
 function  handlePropertyFormsubmission(){
     $('#uiBlocker').show();
-    setTimeout(() => {
-       
-        $('.propertySubmissionForm').submit();
-        $('#uiBlocker').show();
+    let form = document.getElementById('propertyAdd_form');
+    let data = new FormData(form);
+
+    for (var i = 0; i < selectedFiles.length; i++) {
+        data.append('photos[]', selectedFiles[i]);
+    }
+
+    let type = 'POST';
+    let url = "{{ route('admin.property.main.submission') }}";
+    SendAjaxRequestToServer(type, url, data, '', handlePropertyFormsubmissionResponse, '', '.amenities_continue_btn');
+}
+
+function handlePropertyFormsubmissionResponse(response) {
+    
+    $('#uiBlocker').hide();
+    
+    if (response.status == 200) {
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
+
+        $('#amenities_tab').hide();
+        $('#done_tab').show();
+
+        let form = $('#propertyAdd_form');
         
-    }, 1000);
-    setTimeout(()=>{
-        $('#uiBlocker').hide();
-    },3000)
+        form.trigger("reset");
+        setTimeout(function() {
+            window.location.reload();
+        }, 1500);
+    }
+
+    if (response.status == 402) {
+
+        error = response.message;
+
+    } else {
+
+        error = response.responseJSON.message;
+        var is_invalid = response.responseJSON.errors;
+
+        $.each(is_invalid, function (key) {
+            // Assuming 'key' corresponds to the form field name
+            var inputField = $('[name="' + key + '"]');
+            // Add the 'is-invalid' class to the input field's parent or any desired container
+            inputField.addClass('is-invalid');
+        });
+    }
+    toastr.error(error, '', {
+        timeOut: 3000
+    });
 }
 
 </script>
@@ -1125,55 +1254,7 @@ function  handlePropertyFormsubmission(){
 
 
 
-{{-- file preview handled here --}}
-<script>
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-        const files = event.target.files; 
-        const previewList = document.getElementById('previewList');
-        previewList.innerHTML = ''; // Clear previous previews
 
-        Array.from(files).forEach((file, index) => {
-            // Check if the file has a valid image extension
-            const validImageExtensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff', '.webp'];
-            const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-
-            if (!validImageExtensions.includes(fileExtension)) {
-                alert('Only image files are allowed.');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <div class="thumb">
-                        <img src="${e.target.result}" alt="">
-                        <button type="button" class="x_btn" onclick="removeFile(this, ${index})"></button>
-                    </div>
-                `;
-                previewList.appendChild(li);
-            };
-            reader.readAsDataURL(file);
-        });
-    });
-
-    function removeFile(btn, index) {
-        const previewList = document.getElementById('previewList');
-        const li = btn.parentElement.parentElement;
-        const inputFile = document.getElementById('fileInput');
-
-        // Convert FileList to Array
-        const files = Array.from(inputFile.files);
-        files.splice(index, 1); // Remove the file at the given index
-
-        // Create a new FileList object
-        const dataTransfer = new DataTransfer();
-        files.forEach(file => dataTransfer.items.add(file));
-        inputFile.files = dataTransfer.files; // Update the input file list
-
-        li.remove(); // Remove the list item from the DOM
-    }
-</script>
 
 
 
@@ -1531,6 +1612,7 @@ function populateAreas(cityData) {
     // Populate area dropdown
     let areaDropdown = document.getElementById('address_area');
     areaDropdown.innerHTML = '<option value="">Select Area</option>';
+    
     if (city) {
         city.areas.forEach(area => {
             let option = document.createElement('option');
@@ -1538,6 +1620,16 @@ function populateAreas(cityData) {
             option.textContent = area.NAME;
             areaDropdown.appendChild(option);
         });
+        if(city.areas.length > 0){
+            $('#area_mandatory_flag').val('1');
+            $('#area_mandatory_staric').show();
+        }else{
+            $('#area_mandatory_flag').val('0');
+            $('#area_mandatory_staric').hide();
+        }
+    }else{
+        $('#area_mandatory_flag').val('0');
+        $('#area_mandatory_staric').hide();
     }
 
     // Clear and populate locations and sectors based on areas
@@ -1555,6 +1647,7 @@ function populateLocations(areas) {
     // Populate location dropdown
     let locationDropdown = document.getElementById('address_location');
     locationDropdown.innerHTML = '<option value="">Select Location</option>';
+    
     if (area) {
         area.locations.forEach(location => {
             let option = document.createElement('option');
@@ -1562,6 +1655,16 @@ function populateLocations(areas) {
             option.textContent = location.NAME;
             locationDropdown.appendChild(option);
         });
+        if(area.locations.length > 0){
+            $('#location_mandatory_flag').val('1');
+            $('#location_mandatory_staric').show();
+        }else{
+            $('#location_mandatory_flag').val('0');
+            $('#location_mandatory_staric').hide();
+        }
+    }else{
+        $('#location_mandatory_flag').val('0');
+        $('#location_mandatory_staric').hide();
     }
 
     // Clear and populate sectors based on locations
@@ -1579,6 +1682,7 @@ function populateSectors(locations) {
     // Populate sector dropdown
     let sectorDropdown = document.getElementById('address_sector');
     sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+    
     if (location) {
         location.sectors.forEach(sector => {
             let option = document.createElement('option');
@@ -1586,6 +1690,17 @@ function populateSectors(locations) {
             option.textContent = sector.NAME;
             sectorDropdown.appendChild(option);
         });
+        if(location.sectors.length > 0){
+            $('#sector_mandatory_flag').val('1');
+            $('#sector_mandatory_staric').show();
+        }else{
+            $('#sector_mandatory_flag').val('0');
+            $('#sector_mandatory_staric').hide();
+        }
+        
+    }else{
+        $('#sector_mandatory_flag').val('0');
+        $('#sector_mandatory_staric').hide();
     }
 }
 
@@ -1726,8 +1841,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (value.length === 0) {
                 pInfoFirstNameError.textContent = 'First Name is required.';
                 return false;
-            } else if (!/^[a-zA-Z]{1,15}$/.test(value)) {
-                pInfoFirstNameError.textContent = 'First Name should only contain letters and be up to 15 characters long.';
+            } else if (!/^[a-zA-Z]{1,50}$/.test(value)) {
+                pInfoFirstNameError.textContent = 'First Name should only contain letters and be up to 50 characters long.';
                 return false;
             } else {
                 pInfoFirstNameError.textContent = '';
@@ -1736,66 +1851,66 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     
         const validateLastName = () => {
-    const value = pInfoLastName.value.trim();
-    if (value.length === 0) {
-        pInfoLastNameError.textContent = 'Last Name is required.';
-        return false;
-    } else if (value.length > 15) {
-        pInfoLastNameError.textContent = 'Last Name must not exceed 15 characters long.';
-        return false;
-    } else if (!/^[a-zA-Z]+$/.test(value)) {
-        pInfoLastNameError.textContent = 'Last Name should only contain letters.';
-        return false;
-    } else {
-        pInfoLastNameError.textContent = '';
-        return true;
-    }
-};
+            const value = pInfoLastName.value.trim();
+            if (value.length === 0) {
+                pInfoLastNameError.textContent = 'Last Name is required.';
+                return false;
+            } else if (value.length > 50) {
+                pInfoLastNameError.textContent = 'Last Name must not exceed 50 characters long.';
+                return false;
+            } else if (!/^[a-zA-Z]+$/.test(value)) {
+                pInfoLastNameError.textContent = 'Last Name should only contain letters.';
+                return false;
+            } else {
+                pInfoLastNameError.textContent = '';
+                return true;
+            }
+        };
 
 
     
-const validateEmail = () => {
-    const value = pInfoEmail.value.trim();
-    // Regex pattern to match an email address excluding the '+' sign
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
-    // Check if the email contains a '+' sign
-    if (value.includes('+')) {
-        pInfoEmailError.textContent = 'Email Address should not contain a "+" sign.';
-        return false;
-    }
+        const validateEmail = () => {
+            const value = pInfoEmail.value.trim();
+            // Regex pattern to match an email address excluding the '+' sign
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            // Check if the email contains a '+' sign
+            if (value.includes('+')) {
+                pInfoEmailError.textContent = 'Email Address should not contain a "+" sign.';
+                return false;
+            }
 
-    // Validate the email format
-    if (value.length === 0) {
-        pInfoEmailError.textContent = 'Email Address is required.';
-        return false;
-    } else if (!emailRegex.test(value)) {
-        pInfoEmailError.textContent = 'Please enter a valid email address.';
-        return false;
-    } else {
-        pInfoEmailError.textContent = '';
-        return true;
-    }
-};
+            // Validate the email format
+            if (value.length === 0) {
+                pInfoEmailError.textContent = 'Email Address is required.';
+                return false;
+            } else if (!emailRegex.test(value)) {
+                pInfoEmailError.textContent = 'Please enter a valid email address.';
+                return false;
+            } else {
+                pInfoEmailError.textContent = '';
+                return true;
+            }
+        };
 
 
     
         const validatePhoneNumber = () => {
-    const value = pInfoPhoneNumber.value.trim();
-    if (value.length === 0) {
-        pInfoPhoneNumberError.textContent = 'Phone Number is required.';
-        return false;
-    } else if (value.length < 11 || value.length > 15) {
-        pInfoPhoneNumberError.textContent = 'Phone Number must be between 11 and 15 characters.';
-        return false;
-    } else if (!/^\+?[0-9]*$/.test(value)) {
-        pInfoPhoneNumberError.textContent = 'Please enter a valid phone number.';
-        return false;
-    } else {
-        pInfoPhoneNumberError.textContent = '';
-        return true;
-    }
-};
+            const value = pInfoPhoneNumber.value.trim();
+            if (value.length === 0) {
+                pInfoPhoneNumberError.textContent = 'Phone Number is required.';
+                return false;
+            } else if (value.length < 11 || value.length > 15) {
+                pInfoPhoneNumberError.textContent = 'Phone Number must be between 11 and 15 characters.';
+                return false;
+            } else if (!/^\+?[0-9]*$/.test(value)) {
+                pInfoPhoneNumberError.textContent = 'Please enter a valid phone number.';
+                return false;
+            } else {
+                pInfoPhoneNumberError.textContent = '';
+                return true;
+            }
+        };
     
         const validateForm = () => {
             const isFirstNameValid = validateFirstName();
@@ -1923,14 +2038,36 @@ const validateEmail = () => {
         };
     
         const validateForm = () => {
-            const isCityValid = validateField(addressCity, addressCityError, 'City is required.');
-            const isAreaValid = validateField(addressArea, addressAreaError, 'Area is required.');
-            const isLocationValid = validateField(addressLocation, addressLocationError, 'Location is required.');
-            const isSectorValid = validateField(addressSector, addressSectorError, 'Sector is required.');
-            const isAddressValid = validateField(addressAddress, addressAddressError, 'Address is required.');
-            const isMapLocationValid = true; // Google Map Link is optional, no validation required
-    
-            continueButton.disabled = !(isCityValid && isAreaValid && isLocationValid && isSectorValid && isAddressValid && isMapLocationValid);
+            setTimeout(function(){
+                
+                const isCityValid = validateField(addressCity, addressCityError, 'City is required.');
+
+                if($("#area_mandatory_flag").val() == '1'){
+                    var isAreaValid = validateField(addressArea, addressAreaError, 'Area is required.');
+                }else{
+                    addressAreaError.textContent = '';
+                    var isAreaValid = true;
+                }
+
+                if($("#location_mandatory_flag").val() == '1'){
+                    var isLocationValid = validateField(addressLocation, addressLocationError, 'Location is required.');
+                }else{
+                    addressLocationError.textContent = '';
+                    var isLocationValid = true;
+                }
+                
+                if($("#sector_mandatory_flag").val() == '1'){
+                    var isSectorValid = validateField(addressSector, addressSectorError, 'Sector is required.');
+                }else{
+                    addressSectorError.textContent = '';
+                    var isSectorValid = true;
+                }
+
+                var isAddressValid = validateField(addressAddress, addressAddressError, 'Address is required.');
+                var isMapLocationValid = true; // Google Map Link is optional, no validation required
+                
+                continueButton.disabled = !(isCityValid && isAreaValid && isLocationValid && isSectorValid && isAddressValid && isMapLocationValid);
+            }, 300);
         };
     
         addressCity.addEventListener('input', validateForm);
@@ -1975,17 +2112,17 @@ const validateEmail = () => {
             const isPlotNumValid = validateField(propertyDetailPlotNum, propertyDetailPlotNumError, 'Plot No is required.');
             const isAreaValid = validateField(propertyDetailArea, propertyDetailAreaError, 'Area Unit is required.');
             const isAreaUnitValid = validateField(propertyDetailAreaUnit, propertyDetailAreaUnitError, 'Area is required.');
-            const isBedroomsValid = validateField(propertyDetailBedrooms, propertyDetailBedroomsError, 'Bedrooms are required.');
-            const isBathroomsValid = validateField(propertyDetailBathrooms, propertyDetailBathroomsError, 'Bathrooms are required.');
+            // const isBedroomsValid = validateField(propertyDetailBedrooms, propertyDetailBedroomsError, 'Bedrooms are required.');
+            // const isBathroomsValid = validateField(propertyDetailBathrooms, propertyDetailBathroomsError, 'Bathrooms are required.');
     
-            continueButton.disabled = !(isPlotNumValid && isAreaValid && isAreaUnitValid && isBedroomsValid && isBathroomsValid);
+            continueButton.disabled = !(isPlotNumValid && isAreaValid && isAreaUnitValid);// && isBedroomsValid && isBathroomsValid
         };
     
         propertyDetailPlotNum.addEventListener('input', validateForm);
         propertyDetailArea.addEventListener('change', validateForm);
         propertyDetailAreaUnit.addEventListener('input', validateForm);
-        propertyDetailBedrooms.addEventListener('input', validateForm);
-        propertyDetailBathrooms.addEventListener('input', validateForm);
+        // propertyDetailBedrooms.addEventListener('input', validateForm);
+        // propertyDetailBathrooms.addEventListener('input', validateForm);
     
         // Initial validation check
         validateForm();
@@ -2039,10 +2176,10 @@ const validateEmail = () => {
         const validateLandline = (field, errorElement) => {
             const value = field.value.trim();
             const length = value.length;
-            if (length < 7 || length > 11) {
+            if (value != '' && (length < 7 || length > 11)) {
                 errorElement.textContent = 'Landline number must be between 7 and 11 digits.';
                 return false;
-            } else if (!/^\d+$/.test(value)) {
+            } else if (value != '' && (!/^\d+$/.test(value))) {
                 errorElement.textContent = 'Landline number must contain only digits.';
                 return false;
             } else {
@@ -2052,7 +2189,7 @@ const validateEmail = () => {
         };
 
         const validateFiles = () => {
-            if (fileInput.files.length === 0) {
+            if (selectedFiles.length === 0) {
                 fileInputError.textContent = 'Please upload at least one photo.';
                 return false;
             } else {
@@ -2067,9 +2204,9 @@ const validateEmail = () => {
             const isMobileValid = validatePhoneNumber(extraInfoMobile, extraInfoMobileError);
             const isLandlineValid = validateLandline(extraInfoLandline, extraInfoLandlineError);
             const isDescriptionValid = validateField(extraInfoDescription, extraInfoDescriptionError, 'Description is required.');
-            const areFilesValid = validateFiles();
+            // const areFilesValid = validateFiles();
     
-            continueButton.disabled = !(isTitleValid && isPostingAsValid && isMobileValid && isLandlineValid && isDescriptionValid && areFilesValid);
+            continueButton.disabled = !(isTitleValid && isPostingAsValid && isMobileValid && isLandlineValid && isDescriptionValid);// && areFilesValid
         };
     
         extraInfoTitle.addEventListener('input', validateForm);
@@ -2077,7 +2214,7 @@ const validateEmail = () => {
         extraInfoMobile.addEventListener('input', validateForm);
         extraInfoLandline.addEventListener('input', validateForm);
         extraInfoDescription.addEventListener('input', validateForm);
-        fileInput.addEventListener('change', validateForm);
+        // fileInput.addEventListener('change', validateForm);
     
         // Initial validation check
         validateForm();

@@ -12,7 +12,7 @@
 <header>
     <div class="contain-fluid">
         <div id="uiBlocker"
-            style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 9999; display: none;">
+            style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 100 !important; display: none;">
             <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
                 <img src="{{ asset('assets/images/loading-spinner.gif') }}" alt="Loading..."
                     style="height:150px; width:150px;">
@@ -21,7 +21,6 @@
         <div id="nav">
             <nav class="ease">
                 <ul id="lst">
-
                     {{-- <li><a href="{{url('/admin/users') }}">Admin Users</a></li>
                     <li><a href="{{ url('/admin/media/view') }}">Media</a></li>
                     <li><a href="{{ url('admin/property/listing') }}">Property Listings</a></li> --}}

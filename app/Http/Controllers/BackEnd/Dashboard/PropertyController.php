@@ -27,11 +27,13 @@ class PropertyController extends Controller
     public function propertyListing(Request $request)
     {
         // resources\views\Backend\admin\property\propertyListiing.blade.php
-        $personalInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('status', 0)->get();
-        if ($personalInfo == null) {
-            return view('Backend.admin.property.propertyListiing');
+        $data['personalInfo'] = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('status', 0)->get();
+        $data['postingAs'] = User::whereIn('role', ['admin', 'super_admin'])->where('status', '1')->get('name');
+
+        if ($data['personalInfo'] == null) {
+            return view('Backend.admin.property.propertyListiing')->with($data);
         } else {
-            return view('Backend.admin.property.propertyListiing', compact('personalInfo'));
+            return view('Backend.admin.property.propertyListiing')->with($data);;
         }
     }
 
@@ -51,6 +53,7 @@ class PropertyController extends Controller
 
     public function propertyMainSubmission(Request $request)
     { 
+        
         // Validate the incoming request
         DB::beginTransaction();
         try {
@@ -161,12 +164,14 @@ class PropertyController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Record has been saved successfully.');
+            // return redirect()->back()->with('success', 'Record has been saved successfully.');
+            return response()->json(['status' => 200, 'message' => "Record has been saved successfully."]);
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('Error saving property submission: ' . $e->getMessage());
 
-            return redirect()->back()->withInput()->with('error', 'There was an error saving the record. Please try again.');
+            // return redirect()->back()->withInput()->with('error', 'There was an error saving the record. Please try again.');
+            return response()->json(['status' => 402, 'message' => 'There was an error saving the record. Please try again.']);
         }
     }
 
@@ -200,11 +205,7 @@ class PropertyController extends Controller
 
     public function propertyMainSubmission_edit(Request $request)
     {
-        // Validation rules
-        // Validation rules
-
-        // dd($request->all());
-        $validator = Validator::make($request->all(), [
+        $validatedData = $request->validate([
             'pInfo_firstName_edit' => 'required|string|max:255',
             'pInfo_lastName_edit' => 'required|string|max:255',
             'pInfo_email_edit' => 'required|email',
@@ -215,10 +216,10 @@ class PropertyController extends Controller
             'purpose_commercial_edit' => 'nullable|string|max:255',
             'price_edit' => 'required|integer',
             'address_city_edit' => 'required|string|max:255',
-            'address_area_edit' => 'required|string|max:255',
-            'address_location_edit' => 'required|string|max:2000',
+            'address_area_edit' => 'required_if:area_mandatory_flag,1|max:255',
+            'address_location_edit' => 'required_if:location_mandatory_flag,1|max:2000',
             'address_map_location_edit' => 'nullable|string|max:2000',
-            'address_sector_edit' => 'required|string|max:255',
+            'address_sector_edit' => 'required_if:sector_mandatory_flag,1|max:255',
             'address_address_edit' => 'required|string|max:255',
             'propertyDetail_plot_num_edit' => 'required|string|max:255',
             'propertyDetail_area_edit' => 'required|string|max:255',
@@ -228,17 +229,10 @@ class PropertyController extends Controller
             'extra_info_title_edit' => 'required|string|max:255',
             'extra_info_postingas_edit' => 'required|string|max:255',
             'extra_info_mobile_edit' => 'required|string|max:15',
-            'extra_info_landline_edit' => 'required|string|max:15',
+            'extra_info_landline_edit' => 'max:15',
             'extra_info_description_edit' => 'required|string|max:5000',
             'photos_edit.*' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048' // validate each file
         ]);
-        // Check validation results
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Validation failed. Please check your input.');
-        }
 
         try {
             $propertyInfo = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')
@@ -246,7 +240,8 @@ class PropertyController extends Controller
                 ->first();
 
             if (!$propertyInfo) {
-                return redirect()->back()->with('error', "Property not found");
+                // return redirect()->back()->with('error', "Property not found");
+                return response()->json(['status' => 402, 'message' => "Property not found"]);
             }
 
             // Update personal info
@@ -360,7 +355,8 @@ class PropertyController extends Controller
                         ]);
                     } else {
                         // Handle file upload failure
-                        return redirect()->back()->with('error', "File upload failed for {$photo->getClientOriginalName()}");
+                        // return redirect()->back()->with('error', "File upload failed for {$photo->getClientOriginalName()}");
+                        return response()->json(['status' => 402, 'message' => "File upload failed for {$photo->getClientOriginalName()}"]);
                     }
                 }
             }
@@ -383,11 +379,13 @@ class PropertyController extends Controller
                 // Log the error if email sending fails
                 Log::error('Error sending email on property from admin side edit submission: ' . $e->getMessage());
             }
-            return redirect()->to('admin/property/listing')->with('success', "Edited Successfully");
+            // return redirect()->to('admin/property/listing')->with('success', "Edited Successfully");
+            return response()->json(['status' => 200, 'message' => "Edited Successfully"]);
         } catch (Exception $e) {
             // Log the error message
             Log::error('Error in propertyMainSubmission_edit: ' . $e->getMessage());
-            return redirect()->back()->with('error', "An unexpected error occurred. Please try.");
+            // return redirect()->back()->with('error', "An unexpected error occurred. Please try again.");
+            return response()->json(['status' => 402, 'message' => "An unexpected error occurred. Please try again."]);
         }
     }
 

@@ -19,9 +19,9 @@ class AdminController extends Controller
         $dataAdmin = User::where('role', 'admin')->orderBy('created_at', 'desc')->get();
 
         $adminCounter = $dataAdmin->count();
-        $activeAdmins = User::where('role', 'admin')->where('status', '1')->count();
-        $inactiveAdmins = User::where('role', 'admin')->where('status', '0')->count();
-        $totalAdmins = User::where('role', 'admin')->count();
+        $activeAdmins = User::where('role', 'admin')->where('super_admin', '0')->where('status', '1')->count();
+        $inactiveAdmins = User::where('role', 'admin')->where('super_admin', '0')->where('status', '0')->count();
+        $totalAdmins = User::where('role', 'admin')->where('super_admin', '0')->count();
 
         return view('Backend.admin.user.admins', ['users' => $dataAdmin, 'adminCounter' => $adminCounter, 'activeAdmins' => $activeAdmins, 'inactiveAdmins' => $inactiveAdmins, 'totalAdmins' => $totalAdmins]);
     }

@@ -44,8 +44,8 @@
 </div>
 @endif
 <div class="blk">
-    <form action="{{ route('admin.property.main.submission.edit') }}" class="propertySubmissionForm_edit"
-        id="propertySubmissionForm_edit" method="POST" enctype="multipart/form-data">
+    <form action="" class="propertySubmissionForm_edit"
+        id="propertySubmissionForm_edit" method="" enctype="multipart/form-data">
         @csrf
 
         {{-- Personal info tabl_edit --}}
@@ -253,7 +253,7 @@
                     <h6>City<sup>*</sup></h6>
                     <div class="form_blk">
                         <select name="address_city_edit" id="address_city_edit" class="text_box" data-container="body"
-                            required>
+                            required onchange="populateAreasLov();">
                             <option value="">Choose City</option>
                             @foreach ($cities as $city)
                             <option value="{{ $city->NAME }}" {{ old('address_city_edit', $propertyInfo->
@@ -271,8 +271,9 @@
 
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Area<sup>*</sup></h6>
+                    <h6>Area<sup id="area_mandatory_staric" style="display:none;">**</sup></h6>
                     <div class="form_blk">
+                        <input type="hidden" name="area_mandatory_flag" id="area_mandatory_flag" value="0">
                         <select name="address_area_edit" id="address_area_edit" class="text_box" data-container="body"
                             onchange="populateLocationLov();">
                             <option value="">Choose Area</option>
@@ -288,8 +289,9 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Location<sup>*</sup></h6>
+                    <h6>Location<sup id="location_mandatory_staric" style="display:none;">**</sup></h6>
                     <div class="form_blk">
+                        <input type="hidden" id="location_mandatory_flag" name="location_mandatory_flag" value="0">
                         <select name="address_location_edit" id="address_location_edit" class="text_box"
                             data-container="body" onchange="populateSectorLov();">
                             <option value="">Choose Location</option>
@@ -308,8 +310,9 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Sector<sup>*</sup></h6>
+                    <h6>Sector<sup id="sector_mandatory_staric" style="display:none;">**</sup></h6>
                     <div class="form_blk">
+                        <input type="hidden" id="sector_mandatory_flag" name="sector_mandatory_flag" value="0">
                         <select name="address_sector_edit" id="address_sector_edit" class="text_box"
                             data-container="body">
                             <option value="">Choose Sector</option>
@@ -376,7 +379,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Area<sup>*</sup></h6>
+                    <h6>Area Unit<sup>*</sup></h6>
                     <div class="form_blk">
                         @php
                         $selectedAreaUnit = old('propertyDetail_area_edit',
@@ -404,7 +407,7 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="form_blk">
                         <div>
-                            <h6>Area Unit<sup>*</sup></h6>
+                            <h6>Area<sup>*</sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="propertyDetail_area_unit_edit"
                                     id="propertyDetail_area_unit_edit" class="text_box"
@@ -421,7 +424,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Bedrooms<sup>*</sup></h6>
+                    <h6>Bedrooms<sup></sup></h6>
                     <div class="form_blk">
                         <input type="number" name="propertyDetail_bedrooms_edit"
                             value="{{ old('propertyDetail_bedrooms_edit', $propertyInfo->propertyListingPape->propertyDetail_bedrooms ?? '') }}"
@@ -435,7 +438,7 @@
                 </div>
 
                 <div class="col-sm-6 col-xs-12">
-                    <h6>Bathrooms<sup>*</sup></h6>
+                    <h6>Bathrooms<sup></sup></h6>
                     <div class="form_blk">
                         <input type="number" name="propertyDetail_bathrooms_edit"
                             value="{{ old('propertyDetail_bathrooms_edit', $propertyInfo->propertyListingPape->propertyDetail_bathrooms ?? '') }}"
@@ -477,12 +480,9 @@
                             <div class="form_blk">
                                 <select name="extra_info_postingas_edit" id="extra_info_postingas_edit"
                                     class="text_box">
+                                    
                                     @foreach($postingAs as $name)
-                                    <option value="{{ $name ->name}}" {{ old('extra_info_postingas_edit',
-                                        $propertyInfo->propertyListingPape->extra_info_postingas ?? '') == $name ?
-                                        'selected' : '' }}>
-                                        {{ $name->name }}
-                                    </option>
+                                        <option value="{{ $name->name}}">{{$name->name }}</option>
                                     @endforeach
                                 </select>
                                 @if ($errors->has('extra_info_postingas_edit'))
@@ -510,7 +510,7 @@
 
 
                         <div class="col-xs-12">
-                            <h6>Landline<sup>*</sup></h6>
+                            <h6>Landline<sup></sup></h6>
                             <div class="form_blk">
                                 <input type="number" name="extra_info_landline_edit"
                                     value="{{ old('extra_info_landline_edit', $propertyInfo->propertyListingPape->extra_info_landline ?? '') }}"
@@ -558,12 +558,8 @@
                                 <div class="or"></div>
                                 <div class="btn_blk text-center">
                                     <input type="hidden" id="existingFiles" name="existing_files">
-                                    <input type="file" id="fileInput_edit" name="photos_edit[]" multiple
-                                        style="display:none;" accept=".jpg, .jpeg, .png">
-                                    <button type="button" class="site_btn sm"
-                                        onclick="document.getElementById('fileInput_edit').click();">Browse
-                                        Files
-                                    </button>
+                                    <input type="file" id="fileInput_edit" name="" multiple="false" style="display:none;" accept=".jpg, .jpeg, .png"><!-- photos_edit[] -->
+                                    <button type="button" class="site_btn sm" onclick="document.getElementById('fileInput_edit').click();">Browse Files</button>
                                 </div>
                             </div>
                         </div>
@@ -839,9 +835,9 @@
                 <br>
                 <div class="btn_blk text-center">
                     <button type="submit" class="site_btn long ">
-                        <a class="site_btn" href="{{route('admin.property.listing')}}">Back</a>
+                        <a class="site_btn" id="back_to_Listing" href="{{route('admin.property.listing')}}">Back</a>
                     </button>
-                    <button type="submit" id="propertyFormSubmitEditBtn"
+                    <button type="button" id="propertyFormSubmitEditBtn" onclick="handlePropertyFormsubmission();"
                         class="site_btn extra_info_continue-btn_edit long ">Submit</button>
                 </div>
 
@@ -862,7 +858,9 @@
     setTimeout(()=>{
         var citySelected = '{{ $propertyInfo->propertyListingPape->address_city }}';
         $('#address_city_edit').val(citySelected);
-    },4000)
+        var postedAsTxt = '{{$propertyInfo->propertyListingPape->extra_info_postingas}}';
+        $('#extra_info_postingas_edit').val(postedAsTxt);                 
+    },3000)
     })
 
 </script>
@@ -907,13 +905,25 @@
             $.each(areas, function (index, value) {
                 option += `<option value="${value.NAME}">${value.NAME}</option>`;
             });
+
+            $('#area_mandatory_flag').val('1');
+            $('#area_mandatory_staric').show();
+        }else{
+            $('#area_mandatory_flag').val('0');
+            $('#area_mandatory_staric').hide();
         }
         $("#address_area_edit").html(option);
 
         $("#address_area_edit").val('');
         $("#address_location_edit").val('').html(`<option value="">Choose Location</option>`);
         $("#address_sector_edit").val('').html(`<option value="">Choose Sector</option>`);
+        
+        $('#location_mandatory_flag, #sector_mandatory_flag').val('0');
+        $('#location_mandatory_staric, #sector_mandatory_staric').hide();
 
+        $('#address_location_edit_error, #address_sector_edit_error').text('').hide();
+
+        updateValidation();
     }
 
     function populateLocationLov() {
@@ -932,11 +942,24 @@
             $.each(locations, function (index, value) {
                 option += `<option value="${value.NAME}">${value.NAME}</option>`;
             });
+
+            $('#location_mandatory_flag').val('1');
+            $('#location_mandatory_staric').show();
+        }else{
+            $('#area_mandatory_flag').val('0');
+            $('#area_mandatory_staric').hide();
         }
         $("#address_location_edit").html(option);
 
         $("#address_location_edit").val('');
         $("#address_sector_edit").val('').html(`<option value="">Choose Sector</option>`);
+
+        $('#sector_mandatory_flag').val('0');
+        $('#sector_mandatory_staric').hide();
+
+        $('#address_sector_edit_error').text('').hide();
+
+        updateValidation();
 
     }
 
@@ -956,10 +979,20 @@
             $.each(sectors, function (index, value) {
                 option += `<option value="${value.NAME}">${value.NAME}</option>`;
             });
+
+            $('#sector_mandatory_flag').val('1');
+            $('#sector_mandatory_staric').show();
+        }else{
+            $('#sector_mandatory_flag').val('0');
+            $('#sector_mandatory_staric').hide();
         }
         $("#address_sector_edit").html(option);
 
         $("#address_sector_edit").val('');
+
+        $('#address_sector_edit_error').text('').hide();
+
+        updateValidation();
     }
 
     function loadCityListingAndPropertyListing() {
@@ -968,96 +1001,97 @@
         SendAjaxRequestToServer(type, url, '', '', loadPropertyandCityListing, '', '');
     }
 
-function loadPropertyandCityListing(response) {
-    const cityData = response.cityData;
+    function loadPropertyandCityListing(response) {
+        const cityData = response.cityData;
 
-   
-    let cityDropdown = document.getElementById('address_city_edit');
- cityDropdown.innerHTML = '<option value="">Select City</option>';
-    cityData.forEach(city => {
-        let option = document.createElement('option');
-        option.value = city.NAME;
-        option.textContent = city.NAME;
-        cityDropdown.appendChild(option);
-    });
-
-   // Add event listener to update areas and locations when city is changed
-    cityDropdown.addEventListener('change', function() {
-        populateAreas(cityData);
-    });
-}
-
-function populateAreas(cityData) {
-    let selectedCity = document.getElementById('address_city_edit').value;
-    let city = cityData.find(city => city.NAME === selectedCity);
     
-    // Populate area dropdown
-    let areaDropdown = document.getElementById('address_area_edit');
-    areaDropdown.innerHTML = '<option value="">Select Area</option>';
-    if (city) {
-        city.areas.forEach(area => {
+        let cityDropdown = document.getElementById('address_city_edit');
+        cityDropdown.innerHTML = '<option value="">Select City</option>';
+        cityData.forEach(city => {
             let option = document.createElement('option');
-            option.value = area.NAME;
-            option.textContent = area.NAME;
-            areaDropdown.appendChild(option);
+            option.value = city.NAME;
+            option.textContent = city.NAME;
+            cityDropdown.appendChild(option);
         });
+
+        // Add event listener to update areas and locations when city is changed
+        // cityDropdown.addEventListener('change', function() {
+        //     populateAreas(cityData);
+        // });
     }
 
-    // Clear the location and sector dropdowns
-    let locationDropdown = document.getElementById('address_location_edit');
-    locationDropdown.innerHTML = '<option value="">Select Location</option>';
+// function populateAreas(cityData) {
 
-    let sectorDropdown = document.getElementById('address_sector_edit');
-    sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+//     let selectedCity = document.getElementById('address_city_edit').value;
+//     let city = cityData.find(city => city.NAME === selectedCity);
+    
+//     // Populate area dropdown
+//     let areaDropdown = document.getElementById('address_area_edit');
+//     areaDropdown.innerHTML = '<option value="">Select Area</option>';
+//     if (city) {
+//         city.areas.forEach(area => {
+//             let option = document.createElement('option');
+//             option.value = area.NAME;
+//             option.textContent = area.NAME;
+//             areaDropdown.appendChild(option);
+//         });
+//     }
 
-    // Add event listener to update locations when area is changed
-    areaDropdown.addEventListener('change', function() {
-        populateLocations(city.areas);
-    });
-}
+//     // Clear the location and sector dropdowns
+//     let locationDropdown = document.getElementById('address_location_edit');
+//     locationDropdown.innerHTML = '<option value="">Select Location</option>';
 
-function populateLocations(areas) {
-    let selectedArea = document.getElementById('address_area_edit').value;
-    let area = areas.find(area => area.NAME === selectedArea);
+//     let sectorDropdown = document.getElementById('address_sector_edit');
+//     sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
 
-    // Populate location dropdown
-    let locationDropdown = document.getElementById('address_location_edit');
-   // locationDropdown.innerHTML = '<option value="">Select Location</option>';
-    if (area) {
-        area.locations.forEach(location => {
-            let option = document.createElement('option');
-            option.value = location.NAME;
-            option.textContent = location.NAME;
-            locationDropdown.appendChild(option);
-        });
-    }
+//     // Add event listener to update locations when area is changed
+//     areaDropdown.addEventListener('change', function() {
+//         populateLocations(city.areas);
+//     });
+// }
 
-    // Clear the sector dropdown
-    let sectorDropdown = document.getElementById('address_sector_edit');
-  //  sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+// function populateLocations(areas) {
+//     let selectedArea = document.getElementById('address_area_edit').value;
+//     let area = areas.find(area => area.NAME === selectedArea);
 
-    // Add event listener to update sectors when location is changed
-    locationDropdown.addEventListener('change', function() {
-        populateSectors(area.locations);
-    });
-}
+//     // Populate location dropdown
+//     let locationDropdown = document.getElementById('address_location_edit');
+//    // locationDropdown.innerHTML = '<option value="">Select Location</option>';
+//     if (area) {
+//         area.locations.forEach(location => {
+//             let option = document.createElement('option');
+//             option.value = location.NAME;
+//             option.textContent = location.NAME;
+//             locationDropdown.appendChild(option);
+//         });
+//     }
 
-function populateSectors(locations) {
-    let selectedLocation = document.getElementById('address_location_edit').value;
-    let location = locations.find(location => location.NAME === selectedLocation);
+//     // Clear the sector dropdown
+//     let sectorDropdown = document.getElementById('address_sector_edit');
+//   //  sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
 
-    // Populate sector dropdown
-    let sectorDropdown = document.getElementById('address_sector_edit');
-    sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
-    if (location) {
-        location.sectors.forEach(sector => {
-            let option = document.createElement('option');
-            option.value = sector.NAME;
-            option.textContent = sector.NAME;
-            sectorDropdown.appendChild(option);
-        });
-    }
-}
+//     // Add event listener to update sectors when location is changed
+//     locationDropdown.addEventListener('change', function() {
+//         populateSectors(area.locations);
+//     });
+// }
+
+// function populateSectors(locations) {
+//     let selectedLocation = document.getElementById('address_location_edit').value;
+//     let location = locations.find(location => location.NAME === selectedLocation);
+
+//     // Populate sector dropdown
+//     let sectorDropdown = document.getElementById('address_sector_edit');
+//     sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
+//     if (location) {
+//         location.sectors.forEach(sector => {
+//             let option = document.createElement('option');
+//             option.value = sector.NAME;
+//             option.textContent = sector.NAME;
+//             sectorDropdown.appendChild(option);
+//         });
+//     }
+// }
  
 // Call this function to load the city and property listings when the page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -1093,9 +1127,9 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 // Usage
-citiesList().then(cityData => {
-     // Do something with the city data
-}); 
+// citiesList().then(cityData => {
+//      // Do something with the city data
+// }); 
   
    
 </script>
@@ -1173,35 +1207,96 @@ function getpropertydataEditResponse(response, cityResponse=null) {
         }
 }
 
-
+var selectedFiles = [];
 document.getElementById('fileInput_edit').addEventListener('change', function(event) {
     const files = event.target.files;
-    const previewList = document.getElementById('previewList_edit');
+    // Validate and add selected files to selectedFiles array
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
 
-    Array.from(files).forEach((file, index) => {
-        const fileType = file.type;
-        const validImageTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-        
-        if (!validImageTypes.includes(fileType)) {
-            alert('Only JPG, JPEG, and PNG images are allowed.');
-            return;
+        // Check if the file is an image
+        if (!file.type.startsWith('image/')) {
+            toastr.error('Please select only image files.');
+            continue;
         }
 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const li = document.createElement('li');
-            li.innerHTML += `
-                <div class="thumb">
-                    <img src="${e.target.result}" alt="">
-                    <button type="button" class="x_btn" onclick="removeFile_edit(this)"></button>
-                </div>
-            `;
-            previewList.appendChild(li);
-        };
-        reader.readAsDataURL(file);
-    });
+        selectedFiles.push(file);
+    }
+    // Update the display
+    displaySelectedFiles();
+    $("#fileInput_edit").val('');
+    
 });
 
+function displaySelectedFiles() {
+    const $imageContainer = $('#previewList_edit');
+    $(".tempImages").remove();
+    selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            var imageDiv = `<li class="tempImages">
+                <div class="thumb ">
+                    <img src="${e.target.result}" alt="">
+                    <button type="button" class="x_btn" onclick="removeFile_edit(this, ${index})"></button>
+                </div>
+            </li>`;
+            $imageContainer.append(imageDiv);
+        }
+        reader.readAsDataURL(file);
+    });
+}
+
+function  handlePropertyFormsubmission(){
+    $('#uiBlocker').show();
+    let form = document.getElementById('propertySubmissionForm_edit');
+    let data = new FormData(form);
+
+    for (var i = 0; i < selectedFiles.length; i++) {
+        data.append('photos_edit[]', selectedFiles[i]);
+    }
+
+    let type = 'POST';
+    let url = "{{ route('admin.property.main.submission.edit') }}";
+    SendAjaxRequestToServer(type, url, data, '', handlePropertyFormsubmissionResponse, '', '.amenities_continue_btn');
+}
+
+function handlePropertyFormsubmissionResponse(response) {
+    
+    if (response.status == 200) {
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
+
+        let form = $('#propertySubmissionForm_edit');
+        
+        form.trigger("reset");
+        setTimeout(function() {
+            // $("#back_to_Listing").click();
+            window.location.href = "{{route('admin.property.listing')}}";
+            // window.location.reload();
+        }, 500);
+    }
+
+    if (response.status == 402) {
+
+        error = response.message;
+
+    } else {
+
+        error = response.responseJSON.message;
+        var is_invalid = response.responseJSON.errors;
+
+        $.each(is_invalid, function (key) {
+            // Assuming 'key' corresponds to the form field name
+            var inputField = $('[name="' + key + '"]');
+            // Add the 'is-invalid' class to the input field's parent or any desired container
+            inputField.addClass('is-invalid');
+        });
+    }
+    toastr.error(error, '', {
+        timeOut: 3000
+    });
+}
 
 </script>
 
@@ -1210,7 +1305,7 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 
 
 <script>
-    function removeFile_edit(btn) { 
+    function removeFile_edit(btn,index='') {
     const li = btn.parentElement.parentElement;
     li.remove();
 
@@ -1225,6 +1320,13 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
     
     const existingFilesx = $('#existingFiles');
     let filePathsx = JSON.parse(existingFilesx.val());
+    
+    if(index != ''){
+        console.log('asd');
+        selectedFiles.splice(index, 1);
+        displaySelectedFiles();
+    }
+    
 }
 
 
@@ -1323,15 +1425,20 @@ var $landline = $('#extra_info_landline_edit');
 var $mobile = $('#extra_info_mobile_edit');
 var isValid = true;
 
-if ($landline.val().trim() === '' || $landline.val().trim().length > 10) {
-    $landline.css('border', '1px solid red');
-    toastr.error('Landline number should not be empty and should not exceed 10 characters.', '', {
-        timeOut: 3000
-    });
-    isValid = false;
+if($landline.val().trim() != ''){
+    if ($landline.val().trim().length > 10) {
+        $landline.css('border', '1px solid red');
+        toastr.error('Landline number should not be empty and should not exceed 10 characters.', '', {
+            timeOut: 3000
+        });
+        isValid = false;
+    } else {
+        $landline.css('border', '');
+    }
 } else {
     $landline.css('border', '');
 }
+
 
 if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
     $mobile.css('border', '1px solid red');
@@ -1389,273 +1496,7 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Select all necessary elements
-        var mobileInput = document.getElementById('extra_info_mobile_edit');
-        var mobileErrorMessage = document.getElementById('extra_info_mobile_edit_error');
-        var landlineInput = document.getElementById('extra_info_landline_edit');
-        var landlineErrorMessage = document.getElementById('extra_info_landline_edit_error');
-        var phoneNumberInput = document.getElementById('pInfo_phoneNumber_edit');
-        var phoneNumberErrorMessage = document.getElementById('pInfo_phoneNumber_edit_error');
-        var firstNameInput = document.getElementById('pInfo_firstName_edit');
-        var firstNameErrorMessage = document.getElementById('pInfo_firstName_edit_error');
-        var lastNameInput = document.getElementById('pInfo_lastName_edit');
-        var lastNameErrorMessage = document.getElementById('pInfo_lastName_edit_error');
-        var emailInput = document.getElementById('pInfo_email_edit');
-        var emailErrorMessage = document.getElementById('pInfo_email_edit_error');
-        var purposeInput = document.getElementById('purpose_purpose_edit');
-        var purposeErrorMessage = document.getElementById('purpose_purpose_edit_error');
-        var homeInput = document.getElementById('pupose_home_edit');
-        var homeErrorMessage = document.getElementById('pupose_home_edit_error');
-        var plotInput = document.getElementById('purpose_plot_edit');
-        var plotErrorMessage = document.getElementById('purpose_plot_edit_error');
-        var commercialInput = document.getElementById('purpose_commercial_edit');
-        var commercialErrorMessage = document.getElementById('purpose_commercial_edit_error');
-        var priceInput = document.getElementById('price_edit');
-        var priceErrorMessage = document.getElementById('price_edit_error');
-        var cityInput = document.getElementById('address_city_edit');
-        var cityErrorMessage = document.getElementById('address_city_edit_error');
-        var areaInput = document.getElementById('address_area_edit');
-        var areaErrorMessage = document.getElementById('address_area_edit_error');
-        var locationInput = document.getElementById('address_location_edit');
-        var locationErrorMessage = document.getElementById('address_location_edit_error');
-        var sectorInput = document.getElementById('address_sector_edit');
-        var sectorErrorMessage = document.getElementById('address_sector_edit_error');
-        var addressInput = document.getElementById('address_address_edit');
-        var addressErrorMessage = document.getElementById('address_address_edit_error');
-        var detailPlotNumInput = document.getElementById('propertyDetail_plot_num_edit');
-        var detailPlotNumInputErrorMessage = document.getElementById('propertyDetail_plot_num_edit_error');
-        var detailAreaInput = document.getElementById('propertyDetail_area_edit');
-        var detailAreaInputErrorMessage = document.getElementById('propertyDetail_area_edit_error');
-        var detailBathInput = document.getElementById('propertyDetail_bathrooms_edit');
-        var detailBathInputErrorMessage = document.getElementById('propertyDetail_bathrooms_edit_error');
-        var detailBedroomsInput = document.getElementById('propertyDetail_bedrooms_edit');
-        var detailBedroomsInputErrorMessage = document.getElementById('propertyDetail_bedrooms_edit_error');
-        var detailAreaUnitInput = document.getElementById('propertyDetail_area_unit_edit');
-        var detailAreaUnitInputErrorMessage = document.getElementById('propertyDetail_area_unit_edit_error');
-        var extraInfoTitleInput = document.getElementById('extra_info_title_edit');
-        var extraInfoTitleInputErrorMessage = document.getElementById('extra_info_title_edit_error');
-        var extraInfoDescriptionInput = document.getElementById('extra_info_description_edit');
-        var extraInfoDescriptionInputErrorMessage = document.getElementById('extra_info_description_edit_error');
-        var submitButton = document.getElementById('propertyFormSubmitEditBtn');
-    
-        function updateValidation() {
-            var isValid = true;
-    
-            // Mobile Validation
-            if (mobileInput.value.length < 11 || mobileInput.value.length > 15) {
-                mobileErrorMessage.textContent = 'The mobile number must be between 11 and 15 digits long.';
-                mobileErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                mobileErrorMessage.textContent = '';
-                mobileErrorMessage.style.display = 'none';
-            }
-    
-            // Landline Validation
-            if (landlineInput.value.length < 7 || landlineInput.value.length > 11) {
-                landlineErrorMessage.textContent = 'The landline number must be between 7 and 11 digits long.';
-                landlineErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                landlineErrorMessage.textContent = '';
-                landlineErrorMessage.style.display = 'none';
-            }
-    
-            // Phone Number Validation
-            if (phoneNumberInput.value.length < 11 || phoneNumberInput.value.length > 15) {
-                phoneNumberErrorMessage.textContent = 'The phone number must be between 11 and 15 digits long.';
-                phoneNumberErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                phoneNumberErrorMessage.textContent = '';
-                phoneNumberErrorMessage.style.display = 'none';
-            }
-    
-            // First Name Validation
-            if (!/^[A-Za-z\s]+$/.test(firstNameInput.value) || firstNameInput.value.length < 1 || firstNameInput.value.length > 50) {
-                firstNameErrorMessage.textContent = 'The first name must only contain alphabets and spaces, and be between 1 and 50 characters long.';
-                firstNameErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                firstNameErrorMessage.textContent = '';
-                firstNameErrorMessage.style.display = 'none';
-            }
-    
-            // Last Name Validation
-            if (!/^[A-Za-z\s]+$/.test(lastNameInput.value) || lastNameInput.value.length < 1 || lastNameInput.value.length > 50) {
-                lastNameErrorMessage.textContent = 'The last name must only contain alphabets and spaces, and be between 1 and 50 characters long.';
-                lastNameErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                lastNameErrorMessage.textContent = '';
-                lastNameErrorMessage.style.display = 'none';
-            }
-    
-            // Email Validation
-            if (emailInput.value.length < 1 || emailInput.value.length > 50 || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailInput.value)) {
-                emailErrorMessage.textContent = 'The email address must be between 1 and 50 characters long and valid.';
-                emailErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                emailErrorMessage.textContent = '';
-                emailErrorMessage.style.display = 'none';
-            }
-    
-            // Purpose Validation
-            if (purposeInput.value.length == 0) {
-                purposeErrorMessage.textContent = 'The purpose is required.';
-                purposeErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                purposeErrorMessage.textContent = '';
-                purposeErrorMessage.style.display = 'none';
-            }
-    
-            // Home/Plot/Commercial Validation
-            if (homeInput.value.length == 0 && plotInput.value.length == 0 && commercialInput.value.length == 0) {
-                homeErrorMessage.textContent = 'One of Home, Plot, or Commercial purpose is required.';
-                homeErrorMessage.style.display = 'block';
-                plotErrorMessage.textContent = '';
-                plotErrorMessage.style.display = 'none';
-                commercialErrorMessage.textContent = '';
-                commercialErrorMessage.style.display = 'none';
-                isValid = false;
-            } else {
-                homeErrorMessage.textContent = '';
-                homeErrorMessage.style.display = 'none';
-                plotErrorMessage.textContent = '';
-                plotErrorMessage.style.display = 'none';
-                commercialErrorMessage.textContent = '';
-                commercialErrorMessage.style.display = 'none';
-            }
-    
-            // Price Validation
-            if (priceInput.value.length < 1 || priceInput.value.length > 15) {
-                priceErrorMessage.textContent = 'The price must be between 1 and 15 digits long.';
-                priceErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                priceErrorMessage.textContent = '';
-                priceErrorMessage.style.display = 'none';
-            }
-    
-            // City Validation
-            if (cityInput.value.length == 0) {
-                cityErrorMessage.textContent = 'The city is required.';
-                cityErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                cityErrorMessage.textContent = '';
-                cityErrorMessage.style.display = 'none';
-            }
-    
-            // Area Validation
-            if (areaInput.value.length == 0) {
-                areaErrorMessage.textContent = 'The area is required.';
-                areaErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                areaErrorMessage.textContent = '';
-                areaErrorMessage.style.display = 'none';
-            }
-    
-            // Location Validation
-            if (locationInput.value.length == 0) {
-                locationErrorMessage.textContent = 'The location is required.';
-                locationErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                locationErrorMessage.textContent = '';
-                locationErrorMessage.style.display = 'none';
-            }
-    
-            // Sector Validation
-            if (sectorInput.value.length == 0) {
-                sectorErrorMessage.textContent = 'The sector is required.';
-                sectorErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                sectorErrorMessage.textContent = '';
-                sectorErrorMessage.style.display = 'none';
-            }
-    
-            // Address Validation
-            if (addressInput.value.length == 0) {
-                addressErrorMessage.textContent = 'The address is required.';
-                addressErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                addressErrorMessage.textContent = '';
-                addressErrorMessage.style.display = 'none';
-            }
-    
-            // Property Details Validation
-            if (detailPlotNumInput.value.length == 0) {
-                detailPlotNumInputErrorMessage.textContent = 'The Plot Num is required.';
-                detailPlotNumInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                detailPlotNumInputErrorMessage.textContent = '';
-                detailPlotNumInputErrorMessage.style.display = 'none';
-            }
-    
-            if (detailAreaInput.value.length == 0) {
-                detailAreaInputErrorMessage.textContent = 'The Area is required.';
-                detailAreaInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                detailAreaInputErrorMessage.textContent = '';
-                detailAreaInputErrorMessage.style.display = 'none';
-            }
-    
-            if (detailBathInput.value.length == 0) {
-                detailBathInputErrorMessage.textContent = 'The Bathrooms is required.';
-                detailBathInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                detailBathInputErrorMessage.textContent = '';
-                detailBathInputErrorMessage.style.display = 'none';
-            }
-    
-            if (detailBedroomsInput.value.length == 0) {
-                detailBedroomsInputErrorMessage.textContent = 'The Bedroom is required.';
-                detailBedroomsInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                detailBedroomsInputErrorMessage.textContent = '';
-                detailBedroomsInputErrorMessage.style.display = 'none';
-            }
-    
-            if (detailAreaUnitInput.value.length == 0) {
-                detailAreaUnitInputErrorMessage.textContent = 'The Area unit is required.';
-                detailAreaUnitInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                detailAreaUnitInputErrorMessage.textContent = '';
-                detailAreaUnitInputErrorMessage.style.display = 'none';
-            }
-    
-            // Extra Info Validation
-            if (extraInfoTitleInput.value.length == 0) {
-                extraInfoTitleInputErrorMessage.textContent = 'The Title is required.';
-                extraInfoTitleInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                extraInfoTitleInputErrorMessage.textContent = '';
-                extraInfoTitleInputErrorMessage.style.display = 'none';
-            }
-    
-            if (extraInfoDescriptionInput.value.length == 0) {
-                extraInfoDescriptionInputErrorMessage.textContent = 'The Description is required.';
-                extraInfoDescriptionInputErrorMessage.style.display = 'block';
-                isValid = false;
-            } else {
-                extraInfoDescriptionInputErrorMessage.textContent = '';
-                extraInfoDescriptionInputErrorMessage.style.display = 'none';
-            }
-    
-            // Enable or disable the submit button based on validation
-            submitButton.disabled = !isValid;
-        }
+        
     
         // Add event listeners to validate fields on input change
         var inputs = [
@@ -1679,6 +1520,274 @@ if ($mobile.val().trim() === '' || $mobile.val().trim().length > 15) {
         // Initial validation check
         updateValidation();
     });
+
+    var mobileInput = document.getElementById('extra_info_mobile_edit');
+    var mobileErrorMessage = document.getElementById('extra_info_mobile_edit_error');
+    var landlineInput = document.getElementById('extra_info_landline_edit');
+    var landlineErrorMessage = document.getElementById('extra_info_landline_edit_error');
+    var phoneNumberInput = document.getElementById('pInfo_phoneNumber_edit');
+    var phoneNumberErrorMessage = document.getElementById('pInfo_phoneNumber_edit_error');
+    var firstNameInput = document.getElementById('pInfo_firstName_edit');
+    var firstNameErrorMessage = document.getElementById('pInfo_firstName_edit_error');
+    var lastNameInput = document.getElementById('pInfo_lastName_edit');
+    var lastNameErrorMessage = document.getElementById('pInfo_lastName_edit_error');
+    var emailInput = document.getElementById('pInfo_email_edit');
+    var emailErrorMessage = document.getElementById('pInfo_email_edit_error');
+    var purposeInput = document.getElementById('purpose_purpose_edit');
+    var purposeErrorMessage = document.getElementById('purpose_purpose_edit_error');
+    var homeInput = document.getElementById('pupose_home_edit');
+    var homeErrorMessage = document.getElementById('pupose_home_edit_error');
+    var plotInput = document.getElementById('purpose_plot_edit');
+    var plotErrorMessage = document.getElementById('purpose_plot_edit_error');
+    var commercialInput = document.getElementById('purpose_commercial_edit');
+    var commercialErrorMessage = document.getElementById('purpose_commercial_edit_error');
+    var priceInput = document.getElementById('price_edit');
+    var priceErrorMessage = document.getElementById('price_edit_error');
+    var cityInput = document.getElementById('address_city_edit');
+    var cityErrorMessage = document.getElementById('address_city_edit_error');
+    var areaInput = document.getElementById('address_area_edit');
+    var areaErrorMessage = document.getElementById('address_area_edit_error');
+    var locationInput = document.getElementById('address_location_edit');
+    var locationErrorMessage = document.getElementById('address_location_edit_error');
+    var sectorInput = document.getElementById('address_sector_edit');
+    var sectorErrorMessage = document.getElementById('address_sector_edit_error');
+    var addressInput = document.getElementById('address_address_edit');
+    var addressErrorMessage = document.getElementById('address_address_edit_error');
+    var detailPlotNumInput = document.getElementById('propertyDetail_plot_num_edit');
+    var detailPlotNumInputErrorMessage = document.getElementById('propertyDetail_plot_num_edit_error');
+    var detailAreaInput = document.getElementById('propertyDetail_area_edit');
+    var detailAreaInputErrorMessage = document.getElementById('propertyDetail_area_edit_error');
+    var detailBathInput = document.getElementById('propertyDetail_bathrooms_edit');
+    var detailBathInputErrorMessage = document.getElementById('propertyDetail_bathrooms_edit_error');
+    var detailBedroomsInput = document.getElementById('propertyDetail_bedrooms_edit');
+    var detailBedroomsInputErrorMessage = document.getElementById('propertyDetail_bedrooms_edit_error');
+    var detailAreaUnitInput = document.getElementById('propertyDetail_area_unit_edit');
+    var detailAreaUnitInputErrorMessage = document.getElementById('propertyDetail_area_unit_edit_error');
+    var extraInfoTitleInput = document.getElementById('extra_info_title_edit');
+    var extraInfoTitleInputErrorMessage = document.getElementById('extra_info_title_edit_error');
+    var extraInfoDescriptionInput = document.getElementById('extra_info_description_edit');
+    var extraInfoDescriptionInputErrorMessage = document.getElementById('extra_info_description_edit_error');
+    var submitButton = document.getElementById('propertyFormSubmitEditBtn');
+
+    function updateValidation() {
+        var isValid = true;
+
+        // Mobile Validation
+        if (mobileInput.value.length < 11 || mobileInput.value.length > 15) {
+            mobileErrorMessage.textContent = 'The mobile number must be between 11 and 15 digits long.';
+            mobileErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            mobileErrorMessage.textContent = '';
+            mobileErrorMessage.style.display = 'none';
+        }
+
+        // Landline Validation
+        if (landlineInput.value != '' && (landlineInput.value.length < 7 || landlineInput.value.length > 11)) {
+            landlineErrorMessage.textContent = 'The landline number must be between 7 and 11 digits long.';
+            landlineErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            landlineErrorMessage.textContent = '';
+            landlineErrorMessage.style.display = 'none';
+        }
+
+        // Phone Number Validation
+        if (phoneNumberInput.value.length < 11 || phoneNumberInput.value.length > 15) {
+            phoneNumberErrorMessage.textContent = 'The phone number must be between 11 and 15 digits long.';
+            phoneNumberErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            phoneNumberErrorMessage.textContent = '';
+            phoneNumberErrorMessage.style.display = 'none';
+        }
+
+        // First Name Validation
+        if (!/^[A-Za-z\s]+$/.test(firstNameInput.value) || firstNameInput.value.length < 1 || firstNameInput.value.length > 50) {
+            firstNameErrorMessage.textContent = 'The first name must only contain alphabets and spaces, and be between 1 and 50 characters long.';
+            firstNameErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            firstNameErrorMessage.textContent = '';
+            firstNameErrorMessage.style.display = 'none';
+        }
+
+        // Last Name Validation
+        if (!/^[A-Za-z\s]+$/.test(lastNameInput.value) || lastNameInput.value.length < 1 || lastNameInput.value.length > 50) {
+            lastNameErrorMessage.textContent = 'The last name must only contain alphabets and spaces, and be between 1 and 50 characters long.';
+            lastNameErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            lastNameErrorMessage.textContent = '';
+            lastNameErrorMessage.style.display = 'none';
+        }
+
+        // Email Validation
+        if (emailInput.value.length < 1 || emailInput.value.length > 50 || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(emailInput.value)) {
+            emailErrorMessage.textContent = 'The email address must be between 1 and 50 characters long and valid.';
+            emailErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            emailErrorMessage.textContent = '';
+            emailErrorMessage.style.display = 'none';
+        }
+
+        // Purpose Validation
+        if (purposeInput.value.length == 0) {
+            purposeErrorMessage.textContent = 'The purpose is required.';
+            purposeErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            purposeErrorMessage.textContent = '';
+            purposeErrorMessage.style.display = 'none';
+        }
+
+        // Home/Plot/Commercial Validation
+        if (homeInput.value.length == 0 && plotInput.value.length == 0 && commercialInput.value.length == 0) {
+            homeErrorMessage.textContent = 'One of Home, Plot, or Commercial purpose is required.';
+            homeErrorMessage.style.display = 'block';
+            plotErrorMessage.textContent = '';
+            plotErrorMessage.style.display = 'none';
+            commercialErrorMessage.textContent = '';
+            commercialErrorMessage.style.display = 'none';
+            isValid = false;
+        } else {
+            homeErrorMessage.textContent = '';
+            homeErrorMessage.style.display = 'none';
+            plotErrorMessage.textContent = '';
+            plotErrorMessage.style.display = 'none';
+            commercialErrorMessage.textContent = '';
+            commercialErrorMessage.style.display = 'none';
+        }
+
+        // Price Validation
+        if (priceInput.value.length < 1 || priceInput.value.length > 15) {
+            priceErrorMessage.textContent = 'The price must be between 1 and 15 digits long.';
+            priceErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            priceErrorMessage.textContent = '';
+            priceErrorMessage.style.display = 'none';
+        }
+
+        // City Validation
+        if (cityInput.value.length == 0) {
+            cityErrorMessage.textContent = 'The city is required.';
+            cityErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            cityErrorMessage.textContent = '';
+            cityErrorMessage.style.display = 'none';
+        }
+
+        // Area Validation
+        if (areaInput.value.length == 0 && $('#area_mandatory_flag').val() == '1') {
+            areaErrorMessage.textContent = 'The area is required.';
+            areaErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            areaErrorMessage.textContent = '';
+            areaErrorMessage.style.display = 'none';
+        }
+
+        // Location Validation
+        if (locationInput.value.length == 0 && $('#location_mandatory_flag').val() == '1') {
+            locationErrorMessage.textContent = 'The location is required.';
+            locationErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            locationErrorMessage.textContent = '';
+            locationErrorMessage.style.display = 'none';
+        }
+
+        // Sector Validation
+        if (sectorInput.value.length == 0 && $('#sector_mandatory_flag').val() == '1') {
+            sectorErrorMessage.textContent = 'The sector is required.';
+            sectorErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            sectorErrorMessage.textContent = '';
+            sectorErrorMessage.style.display = 'none';
+        }
+
+        // Address Validation
+        if (addressInput.value.length == 0) {
+            addressErrorMessage.textContent = 'The address is required.';
+            addressErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            addressErrorMessage.textContent = '';
+            addressErrorMessage.style.display = 'none';
+        }
+
+        // Property Details Validation
+        if (detailPlotNumInput.value.length == 0) {
+            detailPlotNumInputErrorMessage.textContent = 'The Plot Num is required.';
+            detailPlotNumInputErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            detailPlotNumInputErrorMessage.textContent = '';
+            detailPlotNumInputErrorMessage.style.display = 'none';
+        }
+
+        if (detailAreaInput.value.length == 0) {
+            detailAreaInputErrorMessage.textContent = 'The Area is required.';
+            detailAreaInputErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            detailAreaInputErrorMessage.textContent = '';
+            detailAreaInputErrorMessage.style.display = 'none';
+        }
+
+        // if (detailBathInput.value.length == 0) {
+        //     detailBathInputErrorMessage.textContent = 'The Bathrooms is required.';
+        //     detailBathInputErrorMessage.style.display = 'block';
+        //     isValid = false;
+        // } else {
+        //     detailBathInputErrorMessage.textContent = '';
+        //     detailBathInputErrorMessage.style.display = 'none';
+        // }
+
+        // if (detailBedroomsInput.value.length == 0) {
+        //     detailBedroomsInputErrorMessage.textContent = 'The Bedroom is required.';
+        //     detailBedroomsInputErrorMessage.style.display = 'block';
+        //     isValid = false;
+        // } else {
+        //     detailBedroomsInputErrorMessage.textContent = '';
+        //     detailBedroomsInputErrorMessage.style.display = 'none';
+        // }
+
+        if (detailAreaUnitInput.value.length == 0) {
+            detailAreaUnitInputErrorMessage.textContent = 'The Area unit is required.';
+            detailAreaUnitInputErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            detailAreaUnitInputErrorMessage.textContent = '';
+            detailAreaUnitInputErrorMessage.style.display = 'none';
+        }
+
+        // Extra Info Validation
+        if (extraInfoTitleInput.value.length == 0) {
+            extraInfoTitleInputErrorMessage.textContent = 'The Title is required.';
+            extraInfoTitleInputErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            extraInfoTitleInputErrorMessage.textContent = '';
+            extraInfoTitleInputErrorMessage.style.display = 'none';
+        }
+
+        if (extraInfoDescriptionInput.value.length == 0) {
+            extraInfoDescriptionInputErrorMessage.textContent = 'The Description is required.';
+            extraInfoDescriptionInputErrorMessage.style.display = 'block';
+            isValid = false;
+        } else {
+            extraInfoDescriptionInputErrorMessage.textContent = '';
+            extraInfoDescriptionInputErrorMessage.style.display = 'none';
+        }
+
+        // Enable or disable the submit button based on validation
+        submitButton.disabled = !isValid;
+    }
 </script>
 
 
