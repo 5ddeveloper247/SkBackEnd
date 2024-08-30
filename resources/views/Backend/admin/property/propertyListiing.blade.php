@@ -150,7 +150,8 @@
                                 <h4>Add Property</h4>
                             </div>
                             <div class="blk">
-                                <form action="" id="propertyAdd_form" class="propertySubmissionForm" method="" enctype="multipart/form-data">
+                                <form action="" id="propertyAdd_form" class="propertySubmissionForm" method=""
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <ul class="head_lst" id="head_lst">
                                         <li id="tab_head_lst1"><span>Personal Info</span></li>
@@ -308,9 +309,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Area<sup id="area_mandatory_staric" style="display:none;">**</sup></h6>
+                                                <h6>Area<sup id="area_mandatory_staric" style="display:none;">**</sup>
+                                                </h6>
                                                 <div class="form_blk">
-                                                    <input type="hidden" id="area_mandatory_flag" name="area_mandatory_flag" value="0">
+                                                    <input type="hidden" id="area_mandatory_flag"
+                                                        name="area_mandatory_flag" value="0">
                                                     <select name="address_area" id="address_area" class="text_box"
                                                         data-container="body">
                                                         <!-- Options will be populated dynamically -->
@@ -319,9 +322,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Location<sup id="location_mandatory_staric" style="display:none;">**</sup></h6>
+                                                <h6>Location<sup id="location_mandatory_staric"
+                                                        style="display:none;">**</sup></h6>
                                                 <div class="form_blk">
-                                                    <input type="hidden" id="location_mandatory_flag" name="location_mandatory_flag" value="0">
+                                                    <input type="hidden" id="location_mandatory_flag"
+                                                        name="location_mandatory_flag" value="0">
                                                     <select name="address_location" id="address_location"
                                                         class="text_box" data-container="body">
                                                         <!-- Options will be populated dynamically -->
@@ -330,9 +335,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6 col-xs-12">
-                                                <h6>Sector<sup id="sector_mandatory_staric" style="display:none;">**</sup></h6>
+                                                <h6>Sector<sup id="sector_mandatory_staric" style="display:none;"></sup>
+                                                </h6>
                                                 <div class="form_blk">
-                                                    <input type="hidden" id="sector_mandatory_flag" name="sector_mandatory_flag" value="0">
+                                                    <input type="hidden" id="sector_mandatory_flag"
+                                                        name="sector_mandatory_flag" value="0">
                                                     <select name="address_sector" id="address_sector" class="text_box"
                                                         data-container="body">
                                                         <!-- Options will be populated dynamically -->
@@ -452,11 +459,13 @@
                                                     <div class="col-xs-12">
                                                         <h6>Posting As<sup>*</sup></h6>
                                                         <div class="form_blk">
-                                                        <select name="extra_info_postingas" id="extra_info_postingas" class="text_box">
-                                                            @foreach($postingAs as $name)
-                                                            <option value="{{ $name ->name}}">{{ $name->name }}</option>
-                                                            @endforeach
-                                                        </select>
+                                                            <select name="extra_info_postingas"
+                                                                id="extra_info_postingas" class="text_box">
+                                                                @foreach($postingAs as $name)
+                                                                <option value="{{ $name ->name}}">{{ $name->name }}
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
                                                             <!-- <input type="text" name="extra_info_postingas"
                                                                 value="{{ old('extra_info_postingas') }}"
                                                                 id="extra_info_postingas" class="text_box"
@@ -519,9 +528,13 @@
                                                             <h6></h6>
                                                             <div class="or"></div>
                                                             <div class="btn_blk text-center">
-                                                                <input type="file" id="fileInputTemp" name="fileInputTemp" accept=".png, .jpg, .jpeg" multiple="false" style="display:none;">
+                                                                <input type="file" id="fileInputTemp"
+                                                                    name="fileInputTemp" accept=".png, .jpg, .jpeg"
+                                                                    multiple="false" style="display:none;">
                                                                 <!-- <input type="file" id="fileInput" name="photos[]" accept=".png, .jpg, .jpeg" multiple style="display:none;"> -->
-                                                                <button type="button" class="site_btn sm" onclick="document.getElementById('fileInputTemp').click();">Browse Files</button>
+                                                                <button type="button" class="site_btn sm"
+                                                                    onclick="document.getElementById('fileInputTemp').click();">Browse
+                                                                    Files</button>
                                                             </div>
                                                             <span class="text-danger" id="fileInput_error"></span>
                                                         </div>
@@ -764,14 +777,14 @@
 <script>
     $(document).ready(function() {
         $('#uiBlocker').show();
-        
+
 
     });
-    
+
     var selectedFiles = [];
     $('#fileInputTemp').on('change', function (event) {
         const files = event.target.files;
-        
+
         $('#previewList').empty();
 
         // Validate and add selected files to selectedFiles array
@@ -810,7 +823,7 @@
 {{-- file preview handled here --}}
 <script>
     document.getElementById('fileInput').addEventListener('change', function(event) {
-        const files = event.target.files; 
+        const files = event.target.files;
         const previewList = document.getElementById('previewList');
         previewList.innerHTML = ''; // Clear previous previews
 
@@ -871,8 +884,8 @@
 <script>
     $(document).ready(function() {
 
-       
-function handleTabHeadNextActive  (tab_head) {   
+
+function handleTabHeadNextActive  (tab_head) {
     for (let i = 1; i <= 7; i++) {
         if (tab_head === i) {
             $('.head_lst > li:nth-child(' + i + ')').addClass('current');
@@ -890,7 +903,7 @@ function handleTabHeadNextActive  (tab_head) {
     var lastName = $('#pInfo_lastName');
     var email = $('#pInfo_email');
     var phone = $('#pInfo_phoneNumber');
-    
+
     function isValidEmail(email) {
     // Basic email pattern for validation
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -935,7 +948,7 @@ function handleTabHeadNextActive  (tab_head) {
             timeOut: 2000
         });
         return;
-    } 
+    }
     else {
         handleTabHeadNextActive(tab_head_lst + 1);
         $('#personal_info_tab').css('display', 'none');
@@ -947,13 +960,13 @@ function handleTabHeadNextActive  (tab_head) {
    // Step 2:purpose Validation and Navigation
    $('.purpose_continue_btn').click(function() {
     const tab_head_lst = 2;
-   
+
     // Check if any field failed validation
         // If all fields pass validation, proceed to the next tab
         handleTabHeadNextActive(tab_head_lst + 1);
         $('#purpose_tab').hide();
         $('#address_tab').show();
-    
+
 });
 
 
@@ -981,9 +994,9 @@ $('.address_continue_btn').click(function() {
     if (!location.val().trim() && $("#location_mandatory_flag").val() == '1') {
         location.addClass('validation-failed');
     }
-    if (!sector.val().trim() && $("#sector_mandatory_flag").val() == '1') {
-        sector.addClass('validation-failed');
-    }
+    // if (!sector.val().trim() && $("#sector_mandatory_flag").val() == '1') {
+    //     sector.addClass('validation-failed');
+    // }
     if (!address.val().trim()) {
         address.addClass('validation-failed');
     }
@@ -1044,9 +1057,9 @@ $('.property_detail_continue_btn').click(function() {
     // }
     // if (!bathrooms.val().trim()) {
     //     bathrooms.addClass('validation-failed');
-    // } 
-    // } 
-   
+    // }
+    // }
+
 
     // Check if any field failed validation
     if ($('.validation-failed').length > 0) {
@@ -1054,7 +1067,7 @@ $('.property_detail_continue_btn').click(function() {
                 timeOut: 3000
             });
         return;
-    } 
+    }
     else {
         // If all fields pass validation, proceed to the next tab
         handleTabHeadNextActive(tab_head_lst + 1);
@@ -1091,7 +1104,7 @@ $('.extra_info_continue-btn').click(function() {
             timeOut: 3000
         });
     }
-    
+
     // if (!landline.val().trim()) {
     //     landline.addClass('validation-failed');
     // }
@@ -1131,14 +1144,14 @@ $('.extra_info_continue-btn').click(function() {
         $('#amenities_tab').show();
 
         // Add code to move to the next step or complete the form
-    }    
+    }
 });
 
 
 
 $('.amenities_continue_btn').click(function(){
     const tab_head_lst = 6;
-    
+
     handleTabHeadNextActive(tab_head_lst + 1);
     handlePropertyFormsubmission();
 
@@ -1152,10 +1165,10 @@ $('.prev_btn').click(function() {
     });
 
     // Example of using jQuery Mask Plugin
-  
+
 });
 
-  
+
 
 function  handlePropertyFormsubmission(){
     $('#uiBlocker').show();
@@ -1172,9 +1185,9 @@ function  handlePropertyFormsubmission(){
 }
 
 function handlePropertyFormsubmissionResponse(response) {
-    
+    console.log(response);
+
     $('#uiBlocker').hide();
-    
     if (response.status == 200) {
         toastr.success(response.message, '', {
             timeOut: 3000
@@ -1184,7 +1197,7 @@ function handlePropertyFormsubmissionResponse(response) {
         $('#done_tab').show();
 
         let form = $('#propertyAdd_form');
-        
+
         form.trigger("reset");
         setTimeout(function() {
             window.location.reload();
@@ -1218,11 +1231,11 @@ function handlePropertyFormsubmissionResponse(response) {
 <script>
     $(document).ready(function() {
     $('.prev_btn').click(function() {
-       
+
 
         // Get the current tab index
         var currentIndex = $('#head_lst li').index($('#head_lst li.current'));
-       
+
 
         // If it's the first tab, return early
         if (currentIndex === 0) {
@@ -1263,9 +1276,9 @@ function handlePropertyFormsubmissionResponse(response) {
 {{-- ___________________________________-Edit Scripts started______________________________________ --}}
 <script>
     $(document).ready(function() {
-    
-           
-    function handleTabHeadNextActive  (tab_head) {   
+
+
+    function handleTabHeadNextActive  (tab_head) {
         for (let i = 1; i <= 7; i++) {
             if (tab_head === i) {
                 $('.head_lst > li:nth-child(' + i + ')').addClass('current');
@@ -1274,8 +1287,8 @@ function handlePropertyFormsubmissionResponse(response) {
             }
         }
     }
-    
-    
+
+
         // Step 1:edit Personal Info Validation and Navigation
         $('#p-info_continue_btn_edit').click(function(e) {
         const tab_head_lst = 1;
@@ -1283,10 +1296,10 @@ function handlePropertyFormsubmissionResponse(response) {
         var lastName = $('#pInfo_lastName_edit');
         var email = $('#pInfo_email_edit');
         var phone = $('#pInfo_phoneNumber_edit');
-        
+
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
-    
+
         if (!firstName.val().trim()) {
             firstName.addClass('validation-failed');
         }
@@ -1299,33 +1312,33 @@ function handlePropertyFormsubmissionResponse(response) {
         if (!phone.val().trim()) {
             phone.addClass('validation-failed');
         }
-    
+
         if ($('.validation-failed').length > 0) {
             handleTabHeadNextActive(tab_head_lst);
             $('#personal_info_tab_edit').css('display', 'block');
             $('#purpose_tab_edit').css('display', 'none');
             return;
-        } 
+        }
         else {
             handleTabHeadNextActive(tab_head_lst + 1);
             $('#personal_info_tab_edit').css('display', 'none');
             $('#purpose_tab_edit').css('display', 'block');
         }
     });
-    
-    
-    
+
+
+
        // Step 2: edit purpose Validation and Navigation
     $('.purpose_continue_btn_edit').click(function() {
         const tab_head_lst = 2;
         var purpose = $('#purpose_purpose_edit');
         var home = $('#pupose_home_edit');
-        var plot = $('#purpose_plot_edit'); 
+        var plot = $('#purpose_plot_edit');
         var commercial = $('#purpose_commercial_edit');
-    
+
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
-    
+
         // Add validation logic for Purpose fields
         if (!purpose.val().trim()) {
             purpose.addClass('validation-failed');
@@ -1339,13 +1352,13 @@ function handlePropertyFormsubmissionResponse(response) {
         if (!commercial.val().trim()) {
             commercial.addClass('validation-failed');
         }
-    
+
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
             toastr.error('Please select all required fields in Purpose', '', {
                 timeOut: 3000
             });
-            return;  
+            return;
         } else {
             // If all fields pass validation, proceed to the next tab
             handleTabHeadNextActive(tab_head_lst + 1);
@@ -1353,26 +1366,26 @@ function handlePropertyFormsubmissionResponse(response) {
             $('#address_tab_edit').show();
         }
     });
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
 //step:3 edit
     $('.address_continue_btn_edit').click(function() {
-      
+
         const tab_head_lst = 3;
         var city = $('#address_city_edit');
         var area = $('#address_area_edit');
         var phase = $('#address_phase_edit');
         var sector = $('#address_sector_edit');
         var address = $('#address_address_edit');
-    
+
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
-    
+
         // Add validation logic for Address fields
         if (!city.val().trim()) {
             city.addClass('validation-failed');
@@ -1389,7 +1402,7 @@ function handlePropertyFormsubmissionResponse(response) {
         if (!address.val().trim()) {
             address.addClass('validation-failed');
         }
-    
+
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
             toastr.error('Please select all required fields in Address', '', {
@@ -1403,9 +1416,9 @@ function handlePropertyFormsubmissionResponse(response) {
             $('#property_detail_tab_edit').show();
         }
     });
-    
-    
-    
+
+
+
     // ____________________ step: 4 edit property_detail_edit______________________
     $('.property_detail_continue_btn_edit').click(function() {
         const tab_head_lst = 4;
@@ -1414,10 +1427,10 @@ function handlePropertyFormsubmissionResponse(response) {
         var areaUnit = $('#propertyDetail_area_unit_edit');
         var bedrooms = $('#propertyDetail_bedrooms_edit');
         var bathrooms = $('#propertyDetail_bathrooms_edit');
-    
+
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
-    
+
         // Add validation logic for Property Detail fields
         if (!plotNum.val().trim()) {
             plotNum.addClass('validation-failed');
@@ -1434,7 +1447,7 @@ function handlePropertyFormsubmissionResponse(response) {
         if (!bathrooms.val().trim()) {
             bathrooms.addClass('validation-failed');
         }
-    
+
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
              toastr.error('Please select all required fields in Property Detail', '', {
@@ -1448,9 +1461,9 @@ function handlePropertyFormsubmissionResponse(response) {
             $('#extra_info_tab_edit').show();
         }
     });
-    
-    
-    
+
+
+
     // ____________________step:5 edit extra_info_edit______________________
     $('.extra_info_continue-btn_edit').click(function() {
         const tab_head_lst = 5;
@@ -1459,10 +1472,10 @@ function handlePropertyFormsubmissionResponse(response) {
         var mobile = $('#extra_info_mobile_edit');
         var landline = $('#extra_info_landline_edit');
         var description = $('#extra_info_description_edit');
-    
+
         // Remove red borders from previously failed fields
         $('.validation-failed').removeClass('validation-failed');
-    
+
         // Add validation logic for Extra Information fields
         if (!title.val().trim()) {
             title.addClass('validation-failed');
@@ -1479,7 +1492,7 @@ function handlePropertyFormsubmissionResponse(response) {
         if (!description.val().trim()) {
             description.addClass('validation-failed');
         }
-    
+
         // Check if any field failed validation
         if ($('.validation-failed').length > 0) {
             toastr.error('Please fill all required fields', '', {
@@ -1491,41 +1504,41 @@ function handlePropertyFormsubmissionResponse(response) {
             handleTabHeadNextActive(tab_head_lst + 1);
             $('#extra_info_tab_edit').hide();
             $('#amenities_tab_edit').show();
-    
+
             // Add code to move to the next step or complete the form
-        }    
-    }); 
-    
-    
+        }
+    });
+
+
     // ____________________step:6 edit amenities_edit______________________
     $('.amenities_continue_btn_edit').click(function(){
         const tab_head_lst = 6;
         $('#amenities_tab_edit').hide();
         $('#done_tab_edit').show();
         handleTabHeadNextActive(tab_head_lst + 1);
-        handlePropertyFormsubmission_edit(); 
-    
+        handlePropertyFormsubmission_edit();
+
     });
-    
-    
-    
+
+
+
     //Back Buttons
     $('.prev_btn').click(function() {
             $(this).closest('.tab').hide().prev('.tab').show();
         });
-    
+
         // Example of using jQuery Mask Plugin
-      
+
     });
-    
-      
+
+
     function  handlePropertyFormsubmission_edit(){
         setTimeout(() => {
             $('.propertySubmissionForm_edit').submit();
-            
-        }, 1000); 
+
+        }, 1000);
     }
-    
+
 </script>
 
 
@@ -1569,8 +1582,8 @@ document.getElementById('fileInput_edit').addEventListener('change', function(ev
 
 {{-- handle remove btn --}}
 <script>
-    function removeFile_edit(btn) { 
-        removeFile(btn); 
+    function removeFile_edit(btn) {
+        removeFile(btn);
 }
 </script>
 
@@ -1608,11 +1621,11 @@ function loadPropertyandCityListing(response) {
 function populateAreas(cityData) {
     let selectedCity = document.getElementById('address_city').value;
     let city = cityData.find(city => city.NAME === selectedCity);
-    
+
     // Populate area dropdown
     let areaDropdown = document.getElementById('address_area');
     areaDropdown.innerHTML = '<option value="">Select Area</option>';
-    
+
     if (city) {
         city.areas.forEach(area => {
             let option = document.createElement('option');
@@ -1647,7 +1660,7 @@ function populateLocations(areas) {
     // Populate location dropdown
     let locationDropdown = document.getElementById('address_location');
     locationDropdown.innerHTML = '<option value="">Select Location</option>';
-    
+
     if (area) {
         area.locations.forEach(location => {
             let option = document.createElement('option');
@@ -1682,7 +1695,7 @@ function populateSectors(locations) {
     // Populate sector dropdown
     let sectorDropdown = document.getElementById('address_sector');
     sectorDropdown.innerHTML = '<option value="">Select Sector</option>';
-    
+
     if (location) {
         location.sectors.forEach(sector => {
             let option = document.createElement('option');
@@ -1697,7 +1710,7 @@ function populateSectors(locations) {
             $('#sector_mandatory_flag').val('0');
             $('#sector_mandatory_staric').hide();
         }
-        
+
     }else{
         $('#sector_mandatory_flag').val('0');
         $('#sector_mandatory_staric').hide();
@@ -1728,28 +1741,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 $('#purpose_commercial').val('');
             }
         }
-    
+
         $('#purpose_home').change(function() {
             if ($(this).val() !== '') {
                 resetSelects('#purpose_home');
             }
         });
-    
+
         $('#purpose_plot').change(function() {
             if ($(this).val() !== '') {
                 resetSelects('#purpose_plot');
             }
         });
-    
+
         $('#purpose_commercial').change(function() {
             if ($(this).val() !== '') {
                 resetSelects('#purpose_commercial');
             }
         });
-    
+
         $("#propertySubmissionForm").submit(function(event) {
             var isValid = true;
-    
+
             // List of input fields to validate
             var requiredFields = [
                 '#pInfo_firstName',
@@ -1774,7 +1787,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 '#extra_info_landline',
                 '#extra_info_description'
             ];
-    
+
             // Loop through each required field and check if it's empty
             requiredFields.forEach(function(field) {
                 var $field = $(field);
@@ -1785,18 +1798,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     $field.css('border', '');
                 }
             });
-    
-            //Ensure only one of the purpose fields is selected 
+
+            //Ensure only one of the purpose fields is selected
             var purposeFields = [
                 '#pupose_home',
                 '#purpose_plot',
                 '#purpose_commercial'
             ];
-    
+
             var purposeSelected = purposeFields.some(function(field) {
                 return $(field).val().trim() !== '';
             });
-    
+
             if (!purposeSelected) {
                 purposeFields.forEach(function(field) {
                     $(field).css('border', '1px solid red');
@@ -1809,8 +1822,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 purposeFields.forEach(function(field) {
                     $(field).css('border', '');
                 });
-            }  
-    
+            }
+
             // Prevent form submission if any field is invalid
             if (!isValid) {
                 $(window).scrollTop(0);
@@ -1830,106 +1843,98 @@ document.addEventListener('DOMContentLoaded', function() {
         const pInfoEmail = document.getElementById('pInfo_email');
         const pInfoPhoneNumber = document.getElementById('pInfo_phoneNumber');
         const continueButton = document.getElementById('p-info_continue_btn');
-    
+
         const pInfoFirstNameError = document.getElementById('pInfo_firstName_error');
         const pInfoLastNameError = document.getElementById('pInfo_lastName_error');
         const pInfoEmailError = document.getElementById('pInfo_email_error');
         const pInfoPhoneNumberError = document.getElementById('pInfo_phoneNumber_error');
-    
-        const validateFirstName = () => {
-            const value = pInfoFirstName.value.trim();
+
+        // Function to handle real-time validation of the first name
+        const handleFirstNameInput = (event) => {
+            const value = pInfoFirstName.value;
+
+            // Remove any non-alphabetic characters immediately
+            pInfoFirstName.value = value.replace(/[^a-zA-Z]/g, '');
+
+            // Check for length and display errors
             if (value.length === 0) {
                 pInfoFirstNameError.textContent = 'First Name is required.';
-                return false;
-            } else if (!/^[a-zA-Z]{1,50}$/.test(value)) {
-                pInfoFirstNameError.textContent = 'First Name should only contain letters and be up to 50 characters long.';
-                return false;
+            } else if (value.length > 50) {
+                pInfoFirstNameError.textContent = 'First Name should not exceed 50 characters.';
             } else {
                 pInfoFirstNameError.textContent = '';
-                return true;
             }
         };
-    
-        const validateLastName = () => {
-            const value = pInfoLastName.value.trim();
+
+        // Function to handle real-time validation of the last name
+        const handleLastNameInput = (event) => {
+            const value = pInfoLastName.value;
+
+            // Remove any non-alphabetic characters immediately
+            pInfoLastName.value = value.replace(/[^a-zA-Z]/g, '');
+
+            // Check for length and display errors
             if (value.length === 0) {
                 pInfoLastNameError.textContent = 'Last Name is required.';
-                return false;
             } else if (value.length > 50) {
-                pInfoLastNameError.textContent = 'Last Name must not exceed 50 characters long.';
-                return false;
-            } else if (!/^[a-zA-Z]+$/.test(value)) {
-                pInfoLastNameError.textContent = 'Last Name should only contain letters.';
-                return false;
+                pInfoLastNameError.textContent = 'Last Name should not exceed 50 characters.';
             } else {
                 pInfoLastNameError.textContent = '';
-                return true;
             }
         };
 
-
-    
-        const validateEmail = () => {
+        // Function to handle real-time validation of the email
+        const handleEmailInput = (event) => {
             const value = pInfoEmail.value.trim();
-            // Regex pattern to match an email address excluding the '+' sign
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            
+
             // Check if the email contains a '+' sign
             if (value.includes('+')) {
                 pInfoEmailError.textContent = 'Email Address should not contain a "+" sign.';
-                return false;
-            }
-
-            // Validate the email format
-            if (value.length === 0) {
-                pInfoEmailError.textContent = 'Email Address is required.';
-                return false;
-            } else if (!emailRegex.test(value)) {
+                pInfoEmail.value = value.replace(/\+/g, ''); // Remove any '+' sign
+            } else if (!emailRegex.test(value) && value.length > 0) {
                 pInfoEmailError.textContent = 'Please enter a valid email address.';
-                return false;
             } else {
                 pInfoEmailError.textContent = '';
-                return true;
             }
         };
 
+        // Function to handle real-time validation of the phone number
+        const handlePhoneNumberInput = (event) => {
+            const value = pInfoPhoneNumber.value;
 
-    
-        const validatePhoneNumber = () => {
-            const value = pInfoPhoneNumber.value.trim();
+            // Remove any non-numeric characters immediately
+            pInfoPhoneNumber.value = value.replace(/[^\d+]/g, '');
+
+            // Check for length and display errors
             if (value.length === 0) {
                 pInfoPhoneNumberError.textContent = 'Phone Number is required.';
-                return false;
             } else if (value.length < 11 || value.length > 15) {
-                pInfoPhoneNumberError.textContent = 'Phone Number must be between 11 and 15 characters.';
-                return false;
-            } else if (!/^\+?[0-9]*$/.test(value)) {
-                pInfoPhoneNumberError.textContent = 'Please enter a valid phone number.';
-                return false;
+                pInfoPhoneNumberError.textContent = 'Phone Number must be between 11 and 15 digits.';
             } else {
                 pInfoPhoneNumberError.textContent = '';
-                return true;
             }
         };
-    
+
         const validateForm = () => {
-            const isFirstNameValid = validateFirstName();
-            const isLastNameValid = validateLastName();
-            const isEmailValid = validateEmail();
-            const isPhoneNumberValid = validatePhoneNumber();
-            
+            const isFirstNameValid = !pInfoFirstNameError.textContent;
+            const isLastNameValid = !pInfoLastNameError.textContent;
+            const isEmailValid = !pInfoEmailError.textContent;
+            const isPhoneNumberValid = !pInfoPhoneNumberError.textContent;
+
             continueButton.disabled = !(isFirstNameValid && isLastNameValid && isEmailValid && isPhoneNumberValid);
         };
-    
-        pInfoFirstName.addEventListener('input', validateForm);
-        pInfoLastName.addEventListener('input', validateForm);
-        pInfoEmail.addEventListener('input', validateForm);
-        pInfoPhoneNumber.addEventListener('input', validateForm);
-    
+
+        pInfoFirstName.addEventListener('input', handleFirstNameInput);
+        pInfoLastName.addEventListener('input', handleLastNameInput);
+        pInfoEmail.addEventListener('input', handleEmailInput);
+        pInfoPhoneNumber.addEventListener('input', handlePhoneNumberInput);
+
         // Initial validation check
         validateForm();
     });
 </script>
+
 
 {{-- //step 2 validtion --}}
 <script>
@@ -1940,13 +1945,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const purposeCommercial = document.getElementById('purpose_commercial');
         const price = document.getElementById('price');
         const continueButton = document.getElementById('purpose_continue_btn');
-    
+
         const purposePurposeError = document.getElementById('purpose_purpose_error');
         const purposeHomeError = document.getElementById('purpose_home_error');
         const purposePlotError = document.getElementById('purpose_plot_error');
         const purposeCommercialError = document.getElementById('purpose_commercial_error');
         const priceError = document.getElementById('price_error');
-    
+
         const validatePurpose = () => {
             const value = purposePurpose.value.trim();
             if (value.length === 0) {
@@ -1957,12 +1962,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validateHomePlotCommercial = () => {
             const homeValue = purposeHome.value.trim();
             const plotValue = purposePlot.value.trim();
             const commercialValue = purposeCommercial.value.trim();
-    
+
             if (homeValue.length === 0 && plotValue.length === 0 && commercialValue.length === 0) {
                 purposeHomeError.textContent = 'One of Home, Plot, or Commercial is required.';
                 purposePlotError.textContent = 'One of Home, Plot, or Commercial is required.';
@@ -1975,7 +1980,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validatePrice = () => {
             const value = price.value.trim();
             if (value.length === 0) {
@@ -1989,21 +1994,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validateForm = () => {
             const isPurposeValid = validatePurpose();
             const isHomePlotCommercialValid = validateHomePlotCommercial();
             const isPriceValid = validatePrice();
-            
+
             continueButton.disabled = !(isPurposeValid && isHomePlotCommercialValid && isPriceValid);
         };
-    
+
         purposePurpose.addEventListener('input', validateForm);
         purposeHome.addEventListener('input', validateForm);
         purposePlot.addEventListener('input', validateForm);
         purposeCommercial.addEventListener('input', validateForm);
         price.addEventListener('input', validateForm);
-    
+
         // Initial validation check
         validateForm();
     });
@@ -2019,14 +2024,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const addressAddress = document.getElementById('address_address');
         const addressMapLocation = document.getElementById('address_map_location');
         const continueButton = document.getElementById('address_continue_btn');
-    
+
         const addressCityError = document.getElementById('address_city_error');
         const addressAreaError = document.getElementById('address_area_error');
         const addressLocationError = document.getElementById('address_location_error');
         const addressSectorError = document.getElementById('address_sector_error');
         const addressAddressError = document.getElementById('address_address_error');
         const addressMapLocationError = document.getElementById('address_map_location_error');
-    
+
         const validateField = (field, errorElement, errorMessage) => {
             if (field.value.trim() === '') {
                 errorElement.textContent = errorMessage;
@@ -2036,10 +2041,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validateForm = () => {
             setTimeout(function(){
-                
+
                 const isCityValid = validateField(addressCity, addressCityError, 'City is required.');
 
                 if($("#area_mandatory_flag").val() == '1'){
@@ -2055,28 +2060,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     addressLocationError.textContent = '';
                     var isLocationValid = true;
                 }
-                
-                if($("#sector_mandatory_flag").val() == '1'){
-                    var isSectorValid = validateField(addressSector, addressSectorError, 'Sector is required.');
-                }else{
-                    addressSectorError.textContent = '';
-                    var isSectorValid = true;
-                }
+
+                // if($("#sector_mandatory_flag").val() == '1'){
+                //     var isSectorValid = validateField(addressSector, addressSectorError, 'Sector is required.');
+                // }else{
+                //     addressSectorError.textContent = '';
+                //     var isSectorValid = true;
+                // }
 
                 var isAddressValid = validateField(addressAddress, addressAddressError, 'Address is required.');
                 var isMapLocationValid = true; // Google Map Link is optional, no validation required
-                
-                continueButton.disabled = !(isCityValid && isAreaValid && isLocationValid && isSectorValid && isAddressValid && isMapLocationValid);
+
+                continueButton.disabled = !(isCityValid && isAreaValid && isLocationValid  && isAddressValid && isMapLocationValid);
             }, 300);
         };
-    
+
         addressCity.addEventListener('input', validateForm);
         addressArea.addEventListener('input', validateForm);
         addressLocation.addEventListener('input', validateForm);
         addressSector.addEventListener('input', validateForm);
         addressAddress.addEventListener('input', validateForm);
         addressMapLocation.addEventListener('input', validateForm);
-    
+
         // Initial validation check
         validateForm();
     });
@@ -2091,13 +2096,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const propertyDetailBedrooms = document.getElementById('propertyDetail_bedrooms');
         const propertyDetailBathrooms = document.getElementById('propertyDetail_bathrooms');
         const continueButton = document.getElementById('property_detail_continue_btn');
-    
+
         const propertyDetailPlotNumError = document.getElementById('propertyDetail_plot_num_error');
         const propertyDetailAreaError = document.getElementById('propertyDetail_area_error');
         const propertyDetailAreaUnitError = document.getElementById('propertyDetail_area_unit_error');
         const propertyDetailBedroomsError = document.getElementById('propertyDetail_bedrooms_error');
         const propertyDetailBathroomsError = document.getElementById('propertyDetail_bathrooms_error');
-    
+
         const validateField = (field, errorElement, errorMessage) => {
             if (field.value.trim() === '') {
                 errorElement.textContent = errorMessage;
@@ -2107,23 +2112,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validateForm = () => {
             const isPlotNumValid = validateField(propertyDetailPlotNum, propertyDetailPlotNumError, 'Plot No is required.');
             const isAreaValid = validateField(propertyDetailArea, propertyDetailAreaError, 'Area Unit is required.');
             const isAreaUnitValid = validateField(propertyDetailAreaUnit, propertyDetailAreaUnitError, 'Area is required.');
             // const isBedroomsValid = validateField(propertyDetailBedrooms, propertyDetailBedroomsError, 'Bedrooms are required.');
             // const isBathroomsValid = validateField(propertyDetailBathrooms, propertyDetailBathroomsError, 'Bathrooms are required.');
-    
+
             continueButton.disabled = !(isPlotNumValid && isAreaValid && isAreaUnitValid);// && isBedroomsValid && isBathroomsValid
         };
-    
+
         propertyDetailPlotNum.addEventListener('input', validateForm);
         propertyDetailArea.addEventListener('change', validateForm);
         propertyDetailAreaUnit.addEventListener('input', validateForm);
         // propertyDetailBedrooms.addEventListener('input', validateForm);
         // propertyDetailBathrooms.addEventListener('input', validateForm);
-    
+
         // Initial validation check
         validateForm();
     });
@@ -2140,14 +2145,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const extraInfoDescription = document.getElementById('extra_info_description');
         const fileInput = document.getElementById('fileInput');
         const continueButton = document.getElementById('extra_info_continue_btn');
-    
+
         const extraInfoTitleError = document.getElementById('extra_info_title_error');
         const extraInfoPostingAsError = document.getElementById('extra_info_postingas_error');
         const extraInfoMobileError = document.getElementById('extra_info_mobile_error');
         const extraInfoLandlineError = document.getElementById('extra_info_landline_error');
         const extraInfoDescriptionError = document.getElementById('extra_info_description_error');
         const fileInputError = document.getElementById('fileInput_error');
-    
+
         const validateField = (field, errorElement, errorMessage) => {
             if (field.value.trim() === '') {
                 errorElement.textContent = errorMessage;
@@ -2157,7 +2162,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validatePhoneNumber = (field, errorElement) => {
             const value = field.value.trim();
             const length = value.length;
@@ -2197,7 +2202,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return true;
             }
         };
-    
+
         const validateForm = () => {
             const isTitleValid = validateField(extraInfoTitle, extraInfoTitleError, 'Title is required.');
             const isPostingAsValid = validateField(extraInfoPostingAs, extraInfoPostingAsError, 'Posting As is required.');
@@ -2205,17 +2210,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const isLandlineValid = validateLandline(extraInfoLandline, extraInfoLandlineError);
             const isDescriptionValid = validateField(extraInfoDescription, extraInfoDescriptionError, 'Description is required.');
             // const areFilesValid = validateFiles();
-    
+
             continueButton.disabled = !(isTitleValid && isPostingAsValid && isMobileValid && isLandlineValid && isDescriptionValid);// && areFilesValid
         };
-    
+
         extraInfoTitle.addEventListener('input', validateForm);
         extraInfoPostingAs.addEventListener('input', validateForm);
         extraInfoMobile.addEventListener('input', validateForm);
         extraInfoLandline.addEventListener('input', validateForm);
         extraInfoDescription.addEventListener('input', validateForm);
         // fileInput.addEventListener('change', validateForm);
-    
+
         // Initial validation check
         validateForm();
     });

@@ -29,11 +29,11 @@ class PropertyController extends Controller
         // resources\views\Backend\admin\property\propertyListiing.blade.php
         $data['personalInfo'] = PersonalInfo::with('propertyListingPape', 'amenities', 'propertyRecordFiles')->where('status', 0)->get();
         $data['postingAs'] = User::whereIn('role', ['admin', 'super_admin'])->where('status', '1')->get('name');
-
+        $postingAs = User::whereIn('role', ['admin', 'super_admin'])->where('status', '1')->get('name');
         if ($data['personalInfo'] == null) {
-            return view('Backend.admin.property.propertyListiing')->with($data);
+            return view('Backend.admin.property.propertyListiing')->with($data, $postingAs);
         } else {
-            return view('Backend.admin.property.propertyListiing')->with($data);;
+            return view('Backend.admin.property.propertyListiing')->with($data, $postingAs);;
         }
     }
 
@@ -52,8 +52,8 @@ class PropertyController extends Controller
 
 
     public function propertyMainSubmission(Request $request)
-    { 
-        
+    {
+
         // Validate the incoming request
         DB::beginTransaction();
         try {
@@ -145,22 +145,22 @@ class PropertyController extends Controller
                 }
             }
 
-            // Send email
-            try {
-                $requestData = $request->all();
-                $body = view('mail.mail_templates.request_creation_admin', ['requestData' => $requestData])->render();
-                $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
-                $userEmailsSend = $request->pInfo_email;
+            // // Send email
+            // try {
+            //     $requestData = $request->all();
+            //     $body = view('mail.mail_templates.request_creation_admin', ['requestData' => $requestData])->render();
+            //     $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
+            //     $userEmailsSend = $request->pInfo_email;
 
-                $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
-                $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
+            //     $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
+            //     $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
 
-                Log::info('at: ' . now());
-                Log::info('Email property response 1: ' . $response);
-                Log::info('Email property response 2: ' . $response2);
-            } catch (Exception $e) {
-                Log::error('Error sending email on property from admin side submission: ' . $e->getMessage());
-            }
+            //     Log::info('at: ' . now());
+            //     Log::info('Email property response 1: ' . $response);
+            //     Log::info('Email property response 2: ' . $response2);
+            // } catch (Exception $e) {
+            //     Log::error('Error sending email on property from admin side submission: ' . $e->getMessage());
+            // }
 
             DB::commit();
 
@@ -219,7 +219,7 @@ class PropertyController extends Controller
             'address_area_edit' => 'required_if:area_mandatory_flag,1|max:255',
             'address_location_edit' => 'required_if:location_mandatory_flag,1|max:2000',
             'address_map_location_edit' => 'nullable|string|max:2000',
-            'address_sector_edit' => 'required_if:sector_mandatory_flag,1|max:255',
+            // 'address_sector_edit' => 'required_if:sector_mandatory_flag,1|max:255',
             'address_address_edit' => 'required|string|max:255',
             'propertyDetail_plot_num_edit' => 'required|string|max:255',
             'propertyDetail_area_edit' => 'required|string|max:255',
@@ -293,7 +293,7 @@ class PropertyController extends Controller
             }
 
 
-            // Update amenities 
+            // Update amenities
             $amenities = [
                 'Possesion' => $request->has('check_Possesion_edit') ? 1 : 0,
                 'Balloted' => $request->has('check_Balloted_edit') ? 1 : 0,
@@ -371,7 +371,7 @@ class PropertyController extends Controller
                 // to username, to email, from username, subject, body html
                 $response = sendMail($request->pInfo_firstName, $userEmailsSend, 'Sk Property', 'Property listing request has submitted successfully', $body);
                 $response2 = sendMail($request->pInfo_firstName, $adminEmailsSend, 'Sk Property', 'New property is listed', $body);
-                // Log the current timestamp and response 
+                // Log the current timestamp and response
                 Log::info('at: ' . now());
                 Log::info('Email property response 1: ' . $response);
                 Log::info('Email property response 2: ' . $response2);

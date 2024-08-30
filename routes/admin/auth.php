@@ -13,7 +13,7 @@ use App\Http\Controllers\BackEnd\Dashboard\TestimonialsController;
 use App\Http\Controllers\BackEnd\Dashboard\CityController;
 
 
-//redirect if authenticated  
+//redirect if authenticated
 Route::middleware(['admin.redirect'])->group(function () {
     Route::get('/admin/login', [LoginController::class, 'index'])->name('admin.login.view');
     Route::post('/admin/login', [LoginController::class, 'handleLogin'])->name('admin.login.submit');
@@ -22,7 +22,7 @@ Route::middleware(['admin.redirect'])->group(function () {
 
 
 //check role admin before access
-Route::middleware(['admin','admin.status'])->group(function () {
+Route::middleware(['admin', 'admin.status'])->group(function () {
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
     Route::get('/admin/admin/list', [AdminController::class, 'adminList'])->name('admin.list');
     Route::get('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
@@ -34,7 +34,7 @@ Route::middleware(['admin','admin.status'])->group(function () {
     Route::get('admin/users/admin/destroy/{id}', [AdminController::class, 'destroyAdmins'])->name('admin.user.destroy');
 
 
-    // Add other admin routes here 
+    // Add other admin routes here
 
 
     // Add admin user Routes here
@@ -118,24 +118,23 @@ Route::middleware(['admin','admin.status'])->group(function () {
 
     Route::post('admin/city/getcitydetails', [CityController::class, 'getCityDetails'])->name('admin.city.getcitydetails');
     Route::post('admin/city/update', [CityController::class, 'updateCity'])->name('admin.city.update');
-    
-    
-    
+
+
+
     Route::post('admin/area/getareadetails', [CityController::class, 'getAreaDetails'])->name('admin.area.getareadetails');
     Route::post('admin/area/update', [CityController::class, 'updateArea'])->name('admin.area.update');
     Route::post('admin/area/delete', [CityController::class, 'deleteArea'])->name('admin.area.delete');
-    
-    
+
+
     Route::post('admin/location/getlocationdetails', [CityController::class, 'getLocationDetails'])->name('admin.location.getlocationdetails');
     Route::post('admin/location/update', [CityController::class, 'updateLocation'])->name('admin.location.update');
     Route::post('admin/location/delete', [CityController::class, 'deleteLocation'])->name('admin.location.delete');
     Route::post('admin/location/getcityareas', [CityController::class, 'getcityareas'])->name('admin.location.getcityareas');
-    
-    
+
+
     Route::post('admin/sector/getsectordetails', [CityController::class, 'getsectorDetails'])->name('admin.sector.getsectordetails');
     Route::post('admin/sector/getarealocations ', [CityController::class, 'getarealocations'])->name('admin.sector.getarealocations ');
     Route::post('admin/sector/update', [CityController::class, 'updatesector'])->name('admin.sector.update');
     Route::post('admin/sector/delete', [CityController::class, 'deleteSector'])->name('admin.sector.delete');
     Route::post('admin/location/getcityareas', [CityController::class, 'getcityareas'])->name('admin.location.getcityareas');
-
 });

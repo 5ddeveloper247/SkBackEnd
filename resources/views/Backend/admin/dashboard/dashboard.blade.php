@@ -74,20 +74,20 @@
             <div class="col">
                 <div class="inner">
                     <strong>{{ $inactivePropertyListings }}</strong>
-                    <p>Inactive Property Listings</p>
+                    <p>Inactive Properties</p>
                 </div>
             </div>
 
             <div class="col">
                 <div class="inner">
                     <strong>{{ $activePropertyListings }}</strong>
-                    <p>Active Property Listings</p>
+                    <p>Active Propertties</p>
                 </div>
             </div>
             <div class="col">
                 <div class="inner">
                     <strong>{{ $pendingContacts }}</strong>
-                    <p>Pending Contact queries</p>
+                    <p>Pending Contacts</p>
                 </div>
             </div>
         </div>
@@ -146,16 +146,16 @@
         allDates.forEach(date => {
             let inquiryIndex = inquiriesDates.indexOf(date);
             let propertyIndex = propertiesDates.indexOf(date);
-            
+
             inquiriesData.push(inquiryIndex !== -1 ? inquiriesCounts[inquiryIndex] : 0);
             propertiesRentData.push(propertyIndex !== -1 ? propertiesRentCounts[propertyIndex] : 0);
             propertiesSaleData.push(propertyIndex !== -1 ? propertiesSaleCounts[propertyIndex] : 0);
         });
-        
+
         // Format dates for x-axis labels
         let x_value_days = allDates.map(date => {
             return new Date(date).toLocaleDateString('en-GB', {
-                day: 'numeric', 
+                day: 'numeric',
                 month: 'short'
             });
         });

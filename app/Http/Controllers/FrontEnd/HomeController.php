@@ -107,10 +107,10 @@ class HomeController extends Controller
                     $body = view('mail.mail_templates.request', ['requestData' => $requestData])->render();
                     $adminEmailsSend = Setting::whereNotNull('admin_email')->value('admin_email');
                     $userEmailsSend = $request->email;
-                    // to username, to email, from username, subject, body html 
+                    // to username, to email, from username, subject, body html
                     $response = sendMail($request->name, $userEmailsSend, 'Sk Property', 'Property Listing Request Has Submitted Successfully', $body);
                     $response2 = sendMail($request->name, $adminEmailsSend, 'Sk Property', 'New Property is listed', $body);
-                    // Log the current timestamp and response 
+                    // Log the current timestamp and response
                     Log::info('at: ' . now());
                     Log::info('Email property response 1: ' . $response);
                     Log::info('Email property response 2: ' . $response2);
@@ -317,26 +317,28 @@ class HomeController extends Controller
                     });
                 }
 
-                // Handle commercial filters
-                if (in_array($filterData['selectedFilterOption'], ['Shop', 'Office', 'Building'])) {
+                // Check if 'selectedFilterOption' exists and is not empty
+                if (isset($filterData['selectedFilterOption']) && !empty($filterData['selectedFilterOption'])) {
+                    // Handle commercial filters
+                    if (in_array($filterData['selectedFilterOption'], ['Shop', 'Office', 'Building'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('purpose_commercial', $filterData['selectedFilterOption']);
+                        });
+                    }
 
-                    $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('purpose_commercial', $filterData['selectedFilterOption']);
-                    });
-                }
+                    // Handle home type filters
+                    if (in_array($filterData['selectedFilterOption'], ['House', 'Flat'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('pupose_home', $filterData['selectedFilterOption']);
+                        });
+                    }
 
-                // Handle home type filters
-                if (in_array($filterData['selectedFilterOption'], ['House', 'Flat'])) {
-                    $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('pupose_home', $filterData['selectedFilterOption']);
-                    });
-                }
-
-                // Handle plot filters 
-                if (in_array($filterData['selectedFilterOption'], ['Residential', 'Commercial'])) {
-                    $query->WhereHas('propertyListingPape', function ($q) use ($filterData) {
-                        $q->where('purpose_plot', $filterData['selectedFilterOption']);
-                    });
+                    // Handle plot filters
+                    if (in_array($filterData['selectedFilterOption'], ['Residential', 'Commercial'])) {
+                        $query->whereHas('propertyListingPape', function ($q) use ($filterData) {
+                            $q->where('purpose_plot', $filterData['selectedFilterOption']);
+                        });
+                    }
                 }
 
                 if (isset($filterData['sector']) && !empty($filterData['sector'])) {
@@ -369,9 +371,6 @@ class HomeController extends Controller
                     });
                 }
 
-                // Apply other filters if they exist
-
-
                 // Eager load relationships
                 $query->with(['propertyListingPape', 'amenities', 'propertyRecordFiles']);
 
@@ -391,9 +390,11 @@ class HomeController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to fetch property data.',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
+
 
 
 
